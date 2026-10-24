@@ -60,9 +60,23 @@ details{background:var(--sf);border:1px solid var(--ln);border-radius:12px;paddi
 footer{background:var(--ink);color:#c5d3ee;padding:44px 0 28px;font-size:.9rem}footer .g{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:28px}footer h4{margin:0 0 10px;color:#fff;font-size:.9rem}footer a{display:block;padding:3px 0;opacity:.8}footer a:hover{opacity:1}footer .logo{color:#fff;margin-bottom:10px}
 footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2b3f66;font-size:.82rem;opacity:.7}
 .wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:#16a34a;display:grid;place-items:center;box-shadow:0 10px 20px -8px rgba(0,0,0,.4);z-index:15;color:#fff}.wa svg{width:26px;height:26px}
+
+/* Pop-up sizing & compact radio formatting */
 .modal{position:fixed;inset:0;z-index:40;background:rgba(28,25,23,.55);display:none;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}
-.box{background:#fff;border-radius:18px;padding:28px;width:100%;max-width:440px;position:relative;max-height:90vh;overflow-y:auto}.box label{display:block;font-weight:700;font-size:.85rem;margin-top:14px}.box input{width:100%;margin-top:6px}.box .btn{width:100%;margin-top:20px}
-.x{position:absolute;right:12px;top:12px;border:0;background:var(--tint);width:44px;height:44px;border-radius:50%;cursor:pointer}
+.box{background:#fff;border-radius:18px;padding:22px 24px;width:100%;max-width:420px;position:relative;max-height:92vh;overflow-y:auto;box-shadow:0 20px 40px -15px rgba(0,0,0,.3)}
+.box label{display:block;font-weight:700;font-size:.85rem;margin-top:10px}.box input[type=text], .box input[type=tel]{width:100%;margin-top:4px}
+.box .btn{width:100%;margin-top:16px}
+.x{position:absolute;right:14px;top:14px;border:0;background:var(--tint);width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;color:var(--ink)}
+
+/* Custom compact radio list */
+.rc-opt-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.rc-opt-item{display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--ln);border-radius:10px;padding:10px 12px;cursor:pointer;transition:border-color .2s, background .2s}
+.rc-opt-item:hover{border-color:var(--ac);background:#edf3ff}
+.rc-opt-item input[type=radio]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid var(--mut);border-radius:50%;outline:none;margin:0;flex:none;display:grid;place-items:center;cursor:pointer;transition:border-color .2s}
+.rc-opt-item input[type=radio]:checked{border-color:var(--ac);background:#fff}
+.rc-opt-item input[type=radio]:checked::before{content:"";width:10px;height:10px;background:var(--ac);border-radius:50%}
+.rc-opt-item span{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.35}
+
 #toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;translate:-50% 0}
 @media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
 @media(max-width:820px){.mn{display:block}.logo{margin-right:auto}header .w{gap:10px}
@@ -107,17 +121,17 @@ footer .g{grid-template-columns:1fr 1fr}}
 .pane{width:100%;max-width:420px}
 .pane h1{font-size:clamp(1.7rem,4vw,2.2rem)}.pane h1:focus{outline:none}
 .pane .lead{color:var(--mut);margin-top:8px}
-.fld{margin-top:16px}.fld label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}.fld input{width:100%}
+.fld{margin-top:14px}.fld label{display:block;font-weight:700;font-size:.88rem;margin-bottom:4px}.fld input{width:100%}
 .fld input[aria-invalid="true"]{border-color:var(--er)}
-.hint{color:var(--mut);font-size:.82rem;margin-top:6px}
-.err{color:var(--er);font-size:.86rem;font-weight:500;margin-top:6px}
-.lr{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.lr label{margin-bottom:6px}
+.hint{color:var(--mut);font-size:.8rem;margin-top:4px}
+.err{color:var(--er);font-size:.85rem;font-weight:500;margin-top:4px}
+.lr{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.lr label{margin-bottom:4px}
 .pane a.t{color:var(--ac2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .pwr{position:relative}.pwr input{padding-right:72px}
 .show{position:absolute;right:2px;top:0;height:44px;min-width:60px;border:0;background:none;color:var(--ac2);font:700 .85rem 'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;border-radius:10px}
-.banner{border-radius:10px;padding:12px 14px;font-size:.9rem;margin-top:16px;border:1px solid}
+.banner{border-radius:10px;padding:12px 14px;font-size:.9rem;margin-top:14px;border:1px solid}
 .banner.err{background:#fdecea;border-color:#f3b8b2;color:#7a1a12}.banner.inf{background:var(--tint);border-color:#bfd0f3;color:var(--ink)}
-.pane .btn{width:100%;margin-top:22px}
+.pane .btn{width:100%;margin-top:18px}
 .alt2{margin-top:18px;text-align:center;color:var(--mut);font-size:.92rem}.alt2 a{display:inline-block;padding:8px 4px}
 /* welcome popup */
 .wl{display:grid;gap:10px;margin:18px 0 0}
@@ -125,7 +139,7 @@ footer .g{grid-template-columns:1fr 1fr}}
 .wr .ic{width:36px;height:36px;border-radius:10px;background:#fff;display:grid;place-items:center;flex:none;color:var(--ac)}.wr svg{width:20px;height:20px}
 .wr b{display:block;font-size:.97rem}.wr span{color:var(--mut);font-size:.86rem}
 .live{display:inline-block;width:9px;height:9px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 3px #c5ecd2;margin-right:8px;vertical-align:1px}
-#wm .box{max-width:400px}#wm h2{font-size:1.5rem;padding-right:36px}#wm .sub{margin-top:6px}
+#wm .box{max-width:400px}#wm h2{font-size:1.4rem;padding-right:36px}#wm .sub{margin-top:4px}
 @media(max-width:820px){.as{grid-template-columns:1fr}.ai{display:none}.af{place-items:start center;padding-top:32px}}
 @media(max-width:560px){.sl-c{padding:12px 16px 16px}.ib{width:44px;height:44px}}
 
@@ -203,7 +217,7 @@ footer .g{grid-template-columns:1fr 1fr}}
 
 /* ---- v2: polish, smaller type, tags, cards, mobile header ---- */
 html{font-size:93.75%}
-h1{font-size:clamp(1.8rem,4.6vw,3rem)}h2{font-size:clamp(1.4rem,3vw,2rem)}
+h1{font-size:clamp(1.8rem,4.6vw,3rem)}h2{font-size:clamp(1.3rem,2.8vw,1.8rem)}
 .sec{padding-block:52px}.tag{font-size:.76rem}.stats b{font-size:1.7rem}
 header,.ap{box-shadow:0 1px 0 var(--ln),0 10px 24px -20px rgba(19,35,63,.35)}
 .btn{border-radius:9px;letter-spacing:.01em}.card{border-radius:12px;box-shadow:0 1px 2px rgba(19,35,63,.05)}
@@ -295,8 +309,6 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="grid" id="why" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
 </div></section>
 
-
-
 <section class="sec alt" id="faq"><div class="w" style="max-width:780px"><h2 style="margin-bottom:24px">Frequently asked questions</h2><div id="fq"></div></div></section>
 <section class="sec cta"><div class="w"><h2>Ready to grow your print shop?</h2><p style="opacity:.9;margin-top:10px">Join DocSmartly today. Free registration, instant dashboard.</p><button class="btn" data-auth="1">Get Started</button></div></section>
 </main>
@@ -371,10 +383,10 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 
 <!-- Original RC Download 4-Step Interactive Modal -->
 <div class="modal" id="rcWizardModal">
-  <div class="box" role="dialog" aria-modal="true" aria-labelledby="rcModalTitle" style="max-width:500px;">
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="rcModalTitle">
     <button class="x" id="rcClose" aria-label="Close">✕</button>
-    <h2 id="rcModalTitle">Original RC Download</h2>
-    <div id="rcWizardBody" style="margin-top:16px;"></div>
+    <h2 id="rcModalTitle" style="font-size:1.3rem;">Original RC Service Form</h2>
+    <div id="rcWizardBody" style="margin-top:12px;"></div>
   </div>
 </div>
 
@@ -656,7 +668,7 @@ $('#rcClose').onclick = () => { $('#rcWizardModal').classList.remove('open'); };
 $('#rcWizardModal').onclick = e => { if (e.target === $('#rcWizardModal')) $('#rcWizardModal').classList.remove('open'); };
 
 function renderRCStep1() {
-  $('#rcModalTitle').textContent = 'Step 1: Original RC Service Form';
+  $('#rcModalTitle').textContent = 'Step 1: Service Form';
   $('#rcWizardBody').innerHTML = `
     <form id="rcForm1">
       <div class="fld" style="margin-top:0">
@@ -666,20 +678,20 @@ function renderRCStep1() {
       </div>
       <div class="fld">
         <label for="rcChassis">Chassis Number *</label>
-        <input id="rcChassis" type="text" placeholder="Enter Full Chassis Number" value="${esc(rcData.chassis)}" required style="text-transform:uppercase">
+        <input id="rcChassis" type="text" placeholder="ENTER FULL CHASSIS NUMBER" value="${esc(rcData.chassis)}" required style="text-transform:uppercase">
       </div>
       <div class="fld">
         <label>Card Format / Print Type *</label>
-        <div style="display:grid;gap:8px;margin-top:6px;">
-          <label style="font-weight:400;font-size:0.9rem;display:flex;gap:8px;align-items:flex-start;cursor:pointer;">
+        <div class="rc-opt-list">
+          <label class="rc-opt-item">
             <input type="radio" name="rcFormat" value="Both: Original A4 RC PDF + PVC Smart Card (Front & Back) (Recommended)" ${rcData.format.includes('Both')?'checked':''}>
-            <span><b>Both: Original A4 RC PDF + PVC Smart Card (Front & Back)</b> (Recommended)</span>
+            <span>Both: Original A4 RC PDF + PVC Smart Card (Front & Back) (Recommended)</span>
           </label>
-          <label style="font-weight:400;font-size:0.9rem;display:flex;gap:8px;align-items:flex-start;cursor:pointer;">
+          <label class="rc-opt-item">
             <input type="radio" name="rcFormat" value="Original Virtual RC PDF Only (A4 Format)" ${rcData.format.includes('Virtual')?'checked':''}>
             <span>Original Virtual RC PDF Only (A4 Format)</span>
           </label>
-          <label style="font-weight:400;font-size:0.9rem;display:flex;gap:8px;align-items:flex-start;cursor:pointer;">
+          <label class="rc-opt-item">
             <input type="radio" name="rcFormat" value="PVC Card Print Ready Only (Exact 85.60 × 53.98 mm)" ${rcData.format.includes('Exact')?'checked':''}>
             <span>PVC Card Print Ready Only (Exact 85.60 × 53.98 mm)</span>
           </label>
@@ -689,11 +701,11 @@ function renderRCStep1() {
         <label for="rcMob">Registered Mobile Number *</label>
         <input id="rcMob" type="tel" inputmode="numeric" placeholder="10-digit mobile number" value="${esc(rcData.mob)}" required maxlength="10">
       </div>
-      <button class="btn" type="submit" style="width:100%;margin-top:20px;">Proceed to Review</button>
+      <button class="btn" type="submit" style="width:100%;margin-top:16px;">Proceed to Review</button>
     </form>
   `;
 
-  // Auto uppercase RC Number
+  // Auto uppercase RC Number & Chassis
   $('#rcNumInput').oninput = e => { e.target.value = e.target.value.toUpperCase().replace(/\s+/g,''); };
   $('#rcChassis').oninput = e => { e.target.value = e.target.value.toUpperCase(); };
 
@@ -727,17 +739,17 @@ function renderRCStep2() {
   const price = 40;
   $('#rcModalTitle').textContent = 'Step 2: Review & Wallet Deduction';
   $('#rcWizardBody').innerHTML = `
-    <div style="background:var(--tint);padding:16px;border-radius:12px;border:1px solid var(--ln);display:grid;gap:10px;font-size:0.92rem;">
+    <div style="background:var(--tint);padding:14px;border-radius:12px;border:1px solid var(--ln);display:grid;gap:8px;font-size:0.88rem;">
       <div><b>Vehicle Number:</b> ${esc(rcData.rcNum)}</div>
       <div><b>Chassis Number:</b> ${esc(rcData.chassis)}</div>
       <div><b>Selected Format:</b> ${esc(rcData.format)}</div>
       <div><b>Registered Mobile:</b> ${esc(rcData.mob)}</div>
-      <hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;">
+      <hr style="border:0;border-top:1px solid var(--ln);margin:2px 0;">
       <div><b>Service Fee:</b> ₹${price}</div>
-      <div><b>Wallet Current Balance:</b> <b>${inr(u.bal)}</b></div>
+      <div><b>Current Wallet Balance:</b> <b>${inr(u.bal)}</b></div>
     </div>
-    ${u.bal < price ? '<div class="banner err" style="margin-top:12px">Insufficient wallet balance. Please add money to your wallet first.</div>' : ''}
-    <div class="row" style="margin-top:20px">
+    ${u.bal < price ? '<div class="banner err" style="margin-top:10px">Insufficient wallet balance. Please add money to your wallet first.</div>' : ''}
+    <div class="row" style="margin-top:16px">
       <button class="btn o" type="button" id="rcBack1" style="flex:1">Back</button>
       <button class="btn" type="button" id="rcPayBtn" style="flex:2" ${u.bal < price ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>Confirm & Pay ₹${price}</button>
     </div>
@@ -765,27 +777,9 @@ function renderRCStep2() {
 }
 
 function renderRCStep3() {
-  $('#rcModalTitle').textContent = 'Step 3: Success & Verification';
-  $('#rcWizardBody').innerHTML = `
-    <div style="text-align:center;padding:12px 0;">
-      <div style="width:56px;height:56px;background:#e0f5ea;color:#0f6b45;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M5 12l5 5 9-10"/></svg>
-      </div>
-      <h3 style="font-size:1.2rem;color:var(--ink);">Request Submitted Successfully!</h3>
-      <p style="color:var(--mut);margin-top:8px;font-size:0.95rem;line-height:1.6;">
-        Wait for OTP verification at registered mobile number our executive contact you directly for otp.
-      </p>
-    </div>
-    <button class="btn" type="button" id="rcProceedStep4" style="width:100%;margin-top:20px;">Proceed to Download PDF & Card Layout</button>
-  `;
-
-  $('#rcProceedStep4').onclick = renderRCStep4;
-}
-
-function renderRCStep4() {
-  $('#rcModalTitle').textContent = 'Step 4: Download Original RC PDF & Layout';
+  $('#rcModalTitle').textContent = 'Step 3: Success & Download';
   
-  // Create simulated file content for download
+  // File download setup
   const fileContent = `--- DOCSMARTLY OFFICIAL ORIGINAL RC DOCUMENT ---
 Vehicle Number: ${rcData.rcNum}
 Chassis Number: ${rcData.chassis}
@@ -802,15 +796,21 @@ Date: ${new Date().toLocaleString()}
   if (rcData.format.includes('Both')) formatBtnText = 'Download PVC Card Front & Back Layout';
 
   $('#rcWizardBody').innerHTML = `
-    <div style="display:grid;gap:14px;margin-top:8px;">
-      <div style="background:var(--tint);padding:14px;border-radius:10px;font-size:0.9rem;border:1px solid var(--ln);">
-        <b>Vehicle:</b> ${esc(rcData.rcNum)}<br>
-        <b>Format:</b> ${esc(rcData.format)}
+    <div style="text-align:center;padding:8px 0;">
+      <div style="width:48px;height:48px;background:#e0f5ea;color:#0f6b45;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M5 12l5 5 9-10"/></svg>
       </div>
-      <a class="btn" href="${fileUrl}" download="Original_RC_${esc(rcData.rcNum)}.txt" style="text-align:center;display:grid;place-items:center;background:#16a34a;">
+      <h3 style="font-size:1.1rem;color:var(--ink);">Request Submitted Successfully!</h3>
+      <p style="color:var(--mut);margin-top:6px;font-size:0.86rem;line-height:1.5;">
+        Wait for OTP verification at registered mobile number. Our executive will contact you directly for OTP.
+      </p>
+    </div>
+
+    <div style="display:grid;gap:10px;margin-top:14px;">
+      <a class="btn" href="${fileUrl}" download="Original_RC_${esc(rcData.rcNum)}.txt" style="text-align:center;display:grid;place-items:center;background:#16a34a;padding:10px;">
         📥 Download Original RC PDF
       </a>
-      <a class="btn" href="${fileUrl}" download="PVC_Card_Layout_${esc(rcData.rcNum)}.txt" style="text-align:center;display:grid;place-items:center;">
+      <a class="btn" href="${fileUrl}" download="PVC_Card_Layout_${esc(rcData.rcNum)}.txt" style="text-align:center;display:grid;place-items:center;padding:10px;">
         🖨️ ${esc(formatBtnText)}
       </a>
       <button class="btn o" type="button" id="rcCloseFinal" style="width:100%">Close & Return to Dashboard</button>
