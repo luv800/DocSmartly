@@ -73,13 +73,69 @@ footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2b3f66;font-siz
 .x{position:absolute;right:14px;top:14px;border:0;background:var(--tint);width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;color:var(--ink)}
 
 /* Custom compact radio list */
-.rc-opt-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.rc-opt-item{display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--ln);border-radius:10px;padding:10px 12px;cursor:pointer;transition:border-color .2s, background .2s}
-.rc-opt-item:hover{border-color:var(--ac);background:#edf3ff}
-.rc-opt-item input[type=radio]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid var(--mut);border-radius:50%;outline:none;margin:0;flex:none;display:grid;place-items:center;cursor:pointer;transition:border-color .2s}
-.rc-opt-item input[type=radio]:checked{border-color:var(--ac);background:#fff}
-.rc-opt-item input[type=radio]:checked::before{content:"";width:10px;height:10px;background:var(--ac);border-radius:50%}
-.rc-opt-item span{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.35}
+/* --- Professional Compact Radio List Styling --- */
+.rc-opt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.rc-opt-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  border: 1.5px solid var(--ln);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rc-opt-item:hover {
+  border-color: var(--ac);
+  background: #edf3ff;
+}
+
+/* Custom Modern Radio Button */
+.rc-opt-item input[type=radio] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--mut);
+  border-radius: 50%;
+  outline: none;
+  margin: 0;
+  flex: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.rc-opt-item input[type=radio]:checked {
+  border-color: var(--ac);
+  background: var(--ac);
+  box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.15);
+}
+
+.rc-opt-item input[type=radio]:checked::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.rc-opt-item span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
 
 #toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;translate:-50% 0}
 @media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
@@ -724,7 +780,7 @@ function renderRCStep1() {
     <form id="rcForm1">
       <div class="fld" style="margin-top:0">
         <label for="rcNumInput">Vehicle Registration Number (RC Number) *</label>
-        <input id="rcNumInput" type="text" placeholder="e.g. RJ14AB1234" value="${esc(rcData.rcNum)}" required style="text-transform:uppercase">
+        <input id="rcNumInput" type="text" placeholder="E.G. RJ14AB1234" value="${esc(rcData.rcNum)}" required style="text-transform:uppercase">
         <p class="hint">Automatic uppercase & validation applied</p>
       </div>
       <div class="fld">
@@ -752,7 +808,7 @@ function renderRCStep1() {
         <label for="rcMob">Registered Mobile Number *</label>
         <input id="rcMob" type="tel" inputmode="numeric" placeholder="10-digit mobile number" value="${esc(rcData.mob)}" required maxlength="10">
       </div>
-      <button class="btn" type="submit" style="width:100%;margin-top:16px;">Proceed to Review</button>
+      <button class="btn" type="submit" style="width:100%;margin-top:18px;">Proceed to Review</button>
     </form>
   `;
 
