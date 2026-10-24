@@ -191,6 +191,7 @@ footer .g{grid-template-columns:1fr 1fr}}
 #sb{position:fixed;left:0;top:0;height:100%;width:min(300px,86vw);z-index:30;translate:-105% 0;transition:translate .25s;padding-top:env(safe-area-inset-top,0px)}
 #sb.open{translate:0 0;box-shadow:0 0 0 100vmax rgba(19,35,63,.5)}}
 @media(max-width:560px){.ig{grid-template-columns:1fr 1fr;gap:8px}}
+.tg{position:absolute;left:8px;top:8px;z-index:2;background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0;font:700 .72rem 'Plus Jakarta Sans',system-ui,sans-serif;border-radius:99px;padding:2px 9px}
 </style>
 </head>
 <body>
@@ -594,20 +595,24 @@ B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded'
 document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
 Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
 const DS=[
-['Lost Document service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
-['PAN card service','',['New PAN apply','PAN update / correction']],
-['PVC tools','',['Voter ID','Aadhaar Card','PAN Card','Driving License','Vehicle RC','Any Other Document']],
+['Lost Document Service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
+['PAN Card Service','',['New PAN apply','PAN update / correction']],
+['PVC Tools','',['Voter ID','Aadhaar Card','PAN Card','Driving License','Vehicle RC','Any Other Document']],
 ['Govt Department & Civil Contractor Services','',['New Digital Signature (DSC)','E-procurement registration','Tender upload (for contractor)','Tender upload (for department)','Building estimate creator','BOQ creator','Govt civil & electric bill maker (Excel)','Govt civil & electric bill maker (Measurement Book)','Bill form','Extra item sheet','Excess item sheet','QC register creator','Work escalation statement']]];
 const FT=[['PDF Tools',['Photo to PDF','PDF merge','PDF split & add page','PDF to JPG','PDF rotate & page reorder','PDF compressor','Add page numbers to PDF','PDF header & footer']],
 ['Image Tools',['Photo compressor','Photo resizer','Photo format converter','Background remove','Background change','Favicon maker']],
-['Print Layout, ID Cards & QR',['Watermark maker','Signature maker','Photo format converter','Background remove','Favicon maker','Colour picker from image']],
+['Print Layout, ID Cards & QR',['Watermark maker','Signature maker','Photo format converter','Colour picker from image']],
 ['Document Creators',['Application format','Resume','Invoice','Letterhead','Quotation','Passport photo sheet','QR code generator','ID card front & back to A4','Student / Employee ID card maker','Visiting card maker','Stamp designer','A4 photo print sheet']],
 ['Business Tools',['GST calculator','Cash calculator','Salary calculator']],
 ['Education Tools',['Typing speed test (Hindi & English)','Online exam system','Word counter']],
 ['Utilities',['Loan / EMI calculator','Age calculator','Percentage calculator','Calculator (basic & scientific)']]];
 const TOP=['Photo to PDF','PDF merge','Photo compressor','Photo resizer','Background remove','Passport photo sheet','QR code generator','Resume','Invoice','GST calculator'];
-const SVN=[['RC Services','RC Services'],['DL Services','DL Services'],['Voter Services','Voter Services'],['Farmer Services','Farmer Services'],['PAN Services','PAN Services'],['Udyam Services','Udyam Services'],['Aadhaar Update & Ration service','Aadhaar & Ration'],['Mobile Services','Mobile Services'],['GST Services','GST Services'],['Chassis & engine to RC','Chassis to RC'],['Challan Check','Challan Details'],['Bank Seeding','DBT Seeding Status']],SVC=Object.fromEntries(SVN);
-DS.unshift(...SVN.map(a=>[a[0],'',P.filter(p=>p[1]==a[1]).map(p=>p[0])]));
+const SVD=[['RC Services','RC Services',[['RC PDF INSTANT',40]]],['DL Services','DL Services',[['DL PDF INSTANT',50]]],['Voter Services','Voter Services',[['Voter Mobile Link',40]]],['Farmer Services','Farmer Services',[['KISAN CARD',25]]],['PAN Services','PAN Services',[['Aadhaar to PAN',250]]],['Udyam Services','Udyam Services',[['New UDYAM CERTIFICATE',200]]],['Aadhaar Update & Ration Service','Aadhaar & Ration',[['AADHAAR Update',150]]],['Mobile Services','Mobile Services',[['Mobile Details Find',30],['Other Mobile Issue',50]]],['GST Services','GST Services',[['New GST Certificate',1200],['GST Download',200]]],['Chassis & Engine To RC','Chassis to RC',[['Chassis to RC',70]]],['Challan Check','Challan Details',[['Challan Details',10]]],['Bank Seeding','DBT Seeding Status',[['DBT Seeding Status',20]]]],SVC=Object.fromEntries(SVD.map(a=>[a[0],a[1]])),DP={};
+DS.unshift(...SVD.map(a=>[a[0],'',a[2].map(x=>{DP[a[0]+'|'+x[0]]=x[1];return x[0]})]));
+const GT='Govt Department & Civil Contractor Services';
+[['Lost Document Service',50],['PAN Card Service',600],['PVC Tools',10]].forEach(([t,p])=>DS.find(x=>x[0]==t)[2].forEach(n=>DP[t+'|'+n]=p));
+Object.entries({'New Digital Signature (DSC)':2500,'E-procurement registration':500,'Tender upload (for contractor)':300,'Tender upload (for department)':700,'Building estimate creator':200,'BOQ creator':200,'Govt civil & electric bill maker (Excel)':1000,'Bill form':400,'Extra item sheet':200,'Excess item sheet':200,'QC register creator':500,'Work escalation statement':700}).forEach(([n,p])=>DP[GT+'|'+n]=p);
+const FREEG=new Set(FT.map(g=>g[0]));
 const ALL=[];DS.forEach(s=>s[2].forEach(n=>ALL.push({k:s[0]+'|'+n,n,s:s[0]})));FT.forEach(g=>g[1].forEach(n=>ALL.push({k:g[0]+'|'+n,n,s:g[0]})));
 const cPaid=DS.reduce((a,s)=>a+s[2].length,0),cFree=FT.reduce((a,g)=>a+g[1].length,0);
 const gen=()=>Math.random().toString(36).slice(2,8).toUpperCase();
@@ -620,7 +625,7 @@ const WA='https://wa.me/917300277557?text=Hello%20DocSmartly%20Support';
 $('#aS').innerHTML=ic('search');$('#aR').innerHTML=ic('gift');$('#aP').innerHTML=ic('book');$('#aA').innerHTML=ic('plus');$('#aW').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
 function setBal(){const u=me();if(u)$('#aB').innerHTML=ic('wal')+'<b>'+inr(u.bal)+'</b>'}
 const sec=(t,c,inner,open,id)=>`<details class="ds" open data-sec="${esc(t)}"${id?` id="${id}"`:''}><summary><span>${t}</span><em>${c}</em></summary>${inner}</details>`;
-const itm=(k,n,fv)=>{const sc=k.split('|')[0],i=ALL.findIndex(a=>a.k==k),pp=SVC[sc]&&P.find(p=>p[0]==n&&p[1]==SVC[sc]);return `<div class="it" data-card="${esc(k)}"><button type="button" class="itb" data-it="${esc(k)}"><span class="sv" style="${sty(i<0?0:i)}">${art(dart(sc,n))}</span><span class="nm">${esc(n)}</span>${pp?`<span class="pr nm">₹${pp[2]}</span>`:''}</button><button type="button" class="fv" data-fav="${esc(k)}" aria-pressed="${fv.includes(k)}" aria-label="Favourite ${esc(n)}" title="Favourite">${ic('heart')}</button></div>`};
+const itm=(k,n,fv)=>{const sc=k.split('|')[0],i=ALL.findIndex(a=>a.k==k);return `<div class="it" data-card="${esc(k)}"><button type="button" class="itb" data-it="${esc(k)}"><span class="sv" style="${sty(i<0?0:i)}">${FREEG.has(sc)?'<span class="tg">Free</span>':''}${art(dart(sc,n))}</span><span class="nm">${esc(n)}</span>${DP[k]!=null?`<span class="pr nm">${inr(DP[k])}</span>`:''}</button><button type="button" class="fv" data-fav="${esc(k)}" aria-pressed="${fv.includes(k)}" aria-label="Favourite ${esc(n)}" title="Favourite">${ic('heart')}</button></div>`};
 const grid=(h)=>`<div class="ig">${h}</div>`;
 function favHTML(){const u=me(),l=ALL.filter(a=>u.fav.includes(a.k));return l.length?grid(l.map(a=>itm(a.k,a.n,u.fav)).join('')):'<p class="sub">Tap the heart on any service to keep it here.</p>'}
 function renderFav(){const u=me();$('#favC').innerHTML=favHTML();$('#favN').textContent=u.fav.length}
@@ -631,11 +636,11 @@ const free=FT.map(g=>sec(g[0],g[1].length,grid(g[1].map(n=>itm(g[0]+'|'+n,n,u.fa
 $('[data-v=dashboard]').innerHTML=`<div class="gc"><div><p class="gs">${g}</p><h1 tabindex="-1">${esc(u.name)}</h1><button type="button" class="link" id="lo2" style="padding-left:0">Log out</button></div>
 <div class="gw"><div><small>Wallet balance</small><b>${inr(u.bal)}</b></div><div class="ctl"><a class="ib" href="#addmoney" aria-label="Add money" title="Add money">${ic('plus')}</a><a class="ib" href="#passbook" aria-label="Passbook" title="Passbook">${ic('book')}</a><a class="ib" href="#referral" aria-label="Refer & Earn" title="Refer & Earn">${ic('gift')}</a></div></div></div>
 <div class="stt">${stat.map(s=>`<div><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
-<h2 class="sh">My favourites (<span id="favN">${u.fav.length}</span>)</h2><div id="favC">${favHTML()}</div>
-<h2 class="sh">All services (${cPaid})</h2>${paid.join('')}
-<h2 class="sh">Free & trending tools (${cFree})</h2>
-${sec('Trending tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map((n,i)=>{const a=ALL.find(x=>x.n==n&&x.s!='Print Layout, ID Cards & QR');return itm(a.k,n,u.fav)}).join('')),true,'trend')}
-${sec('Free tools',cFree,free.join(''),false)}`}
+<h2 class="sh">My Favourites (<span id="favN">${u.fav.length}</span>)</h2><div id="favC">${favHTML()}</div>
+<h2 class="sh">All Services (${cPaid})</h2>${paid.join('')}
+<h2 class="sh">Free & Trending Tools (${cFree})</h2>
+${sec('Trending Tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map((n,i)=>{const a=ALL.find(x=>x.n==n&&x.s!='Print Layout, ID Cards & QR');return itm(a.k,n,u.fav)}).join('')),true,'trend')}
+${sec('Free Tools',cFree,free.join(''),false)}`}
 /* referral */
 const rlink=u=>location.href.split('#')[0].split('?')[0]+'?ref='+u.code;
 function refRows(q){const u=me(),r=u.refs.filter(x=>x.name.toLowerCase().includes(q.toLowerCase()));$('#rfB').innerHTML=r.map(x=>`<tr><td data-l="Name">${esc(x.name)}</td><td data-l="Join date">${dt(x.t)}</td><td data-l="Status">${x.st}</td><td data-l="Bonus"><b>${inr(x.bonus)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.refs.length?'No referral matches that name.':'No referrals yet. Share your link to start earning ₹10 per referral.'}</td></tr>`}
@@ -691,11 +696,11 @@ const DA={
 const TM={'Photo to PDF':'JPG / PNG to PDF','PDF merge':'PDF Merge','PDF split & add page':'PDF Split & Page Extract','PDF to JPG':'PDF to JPG','PDF rotate & page reorder':'PDF Rotate & Reorder','PDF compressor':'PDF Compressor (KB)','Add page numbers to PDF':'PDF Page Number Adder','PDF header & footer':'PDF Header & Footer Maker','Photo compressor':'Photo Compressor (KB)','Photo resizer':'Photo & Signature Resizer','Photo format converter':'Image Format Converter','Background remove':'Background Remover','Background change':'Photo Color Changer','Favicon maker':'Favicon Preview Tool & Maker','Watermark maker':'Image Watermark Maker','Signature maker':'Digital Signature Maker','Colour picker from image':'Color Picker from Image','Application format':'Text to PDF / Application','Resume':'Resume Maker','Invoice':'Invoice Maker','Letterhead':'Letterhead Maker','Quotation':'Quotation Maker','Passport photo sheet':'Passport Photo Sheet','QR code generator':'QR Code Generator','ID card front & back to A4':'ID Card Front & Back to A4','Visiting card maker':'Visiting Card Designer','Stamp designer':'Stamp Designer','A4 photo print sheet':'A4 Photo Print Layout','GST calculator':'GST Calculator','Cash calculator':'Cash Denomination Calculator','Salary calculator':'Salary Calculator','Loan / EMI calculator':'Loan / EMI Calculator','Age calculator':'Age Calculator','Percentage calculator':'Percentage Calculator'};
 function dart(s,n){
 if(SVC[s])return V[SVC[s]]();
-if(s=='Lost Document service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
-if(s=='PVC tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
-if(s=='PAN card service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
+if(s=='Lost Document Service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
+if(s=='PVC Tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
+if(s=='PAN Card Service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
 const f=DA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
-$('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>`<button class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3></button>`).join('');
+$('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>`<button class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3>${DP[GT+'|'+n]!=null?`<div class="pr">${inr(DP[GT+'|'+n])}</div>`:''}</button>`).join('');
 $('#sbT').innerHTML=ic('menu');
 
 /* ---------- left menu ---------- */
