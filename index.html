@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6fbf7;--sf:#fff;--ink:#0f2a1c;--mut:#566b5e;--ac:#15803d;--ac2:#047857;--ln:#d9eadf;--tint:#e8f5ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#f6fbf7;--sf:#fff;--ink:#0f2a1c;--mut:#566b5e;--ac:#15803d;--ac2:#047857;--ln:#d9eadf;--tint:#e8f5ec;--er:#b42318;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#f6fbf7}}
 :root[data-theme="dark"]{--bg:#f6fbf7}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}
@@ -28,15 +28,6 @@ nav{display:flex;gap:16px;font-size:.88rem;color:var(--mut);margin-left:auto}nav
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:52px}
 .tag{display:inline-block;background:var(--tint);border:1px solid var(--ln);border-radius:99px;padding:5px 14px;font-size:.82rem;font-weight:700;color:var(--ac2);margin-bottom:16px}
 .hero p.l{color:var(--mut);font-size:1.05rem;margin:16px 0 24px;max-width:540px}.row{display:flex;gap:12px;flex-wrap:wrap}
-.stack{position:relative;aspect-ratio:1/.95;max-width:480px;width:100%;margin-inline:auto}
-.pc{position:absolute;width:66%;aspect-ratio:1.586;border-radius:16px;padding:16px;color:#fff;box-shadow:0 24px 40px -18px rgba(28,25,23,.45);animation:fl 6s ease-in-out infinite}
-.pc small{opacity:.85;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}.pc h4{margin:3px 0 0;font:700 .95rem 'Fraunces',serif}
-.pc .no{position:absolute;left:16px;bottom:14px;letter-spacing:.14em;font-weight:700;font-size:.78rem}
-.pc:nth-child(1){left:0;top:0;background:linear-gradient(135deg,#16a34a,#14532d);transform:rotate(-7deg)}
-.pc:nth-child(2){right:0;top:23%;background:linear-gradient(135deg,#0d9488,#134e4a);transform:rotate(5deg);animation-delay:-2s}
-.pc:nth-child(3){left:14%;top:49%;background:linear-gradient(135deg,#0369a1,#0c4a6e);transform:rotate(-2deg);animation-delay:-4s}
-.badge{position:absolute;right:0;bottom:0;background:#fff;border:1px solid var(--ln);border-radius:12px;padding:9px 14px;font-size:.8rem;box-shadow:0 10px 20px -12px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;z-index:2}.badge b{display:block;font-size:.85rem}.badge svg{width:22px;height:22px;color:var(--ac2)}
-@keyframes fl{50%{translate:0 -10px}}
 .stats{background:var(--ink);color:#f6fbf7}.stats .w{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-block:28px;text-align:center}
 .stats b{font:800 2rem 'Fraunces',serif;color:#86efac;display:block}.stats span{font-size:.85rem;opacity:.75}
 .head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:26px}
@@ -70,27 +61,81 @@ footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2a4a37;font-siz
 .wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:#16a34a;display:grid;place-items:center;box-shadow:0 10px 20px -8px rgba(0,0,0,.4);z-index:15;color:#fff}.wa svg{width:26px;height:26px}
 .modal{position:fixed;inset:0;z-index:40;background:rgba(28,25,23,.55);display:none;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}
 .box{background:#fff;border-radius:18px;padding:28px;width:100%;max-width:380px;position:relative}.box label{display:block;font-weight:700;font-size:.85rem;margin-top:14px}.box input{width:100%;margin-top:6px}.box .btn{width:100%;margin-top:20px}
-.x{position:absolute;right:12px;top:12px;border:0;background:var(--tint);width:36px;height:36px;border-radius:50%;cursor:pointer}
+.x{position:absolute;right:12px;top:12px;border:0;background:var(--tint);width:44px;height:44px;border-radius:50%;cursor:pointer}
 #toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;translate:-50% 0}
 @media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
 @media(max-width:820px){.mn{display:block}.logo{margin-right:auto}header .w{gap:10px}
 nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--ln);flex-direction:column;gap:0;padding:8px 20px 14px;margin:0}nav.open{display:flex}nav a{padding:13px 0;border-bottom:1px solid var(--ln);font-size:1rem;color:var(--ink)}
-.hero{grid-template-columns:1fr;padding-block:34px 24px;text-align:center}.hero p.l{margin-inline:auto}.row{justify-content:center}.stack{max-width:420px}
+.hero{grid-template-columns:1fr;padding-block:34px 24px;text-align:center}.hero p.l{margin-inline:auto}.row{justify-content:center}
 .steps{grid-template-columns:1fr}.stats .w{grid-template-columns:repeat(2,1fr)}.sec{padding-block:44px}.head{align-items:stretch}.head input,.head select{width:100%}.head>div[style]{width:100%}.head>div[style]>*{flex:1 1 140px}}
 @media(max-width:560px){.w{padding-inline:16px}.hm{display:none}.btn{padding:11px 16px}.hero .row .btn{flex:1 1 140px;text-align:center}.grid{grid-template-columns:1fr 1fr;gap:10px}.card{padding:10px}
 .cats{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding:0 16px 6px;scrollbar-width:none}.cats button{flex:none}
 .tw{border:0;background:none;overflow:visible}table{min-width:0}thead{display:none}tr,td{display:block}tr{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:10px 14px;margin-bottom:10px}td{border:0;padding:4px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}td::before{content:attr(data-l);color:var(--mut);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}td:last-child{justify-content:flex-end}td:last-child::before{content:none}
-.pc{padding:12px}.pc .no{left:12px;bottom:10px;font-size:.68rem}.pc h4{font-size:.85rem}footer .g{grid-template-columns:1fr 1fr}}
+footer .g{grid-template-columns:1fr 1fr}}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
-@media(max-width:560px){.badge{padding:7px 10px;font-size:.72rem;gap:7px}.badge svg{width:18px;height:18px}}
+
+[hidden]{display:none!important}
+.hero>*{min-width:0}
+.hi{font-size:.9rem;font-weight:700;color:var(--mut);margin-right:4px}
+/* hero slider */
+.sl{width:100%;max-width:520px;margin-inline:auto;text-align:left}
+.sl-v{overflow:hidden;border-radius:20px;border:1px solid var(--ln);background:var(--sf);box-shadow:0 26px 44px -28px rgba(15,42,28,.45);touch-action:pan-y}
+.sl-t{display:flex;transition:transform .55s cubic-bezier(.22,.8,.3,1)}
+.sl-s{flex:0 0 100%;min-width:0}
+.sl-s .sv{border-radius:0;margin:0}
+.sl-c{padding:14px 20px 18px;border-top:1px solid var(--ln)}
+.sl-c h3{font-size:1.15rem}.sl-c p{color:var(--mut);font-size:.92rem;margin-top:4px}
+.sl-b{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.dots{display:flex}
+.dot{width:30px;height:44px;border:0;background:none;cursor:pointer;display:grid;place-items:center;padding:0}
+.dot::before{content:"";width:8px;height:8px;border-radius:99px;background:#a9c7b4;transition:width .25s,background .25s}
+.dot[aria-current="true"]::before{width:24px;background:var(--ac)}
+.ctl{display:flex;gap:6px}
+.ib{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ln);background:var(--sf);color:var(--ink);cursor:pointer;display:grid;place-items:center;padding:0}
+.ib:hover{border-color:var(--ac);color:var(--ac)}.ib svg{width:20px;height:20px}
+/* auth */
+#auth{min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
+.ah{border-bottom:1px solid var(--ln);background:var(--bg)}
+.ah .w{display:flex;align-items:center;justify-content:space-between;height:60px}
+.back{font-weight:700;font-size:.9rem;color:var(--ac2);min-height:44px;display:inline-flex;align-items:center}.back:hover{text-decoration:underline}
+.as{flex:1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
+.ai{background:var(--ink);color:#d7e9dd;padding:56px 48px;display:flex;flex-direction:column;justify-content:center;gap:26px}
+.ai h2{color:#fff;max-width:420px}.ai ul{list-style:none;margin:0;padding:0;display:grid;gap:18px;max-width:420px}
+.ai li{display:flex;gap:14px;align-items:flex-start}.ai li svg{width:22px;height:22px;color:#86efac;flex:none;margin-top:2px}.ai li b{display:block;color:#fff}.ai li span{font-size:.9rem;opacity:.8}
+.af{display:grid;place-items:center;padding:40px 20px}
+.pane{width:100%;max-width:420px}
+.pane h1{font-size:clamp(1.7rem,4vw,2.2rem)}.pane h1:focus{outline:none}
+.pane .lead{color:var(--mut);margin-top:8px}
+.fld{margin-top:16px}.fld label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}.fld input{width:100%}
+.fld input[aria-invalid="true"]{border-color:var(--er)}
+.hint{color:var(--mut);font-size:.82rem;margin-top:6px}
+.err{color:var(--er);font-size:.86rem;font-weight:500;margin-top:6px}
+.lr{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.lr label{margin-bottom:6px}
+.pane a.t{color:var(--ac2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.pwr{position:relative}.pwr input{padding-right:72px}
+.show{position:absolute;right:2px;top:0;height:44px;min-width:60px;border:0;background:none;color:var(--ac2);font:700 .85rem 'Figtree',sans-serif;cursor:pointer;border-radius:10px}
+.banner{border-radius:10px;padding:12px 14px;font-size:.9rem;margin-top:16px;border:1px solid}
+.banner.err{background:#fdecea;border-color:#f3b8b2;color:#7a1a12}.banner.inf{background:var(--tint);border-color:#a7d9b6;color:var(--ink)}
+.pane .btn{width:100%;margin-top:22px}
+.alt2{margin-top:18px;text-align:center;color:var(--mut);font-size:.92rem}.alt2 a{display:inline-block;padding:8px 4px}
+/* welcome popup */
+.wl{display:grid;gap:10px;margin:18px 0 0}
+.wr{display:flex;gap:12px;align-items:flex-start;background:var(--tint);border:1px solid var(--ln);border-radius:12px;padding:12px 14px}
+.wr .ic{width:36px;height:36px;border-radius:10px;background:#fff;display:grid;place-items:center;flex:none;color:var(--ac)}.wr svg{width:20px;height:20px}
+.wr b{display:block;font-size:.97rem}.wr span{color:var(--mut);font-size:.86rem}
+.live{display:inline-block;width:9px;height:9px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 3px #c9ecd4;margin-right:8px;vertical-align:1px}
+#wm .box{max-width:400px}#wm h2{font-size:1.5rem;padding-right:36px}#wm .sub{margin-top:6px}
+@media(max-width:820px){.as{grid-template-columns:1fr}.ai{display:none}.af{place-items:start center;padding-top:32px}}
+@media(max-width:560px){.sl-c{padding:12px 16px 16px}.ib{width:44px;height:44px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<div id="home">
 <header><div class="w">
 <a class="logo" href="#top"><b>D</b>DocSmartly</a>
 <nav id="nav"><a href="#services">Services</a><a href="#tools">Free Tools</a><a href="#pan">PAN</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
-<div style="display:flex;gap:8px"><button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button></div>
+<div id="hdrAct" style="display:flex;gap:8px;align-items:center"><button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button></div>
 <button class="mn" id="mn" aria-label="Menu" aria-expanded="false" aria-controls="nav">☰</button>
 </div></header>
 
@@ -100,11 +145,9 @@ nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--bg);
 <h1>PVC Card Print Portal – RC, DL, Voter, Aadhaar &amp; PAN Print in Seconds</h1>
 <p class="l">DocSmartly is the all-in-one print portal for CSC, cyber café and printing shops: RC PDF, DL PDF, Voter PDF, Ration card, Farmer ID and more. Pay from wallet, download instantly, print on PVC.</p>
 <div class="row"><button class="btn" data-auth="1">Start Free – Register</button><button class="btn o" data-auth="0">Login</button></div></div>
-<div class="stack" aria-hidden="true">
-<div class="pc"><small>Vehicle Registration</small><h4>RC PVC Card</h4><div class="no">XX 00 XX 0000</div></div>
-<div class="pc"><small>Driving Licence</small><h4>DL PVC Card</h4><div class="no">XX00 0000000000</div></div>
-<div class="pc"><small>Election Card</small><h4>Voter PVC Card</h4><div class="no">XXX0000000</div></div>
-<div class="badge"><span id="bi"></span><div><b>PDF Ready</b>Downloaded in 4 sec</div></div>
+<div class="sl" role="region" aria-roledescription="carousel" aria-label="DocSmartly highlights">
+<div class="sl-v" id="slV" aria-live="off"><div class="sl-t" id="slT"></div></div>
+<div class="sl-b"><div class="dots" id="slD"></div><div class="ctl"><button type="button" class="ib" id="slP" aria-label="Pause slideshow" title="Pause slideshow"></button><button type="button" class="ib" id="slPrev" aria-label="Previous slide" title="Previous slide"></button><button type="button" class="ib" id="slNext" aria-label="Next slide" title="Next slide"></button></div></div>
 </div>
 </section>
 <div class="stats"><div class="w"><div><b>38+</b><span>Print services</span></div><div><b>53+</b><span>Free online tools</span></div><div><b>24×7</b><span>Instant results</span></div><div><b>100%</b><span>Auto refund on failure</span></div></div></div>
@@ -167,18 +210,68 @@ nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--bg);
 <div><h4>Contact</h4><a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener">+91 73002 77557</a></div>
 </div><div class="c">© 2026 DocSmartly. All rights reserved. PVC Card Print Portal · Print Portal India</div></div></footer>
 <a class="wa" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp support"><span id="wi"></span></a>
+</div>
 
-<div class="modal" id="m"><div class="box"><button class="x" data-close aria-label="Close">✕</button><h3 id="mt">Login</h3>
-<form id="f"><label for="mob">Mobile number</label><input id="mob" type="tel" required placeholder="10-digit mobile">
-<div id="sw"><label for="shop">Shop name</label><input id="shop" placeholder="Your cyber café"></div>
-<label for="pw">Password</label><input id="pw" type="password" required><button class="btn" id="mb">Login</button></form></div></div>
-<div id="toast"></div>
+<section id="auth" hidden>
+<div class="ah"><div class="w"><a class="logo" href="#top"><b>D</b>DocSmartly</a><a class="back" href="#top">Back to home</a></div></div>
+<div class="as">
+<aside class="ai"><h2>Your print shop, one login away</h2>
+<ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><div><b>All services working</b><span>RC, DL, Voter, PAN and more, live and ready.</span></div></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg><div><b>Auto refund if a service fails</b><span>Pay only for results that arrive.</span></div></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></svg><div><b>Every PDF saved in History</b><span>Download again whenever you need it.</span></div></li></ul></aside>
+<div class="af">
+
+<div class="pane" data-r="login" hidden>
+<h1 tabindex="-1">Log in</h1><p class="lead">Welcome back. Log in to use your wallet and services.</p>
+<div class="banner err" id="lBan" role="alert" hidden></div>
+<form id="fLogin" novalidate>
+<div class="fld"><label for="lId">Mobile number or email</label><input id="lId" name="lId" type="text" autocomplete="username" data-rule="idn" required aria-required="true" aria-describedby="lId-e" inputmode="email" placeholder="9876543210 or name@domain.com"><p class="err" id="lId-e" role="alert" hidden></p></div>
+<div class="fld"><div class="lr"><label for="lPw">Password</label><a class="t" href="#forgot">Forgot password?</a></div><div class="pwr"><input id="lPw" name="lPw" type="password" autocomplete="current-password" data-rule="lpw" required aria-required="true" aria-describedby="lPw-e"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="lPw">Show</button></div><p class="err" id="lPw-e" role="alert" hidden></p></div>
+<button class="btn" type="submit">Log in</button></form>
+<p class="alt2">New to DocSmartly? <a class="t" href="#register">New registration</a></p>
+</div>
+
+<div class="pane" data-r="register" hidden>
+<h1 tabindex="-1">New registration</h1><p class="lead">Create your free account. All fields are required.</p>
+<form id="fReg" novalidate>
+<div class="fld"><label for="rName">Full name</label><input id="rName" name="rName" type="text" autocomplete="name" data-rule="name" required aria-required="true" aria-describedby="rName-e"><p class="err" id="rName-e" role="alert" hidden></p></div>
+<div class="fld"><label for="rMob">Mobile number</label><input id="rMob" name="rMob" type="tel" autocomplete="tel" data-rule="mob" required aria-required="true" aria-describedby="rMob-e rMob-h" inputmode="numeric"><p class="hint" id="rMob-h">10-digit Indian mobile number</p><p class="err" id="rMob-e" role="alert" hidden></p></div>
+<div class="fld"><label for="rMail">Email</label><input id="rMail" name="rMail" type="email" autocomplete="email" data-rule="mail" required aria-required="true" aria-describedby="rMail-e" placeholder="name@domain.com"><p class="err" id="rMail-e" role="alert" hidden></p></div>
+<div class="fld"><label for="rPw">Password</label><div class="pwr"><input id="rPw" name="rPw" type="password" autocomplete="new-password" data-rule="pw" required aria-required="true" aria-describedby="rPw-e rPw-h"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="rPw">Show</button></div><p class="hint" id="rPw-h">At least 8 characters</p><p class="err" id="rPw-e" role="alert" hidden></p></div>
+<button class="btn" type="submit">Create account</button></form>
+<p class="alt2">Already registered? <a class="t" href="#login">Log in</a></p>
+</div>
+
+<div class="pane" data-r="forgot" hidden>
+<h1 tabindex="-1">Forgot password</h1>
+<div id="fp1"><p class="lead">Enter the mobile number or email you registered with.</p>
+<form id="fF1" novalidate>
+<div class="fld"><label for="fId">Mobile number or email</label><input id="fId" name="fId" type="text" autocomplete="username" data-rule="idn" required aria-required="true" aria-describedby="fId-e" inputmode="email" placeholder="9876543210 or name@domain.com"><p class="err" id="fId-e" role="alert" hidden></p></div>
+<button class="btn" type="submit">Send reset code</button></form></div>
+<div id="fp2" hidden><p class="lead" id="fSent"></p>
+<div class="banner inf">Preview build: no message is sent. Use code 123456.</div>
+<form id="fF2" novalidate>
+<div class="fld"><label for="fCode">Reset code</label><input id="fCode" name="fCode" type="text" autocomplete="one-time-code" data-rule="code" required aria-required="true" aria-describedby="fCode-e" inputmode="numeric" maxlength="6"><p class="err" id="fCode-e" role="alert" hidden></p></div>
+<div class="fld"><label for="fPw">New password</label><div class="pwr"><input id="fPw" name="fPw" type="password" autocomplete="new-password" data-rule="pw" required aria-required="true" aria-describedby="fPw-e fPw-h"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="fPw">Show</button></div><p class="hint" id="fPw-h">At least 8 characters</p><p class="err" id="fPw-e" role="alert" hidden></p></div>
+<button class="btn" type="submit">Reset password</button></form></div>
+<p class="alt2"><a class="t" href="#login">Back to log in</a></p>
+</div>
+
+</div></div></section>
+
+<div class="modal" id="wm"><div class="box" role="dialog" aria-modal="true" aria-labelledby="wt"><button class="x" id="wx" aria-label="Close welcome message">✕</button>
+<h2 id="wt">Welcome</h2><p class="sub" id="ws"></p>
+<div class="wl"><div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><div><b><i class="live"></i>All services working</b><span>RC, DL, Voter, PAN and every other service is live.</span></div></div>
+<div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg></span><div><b>Auto refund if a service fails</b><span>The amount returns to your wallet automatically.</span></div></div></div>
+<button class="btn" id="wGo" type="button">Explore services</button></div></div>
+
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
 const $=s=>document.querySelector(s);
 const I={car:'M5 16v-5l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3',id:'M3 7h18v12H3zM8 13a2 2 0 1 0 0-.01M6 17c1-2 4-2 5 0M14 11h4M14 15h4',vote:'M4 9h16v11H4zM8 9V5h8v4M9 14l2 2 4-4',leaf:'M12 20V10M12 10c0-4 3-6 6-6 0 4-2 6-6 6M12 14c0-3-2-5-5-5 0 3 2 5 5 5',pan:'M3 5h18v14H3zM7 10h6M7 14h10M15 8h3v3h-3z',basket:'M4 10h16l-1.5 9h-13zM8 10l3-5M16 10l-3-5',phone:'M7 3h10v18H7zM11 18h2',pct:'M6 18L18 6M7 7m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M17 17m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0',inv:'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18',shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',img:'M3 5h18v14H3zM9 10m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',merge:'M3 4h8v10H3zM13 10h8v10h-8z',zip:'M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5',resize:'M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6',qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',sign:'M3 17c3-6 5-9 6-6s-2 7 1 6 3-5 5-5 1 4 3 3M3 21h18',edit:'M4 20l1-4 11-11 3 3L8 19zM14 7l3 3',search:'M11 11m-6 0a6 6 0 1 0 12 0a6 6 0 1 0-12 0M16 16l4 4',globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',lock:'M5 11h14v10H5zM8 11V8a4 4 0 0 1 8 0v3',calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M12 15h2',stamp:'M9 4h6v6l3 4v3H6v-3l3-4zM5 21h14',clock:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M12 7v5l3 2',cash:'M3 7h18v10H3zM12 12m-2.500 0a2.500 2.500 0 1 0 5 0a2.500 2.500 0 1 0-5 0',print:'M7 9V4h10v5M7 17H5v-6h14v6h-2M7 14h10v6H7z',text:'M5 6h14M5 10h14M5 14h10M5 18h8',split:'M12 3v18M4 6h6v12H4zM14 6h6v12h-6z',rot:'M20 12a8 8 0 1 1-3-6.200M20 4v5h-5',conv:'M4 8h14l-3-3M20 16H6l3 3',layers:'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',drop:'M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z',blur:'M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0',frame:'M4 4h16v16H4zM8 8h8v8H8z',a4:'M6 3h12v18H6zM8 6h8v5H8z',check:'M5 12l5 5 9-10',zap:'M13 3L5 14h6l-1 7 8-11h-6z',fing:'M8 12a4 4 0 0 1 8 0M6 12a6 6 0 0 1 12 0M12 12v6',cloud:'M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.500-1A4.500 4.500 0 0 1 17 18z',users:'M9 11a3 3 0 1 0 0-.01M3 20c1-4 11-4 12 0M17 8a3 3 0 0 1 0 6M21 20c0-2-1-3-3-3.500',mob:'M7 3h10v18H7zM11 18h2',gift:'M4 9h16v4H4zM6 13v8h12v-8M12 9v12M12 9c-3 0-4-4-1-4s1 4 1 4zM12 9c3 0 4-4 1-4'};
 const ic=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${I[k]}"/></svg>`;
-$('#bi').innerHTML=ic('check');$('#wi').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
+$('#wi').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
 const G=[["#15803d","#14532d"],["#0d9488","#134e4a"],["#0369a1","#0c4a6e"],["#4d7c0f","#1a2e05"],["#047857","#022c22"],["#0e7490","#164e63"],["#16a34a","#064e3b"],["#65a30d","#365314"]];
 const R=(x,y,w,h,c,r=3)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
 const C=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
@@ -306,13 +399,126 @@ $('#pc').innerHTML+=[...new Set(P.map(r=>r[1]))].map(c=>`<option>${c}</option>`)
 function rp(){const q=$('#pq').value.toLowerCase(),c=$('#pc').value;$('#pb').innerHTML=P.filter(r=>(c=='all'||r[1]==c)&&r[0].toLowerCase().includes(q)).map(r=>{const i=Math.max(0,S.findIndex(s=>s[0]==r[1]));return`<tr><td data-l="Service"><span class="rn"><span class="mt" aria-hidden="true" style="background:linear-gradient(135deg,${G[i%8][0]},${G[i%8][1]})">${ic(S[i][1])}</span>${r[0]}</span></td><td data-l="Category">${r[1]}</td><td data-l="Price"><b>₹${r[2]}</b></td><td><button class="link" data-auth="1">Use</button></td></tr>`}).join('')}
 $('#pq').oninput=rp;$('#pc').onchange=rp;rp();
 $('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 53 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
-const M=$('#m'),N=$('#nav'),B=$('#mn');
-function auth(r){$('#mt').textContent=r?'Create account':'Login';$('#mb').textContent=r?'Register':'Login';$('#sw').style.display=r?'block':'none';M.classList.add('open');$('#mob').focus()}
+Object.assign(I,{pause:'M8 5v14M16 5v14',play:'M8 5l11 7-11 7z',prev:'M15 5l-7 7 7 7',next:'M9 5l7 7-7 7'});
+const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let tmr;function toast(m,ms=3400){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>t.classList.remove('on'),ms)}
+
+/* ---------- hero image slider (self-drawn art) ---------- */
+const rot=(a,x,y,h)=>`<g transform="rotate(${a} ${x} ${y})">${h}</g>`;
+const SL=[
+{t:'RC, DL & Voter PVC cards',p:'38+ print services for CSC, cyber cafés and print shops, in one portal.',
+ a:()=>rot(-8,46,36,CARD(10,12,72,46,'fa')+X(18,23,'VEHICLE RC',5,'fw','start')+R(18,30,38,9,'fy',2)+X(37,37,'RJ14 AB 1234',4.6)+L(18,45,40,2,5,'fo'))
+ +rot(6,114,48,R(78,26,72,46,'fb',7)+X(86,37,'DRIVING LICENCE',5,'fw','start')+H(86,42,18,26,'fa')+L(110,46,34,3,6,'fo'))
+ +rot(-2,70,74,R(34,52,76,44,'fw',7)+R(34,52,76,10,'fa',5)+X(42,60,'ELECTION CARD',4.6,'fw','start')+H(42,65,18,26,'fb')+L(66,68,36,3,6,'fl'))},
+{t:'PDF ready in seconds',p:'Enter the number, download the PDF, print on PVC. Re-download from History anytime.',
+ a:()=>conv('PVC')+C(138,18,12,'fy')+Pa('M138 11v7l4 3','sa')+X(118,88,'85.60 × 53.98 mm',5)},
+{t:'Recharge with any UPI app',p:'Wallet balance is added automatically after payment.',
+ a:()=>R(12,30,84,56,'fa',9)+R(12,24,84,14,'fb',7)+R(72,50,34,20,'fy',7)+C(84,60,3.5,'fk')+X(42,66,'₹ 500',10,'fw')+`<g transform="translate(110 16) scale(.55)">${QR(0,0)}</g>`+X(130,66,'UPI',8,'fa')},
+{t:'Auto refund if a service fails',p:'Pay only for successful results. Failed requests go back to your wallet.',
+ a:()=>C(44,54,28,'fy')+X(44,64,'₹',28)+Pa('M80 34q18-22 42-8','sa')+Pa('M114 18l9 8-11 4','sa')+R(98,46,48,36,'fa',7)+R(98,40,48,10,'fb',5)+C(138,62,4,'fy')+C(142,34,11,'fg')+Pa('M136.500 34l4 4 7-8','sw')}
+];
+(function(){
+const T=$('#slT'),D=$('#slD'),P=$('#slP'),V=$('#slV'),n=SL.length;let i=0,play=!matchMedia('(prefers-reduced-motion:reduce)').matches,hold=false,tm,x0=null;
+T.innerHTML=SL.map((s,k)=>`<div class="sl-s" role="group" aria-roledescription="slide" aria-label="${k+1} of ${n}"><div class="sv" style="${sty(k)}">${art(s.a())}</div><div class="sl-c"><h3>${s.t}</h3><p>${s.p}</p></div></div>`).join('');
+D.innerHTML=SL.map((s,k)=>`<button type="button" class="dot" data-k="${k}" aria-label="Show slide ${k+1}: ${esc(s.t)}"></button>`).join('');
+$('#slPrev').innerHTML=ic('prev');$('#slNext').innerHTML=ic('next');
+function paint(){P.innerHTML=ic(play?'pause':'play');const l=play?'Pause slideshow':'Play slideshow';P.setAttribute('aria-label',l);P.title=l;V.setAttribute('aria-live',play?'off':'polite')}
+function tick(){clearTimeout(tm);if(play&&!hold&&!document.hidden)tm=setTimeout(()=>go(i+1),5200)}
+function go(k){i=(k+n)%n;T.style.transform=`translateX(${-i*100}%)`;[...T.children].forEach((e,q)=>e.setAttribute('aria-hidden',q==i?'false':'true'));[...D.children].forEach((e,q)=>e.setAttribute('aria-current',q==i));tick()}
+$('#slPrev').onclick=()=>go(i-1);$('#slNext').onclick=()=>go(i+1);P.onclick=()=>{play=!play;paint();tick()};
+D.onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};
+const R0=V.parentElement;R0.addEventListener('mouseenter',()=>{hold=true;tick()});R0.addEventListener('mouseleave',()=>{hold=false;tick()});
+R0.addEventListener('focusin',()=>{hold=true;tick()});R0.addEventListener('focusout',()=>{hold=false;tick()});
+R0.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')go(i-1);if(e.key=='ArrowRight')go(i+1)});
+document.addEventListener('visibilitychange',tick);
+V.addEventListener('pointerdown',e=>{x0=e.clientX});V.addEventListener('pointerup',e=>{if(x0===null)return;const d=e.clientX-x0;x0=null;if(Math.abs(d)>45)go(d<0?i+1:i-1)});V.addEventListener('pointercancel',()=>{x0=null});
+paint();go(0);
+})();
+
+/* ---------- storage (browser only: preview build, no server) ---------- */
+const mem={};
+const st={get(k){try{return localStorage.getItem(k)}catch(e){return k in mem?mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}},del(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}};
+const users=()=>{try{return JSON.parse(st.get('ds_users')||'[]')}catch(e){return[]}};
+const saveUsers=u=>st.set('ds_users',JSON.stringify(u));
+const user=()=>{const id=st.get('ds_session');return id?users().find(u=>u.id==id):null};
+const b2h=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+const salt=()=>b2h(crypto.getRandomValues(new Uint8Array(16)));
+async function hash(pw,sl){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return b2h(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new TextEncoder().encode(sl),iterations:100000},k,256))}
+
+/* ---------- validation ---------- */
+const normMob=v=>{let d=v.replace(/\D/g,'');if(d.length==12&&d.startsWith('91'))d=d.slice(2);else if(d.length==11&&d[0]=='0')d=d.slice(1);return d};
+const okMob=v=>/^[\d\s+\-()]+$/.test(v.trim())&&/^[6-9]\d{9}$/.test(normMob(v));
+const okMail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+const idType=v=>okMob(v)?'m':okMail(v)?'e':'';
+const findUser=v=>{const t=idType(v);return t?users().find(u=>t=='m'?u.mob==normMob(v):u.mail==v.trim().toLowerCase()):null};
+const RULES={
+name:v=>v.trim().length>=2?'':'Enter your full name, for example Rahul Sharma.',
+mob:v=>okMob(v)?'':'Enter a 10-digit mobile number, for example 9876543210.',
+mail:v=>okMail(v)?'':'Enter an email like name@domain.com.',
+pw:v=>v.length>=8?'':'Use at least 8 characters for your password.',
+idn:v=>idType(v)?'':'Enter a 10-digit mobile number or an email like name@domain.com.',
+lpw:v=>v?'':'Enter your password.',
+code:v=>/^\d{6}$/.test(v.trim())?'':'Enter the 6-digit reset code.'};
+let prog=false;
+function setErr(f,m){f.setAttribute('aria-invalid','true');const e=$('#'+f.id+'-e');e.textContent=m;e.hidden=false;const h=$('#'+f.id+'-h');if(h)h.hidden=true}
+function clearErr(f){f.removeAttribute('aria-invalid');const e=$('#'+f.id+'-e');e.hidden=true;e.textContent='';const h=$('#'+f.id+'-h');if(h)h.hidden=false}
+function check(f){const m=RULES[f.dataset.rule](f.value);m?setErr(f,m):clearErr(f);return !m}
+function validate(form){let first=null;form.querySelectorAll('[data-rule]').forEach(f=>{if(!check(f)&&!first)first=f});if(first){first.scrollIntoView({block:'center',behavior:'smooth'});prog=true;first.focus({preventScroll:true});prog=false}return !first}
+document.querySelectorAll('[data-rule]').forEach(f=>{f.addEventListener('blur',()=>check(f));f.addEventListener('focus',()=>{if(!prog)clearErr(f)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')=='true')clearErr(f)})});
+function ban(id,m){const b=$('#'+id);if(!m){b.hidden=true;return}b.textContent=m;b.hidden=false}
+async function run(form,label,fn){if(form.dataset.busy)return;form.dataset.busy='1';const b=form.querySelector('button[type=submit]'),o=b.textContent;b.textContent=label;b.setAttribute('aria-busy','true');try{await fn()}finally{delete form.dataset.busy;b.textContent=o;b.removeAttribute('aria-busy')}}
+const GEN='We couldn’t complete that right now. Please try again in a moment.';
+document.addEventListener('click',e=>{const sh=e.target.closest('.show');if(sh){const f=$('#'+sh.dataset.for),v=f.type=='password';f.type=v?'text':'password';sh.textContent=v?'Hide':'Show';sh.setAttribute('aria-pressed',v);sh.setAttribute('aria-label',v?'Hide password':'Show password')}});
+
+/* ---------- header, session ---------- */
+function hdr(){const u=user();$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><button class="btn o" id="lo">Log out</button>`:'<button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
+const to=h=>{location.hash=h};
+const W=$('#wm');
+function welcome(u,fresh){$('#wt').textContent='Welcome, '+u.name.trim().split(/\s+/)[0];$('#ws').textContent=fresh?'Your account is ready.':'You’re logged in.';W.classList.add('open');$('#wGo').focus()}
+const closeW=()=>W.classList.remove('open');
+$('#wx').onclick=closeW;W.onclick=e=>{if(e.target===W)closeW()};$('#wGo').onclick=()=>{closeW();to('services')};
+W.addEventListener('keydown',e=>{if(e.key!='Tab')return;const f=[$('#wx'),$('#wGo')],k=f.indexOf(document.activeElement);e.preventDefault();f[(k+(e.shiftKey?-1:1)+2)%2].focus()});
+function login(u,fresh){st.set('ds_session',u.id);hdr();to('top');route();welcome(u,fresh)}
+
+/* ---------- routing: #login  #register  #forgot ---------- */
+const AUTH=['login','register','forgot'],TT={login:'Log in',register:'New registration',forgot:'Forgot password'},BASE=document.title;
+let wasAuth=false,pre=null,fu=null,fid='';
+function resetPanes(){document.querySelectorAll('#auth form').forEach(f=>{f.reset();f.querySelectorAll('[data-rule]').forEach(clearErr)});document.querySelectorAll('#auth .show').forEach(b=>{b.textContent='Show';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Show password')});document.querySelectorAll('#auth input[type=text][id$=Pw]').forEach(i=>i.type='password');ban('lBan');$('#fp1').hidden=false;$('#fp2').hidden=true;fu=null}
+function route(){const h=location.hash.slice(1),isA=AUTH.includes(h);
+if(isA&&user()){location.replace('#top');return}
+$('#home').hidden=isA;$('#auth').hidden=!isA;
+if(isA){resetPanes();document.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.r!=h);document.title=TT[h]+' – DocSmartly';scrollTo(0,0);if(h=='login'&&pre){$('#lId').value=pre;pre=null;$('#lPw').focus()}else $('.pane:not([hidden]) h1').focus({preventScroll:true})}
+else{document.title=BASE;if(wasAuth){const el=h&&document.getElementById(h);el?el.scrollIntoView():scrollTo(0,0)}}
+wasAuth=isA}
+addEventListener('hashchange',route);
+
+/* ---------- forms ---------- */
+$('#fLogin').onsubmit=e=>{e.preventDefault();const f=e.target;ban('lBan');if(!validate(f))return;run(f,'Logging in…',async()=>{try{const u=findUser($('#lId').value),ok=u&&await hash($('#lPw').value,u.salt)==u.hash;if(!ok){ban('lBan','We couldn’t log you in. Check your mobile number or email and your password, then try again.');return}login(u,false)}catch(x){ban('lBan',GEN)}})};
+$('#fReg').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;
+const mob=normMob($('#rMob').value),mail=$('#rMail').value.trim().toLowerCase(),all=users();
+if(all.some(u=>u.mob==mob)){setErr($('#rMob'),'This mobile number is already registered. Log in instead.');$('#rMob').focus();return}
+if(all.some(u=>u.mail==mail)){setErr($('#rMail'),'This email is already registered. Log in instead.');$('#rMail').focus();return}
+run(f,'Creating account…',async()=>{try{const sl=salt(),u={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:await hash($('#rPw').value,sl)};all.push(u);saveUsers(all);login(u,true)}catch(x){toast(GEN)}})};
+const mask=v=>idType(v)=='m'?'XXXXXX'+normMob(v).slice(-4):v.trim().replace(/^(.).*(@.*)$/,'$1•••$2');
+$('#fF1').onsubmit=e=>{e.preventDefault();if(!validate(e.target))return;const v=$('#fId').value,u=findUser(v);if(!u){setErr($('#fId'),'We couldn’t find an account with these details. Check them, or use New registration.');$('#fId').focus();return}
+fu=u;fid=v.trim();$('#fSent').textContent='Enter the 6-digit reset code for '+mask(v)+'.';$('#fp1').hidden=true;$('#fp2').hidden=false;$('#fCode').focus()};
+$('#fF2').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;if($('#fCode').value.trim()!='123456'){setErr($('#fCode'),'That code doesn’t match. Check the code and try again.');$('#fCode').focus();return}
+run(f,'Resetting password…',async()=>{try{const all=users(),u=all.find(x=>x.id==fu.id),sl=salt();u.salt=sl;u.hash=await hash($('#fPw').value,sl);saveUsers(all);pre=fid;to('login');toast('Password updated. Log in with your new password.')}catch(x){toast(GEN)}})};
+
+/* ---------- page-level clicks ---------- */
+document.addEventListener('click',e=>{
+if(e.target.closest('#lo')){st.del('ds_session');hdr();toast('You’ve been logged out.');return}
+const a=e.target.closest('[data-auth]');
+if(a){e.preventDefault();if(user())toast('You’re already logged in.');else to(+a.dataset.auth?'register':'login');return}
+if(e.target.closest('[data-svc]')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
+
+/* ---------- mobile menu ---------- */
+const N=$('#nav'),B=$('#mn');
 function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
 B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('click',e=>{const a=e.target.closest('[data-auth]');if(a){e.preventDefault();auth(+a.dataset.auth)}if(e.target.closest('[data-svc]'))auth(0);if(e.target.closest('[data-close]')||e.target===M)M.classList.remove('open')});
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){M.classList.remove('open');cn()}});
-$('#f').onsubmit=e=>{e.preventDefault();M.classList.remove('open');const t=$('#toast');t.textContent='This is a design preview. No account was created.';t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)};
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});
+hdr();route();
+
 </script>
 </body>
 </html>
