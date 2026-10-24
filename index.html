@@ -127,6 +127,40 @@ footer .g{grid-template-columns:1fr 1fr}}
 #wm .box{max-width:400px}#wm h2{font-size:1.5rem;padding-right:36px}#wm .sub{margin-top:6px}
 @media(max-width:820px){.as{grid-template-columns:1fr}.ai{display:none}.af{place-items:start center;padding-top:32px}}
 @media(max-width:560px){.sl-c{padding:12px 16px 16px}.ib{width:44px;height:44px}}
+
+/* app */
+#app{min-height:100vh;background:var(--bg)}
+.ap{position:sticky;top:0;z-index:20;background:rgba(246,251,247,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
+.ap>.w{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-block:8px;min-height:60px}
+.tb{display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:99px;background:var(--tint);border:1.5px solid var(--ln);font-size:.95rem}.chip svg{width:20px;height:20px;color:var(--ac)}
+.ib.pl{background:var(--ac);color:#fff;border-color:var(--ac)}.ib.pl:hover{color:#fff;box-shadow:0 8px 18px -8px var(--ac)}
+.sp{border-top:1px solid var(--ln);padding-block:12px}.sp .w{display:block}.sp label{display:block;font-weight:700;font-size:.85rem;margin-bottom:6px}.sp input{width:100%}
+.sri{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:10px 14px;margin-top:6px;font:600 .92rem 'Figtree',sans-serif;cursor:pointer;min-height:44px;align-items:center}.sri small{color:var(--mut);font-weight:400}
+.apm{padding-block:28px 64px}.apm [data-v] h1:focus{outline:none}.apm h1{font-size:clamp(1.6rem,4vw,2.2rem)}
+.bk{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:var(--ac2);margin-bottom:6px}.bk:hover{text-decoration:underline}
+.lead{color:var(--mut);margin-top:8px}
+.gc{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;background:var(--ink);color:#e6f2ea;border-radius:18px;padding:24px}
+.gc h1{color:#fff}.gs{color:#86efac;font-weight:700;font-size:.9rem}.gc .link{color:#c9ecd4}
+.gw{display:flex;gap:20px;align-items:center;flex-wrap:wrap}.gw small{display:block;opacity:.75;font-size:.8rem}.gw b{font:800 1.9rem 'Fraunces',serif;color:#fff}
+.gc .ib{background:transparent;color:#fff;border-color:#3d6a50}.gc .ib:hover{background:#fff;color:var(--ink)}
+.stt{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px}.stt.s3{grid-template-columns:repeat(3,1fr)}
+.stt>div{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px 16px}.stt b{font:800 1.6rem 'Fraunces',serif;color:var(--ac2);display:block;overflow-wrap:anywhere}.stt span{font-size:.82rem;color:var(--mut)}
+.sh{font-size:1.3rem;margin:32px 0 12px}
+.ds{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:4px 16px;margin-bottom:10px}.ds summary{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px}.ds summary em{font-style:normal;background:var(--tint);border-radius:99px;padding:2px 12px;font-size:.82rem;color:var(--ac2)}.ds>.ig,.ds>p,.ds>details{margin-bottom:14px}
+.ds .ds{background:var(--bg)}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.it{display:flex;align-items:center;background:var(--sf);border:1px solid var(--ln);border-radius:12px}.it:hover{border-color:var(--ac)}
+.itb{flex:1;min-height:44px;text-align:left;border:0;background:none;padding:8px 6px 8px 14px;font:600 .9rem 'Figtree',sans-serif;color:var(--ink);cursor:pointer}
+.fv{width:44px;height:44px;border:0;background:none;color:#8aa596;cursor:pointer;display:grid;place-items:center;flex:none}.fv svg{width:20px;height:20px}.fv[aria-pressed="true"]{color:#dc2626}.fv[aria-pressed="true"] path{fill:#dc2626}
+.pn{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:520px;margin-top:18px}.pn small{color:var(--mut)}.pn input{width:100%}.pn label{font-weight:700;font-size:.9rem;display:block;margin-bottom:6px}
+.big{font:800 2rem 'Fraunces',serif;color:var(--ac2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chp{min-height:44px;padding:0 18px;border-radius:99px;border:1.5px solid var(--ln);background:var(--sf);font:700 .92rem 'Figtree',sans-serif;cursor:pointer}.chp:hover{border-color:var(--ac);color:var(--ac2)}
+#app .pn .btn{width:100%;margin-top:18px}
+.rd{list-style:none;margin:0;padding:0;max-width:520px;display:grid;gap:8px}.rd li{display:flex;justify-content:space-between;align-items:center;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px 16px}.rd small{display:block;color:var(--mut);font-size:.8rem}.rd b{color:var(--ac2)}
+.srt{display:flex;gap:8px;align-items:center}.srt input{width:200px}
+@media(max-width:820px){.stt{grid-template-columns:repeat(2,1fr)}.stt.s3{grid-template-columns:1fr}.srt input{width:100%}.srt{flex:1}}
+@media(max-width:560px){.ap .lt{display:none}.ap>.w{padding-inline:12px;gap:6px}.tb{gap:4px}.chip{padding:0 10px}.gc{padding:18px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -259,6 +293,11 @@ footer .g{grid-template-columns:1fr 1fr}}
 
 </div></div></section>
 
+<div id="app" hidden>
+<header class="ap"><div class="w"><a class="logo" href="#dashboard"><b>D</b><span class="lt">DocSmartly</span></a>
+<div class="tb"><button type="button" class="ib" id="aS" aria-label="Search services" title="Search services"></button><a class="ib" id="aR" href="#referral" aria-label="Refer & Earn" title="Refer & Earn"></a><a class="ib" id="aP" href="#passbook" aria-label="Passbook" title="Passbook"></a><a class="ib" id="aW" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp help" title="WhatsApp help"></a><a class="chip" id="aB" href="#passbook" title="Wallet balance" aria-label="Wallet balance"></a><a class="ib pl" id="aA" href="#addmoney" aria-label="Add balance" title="Add balance"></a></div></div>
+<div class="sp" id="sP" hidden><div class="w"><label for="sQ">Search services</label><input id="sQ" type="search" autocomplete="off"><div id="sR"></div></div></div></header>
+<main class="w apm"><section data-v="dashboard" hidden></section><section data-v="referral" hidden></section><section data-v="passbook" hidden></section><section data-v="addmoney" hidden></section></main></div>
 <div class="modal" id="wm"><div class="box" role="dialog" aria-modal="true" aria-labelledby="wt"><button class="x" id="wx" aria-label="Close welcome message">✕</button>
 <h2 id="wt">Welcome</h2><p class="sub" id="ws"></p>
 <div class="wl"><div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><div><b><i class="live"></i>All services working</b><span>RC, DL, Voter, PAN and every other service is live.</span></div></div>
@@ -471,25 +510,26 @@ const GEN='We couldn’t complete that right now. Please try again in a moment.'
 document.addEventListener('click',e=>{const sh=e.target.closest('.show');if(sh){const f=$('#'+sh.dataset.for),v=f.type=='password';f.type=v?'text':'password';sh.textContent=v?'Hide':'Show';sh.setAttribute('aria-pressed',v);sh.setAttribute('aria-label',v?'Hide password':'Show password')}});
 
 /* ---------- header, session ---------- */
-function hdr(){const u=user();$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><button class="btn o" id="lo">Log out</button>`:'<button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
+function hdr(){const u=user();$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="#dashboard">Dashboard</a><button class="btn o" id="lo">Log out</button>`:'<button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
 const to=h=>{location.hash=h};
 const W=$('#wm');
 function welcome(u,fresh){$('#wt').textContent='Welcome, '+u.name.trim().split(/\s+/)[0];$('#ws').textContent=fresh?'Your account is ready.':'You’re logged in.';W.classList.add('open');$('#wGo').focus()}
 const closeW=()=>W.classList.remove('open');
-$('#wx').onclick=closeW;W.onclick=e=>{if(e.target===W)closeW()};$('#wGo').onclick=()=>{closeW();to('services')};
+$('#wx').onclick=closeW;W.onclick=e=>{if(e.target===W)closeW()};$('#wGo').onclick=closeW;
 W.addEventListener('keydown',e=>{if(e.key!='Tab')return;const f=[$('#wx'),$('#wGo')],k=f.indexOf(document.activeElement);e.preventDefault();f[(k+(e.shiftKey?-1:1)+2)%2].focus()});
-function login(u,fresh){st.set('ds_session',u.id);hdr();to('top');route();welcome(u,fresh)}
+function login(u,fresh){st.set('ds_session',u.id);st.del('ds_ref');hdr();to('dashboard');route();welcome(u,fresh)}
 
 /* ---------- routing: #login  #register  #forgot ---------- */
-const AUTH=['login','register','forgot'],TT={login:'Log in',register:'New registration',forgot:'Forgot password'},BASE=document.title;
+const APP=['dashboard','referral','passbook','addmoney'],AUTH=['login','register','forgot'],TT={login:'Log in',register:'New registration',forgot:'Forgot password'},BASE=document.title;
 let wasAuth=false,pre=null,fu=null,fid='';
 function resetPanes(){document.querySelectorAll('#auth form').forEach(f=>{f.reset();f.querySelectorAll('[data-rule]').forEach(clearErr)});document.querySelectorAll('#auth .show').forEach(b=>{b.textContent='Show';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Show password')});document.querySelectorAll('#auth input[type=text][id$=Pw]').forEach(i=>i.type='password');ban('lBan');$('#fp1').hidden=false;$('#fp2').hidden=true;fu=null}
 function route(){const h=location.hash.slice(1),isA=AUTH.includes(h);
-if(isA&&user()){location.replace('#top');return}
-$('#home').hidden=isA;$('#auth').hidden=!isA;
+const isP=APP.includes(h);if(isP&&!user()){location.replace('#login');return}if(isA&&user()){location.replace('#dashboard');return}
+$('#home').hidden=isA||isP;$('#auth').hidden=!isA;$('#app').hidden=!isP;
 if(isA){resetPanes();document.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.r!=h);document.title=TT[h]+' – DocSmartly';scrollTo(0,0);if(h=='login'&&pre){$('#lId').value=pre;pre=null;$('#lPw').focus()}else $('.pane:not([hidden]) h1').focus({preventScroll:true})}
+else if(isP)showView(h);
 else{document.title=BASE;if(wasAuth){const el=h&&document.getElementById(h);el?el.scrollIntoView():scrollTo(0,0)}}
-wasAuth=isA}
+wasAuth=isA||isP}
 addEventListener('hashchange',route);
 
 /* ---------- forms ---------- */
@@ -498,7 +538,7 @@ $('#fReg').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))retu
 const mob=normMob($('#rMob').value),mail=$('#rMail').value.trim().toLowerCase(),all=users();
 if(all.some(u=>u.mob==mob)){setErr($('#rMob'),'This mobile number is already registered. Log in instead.');$('#rMob').focus();return}
 if(all.some(u=>u.mail==mail)){setErr($('#rMail'),'This email is already registered. Log in instead.');$('#rMail').focus();return}
-run(f,'Creating account…',async()=>{try{const sl=salt(),u={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:await hash($('#rPw').value,sl)};all.push(u);saveUsers(all);login(u,true)}catch(x){toast(GEN)}})};
+run(f,'Creating account…',async()=>{try{const sl=salt(),u={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:await hash($('#rPw').value,sl),bal:0,tx:[],fav:[],refs:[],orders:[],code:gen(),first:false};const rc=st.get('ds_ref'),rf=rc&&all.find(x=>x.code==rc);if(rf){u.refBy=rf.id;(rf.refs=rf.refs||[]).push({id:u.id,name:u.name,t:Date.now(),st:'Pending',bonus:0})}all.push(u);saveUsers(all);login(u,true)}catch(x){toast(GEN)}})};
 const mask=v=>idType(v)=='m'?'XXXXXX'+normMob(v).slice(-4):v.trim().replace(/^(.).*(@.*)$/,'$1•••$2');
 $('#fF1').onsubmit=e=>{e.preventDefault();if(!validate(e.target))return;const v=$('#fId').value,u=findUser(v);if(!u){setErr($('#fId'),'We couldn’t find an account with these details. Check them, or use New registration.');$('#fId').focus();return}
 fu=u;fid=v.trim();$('#fSent').textContent='Enter the 6-digit reset code for '+mask(v)+'.';$('#fp1').hidden=true;$('#fp2').hidden=false;$('#fCode').focus()};
@@ -507,7 +547,7 @@ run(f,'Resetting password…',async()=>{try{const all=users(),u=all.find(x=>x.id
 
 /* ---------- page-level clicks ---------- */
 document.addEventListener('click',e=>{
-if(e.target.closest('#lo')){st.del('ds_session');hdr();toast('You’ve been logged out.');return}
+if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
 const a=e.target.closest('[data-auth]');
 if(a){e.preventDefault();if(user())toast('You’re already logged in.');else to(+a.dataset.auth?'register':'login');return}
 if(e.target.closest('[data-svc]')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
@@ -516,7 +556,93 @@ if(e.target.closest('[data-svc]')){if(user())toast('Your dashboard is coming nex
 const N=$('#nav'),B=$('#mn');
 function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
 B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
+Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
+const DS=[
+['Lost Document service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
+['PAN card service','',['New PAN apply','PAN update / correction']],
+['PVC tools','',['Voter ID','Aadhaar Card','PAN Card','Driving License','Vehicle RC','Any Other Document']],
+['Govt Department & Civil Contractor Services','',['New Digital Signature (DSC)','E-procurement registration','Tender upload (for contractor)','Tender upload (for department)','Building estimate creator','BOQ creator','Govt civil & electric bill maker (Excel)','Govt civil & electric bill maker (Measurement Book)','Bill form','Extra item sheet','Excess item sheet','QC register creator','Work escalation statement']]];
+const FT=[['PDF Tools',['Photo to PDF','PDF merge','PDF split & add page','PDF to JPG','PDF rotate & page reorder','PDF compressor','Add page numbers to PDF','PDF header & footer']],
+['Image Tools',['Photo compressor','Photo resizer','Photo format converter','Background remove','Background change','Favicon maker']],
+['Print Layout, ID Cards & QR',['Watermark maker','Signature maker','Photo format converter','Background remove','Favicon maker','Colour picker from image']],
+['Document Creators',['Application format','Resume','Invoice','Letterhead','Quotation','Passport photo sheet','QR code generator','ID card front & back to A4','Student / Employee ID card maker','Visiting card maker','Stamp designer','A4 photo print sheet']],
+['Business Tools',['GST calculator','Cash calculator','Salary calculator']],
+['Education Tools',['Typing speed test (Hindi & English)','Online exam system','Word counter']],
+['Utilities',['Loan / EMI calculator','Age calculator','Percentage calculator','Calculator (basic & scientific)']]];
+const TOP=['Photo to PDF','PDF merge','Photo compressor','Photo resizer','Background remove','Passport photo sheet','QR code generator','Resume','Invoice','GST calculator'];
+const ALL=[];DS.forEach(s=>s[2].forEach(n=>ALL.push({k:s[0]+'|'+n,n,s:s[0]})));FT.forEach(g=>g[1].forEach(n=>ALL.push({k:g[0]+'|'+n,n,s:g[0]})));
+const cPaid=DS.reduce((a,s)=>a+s[2].length,0),cFree=FT.reduce((a,g)=>a+g[1].length,0);
+const gen=()=>Math.random().toString(36).slice(2,8).toUpperCase();
+const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
+const dt=t=>new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+function me(){const u=user();if(!u)return null;let ch=0;['tx','fav','refs','orders'].forEach(k=>{if(!u[k]){u[k]=[];ch=1}});if(u.bal==null){u.bal=0;ch=1}if(!u.code){u.code=gen();ch=1}if(ch)save(u);return u}
+function save(u){const a=users(),i=a.findIndex(x=>x.id==u.id);a[i]=u;saveUsers(a)}
+const WA='https://wa.me/917300277557?text=Hello%20DocSmartly%20Support';
+/* top bar */
+$('#aS').innerHTML=ic('search');$('#aR').innerHTML=ic('gift');$('#aP').innerHTML=ic('book');$('#aA').innerHTML=ic('plus');$('#aW').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
+function setBal(){const u=me();if(u)$('#aB').innerHTML=ic('wal')+'<b>'+inr(u.bal)+'</b>'}
+const sec=(t,c,inner,open)=>`<details class="ds"${open?' open':''}><summary><span>${t}</span><em>${c}</em></summary>${inner}</details>`;
+const itm=(k,n,fv)=>`<div class="it"><button type="button" class="itb" data-it="${esc(k)}">${esc(n)}</button><button type="button" class="fv" data-fav="${esc(k)}" aria-pressed="${fv.includes(k)}" aria-label="Favourite ${esc(n)}" title="Favourite">${ic('heart')}</button></div>`;
+const grid=(h)=>`<div class="ig">${h}</div>`;
+function favHTML(){const u=me(),l=ALL.filter(a=>u.fav.includes(a.k));return l.length?grid(l.map(a=>itm(a.k,a.n+' · '+a.s,u.fav)).join('').replace(/data-it="([^"]*)">([^<]*) · [^<]*</g,'data-it="$1">$2<')):'<p class="sub">Tap the heart on any service to keep it here.</p>'}
+function renderFav(){const u=me();$('#favC').innerHTML=favHTML();$('#favN').textContent=u.fav.length}
+function renderDash(){const u=me(),h=new Date().getHours(),g=h<12?'Good morning':h<17?'Good afternoon':'Good evening',o=u.orders,cnt=s=>o.filter(x=>x.s==s).length;
+const stat=[['Total services',cPaid+cFree],['Pending',cnt('pending')],['Processing',cnt('processing')],['Success',cnt('success')],['Failed',cnt('failed')]];
+const paid=DS.map(s=>sec(s[0],s[2].length,(s[1]?`<p class="sub" style="margin:0 0 12px">${s[1]}</p>`:'')+grid(s[2].map(n=>itm(s[0]+'|'+n,n,u.fav)).join('')),1));
+const free=FT.map(g=>sec(g[0],g[1].length,grid(g[1].map(n=>itm(g[0]+'|'+n,n,u.fav)).join(''))));
+$('[data-v=dashboard]').innerHTML=`<div class="gc"><div><p class="gs">${g}</p><h1 tabindex="-1">${esc(u.name)}</h1><button type="button" class="link" id="lo2" style="padding-left:0">Log out</button></div>
+<div class="gw"><div><small>Wallet balance</small><b>${inr(u.bal)}</b></div><div class="ctl"><a class="ib" href="#addmoney" aria-label="Add money" title="Add money">${ic('plus')}</a><a class="ib" href="#passbook" aria-label="Passbook" title="Passbook">${ic('book')}</a><a class="ib" href="#referral" aria-label="Refer & Earn" title="Refer & Earn">${ic('gift')}</a></div></div></div>
+<div class="stt">${stat.map(s=>`<div><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
+<h2 class="sh">My favourites (<span id="favN">${u.fav.length}</span>)</h2><div id="favC">${favHTML()}</div>
+<h2 class="sh">All services (${cPaid})</h2>${paid.join('')}
+<h2 class="sh">Free & trending tools (${cFree})</h2>
+${sec('Trending tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map((n,i)=>{const a=ALL.find(x=>x.n==n&&x.s!='Print Layout, ID Cards & QR');return itm(a.k,(i+1)+'. '+n,u.fav).replace('>'+(i+1)+'. '+n+'<','>'+esc(n)+'<')}).join('')),true)}
+${sec('Free tools',cFree,free.join(''),false)}`}
+/* referral */
+const rlink=u=>location.href.split('#')[0].split('?')[0]+'?ref='+u.code;
+function refRows(q){const u=me(),r=u.refs.filter(x=>x.name.toLowerCase().includes(q.toLowerCase()));$('#rfB').innerHTML=r.map(x=>`<tr><td data-l="Name">${esc(x.name)}</td><td data-l="Join date">${dt(x.t)}</td><td data-l="Status">${x.st}</td><td data-l="Bonus"><b>${inr(x.bonus)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.refs.length?'No referral matches that name.':'No referrals yet. Share your link to start earning ₹10 per referral.'}</td></tr>`}
+function renderRef(){const u=me();$('[data-v=referral]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Refer & Earn</h1><p class="lead">Per referral ₹10 bonus, added to your wallet after your friend’s first recharge.</p>
+<div class="pn"><label for="rl">Your referral link</label><input id="rl" readonly value="${esc(rlink(u))}"><div class="row" style="margin-top:12px"><button class="btn" id="cpL" type="button">Copy link</button><button class="btn o" id="shL" type="button">Share link</button></div></div>
+<div class="head" style="margin-top:28px;margin-bottom:12px"><h2 class="sh" style="margin:0">My Referral (${u.refs.length})</h2><div class="srt"><input id="rfQ" type="search" placeholder="Referral name" aria-label="Search referral name" hidden><button type="button" class="ib" id="rfT" aria-label="Search referrals" title="Search referrals">${ic('search')}</button></div></div>
+<div class="tw"><table><thead><tr><th>Name</th><th>Join date</th><th>Status</th><th>Bonus</th></tr></thead><tbody id="rfB"></tbody></table></div>`;refRows('')}
+/* passbook */
+function renderPass(){const u=me(),add=u.tx.filter(t=>t.type=='credit').reduce((a,t)=>a+t.amt,0),sp=u.tx.filter(t=>t.type=='debit').reduce((a,t)=>a+t.amt,0);
+$('[data-v=passbook]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Passbook</h1>
+<div class="stt s3"><div><b>${inr(u.bal)}</b><span>Current balance</span></div><div><b>${inr(add)}</b><span>Total added</span></div><div><b>${inr(sp)}</b><span>Total spent</span></div></div>
+<div class="head" style="margin:26px 0 12px"><h2 class="sh" style="margin:0">Wallet transactions (${u.tx.length})</h2><div class="srt"><input id="pbQ" type="search" placeholder="Search transactions" aria-label="Search transactions" hidden><button type="button" class="ib" id="pbT" aria-label="Search transactions" title="Search transactions">${ic('search')}</button></div></div>
+<div class="tw"><table><thead><tr><th>Date</th><th>Details</th><th>Type</th><th>Amount</th></tr></thead><tbody id="pbB"></tbody></table></div>`;passRows('')}
+function passRows(q){const u=me(),r=u.tx.filter(t=>(t.note+' '+t.type+' '+t.amt+' '+dt(t.t)).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.t-a.t);$('#pbB').innerHTML=r.map(t=>`<tr><td data-l="Date">${dt(t.t)}</td><td data-l="Details">${esc(t.note)}</td><td data-l="Type">${t.type=='credit'?'Credit':'Debit'}</td><td data-l="Amount"><b>${t.type=='credit'?'+':'−'}${inr(t.amt)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.tx.length?'No transaction matches your search.':'No transactions yet. Add money to see it here.'}</td></tr>`}
+/* add money */
+let quick=false;
+function recent(){const u=me(),r=u.tx.filter(t=>t.type=='credit'&&t.note.startsWith('Added')).sort((a,b)=>b.t-a.t).slice(0,5);return r.length?r.map(t=>`<li><span>${esc(t.note)}<small>${dt(t.t)}</small></span><b>+${inr(t.amt)}</b></li>`).join(''):'<li class="sub">No deposits yet.</li>'}
+function renderAdd(){const u=me();quick=false;$('[data-v=addmoney]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Add money to wallet</h1>
+<div class="pn"><small>Current balance</small><div class="big">${inr(u.bal)}</div>
+<form id="fAdd" novalidate><div class="fld"><label for="amt">Amount</label><input id="amt" type="number" inputmode="numeric" min="200" step="1" aria-describedby="amt-h amt-e"><p class="hint" id="amt-h">Minimum ₹200</p><p class="err" id="amt-e" role="alert" hidden></p></div>
+<div class="chips" role="group" aria-label="Quick amounts">${[100,200,500,1000].map(v=>`<button type="button" class="chp" data-q="${v}">+${v}</button>`).join('')}</div>
+<button class="btn" type="submit">Pay with UPI</button></form></div>
+<h2 class="sh">Recent deposits</h2><ul class="rd" id="rdL">${recent()}</ul>`}
+const VIEWS={dashboard:renderDash,referral:renderRef,passbook:renderPass,addmoney:renderAdd},VT={dashboard:'Dashboard',referral:'Refer & Earn',passbook:'Passbook',addmoney:'Add money'};
+function showView(h){document.querySelectorAll('#app [data-v]').forEach(v=>v.hidden=v.dataset.v!=h);VIEWS[h]();setBal();$('#sP').hidden=true;document.title=VT[h]+' – DocSmartly';scrollTo(0,0);$(`[data-v=${h}] h1`).focus({preventScroll:true})}
+/* events */
+document.addEventListener('click',e=>{const t=e.target;let b;
+if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
+if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
+if(b=t.closest('[data-fav]')){const u=me(),k=b.dataset.fav,i=u.fav.indexOf(k);i<0?u.fav.push(k):u.fav.splice(i,1);save(u);document.querySelectorAll('[data-fav]').forEach(x=>{if(x.dataset.fav==k)x.setAttribute('aria-pressed',i<0)});renderFav();return}
+if(b=t.closest('#app [data-it]')){const a=ALL.find(x=>x.k==b.dataset.it);toast((a?a.n:'This service')+' will open here. The service form is coming next.');$('#sP').hidden=true;return}
+if(t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
+if(t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
+if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hidden;if(!q.hidden)q.focus();else{q.value='';(b.id=='rfT'?refRows:passRows)('')}return}
+if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
+document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
+if(t.id=='sQ'){const q=t.value.trim().toLowerCase(),r=q?ALL.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8):[];$('#sR').innerHTML=r.map(a=>`<button type="button" class="sri" data-it="${esc(a.k)}">${esc(a.n)}<small>${esc(a.s)}</small></button>`).join('')||(q?'<p class="sub" style="padding:8px 4px">No service matches that search.</p>':'')}});
+document.addEventListener('submit',e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
+if(!(v>=200)){setErr(a,'Enter an amount of ₹200 or more.');a.focus();return}
+const all=users(),u=all.find(x=>x.id==user().id);u.bal=(u.bal||0)+v;u.tx=u.tx||[];u.tx.push({t:Date.now(),type:'credit',amt:v,note:'Added via UPI'});
+if(u.refBy&&!u.first){const r=all.find(x=>x.id==u.refBy);if(r){r.bal=(r.bal||0)+10;(r.tx=r.tx||[]).push({t:Date.now(),type:'credit',amt:10,note:'Referral bonus: '+u.name});const f=(r.refs||[]).find(x=>x.id==u.id);if(f){f.st='Credited';f.bonus=10}}}
+u.first=true;saveUsers(all);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
+const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
+
 hdr();route();
 
 </script>
