@@ -72,12 +72,34 @@ footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2b3f66;font-siz
 .box .btn{width:100%;margin-top:16px}
 .x{position:absolute;right:14px;top:14px;border:0;background:var(--tint);width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;color:var(--ink)}
 
-/* --- PROFESSIONAL CLEAN RADIO BUTTON STYLING --- */
-.rc-opt-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-.rc-opt-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg);border:1.5px solid var(--ln);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .2s ease}
-.rc-opt-item:hover{border-color:var(--ac);background:#edf3ff}
+/* Custom compact radio list */
+/* --- Professional Compact Radio List Styling --- */
+.rc-opt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
 
-.rc-opt-item input[type="radio"]{
+.rc-opt-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  border: 1.5px solid var(--ln);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rc-opt-item:hover {
+  border-color: var(--ac);
+  background: #edf3ff;
+}
+
+/* Custom Modern Radio Button */
+.rc-opt-item input[type=radio] {
   appearance: none;
   -webkit-appearance: none;
   width: 20px;
@@ -85,27 +107,35 @@ footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2b3f66;font-siz
   border: 2px solid var(--mut);
   border-radius: 50%;
   outline: none;
-  margin: 2px 0 0 0;
+  margin: 0;
   flex: none;
-  display: inline-grid;
-  place-content: center;
+  display: grid;
+  place-items: center;
   cursor: pointer;
   background: #fff;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
-.rc-opt-item input[type="radio"]:checked{
+
+.rc-opt-item input[type=radio]:checked {
   border-color: var(--ac);
   background: var(--ac);
-  box-shadow: 0 0 0 3px rgba(36,87,214,.15);
+  box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.15);
 }
-.rc-opt-item input[type="radio"]:checked::before{
+
+.rc-opt-item input[type=radio]:checked::before {
   content: "";
   width: 8px;
   height: 8px;
   background: #fff;
   border-radius: 50%;
 }
-.rc-opt-item span{font-size:.88rem;font-weight:600;color:var(--ink);line-height:1.4}
+
+.rc-opt-item span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
 
 #toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;translate:-50% 0}
 @media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
@@ -598,7 +628,7 @@ $('#tg').innerHTML=L.map(t=>`<div class="card" data-svc>${t.r?`<span class="rk">
 $('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
 $('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
 
-$('#fq').html=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready Original RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","Original RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 53 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
+$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready Original RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","Original RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 53 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
 Object.assign(I,{pause:'M8 5v14M16 5v14',play:'M8 5l11 7-11 7z',prev:'M15 5l-7 7 7 7',next:'M9 5l7 7-7 7'});
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let tmr;function toast(m,ms=3400){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>t.classList.remove('on'),ms)}
@@ -958,12 +988,12 @@ function renderRef(){const u=me();$('[data-v=referral]').innerHTML=`<a class="bk
 <div class="tw"><table><thead><tr><th>Name</th><th>Join date</th><th>Status</th><th>Bonus</th></tr></thead><tbody id="rfB"></tbody></table></div>`;refRows('')}
 
 /* --- PASSBOOK CONTROL --- */
-function passRows(q){const u=me(),r=u.tx.filter(t=>(t.note+' '+t.type+' '+t.amt+' '+dt(t.t)).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.t-a.t);$('#pbB').innerHTML=r.map(t=>`<tr><td data-l="Date">${dt(t.t)}</td><td data-l="Details">${esc(t.note)}</td><td data-l="Type">${t.type=='credit'?'Credit':'Debit'}</td><td data-l="Amount"><b>${t.type=='credit'?'+':'−'}${inr(t.amt)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.tx.length?'No transaction matches your search.':'No transactions yet. Add money to see it here.'}</td></tr>`}
 function renderPass(){const u=me(),add=u.tx.filter(t=>t.type=='credit').reduce((a,t)=>a+t.amt,0),sp=u.tx.filter(t=>t.type=='debit').reduce((a,t)=>a+t.amt,0);
 $('[data-v=passbook]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Passbook</h1>
 <div class="stt s3"><div><b>${inr(u.bal)}</b><span>Current balance</span></div><div><b>${inr(add)}</b><span>Total added</span></div><div><b>${inr(sp)}</b><span>Total spent</span></div></div>
 <div class="head" style="margin:26px 0 12px"><h2 class="sh" style="margin:0">Wallet transactions (${u.tx.length})</h2><div class="srt"><input id="pbQ" type="search" placeholder="Search transactions" aria-label="Search transactions" hidden><button type="button" class="ib" id="pbT" aria-label="Search transactions" title="Search transactions">${ic('search')}</button></div></div>
 <div class="tw"><table><thead><tr><th>Date</th><th>Details</th><th>Type</th><th>Amount</th></tr></thead><tbody id="pbB"></tbody></table></div>`;passRows('')}
+function passRows(q){const u=me(),r=u.tx.filter(t=>(t.note+' '+t.type+' '+t.amt+' '+dt(t.t)).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.t-a.t);$('#pbB').innerHTML=r.map(t=>`<tr><td data-l="Date">${dt(t.t)}</td><td data-l="Details">${esc(t.note)}</td><td data-l="Type">${t.type=='credit'?'Credit':'Debit'}</td><td data-l="Amount"><b>${t.type=='credit'?'+':'−'}${inr(t.amt)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.tx.length?'No transaction matches your search.':'No transactions yet. Add money to see it here.'}</td></tr>`}
 
 /* --- ADD MONEY CONTROL --- */
 let quick=false;
@@ -1001,4 +1031,73 @@ const DA={
 'Work escalation statement':()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa')+L(26,30,50,5,8)+R(94,62,12,22,'fb',2)+R(110,50,12,34,'fb',2)+R(126,36,12,48,'fa',2)+Pa('M92 52l16-10 12 6 20-24','sa')+Pa('M130 24h10v10','sa'),
 'Student / Employee ID card maker':()=>IDV(18,4,56,92,'STUDENT','fb')+IDV(86,4,56,92,'EMPLOYEE','fa'),
 'Typing speed test (Hindi & English)':()=>TA['Hindi Typing Tool']()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
-'Online exam system':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+
+'Online exam system':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+i*16,4,i==1?'fa':'fl')+R(56,32+i*16,56,4,'fl',2)).join('')+C(120,78,12,'fy')+Pa('M120 71v7l5 3','sa'),
+'Word counter':()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')+X(120,77,'words',6.5,'fw'),
+'Calculator (basic & scientific)':()=>CALC('√ π')};
+const TM={'Photo to PDF':'JPG / PNG to PDF','PDF merge':'PDF Merge','PDF split & add page':'PDF Split & Page Extract','PDF to JPG':'PDF to JPG','PDF rotate & page reorder':'PDF Rotate & Reorder','PDF compressor':'PDF Compressor (KB)','Add page numbers to PDF':'PDF Page Number Adder','PDF header & footer':'PDF Header & Footer Maker','Photo compressor':'Photo Compressor (KB)','Photo resizer':'Photo & Signature Resizer','Photo format converter':'Image Format Converter','Background remove':'Background Remover','Background change':'Photo Color Changer','Favicon maker':'Favicon Preview Tool & Maker','Watermark maker':'Image Watermark Maker','Signature maker':'Digital Signature Maker','Colour picker from image':'Color Picker from Image','Application format':'Text to PDF / Application','Resume':'Resume Maker','Invoice':'Invoice Maker','Letterhead':'Letterhead Maker','Quotation':'Quotation Maker','Passport photo sheet':'Passport Photo Sheet','QR code generator':'QR Code Generator','ID card front & back to A4':'ID Card Front & Back to A4','Visiting card maker':'Visiting Card Designer','Stamp designer':'Stamp Designer','A4 photo print sheet':'A4 Photo Print Layout','GST calculator':'GST Calculator','Cash calculator':'Cash Denomination Calculator','Salary calculator':'Salary Calculator','Loan / EMI calculator':'Loan / EMI Calculator','Age calculator':'Age Calculator','Percentage calculator':'Percentage Calculator'};
+function dart(s,n){
+if(SVC[s])return V[SVC[s]]();
+if(s=='Lost Document Service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
+if(s=='PVC Tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
+if(s=='PAN Card Service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
+const f=DA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
+$('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>{const mb=GT+'|'+n==MBK,p=DP[GT+'|'+n];return `<${mb?'div tabindex="0" role="button"':'button'} class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3>${mb?waLink(n):p!=null?`<div class="pr">${inr(p)}</div>`:''}</${mb?'div':'button'}>`}).join('');
+$('#sbT').innerHTML=ic('menu');
+
+/* --- SIDEBAR MENU CONTROL --- */
+function renderSB(){const lk=(h,k,t)=>`<a class="mi" href="${h}">${ic(k)}${t}</a>`,grp=g=>`<details class="sm"><summary data-sg="${esc(g[0])}">${esc(g[0])}<em>${g[1].length}</em></summary>${g[1].map(n=>`<button type="button" class="mi" data-go="${esc(g[0]+'|'+n)}">${esc(n)}</button>`).join('')}</details>`;
+$('#sb').innerHTML=`<div class="sbs">${lk('#dashboard','grid','Dashboard')}${lk('#passbook','book','Passbook')}${lk('#history','hist','History')}${lk('#referral','gift','Refer &amp; Earn')}${lk('#profile','user','Profile')}${lk('#contact','phone','Contact Us')}<p class="mh">Paid services</p>${DS.map(g=>grp([g[0],g[2]])).join('')}<p class="mh">Free tools</p>${FT.map(grp).join('')}</div><div class="sbf"><button type="button" class="mi" id="lo3">${ic('out')}Log Out</button></div>`}
+function sbCur(h){if(!$('#sb').firstChild)renderSB();document.querySelectorAll('#sb a.mi').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')=='#'+h?'page':'false'))}
+const closeSB=()=>{$('#sb').classList.remove('open');$('#sbT').setAttribute('aria-expanded','false')};
+function jump(k,sec){const run=()=>{const el=sec?[...document.querySelectorAll('.ds[data-sec]')].find(x=>x.dataset.sec==k):[...document.querySelectorAll('.ds:not(#trend) [data-card]')].find(x=>x.dataset.card==k);if(!el)return;for(let p=el.closest('details');p;p=p.parentElement&&p.parentElement.closest('details'))p.open=true;el.scrollIntoView({behavior:'smooth',block:sec?'start':'center'});if(!sec){el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),1800)}};
+if(location.hash=='#dashboard')run();else{addEventListener('hashchange',()=>setTimeout(run,0),{once:true});to('dashboard')}}
+document.addEventListener('click',e=>{const t=e.target;let b;
+if(t.closest('#sbT')){const o=$('#sb').classList.toggle('open');$('#sbT').setAttribute('aria-expanded',o);return}
+if(t.closest('#lo3')){st.del('ds_session');closeSB();hdr();to('top');toast('You’ve been logged out.');return}
+if(b=t.closest('[data-go]')){jump(b.dataset.go,0);closeSB();return}
+if(b=t.closest('summary[data-sg]'))jump(b.dataset.sg,1);
+if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
+
+/* --- APP VIEWS MANAGER & EVENT LISTENERS --- */
+function renderHist(){const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);$('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">History</h1><p class="lead">Every request and its result. Download a result again anytime.</p><div class="tw" style="margin-top:18px"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th></tr></thead><tbody>${o.map(x=>`<tr><td data-l="Date">${dt(x.t)}</td><td data-l="Service">${esc(x.n||'')}</td><td data-l="Status">${esc(x.s)}</td><td data-l="Amount"><b>${inr(x.amt||0)}</b></td></tr>`).join('')||'<tr><td colspan="4">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody></table></div>`}
+function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form>`}
+function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
+document.addEventListener('submit',e=>{if(e.target.id!='fPro')return;e.preventDefault();const i=$('#pfN'),v=i.value.trim().replace(/\s+/g,' ');if(v.length<2){setErr(i,'Enter your full name, for example Rahul Sharma.');i.focus();return}const u=me();u.name=v;save(u);renderProf();hdr();toast('Name updated.')});
+const VIEWS={dashboard:renderDash,referral:renderRef,passbook:renderPass,addmoney:renderAdd,history:renderHist,profile:renderProf,contact:renderContact},VT={dashboard:'Dashboard',referral:'Refer & Earn',passbook:'Passbook',addmoney:'Add money',history:'History',profile:'Profile',contact:'Contact Us'};
+
+function showView(h){document.querySelectorAll('#app [data-v]').forEach(v=>v.hidden=v.dataset.v!=h);VIEWS[h]();setBal();sbCur(h);$('#sP').hidden=true;document.title=VT[h]+' – DocSmartly';scrollTo(0,0);$(`[data-v=${h}] h1`).focus({preventScroll:true})}
+
+document.addEventListener('click',e=>{const t=e.target;let b;
+if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
+if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
+if(b=t.closest('[data-fav]')){const u=me(),k=b.dataset.fav,i=u.fav.indexOf(k);i<0?u.fav.push(k):u.fav.splice(i,1);save(u);document.querySelectorAll('[data-fav]').forEach(x=>{if(x.dataset.fav==k)x.setAttribute('aria-pressed',i<0)});renderFav();return}
+if(b=t.closest('#app [data-it]')){
+  const a=ALL.find(x=>x.k==b.dataset.it);
+  if(a && (a.n === 'Original RC Download' || a.n.includes('RC'))) {
+    $('#sP').hidden=true;
+    openRCWizard();
+    return;
+  }
+  toast((a?a.n:'This service')+' will open here. The service form is coming next.');$('#sP').hidden=true;return;
+}
+if(b=t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
+if(b=t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
+if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hidden;if(!q.hidden)q.focus();else{q.value='';(b.id=='rfT'?refRows:passRows)('')}return}
+if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
+document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
+if(t.id=='sQ'){const q=t.value.trim().toLowerCase(),r=q?ALL.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8):[];$('#sR').innerHTML=r.map(a=>`<button type="button" class="sri" data-it="${esc(a.k)}">${esc(a.n)}<small>${esc(a.s)}</small></button>`).join('')||(q?'<p class="sub" style="padding:8px 4px">No service matches that search.</p>':'')}});
+document.addEventListener('submit',e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
+if(!(v>=200)){setErr(a,'Enter an amount of ₹200 or more.');a.focus();return}
+const all=users(),u=all.find(x=>x.id==user().id);u.bal=(u.bal||0)+v;u.tx=u.tx||[];u.tx.push({t:Date.now(),type:'credit',amt:v,note:'Added via UPI'});
+if(u.refBy&&!u.first){const r=all.find(x=>x.id==u.refBy);if(r){r.bal=(r.bal||0)+10;(r.tx=r.tx||[]).push({t:Date.now(),type:'credit',amt:10,note:'Referral bonus: '+u.name});const f=(r.refs||[]).find(x=>x.id==u.id);if(f){f.st='Credited';f.bonus=10}}}
+u.first=true;saveUsers(all);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
+const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
+
+$('#mqT').innerHTML=[0,1].map(()=>['Original RC','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
+hdr();route();
+
+</script>
+</body>
+</html>
