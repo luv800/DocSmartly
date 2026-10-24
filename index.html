@@ -61,7 +61,7 @@ footer{background:var(--ink);color:#c5d3ee;padding:44px 0 28px;font-size:.9rem}f
 footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2b3f66;font-size:.82rem;opacity:.7}
 .wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:#16a34a;display:grid;place-items:center;box-shadow:0 10px 20px -8px rgba(0,0,0,.4);z-index:15;color:#fff}.wa svg{width:26px;height:26px}
 .modal{position:fixed;inset:0;z-index:40;background:rgba(28,25,23,.55);display:none;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}
-.box{background:#fff;border-radius:18px;padding:28px;width:100%;max-width:380px;position:relative}.box label{display:block;font-weight:700;font-size:.85rem;margin-top:14px}.box input{width:100%;margin-top:6px}.box .btn{width:100%;margin-top:20px}
+.box{background:#fff;border-radius:18px;padding:28px;width:100%;max-width:440px;position:relative;max-height:90vh;overflow-y:auto}.box label{display:block;font-weight:700;font-size:.85rem;margin-top:14px}.box input{width:100%;margin-top:6px}.box .btn{width:100%;margin-top:20px}
 .x{position:absolute;right:12px;top:12px;border:0;background:var(--tint);width:44px;height:44px;border-radius:50%;cursor:pointer}
 #toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;translate:-50% 0}
 @media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
@@ -239,7 +239,7 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <section class="w hero">
 <div><span class="tag">India’s fast PVC card print portal</span>
 <h1>PVC Card Print Portal – RC, DL, Voter, Aadhaar &amp; PAN Print in Seconds</h1>
-<p class="l">DocSmartly is the all-in-one print portal for CSC, cyber café and printing shops: RC PDF, DL PDF, Voter PDF, Ration card, Farmer ID and more. Pay from wallet, download instantly, print on PVC.</p>
+<p class="l">DocSmartly is the all-in-one print portal for CSC, cyber café and printing shops: Original RC Download, DL PDF, Voter PDF, Ration card, Farmer ID and more. Pay from wallet, download instantly, print on PVC.</p>
 <div class="row" id="heroAct"><button class="btn" data-auth="1">Start Free – Register</button><button class="btn o" data-auth="0">Login</button></div></div>
 <div class="sl" role="region" aria-roledescription="carousel" aria-label="DocSmartly highlights">
 <div class="sl-v" id="slV" aria-live="off"><div class="sl-t" id="slT"></div></div>
@@ -250,7 +250,7 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="mq" aria-hidden="true"><div class="mq-t" id="mqT"></div></div>
 
 <section class="sec w" id="services">
-<div class="head"><div><h2>Everything your print shop needs</h2><p class="sub">One login, one wallet. RC, DL, Voter, Ration, Farmer and more services for PVC card printing.</p></div><input id="q" placeholder="Search services" aria-label="Search services"></div>
+<div class="head"><div><h2>Everything your print shop needs</h2><p class="sub">One login, one wallet. Original RC, DL, Voter, Ration, Farmer and more services for PVC card printing.</p></div><input id="q" placeholder="Search services" aria-label="Search services"></div>
 <div class="grid" id="svc"></div>
 </section>
 
@@ -287,7 +287,7 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="steps">
 <div class="step"><i>1</i><h3>Register free</h3><p class="sub">Create your account with mobile number. Dashboard opens instantly.</p></div>
 <div class="step"><i>2</i><h3>Add wallet balance</h3><p class="sub">Recharge wallet securely with any UPI app. Balance is added automatically after payment.</p></div>
-<div class="step"><i>3</i><h3>Download &amp; print</h3><p class="sub">Enter RC / DL / EPIC number, get the PDF, print on PVC card. Re-download anytime from History.</p></div>
+<div class="step"><i>3</i><h3>Download &amp; print</h3><p class="sub">Enter Original RC / DL / EPIC number, get the PDF, print on PVC card. Re-download anytime from History.</p></div>
 </div></section>
 
 <section class="sec alt why"><div class="w">
@@ -315,7 +315,7 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="ah"><div class="w"><a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</a><a class="back" href="#top">Back to home</a></div></div>
 <div class="as">
 <aside class="ai"><h2>Your print shop, one login away</h2>
-<ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><div><b>All services working</b><span>RC, DL, Voter, PAN and more, live and ready.</span></div></li>
+<ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><div><b>All services working</b><span>Original RC, DL, Voter, PAN and more, live and ready.</span></div></li>
 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg><div><b>Auto refund if a service fails</b><span>Pay only for results that arrive.</span></div></li>
 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></svg><div><b>Every PDF saved in History</b><span>Download again whenever you need it.</span></div></li></ul></aside>
 <div class="af">
@@ -365,9 +365,18 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="shell"><aside id="sb" aria-label="Menu"></aside><main class="apm"><section data-v="dashboard" hidden></section><section data-v="referral" hidden></section><section data-v="passbook" hidden></section><section data-v="addmoney" hidden></section><section data-v="history" hidden></section><section data-v="profile" hidden></section><section data-v="contact" hidden></section></main></div></div>
 <div class="modal" id="wm"><div class="box" role="dialog" aria-modal="true" aria-labelledby="wt"><button class="x" id="wx" aria-label="Close welcome message">✕</button>
 <h2 id="wt">Welcome</h2><p class="sub" id="ws"></p>
-<div class="wl"><div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><div><b><i class="live"></i>All services working</b><span>RC, DL, Voter, PAN and every other service is live.</span></div></div>
+<div class="wl"><div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><div><b><i class="live"></i>All services working</b><span>Original RC, DL, Voter, PAN and every other service is live.</span></div></div>
 <div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg></span><div><b>Auto refund if a service fails</b><span>The amount returns to your wallet automatically.</span></div></div></div>
 <button class="btn" id="wGo" type="button">Explore services</button></div></div>
+
+<!-- Original RC Download 4-Step Interactive Modal -->
+<div class="modal" id="rcWizardModal">
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="rcModalTitle" style="max-width:500px;">
+    <button class="x" id="rcClose" aria-label="Close">✕</button>
+    <h2 id="rcModalTitle">Original RC Download</h2>
+    <div id="rcWizardBody" style="margin-top:16px;"></div>
+  </div>
+</div>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -474,7 +483,7 @@ const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
 const th=(t,k,n,i)=>`<div class="sv" style="${sty(i)}">${art(t.startsWith('conv:')?conv(t.slice(5)):(V[t]||(()=>CARD(30,20,100,60)))())}</div>`;
 const tt=(n,i)=>`<div class="tl" style="${sty(i)}">${art((TA[n]||(()=>PG()))())}</div>`;
 /* name|category|price */
-const P="RC PDF INSTANT|RC Services|40;RC PDF Server 1|RC Services|30;RC PDF Server 2|RC Services|40;DL PDF INSTANT|DL Services|50;DL PDF Server 1|DL Services|50;DL PDF Server 2 (Blue)|DL Services|50;Voter Mobile Link|Voter Services|40;Voter Mobile Link S1|Voter Services|40;Voter PDF|Voter Services|100;Farmer PDF S1|Farmer Services|25;Farmer PDF All State|Farmer Services|30;AgriStack Farmer PDF|Farmer Services|30;Aadhaar to PAN|PAN Services|40;Aadhaar to PAN S1|PAN Services|40;PAN Details|PAN Services|40;RC Full Details|RC Full Details|50;PAN to Udyam S2|Udyam Services|100;LL PDF|LL Services|30;LL Exam Request|LL Services|80;Ration PDF S1|Aadhaar & Ration|20;Ration PDF S2 (Aadhaar)|Aadhaar & Ration|30;Mobile Details Find|Mobile Services|30;Mobile Details S1|Mobile Services|30;Mobile Details S2|Mobile Services|30;PAN to GST|GST Services|10;GST Details|GST Services|10;Chassis to RC|Chassis to RC|70;Vehicle to Mobile Find|Vehicle To Mobile Find|80;Challan Details|Challan Details|10;DBT Seeding Status|DBT Seeding Status|20;TAN Verification|TAN Verification|30".split(";").map(r=>r.split("|"));
+const P="Original RC Download|RC Services|40;RC PDF Server 1|RC Services|30;RC PDF Server 2|RC Services|40;DL PDF INSTANT|DL Services|50;DL PDF Server 1|DL Services|50;DL PDF Server 2 (Blue)|DL Services|50;Voter Mobile Link|Voter Services|40;Voter Mobile Link S1|Voter Services|40;Voter PDF|Voter Services|100;Farmer PDF S1|Farmer Services|25;Farmer PDF All State|Farmer Services|30;AgriStack Farmer PDF|Farmer Services|30;Aadhaar to PAN|PAN Services|40;Aadhaar to PAN S1|PAN Services|40;PAN Details|PAN Services|40;RC Full Details|RC Full Details|50;PAN to Udyam S2|Udyam Services|100;LL PDF|LL Services|30;LL Exam Request|LL Services|80;Ration PDF S1|Aadhaar & Ration|20;Ration PDF S2 (Aadhaar)|Aadhaar & Ration|30;Mobile Details Find|Mobile Services|30;Mobile Details S1|Mobile Services|30;Mobile Details S2|Mobile Services|30;PAN to GST|GST Services|10;GST Details|GST Services|10;Chassis to RC|Chassis to RC|70;Vehicle to Mobile Find|Vehicle To Mobile Find|80;Challan Details|Challan Details|10;DBT Seeding Status|DBT Seeding Status|20;TAN Verification|TAN Verification|30".split(";").map(r=>r.split("|"));
 /* title|icon|sample number */
 const S="RC Services|car|XX 00 XX 0000;DL Services|id|XX00 0000000000;Voter Services|vote|XXX0000000;Farmer Services|leaf|0000 0000 0000;PAN Services|pan|XXXXX0000X;RC Full Details|doc|XX 00 XX 0000;Udyam Services|store|UDYAM-XX-00-000;LL Services|id|LL 0000 0000;Aadhaar & Ration|basket|0000 0000 0000;Mobile Services|phone|+91 00000 00000;GST Services|pct|00XXXXX0000X;Chassis to RC|car|MA3XXXXXX00;Vehicle To Mobile Find|phone|XX 00 XX 0000;Challan Details|inv|CHALLAN 0000000;DBT Seeding Status|bank|0000 0000 0000;TAN Verification|shield|XXXX00000X".split(";").map(r=>r.split("|"));
 const min=c=>Math.min(...P.filter(p=>p[1]==c).map(p=>+p[2])),cnt=c=>P.filter(p=>p[1]==c).length;
@@ -500,7 +509,7 @@ $('#tg').innerHTML=L.map(t=>`<div class="card" data-svc>${t.r?`<span class="rk">
 $('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
 $('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
 
-$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 53 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
+$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready Original RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","Original RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 53 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
 Object.assign(I,{pause:'M8 5v14M16 5v14',play:'M8 5l11 7-11 7z',prev:'M15 5l-7 7 7 7',next:'M9 5l7 7-7 7'});
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let tmr;function toast(m,ms=3400){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>t.classList.remove('on'),ms)}
@@ -628,7 +637,193 @@ if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your
 const N=$('#nav'),B=$('#mn');
 function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
 B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});
+
+/* ================= Original RC Download 4-Step Interactive Flow ================= */
+let rcData = { rcNum: '', chassis: '', format: 'Both: Original A4 RC PDF + PVC Smart Card (Front & Back) (Recommended)', mob: '' };
+
+function openRCWizard() {
+  if (!user()) {
+    toast('Please log in first to use Original RC Download.');
+    to('login');
+    return;
+  }
+  renderRCStep1();
+  $('#rcWizardModal').classList.add('open');
+}
+
+$('#rcClose').onclick = () => { $('#rcWizardModal').classList.remove('open'); };
+$('#rcWizardModal').onclick = e => { if (e.target === $('#rcWizardModal')) $('#rcWizardModal').classList.remove('open'); };
+
+function renderRCStep1() {
+  $('#rcModalTitle').textContent = 'Step 1: Original RC Service Form';
+  $('#rcWizardBody').innerHTML = `
+    <form id="rcForm1">
+      <div class="fld" style="margin-top:0">
+        <label for="rcNumInput">Vehicle Registration Number (RC Number) *</label>
+        <input id="rcNumInput" type="text" placeholder="e.g. RJ14AB1234" value="${esc(rcData.rcNum)}" required style="text-transform:uppercase">
+        <p class="hint">Automatic uppercase & validation applied</p>
+      </div>
+      <div class="fld">
+        <label for="rcChassis">Chassis Number *</label>
+        <input id="rcChassis" type="text" placeholder="Enter Full Chassis Number" value="${esc(rcData.chassis)}" required style="text-transform:uppercase">
+      </div>
+      <div class="fld">
+        <label>Card Format / Print Type *</label>
+        <div style="display:grid;gap:8px;margin-top:6px;">
+          <label style="font-weight:400;font-size:0.9rem;display:flex;gap:8px;align-items:flex-start;cursor:pointer;">
+            <input type="radio" name="rcFormat" value="Both: Original A4 RC PDF + PVC Smart Card (Front & Back) (Recommended)" ${rcData.format.includes('Both')?'checked':''}>
+            <span><b>Both: Original A4 RC PDF + PVC Smart Card (Front & Back)</b> (Recommended)</span>
+          </label>
+          <label style="font-weight:400;font-size:0.9rem;display:flex;gap:8px;align-items:flex-start;cursor:pointer;">
+            <input type="radio" name="rcFormat" value="Original Virtual RC PDF Only (A4 Format)" ${rcData.format.includes('Virtual')?'checked':''}>
+            <span>Original Virtual RC PDF Only (A4 Format)</span>
+          </label>
+          <label style="font-weight:400;font-size:0.9rem;display:flex;gap:8px;align-items:flex-start;cursor:pointer;">
+            <input type="radio" name="rcFormat" value="PVC Card Print Ready Only (Exact 85.60 × 53.98 mm)" ${rcData.format.includes('Exact')?'checked':''}>
+            <span>PVC Card Print Ready Only (Exact 85.60 × 53.98 mm)</span>
+          </label>
+        </div>
+      </div>
+      <div class="fld">
+        <label for="rcMob">Registered Mobile Number *</label>
+        <input id="rcMob" type="tel" inputmode="numeric" placeholder="10-digit mobile number" value="${esc(rcData.mob)}" required maxlength="10">
+      </div>
+      <button class="btn" type="submit" style="width:100%;margin-top:20px;">Proceed to Review</button>
+    </form>
+  `;
+
+  // Auto uppercase RC Number
+  $('#rcNumInput').oninput = e => { e.target.value = e.target.value.toUpperCase().replace(/\s+/g,''); };
+  $('#rcChassis').oninput = e => { e.target.value = e.target.value.toUpperCase(); };
+
+  $('#rcForm1').onsubmit = e => {
+    e.preventDefault();
+    const rcNum = $('#rcNumInput').value.trim();
+    const chassis = $('#rcChassis').value.trim();
+    const format = document.querySelector('input[name="rcFormat"]:checked').value;
+    const mob = $('#rcMob').value.trim();
+
+    if (!rcNum || rcNum.length < 5) {
+      toast('Please enter a valid Vehicle Registration Number.');
+      return;
+    }
+    if (!chassis) {
+      toast('Please enter the Chassis Number.');
+      return;
+    }
+    if (!okMob(mob)) {
+      toast('Please enter a valid 10-digit mobile number.');
+      return;
+    }
+
+    rcData = { rcNum, chassis, format, mob };
+    renderRCStep2();
+  };
+}
+
+function renderRCStep2() {
+  const u = me();
+  const price = 40;
+  $('#rcModalTitle').textContent = 'Step 2: Review & Wallet Deduction';
+  $('#rcWizardBody').innerHTML = `
+    <div style="background:var(--tint);padding:16px;border-radius:12px;border:1px solid var(--ln);display:grid;gap:10px;font-size:0.92rem;">
+      <div><b>Vehicle Number:</b> ${esc(rcData.rcNum)}</div>
+      <div><b>Chassis Number:</b> ${esc(rcData.chassis)}</div>
+      <div><b>Selected Format:</b> ${esc(rcData.format)}</div>
+      <div><b>Registered Mobile:</b> ${esc(rcData.mob)}</div>
+      <hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;">
+      <div><b>Service Fee:</b> ₹${price}</div>
+      <div><b>Wallet Current Balance:</b> <b>${inr(u.bal)}</b></div>
+    </div>
+    ${u.bal < price ? '<div class="banner err" style="margin-top:12px">Insufficient wallet balance. Please add money to your wallet first.</div>' : ''}
+    <div class="row" style="margin-top:20px">
+      <button class="btn o" type="button" id="rcBack1" style="flex:1">Back</button>
+      <button class="btn" type="button" id="rcPayBtn" style="flex:2" ${u.bal < price ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>Confirm & Pay ₹${price}</button>
+    </div>
+  `;
+
+  $('#rcBack1').onclick = renderRCStep1;
+  $('#rcPayBtn').onclick = () => {
+    const all = users();
+    const curU = all.find(x => x.id == u.id);
+    if (curU.bal < price) {
+      toast('Insufficient balance!');
+      return;
+    }
+    // Deduct wallet & record history/passbook
+    curU.bal -= price;
+    curU.tx = curU.tx || [];
+    curU.tx.push({ t: Date.now(), type: 'debit', amt: price, note: 'Original RC Download (' + rcData.rcNum + ')' });
+    curU.orders = curU.orders || [];
+    curU.orders.push({ t: Date.now(), n: 'Original RC Download - ' + rcData.rcNum, s: 'success', amt: price, format: rcData.format });
+    saveUsers(all);
+    setBal();
+    renderRCStep3();
+    toast('Payment successful! ₹40 deducted.');
+  };
+}
+
+function renderRCStep3() {
+  $('#rcModalTitle').textContent = 'Step 3: Success & Verification';
+  $('#rcWizardBody').innerHTML = `
+    <div style="text-align:center;padding:12px 0;">
+      <div style="width:56px;height:56px;background:#e0f5ea;color:#0f6b45;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M5 12l5 5 9-10"/></svg>
+      </div>
+      <h3 style="font-size:1.2rem;color:var(--ink);">Request Submitted Successfully!</h3>
+      <p style="color:var(--mut);margin-top:8px;font-size:0.95rem;line-height:1.6;">
+        Wait for OTP verification at registered mobile number our executive contact you directly for otp.
+      </p>
+    </div>
+    <button class="btn" type="button" id="rcProceedStep4" style="width:100%;margin-top:20px;">Proceed to Download PDF & Card Layout</button>
+  `;
+
+  $('#rcProceedStep4').onclick = renderRCStep4;
+}
+
+function renderRCStep4() {
+  $('#rcModalTitle').textContent = 'Step 4: Download Original RC PDF & Layout';
+  
+  // Create simulated file content for download
+  const fileContent = `--- DOCSMARTLY OFFICIAL ORIGINAL RC DOCUMENT ---
+Vehicle Number: ${rcData.rcNum}
+Chassis Number: ${rcData.chassis}
+Registered Mobile: ${rcData.mob}
+Selected Format: ${rcData.format}
+Status: Verified & Generated
+Date: ${new Date().toLocaleString()}
+-----------------------------------------------`;
+  const blob = new Blob([fileContent], { type: 'text/plain' });
+  const fileUrl = URL.createObjectURL(blob);
+
+  let formatBtnText = 'Print PVC Card Layout (85.60 × 53.98 mm)';
+  if (rcData.format.includes('Virtual')) formatBtnText = 'Download Virtual RC PDF (A4 Format)';
+  if (rcData.format.includes('Both')) formatBtnText = 'Download PVC Card Front & Back Layout';
+
+  $('#rcWizardBody').innerHTML = `
+    <div style="display:grid;gap:14px;margin-top:8px;">
+      <div style="background:var(--tint);padding:14px;border-radius:10px;font-size:0.9rem;border:1px solid var(--ln);">
+        <b>Vehicle:</b> ${esc(rcData.rcNum)}<br>
+        <b>Format:</b> ${esc(rcData.format)}
+      </div>
+      <a class="btn" href="${fileUrl}" download="Original_RC_${esc(rcData.rcNum)}.txt" style="text-align:center;display:grid;place-items:center;background:#16a34a;">
+        📥 Download Original RC PDF
+      </a>
+      <a class="btn" href="${fileUrl}" download="PVC_Card_Layout_${esc(rcData.rcNum)}.txt" style="text-align:center;display:grid;place-items:center;">
+        🖨️ ${esc(formatBtnText)}
+      </a>
+      <button class="btn o" type="button" id="rcCloseFinal" style="width:100%">Close & Return to Dashboard</button>
+    </div>
+  `;
+
+  $('#rcCloseFinal').onclick = () => {
+    $('#rcWizardModal').classList.remove('open');
+    to('history');
+  };
+}
+
+/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
 Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
 const DS=[
 ['Lost Document Service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
@@ -643,7 +838,7 @@ const FT=[['PDF Tools',['Photo to PDF','PDF merge','PDF split & add page','PDF t
 ['Education Tools',['Typing speed test (Hindi & English)','Online exam system','Word counter']],
 ['Utilities',['Loan / EMI calculator','Age calculator','Percentage calculator','Calculator (basic & scientific)']]];
 const TOP=['Photo to PDF','PDF merge','Photo compressor','Photo resizer','Background remove','Passport photo sheet','QR code generator','Resume','Invoice','GST calculator'];
-const SVD=[['RC Services','RC Services',[['RC PDF INSTANT',40]]],['DL Services','DL Services',[['DL PDF INSTANT',50]]],['Voter Services','Voter Services',[['Voter Mobile Link',40]]],['Farmer Services','Farmer Services',[['KISAN CARD',25]]],['PAN Services','PAN Services',[['Aadhaar to PAN',250]]],['Udyam Services','Udyam Services',[['New UDYAM CERTIFICATE',200]]],['Aadhaar Update & Ration Service','Aadhaar & Ration',[['AADHAAR Update',150]]],['Mobile Services','Mobile Services',[['Mobile Details Find',30],['Other Mobile Issue',50]]],['GST Services','GST Services',[['New GST Certificate',1200],['GST Download',200]]],['Chassis & Engine To RC','Chassis to RC',[['Chassis to RC',70]]],['Challan Check','Challan Details',[['Challan Details',10]]],['Bank Seeding','DBT Seeding Status',[['DBT Seeding Status',20]]]],SVC=Object.fromEntries(SVD.map(a=>[a[0],a[1]])),DP={};
+const SVD=[['RC Services','RC Services',[['Original RC Download',40]]],['DL Services','DL Services',[['DL PDF INSTANT',50]]],['Voter Services','Voter Services',[['Voter Mobile Link',40]]],['Farmer Services','Farmer Services',[['KISAN CARD',25]]],['PAN Services','PAN Services',[['Aadhaar to PAN',250]]],['Udyam Services','Udyam Services',[['New UDYAM CERTIFICATE',200]]],['Aadhaar Update & Ration Service','Aadhaar & Ration',[['AADHAAR Update',150]]],['Mobile Services','Mobile Services',[['Mobile Details Find',30],['Other Mobile Issue',50]]],['GST Services','GST Services',[['New GST Certificate',1200],['GST Download',200]]],['Chassis & Engine To RC','Chassis to RC',[['Chassis to RC',70]]],['Challan Check','Challan Details',[['Challan Details',10]]],['Bank Seeding','DBT Seeding Status',[['DBT Seeding Status',20]]]],SVC=Object.fromEntries(SVD.map(a=>[a[0],a[1]])),DP={};
 DS.unshift(...SVD.map(a=>[a[0],'',a[2].map(x=>{DP[a[0]+'|'+x[0]]=x[1];return x[0]})]));
 const GT='Govt Department & Civil Contractor Services';
 [['Lost Document Service',50],['PAN Card Service',600],['PVC Tools',10]].forEach(([t,p])=>DS.find(x=>x[0]==t)[2].forEach(n=>DP[t+'|'+n]=p));
@@ -769,9 +964,17 @@ document.addEventListener('click',e=>{const t=e.target;let b;
 if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
 if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
 if(b=t.closest('[data-fav]')){const u=me(),k=b.dataset.fav,i=u.fav.indexOf(k);i<0?u.fav.push(k):u.fav.splice(i,1);save(u);document.querySelectorAll('[data-fav]').forEach(x=>{if(x.dataset.fav==k)x.setAttribute('aria-pressed',i<0)});renderFav();return}
-if(b=t.closest('#app [data-it]')){const a=ALL.find(x=>x.k==b.dataset.it);toast((a?a.n:'This service')+' will open here. The service form is coming next.');$('#sP').hidden=true;return}
-if(t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
-if(t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
+if(b=t.closest('#app [data-it]')){
+  const a=ALL.find(x=>x.k==b.dataset.it);
+  if(a && (a.n === 'Original RC Download' || a.n.includes('RC'))) {
+    $('#sP').hidden=true;
+    openRCWizard();
+    return;
+  }
+  toast((a?a.n:'This service')+' will open here. The service form is coming next.');$('#sP').hidden=true;return;
+}
+if(b=t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
+if(b=t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
 if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hidden;if(!q.hidden)q.focus();else{q.value='';(b.id=='rfT'?refRows:passRows)('')}return}
 if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
@@ -783,7 +986,7 @@ if(u.refBy&&!u.first){const r=all.find(x=>x.id==u.refBy);if(r){r.bal=(r.bal||0)+
 u.first=true;saveUsers(all);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
 const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
 
-$('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
+$('#mqT').innerHTML=[0,1].map(()=>['Original RC','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
 hdr();route();
 
