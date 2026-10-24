@@ -200,15 +200,38 @@ footer .g{grid-template-columns:1fr 1fr}}
 .wal{position:absolute;left:12px;bottom:8px;display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:0 13px;border-radius:99px;background:#12803f;color:#fff;font-weight:800;font-size:.92rem}
 .wal svg{width:19px;height:19px}.card .wal{position:static;margin-top:8px}.it.wq .itb{padding-bottom:52px}
 .logo .lg{width:34px;height:34px;flex:none}
+
+/* ---- v2: polish, smaller type, tags, cards, mobile header ---- */
+html{font-size:93.75%}
+h1{font-size:clamp(1.8rem,4.6vw,3rem)}h2{font-size:clamp(1.4rem,3vw,2rem)}
+.sec{padding-block:52px}.tag{font-size:.76rem}.stats b{font-size:1.7rem}
+header,.ap{box-shadow:0 1px 0 var(--ln),0 10px 24px -20px rgba(19,35,63,.35)}
+.btn{border-radius:9px;letter-spacing:.01em}.card{border-radius:12px;box-shadow:0 1px 2px rgba(19,35,63,.05)}
+.card h3,.nm,.sm .mi,.sm>summary,.sri,.ds>summary>span,.step h3{text-transform:capitalize}
+.pr,.pr.fre,.itb .pr{display:inline-block;background:#12803f;border:1px solid #12803f;color:#fff;font:700 .74rem 'Plus Jakarta Sans',system-ui,sans-serif;padding:2px 9px;border-radius:99px;box-shadow:0 2px 6px rgba(18,128,63,.35)}
+.tg{font:700 .74rem 'Plus Jakarta Sans',system-ui,sans-serif;padding:2px 9px;left:9px;top:9px}.itb .pr{margin:2px 4px 0}
+.ig{grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:8px}
+.itb{padding:6px 6px 8px;font-size:.8rem}.itb .sv{aspect-ratio:16/9;margin-bottom:6px;border-radius:8px}
+.fv{width:34px;height:34px;right:9px;top:9px}.fv svg{width:17px;height:17px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(185px,1fr))}
+header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
+@media(max-width:560px){.ig{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}header .w{gap:8px}header .btn{padding:8px 11px;font-size:.8rem}.logo{font-size:1.05rem}.logo .lg{width:30px;height:30px}.mn{width:40px;height:40px}}
+@media(max-width:350px){header:not(.ap) .lt{display:none}}
+.hero{position:relative;isolation:isolate}.hero::before{content:"";position:absolute;right:-30px;top:-30px;width:380px;height:380px;max-width:80vw;background:radial-gradient(closest-side,rgba(59,115,245,.2),transparent);z-index:-1;pointer-events:none}
+.sl-v{position:relative}.sl-v::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);transform:translateX(-120%);animation:shn 6s ease-in-out infinite;pointer-events:none}
+@keyframes shn{0%,65%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.mq{overflow:hidden;background:#fff;border-bottom:1px solid var(--ln);padding:11px 0}.mq-t{display:flex;width:max-content;animation:mq 40s linear infinite}.mq:hover .mq-t{animation-play-state:paused}
+.mq span{display:inline-flex;align-items:center;gap:10px;padding:0 22px;font-weight:700;font-size:.8rem;color:var(--ac2);white-space:nowrap}.mq span::before{content:"";width:7px;height:7px;border-radius:2px;background:#f5b83d;transform:rotate(45deg)}
+@keyframes mq{to{transform:translateX(-50%)}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="lgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b73f5"/><stop offset="1" stop-color="#16337a"/></linearGradient><symbol id="lg" viewBox="0 0 36 36"><rect width="36" height="36" rx="9" fill="url(#lgG)"/><path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/><path d="M20 7.5v6h6" fill="#c9dbff"/><path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/><rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/><rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/><path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/></symbol></defs></svg>
 <div id="home">
 <header><div class="w">
-<a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</a>
+<a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg><span class="lt">DocSmartly</span></a>
 <nav id="nav"><a href="#services">Services</a><a href="#tools">Free Tools</a><a href="#pan">PAN</a><a href="#govt">Govt Services</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
-<div id="hdrAct" style="display:flex;gap:8px;align-items:center"><button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button></div>
+<div id="hdrAct" style="display:flex;gap:8px;align-items:center"><button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button></div>
 <button class="mn" id="mn" aria-label="Menu" aria-expanded="false" aria-controls="nav">☰</button>
 </div></header>
 
@@ -224,6 +247,7 @@ footer .g{grid-template-columns:1fr 1fr}}
 </div>
 </section>
 <div class="stats"><div class="w"><div><b>38+</b><span>Print services</span></div><div><b>53+</b><span>Free online tools</span></div><div><b>24×7</b><span>Instant results</span></div><div><b>100%</b><span>Auto refund on failure</span></div></div></div>
+<div class="mq" aria-hidden="true"><div class="mq-t" id="mqT"></div></div>
 
 <section class="sec w" id="services">
 <div class="head"><div><h2>Everything your print shop needs</h2><p class="sub">One login, one wallet. RC, DL, Voter, Ration, Farmer and more services for PVC card printing.</p></div><input id="q" placeholder="Search services" aria-label="Search services"></div>
@@ -521,7 +545,16 @@ const saveUsers=u=>st.set('ds_users',JSON.stringify(u));
 const user=()=>{const id=st.get('ds_session');return id?users().find(u=>u.id==id):null};
 const b2h=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 const salt=()=>b2h(crypto.getRandomValues(new Uint8Array(16)));
-async function hash(pw,sl){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return b2h(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new TextEncoder().encode(sl),iterations:100000},k,256))}
+async function hashS(pw,sl){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return b2h(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new TextEncoder().encode(sl),iterations:100000},k,256))}
+
+function sha(s){const K=[],H=[];for(let p=2,n=0;n<64;p++){let q=1;for(let i=2;i*i<=p;i++)if(p%i==0){q=0;break}if(q){if(n<8)H[n]=Math.pow(p,.5)%1*4294967296|0;K[n++]=Math.pow(p,1/3)%1*4294967296|0}}
+const m=[...new TextEncoder().encode(s)],l=m.length*8,r=(x,k)=>x>>>k|x<<32-k;m.push(128);while(m.length%64!=56)m.push(0);for(let i=7;i>=0;i--)m.push(i>3?0:l>>>i*8&255);
+const w=[];for(let o=0;o<m.length;o+=64){for(let i=0;i<16;i++)w[i]=m[o+i*4]<<24|m[o+i*4+1]<<16|m[o+i*4+2]<<8|m[o+i*4+3];
+for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=w[i-16]+(r(a,7)^r(a,18)^a>>>3)+w[i-7]+(r(c,17)^r(c,19)^c>>>10)|0}
+let [a,b,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){const t=h+(r(e,6)^r(e,11)^r(e,25))+(e&f^~e&g)+K[i]+w[i]|0,u=(r(a,2)^r(a,13)^r(a,22))+(a&b^a&c^b&c)|0;h=g;g=f;f=e;e=d+t|0;d=c;c=b;b=a;a=t+u|0}
+[a,b,c,d,e,f,g,h].forEach((v,i)=>H[i]=H[i]+v|0)}
+return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
+async function hash(pw,sl){if(window.crypto&&crypto.subtle){try{return await hashS(pw,sl)}catch(e){}}let x=pw+':'+sl;for(let i=0;i<2000;i++)x=sha(x);return x}
 
 /* ---------- validation ---------- */
 const normMob=v=>{let d=v.replace(/\D/g,'');if(d.length==12&&d.startsWith('91'))d=d.slice(2);else if(d.length==11&&d[0]=='0')d=d.slice(1);return d};
@@ -549,7 +582,7 @@ const GEN='We couldn’t complete that right now. Please try again in a moment.'
 document.addEventListener('click',e=>{const sh=e.target.closest('.show');if(sh){const f=$('#'+sh.dataset.for),v=f.type=='password';f.type=v?'text':'password';sh.textContent=v?'Hide':'Show';sh.setAttribute('aria-pressed',v);sh.setAttribute('aria-label',v?'Hide password':'Show password')}});
 
 /* ---------- header, session ---------- */
-function hdr(){const u=user();$('#heroAct').hidden=!!u;$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="#dashboard">Dashboard</a><button class="btn o" id="lo">Log out</button>`:'<button class="btn o hm" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
+function hdr(){const u=user();$('#heroAct').hidden=!!u;$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="#dashboard">Dashboard</a><button class="btn o" id="lo">Log out</button>`:'<button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
 const to=h=>{location.hash=h};
 const W=$('#wm');
 function welcome(u,fresh){$('#wt').textContent='Welcome, '+u.name.trim().split(/\s+/)[0];$('#ws').textContent=fresh?'Your account is ready.':'You’re logged in.';W.classList.add('open');$('#wGo').focus()}
@@ -750,6 +783,8 @@ if(u.refBy&&!u.first){const r=all.find(x=>x.id==u.refBy);if(r){r.bal=(r.bal||0)+
 u.first=true;saveUsers(all);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
 const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
 
+$('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
 hdr();route();
 
 </script>
