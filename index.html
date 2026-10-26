@@ -618,6 +618,88 @@ function pendingUpdates(){
   const seen=updSeen();
   return(u.orders||[]).filter(o=>updAlertable(o)&&!seen.has(updKey(o)));
 }
+```[cite: 1]
+
+---
+
+### 2. Dhoondhein: `function ensureAlertStyle()`
+*(Yeh `pendingUpdates` ke bilkul niche milegi[cite: 1])*
+
+* **Isko replace karke yeh lagayein:**
+```javascript
+function ensureAlertStyle(){
+  if(document.getElementById('upd-style'))return;
+  const s=document.createElement('style');s.id='upd-style';
+  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:10px;pointer-events:none}'+
+  '#upd .upd-i{pointer-events:auto;background:#fff4e5;border:2.5px solid #d9480f;color:#1b1f2a;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 28px rgba(217,72,15,.35)}'+
+  '#upd .upd-i p{margin:3px 0;font-size:.95rem}#upd .upd-i b{color:#b02a00}'+
+  '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
+  '.sb{display:inline-block;border-radius:99px;padding:3px 11px;font-size:.76rem;font-weight:800;text-transform:capitalize}'+
+  '.s-pending{background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d}'+
+  '.s-processing{background:#dbe7ff;color:#1b44ad;border:1px solid #a9c4ff}'+
+  '.s-success{background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0}'+
+  '.s-failed{background:#fdecea;color:#7a1a12;border:1px solid #f3b8b2}'+
+  '.rk-flash{margin-top:6px;padding:7px 11px;border-radius:8px;background:#fff0eb;border:2px solid #e03131;color:#9b1c1c;font-weight:700;font-size:.84rem;display:inline-block}'+
+  '@media (prefers-reduced-motion:no-preference){#upd .upd-i{animation:updFlash .85s ease-in-out infinite alternate}.rk-flash{animation:rkPulse .9s ease-in-out infinite alternate}}'+
+  '@keyframes updFlash{from{background:#fff4e5;transform:scale(1)}to{background:#ffc999;transform:scale(1.005)}}'+
+  '@keyframes rkPulse{from{background:#fff0eb;border-color:#e03131;box-shadow:0 0 0 0 rgba(224,49,49,.4)}to{background:#ffe066;border-color:#d9480f;color:#7a1a12;box-shadow:0 0 0 5px rgba(224,49,49,0)}}';
+  document.head.appendChild(s);
+}
+```[cite: 1]
+
+---
+
+### 3. Dhoondhein: `function renderHist()`
+*(Yeh lagbhag line 450 ke aas-pass milegi[cite: 1])*
+
+* **Isko replace karke yeh lagayein:**
+```javascript
+function renderHist(){
+  ensureAlertStyle();
+  const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
+  $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
+    <h1 tabindex="-1">History</h1>
+    <p class="lead">Every request and its result. Download a result again anytime.</p>
+    <div class="tw" style="margin-top:18px"><table>
+      <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
+      <tbody>${o.map(x=>`<tr>
+        <td data-l="Date">${dt(x.t)}</td>
+        <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash">🔔 Remark: ${esc(x.remark)}</div>`:''}</td>
+        <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
+        <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
+        <td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td>
+      </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
+    </table></div>`;
+}
+```[cite: 1]
+
+---
+
+### 4. Dhoondhein: File ka Aakhri Hissa (`setInterval`)
+*(Yeh file ke bilkul aakhri lines me milega[cite: 1])*
+
+* **Isko replace karke yeh lagayein:**
+```javascript
+async function syncNow(){
+  if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
+  const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
+  if(!r)return;
+  if(r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users');hdr();route();return}
+  if(!r.ok)return;
+  const j=await r.json();
+  const changed=JSON.stringify(user())!==JSON.stringify(j.user);
+  if(changed){
+    saveUsers([j.user]);
+    setBal();
+    const h=location.hash.slice(1);
+    if(VIEWS[h])VIEWS[h]();
+  }
+  renderAlerts();
+}
+setInterval(syncNow, 5000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
+```[cite: 1]
+
 function ackUpdate(key){const s=updSeen();s.add(key);st.set(updSeenKey(),JSON.stringify([...s]));renderAlerts()}
 function ensureAlertStyle(){
   if(document.getElementById('upd-style'))return;
