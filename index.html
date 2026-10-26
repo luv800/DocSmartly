@@ -605,7 +605,51 @@ function login(u,fresh){st.set('ds_session',u.id);st.del('ds_ref');hdr();to('das
 const APP=['dashboard','referral','passbook','addmoney','history','profile','contact'],AUTH=['login','register','forgot'],TT={login:'Log in',register:'New registration',forgot:'Forgot password'},BASE=document.title;
 let wasAuth=false,pre=null,fu=null,fid='';
 function resetPanes(){document.querySelectorAll('#auth form').forEach(f=>{f.reset();f.querySelectorAll('[data-rule]').forEach(clearErr)});document.querySelectorAll('#auth .show').forEach(b=>{b.textContent='Show';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Show password')});document.querySelectorAll('#auth input[type=text][id$=Pw]').forEach(i=>i.type='password');ban('lBan');$('#fp1').hidden=false;$('#fp2').hidden=true;fu=null}
-function route(){const h=location.hash.slice(1),isA=AUTH.includes(h);
+
+/* ---------- must-see update alerts ----------
+   Shows a flashing banner for every admin change (status, remark, result file)
+   until the customer presses "Got it" or "Open History". Survives page reloads. */
+const updKey=o=>[o.id,o.s,o.remark||'',o.file?o.file.t:''].join('|');
+const updAlertable=o=>o.s!=='pending'||!!o.remark||!!o.file;
+const updSeenKey=()=>'ds_seen_'+st.get('ds_session');
+const updSeen=()=>{try{return new Set(JSON.parse(st.get(updSeenKey())||'[]'))}catch(e){return new Set()}};
+function pendingUpdates(){
+  const u=user();if(!u)return[];
+  // First time this browser sees this account: treat existing orders as already seen, so old requests do not flash
+  if(st.get(updSeenKey())==null)st.set(updSeenKey(),JSON.stringify((u.orders||[]).map(updKey)));
+  const seen=updSeen();
+  return(u.orders||[]).filter(o=>updAlertable(o)&&!seen.has(updKey(o)));
+}
+function ackUpdate(key){const s=updSeen();s.add(key);st.set(updSeenKey(),JSON.stringify([...s]));renderAlerts()}
+function ensureAlertStyle(){
+  if(document.getElementById('upd-style'))return;
+  const s=document.createElement('style');s.id='upd-style';
+  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:6px;padding:8px;pointer-events:none}'+
+  '#upd .upd-i{pointer-events:auto;background:#fff4e5;border:2px solid #d9480f;color:#1b1f2a;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 6px 20px rgba(0,0,0,.25)}'+
+  '#upd .upd-i p{margin:2px 0;font-size:.95rem}#upd .upd-i b{color:#b02a00}'+
+  '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
+  '@media (prefers-reduced-motion:no-preference){#upd .upd-i{animation:updFlash 1s ease-in-out infinite alternate}}'+
+  '@keyframes updFlash{from{background:#fff4e5}to{background:#ffd0a8}}';
+  document.head.appendChild(s);
+}
+function renderAlerts(){
+  ensureAlertStyle();
+  let box=document.getElementById('upd');
+  if(!box){box=document.createElement('div');box.id='upd';box.setAttribute('role','alert');box.setAttribute('aria-live','assertive');document.body.appendChild(box)}
+  const list=pendingUpdates();
+  if(window.__baseTitle==null)window.__baseTitle=document.title;
+  document.title=(list.length?'('+list.length+' new) ':'')+window.__baseTitle;
+  box.innerHTML=list.slice(0,3).map(o=>{
+    const key=updKey(o),bits=[];
+    if(o.s!=='pending')bits.push('Status: <b>'+esc(o.s)+'</b>');
+    if(o.remark)bits.push('Note from DocSmartly: <b>'+esc(o.remark)+'</b>');
+    if(o.file)bits.push('Result ready: <b>'+esc(o.file.name)+'</b> (download in History)');
+    return '<div class="upd-i"><div><p><b>'+esc(o.n||'Your request')+'</b> ('+esc(o.id)+')</p>'+bits.map(b=>'<p>'+b+'</p>').join('')+'</div>'+
+      '<div class="upd-b"><a class="btn" href="#history" data-ack="'+esc(key)+'">Open History</a><button class="btn" type="button" data-ack="'+esc(key)+'">Got it</button></div></div>';
+  }).join('')+(list.length>3?'<div class="upd-i"><p><b>'+(list.length-3)+' more updates.</b> Open History to see all.</p></div>':'');
+}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-ack]');if(a)ackUpdate(a.dataset.ack)});
+function route(){renderAlerts();const h=location.hash.slice(1),isA=AUTH.includes(h);
 const isP=APP.includes(h);if(isP&&!user()){location.replace('#login');return}if(isA&&user()){location.replace('#dashboard');return}
 $('#home').hidden=isA||isP;$('#auth').hidden=!isA;$('#app').hidden=!isP;
 if(isA){resetPanes();document.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.r!=h);document.title=TT[h]+' – DocSmartly';scrollTo(0,0);if(h=='login'&&pre){$('#lId').value=pre;pre=null;$('#lPw').focus()}else $('.pane:not([hidden]) h1').focus({preventScroll:true})}
@@ -808,7 +852,7 @@ const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',
 
 $('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
-restore().finally(()=>{hdr();route()});
+restore().finally(()=>{hdr();route();renderAlerts()});
 // Live updates: pull the latest account every 15 s so admin status/remark/result changes appear without reload.
 // Skipped while the tab is hidden or the request form is open, so nothing the customer is typing gets wiped.
 setInterval(async()=>{
@@ -819,10 +863,8 @@ setInterval(async()=>{
   if(!r.ok)return;
   const j=await r.json();
   const changed=JSON.stringify(user())!==JSON.stringify(j.user);
-  if(!changed)return;
-  saveUsers([j.user]);setBal();
-  const h=location.hash.slice(1);
-  if(VIEWS[h])VIEWS[h]();
+  if(changed){saveUsers([j.user]);setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]()}
+  renderAlerts();
 },15000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)window.dispatchEvent(new Event('hashchange'))});
 
