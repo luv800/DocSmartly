@@ -615,8 +615,6 @@ const updSeenKey=()=>'ds_seen_'+st.get('ds_session');
 const updSeen=()=>{try{return new Set(JSON.parse(st.get(updSeenKey())||'[]'))}catch(e){return new Set()}};
 function pendingUpdates(){
   const u=user();if(!u)return[];
-  // First time this browser sees this account: treat existing orders as already seen, so old requests do not flash
-  if(st.get(updSeenKey())==null)st.set(updSeenKey(),JSON.stringify((u.orders||[]).map(updKey)));
   const seen=updSeen();
   return(u.orders||[]).filter(o=>updAlertable(o)&&!seen.has(updKey(o)));
 }
@@ -624,12 +622,19 @@ function ackUpdate(key){const s=updSeen();s.add(key);st.set(updSeenKey(),JSON.st
 function ensureAlertStyle(){
   if(document.getElementById('upd-style'))return;
   const s=document.createElement('style');s.id='upd-style';
-  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:6px;padding:8px;pointer-events:none}'+
-  '#upd .upd-i{pointer-events:auto;background:#fff4e5;border:2px solid #d9480f;color:#1b1f2a;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 6px 20px rgba(0,0,0,.25)}'+
-  '#upd .upd-i p{margin:2px 0;font-size:.95rem}#upd .upd-i b{color:#b02a00}'+
+  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:10px;pointer-events:none}'+
+  '#upd .upd-i{pointer-events:auto;background:#fff4e5;border:2.5px solid #d9480f;color:#1b1f2a;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 28px rgba(217,72,15,.35)}'+
+  '#upd .upd-i p{margin:3px 0;font-size:.95rem}#upd .upd-i b{color:#b02a00}'+
   '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
-  '@media (prefers-reduced-motion:no-preference){#upd .upd-i{animation:updFlash 1s ease-in-out infinite alternate}}'+
-  '@keyframes updFlash{from{background:#fff4e5}to{background:#ffd0a8}}';
+  '.sb{display:inline-block;border-radius:99px;padding:3px 11px;font-size:.76rem;font-weight:800;text-transform:capitalize}'+
+  '.s-pending{background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d}'+
+  '.s-processing{background:#dbe7ff;color:#1b44ad;border:1px solid #a9c4ff}'+
+  '.s-success{background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0}'+
+  '.s-failed{background:#fdecea;color:#7a1a12;border:1px solid #f3b8b2}'+
+  '.rk-flash{margin-top:6px;padding:7px 11px;border-radius:8px;background:#fff0eb;border:2px solid #e03131;color:#9b1c1c;font-weight:700;font-size:.84rem;display:inline-block}'+
+  '@media (prefers-reduced-motion:no-preference){#upd .upd-i{animation:updFlash .85s ease-in-out infinite alternate}.rk-flash{animation:rkPulse .9s ease-in-out infinite alternate}}'+
+  '@keyframes updFlash{from{background:#fff4e5;transform:scale(1)}to{background:#ffc999;transform:scale(1.005)}}'+
+  '@keyframes rkPulse{from{background:#fff0eb;border-color:#e03131;box-shadow:0 0 0 0 rgba(224,49,49,.4)}to{background:#ffe066;border-color:#d9480f;color:#7a1a12;box-shadow:0 0 0 5px rgba(224,49,49,0)}}';
   document.head.appendChild(s);
 }
 function renderAlerts(){
@@ -811,7 +816,7 @@ if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
 
 /* ---------- history, profile, contact ---------- */
-function renderHist(){const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);$('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">History</h1><p class="lead">Every request and its result. Download a result again anytime.</p><div class="tw" style="margin-top:18px"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead><tbody>${o.map(x=>`<tr><td data-l="Date">${dt(x.t)}</td><td data-l="Service">${esc(x.n||'')}${x.remark?`<br><small class="sub">Note from DocSmartly: ${esc(x.remark)}</small>`:''}</td><td data-l="Status">${esc(x.s)}</td><td data-l="Amount"><b>${inr(x.amt||0)}</b></td><td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td></tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody></table></div>`}
+function renderHist(){ensureAlertStyle();const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);$('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">History</h1><p class="lead">Every request and its result. Download a result again anytime.</p><div class="tw" style="margin-top:18px"><table><thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead><tbody>${o.map(x=>`<tr><td data-l="Date">${dt(x.t)}</td><td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash">🔔 Remark: ${esc(x.remark)}</div>`:''}</td><td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td><td data-l="Amount"><b>${inr(x.amt||0)}</b></td><td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td></tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody></table></div>`}
 const resList=u=>{const l=u.orders.filter(o=>o.file&&o.id).sort((a,b)=>b.t-a.t);return l.length?`<ul class="rd">${l.map(o=>`<li><span>${esc(o.n)}<small>${dt(o.t)} · ${esc(o.file.name)}</small></span><button class="btn" type="button" data-dl="${esc(o.id)}" data-n="${esc(o.file.name)}">Download</button></li>`).join('')}</ul>`:'<p class="sub">Result documents uploaded by our team will appear here.</p>'};
 function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form><h2 class="sh">My results</h2>${resList(u)}`}
 function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
@@ -855,7 +860,7 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce
 restore().finally(()=>{hdr();route();renderAlerts()});
 // Live updates: pull the latest account every 15 s so admin status/remark/result changes appear without reload.
 // Skipped while the tab is hidden or the request form is open, so nothing the customer is typing gets wiped.
-setInterval(async()=>{
+async function syncNow(){
   if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
   const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
   if(!r)return;
@@ -865,8 +870,9 @@ setInterval(async()=>{
   const changed=JSON.stringify(user())!==JSON.stringify(j.user);
   if(changed){saveUsers([j.user]);setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]()}
   renderAlerts();
-},15000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)window.dispatchEvent(new Event('hashchange'))});
+}
+setInterval(syncNow,5000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
 
 </script>
 </body>
