@@ -681,9 +681,17 @@ run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fP
 /* ---------- page-level clicks ---------- */
 document.addEventListener('click',e=>{
 if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
+javascript
 const a=e.target.closest('[data-auth]');
-if(a){e.preventDefault();if(user())toast('You’re already logged in.');else to(+a.dataset.auth?'register':'login');return}
-if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
+if(a){
+  e.preventDefault();
+  if(user()){
+    to('dashboard');
+  }else{
+    to(+a.dataset.auth?'register':'login');
+  }
+  return;
+}if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
 
 javascript
 document.addEventListener('click', async e => {
