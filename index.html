@@ -685,6 +685,26 @@ const a=e.target.closest('[data-auth]');
 if(a){e.preventDefault();if(user())toast('You’re already logged in.');else to(+a.dataset.auth?'register':'login');return}
 if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
 
+javascript
+document.addEventListener('click', async e => {
+  const pb = e.target.closest('[data-pr]');
+  if (pb) {
+    fetch(API + '/api/requests/' + encodeURIComponent(pb.dataset.pr) + '/file', { headers: tokenHdr() })
+    .then(r => { if (!r.ok) throw 0; return r.blob(); })
+    .catch(() => { toast('Could not open file for printing.'); return null; })
+    .then(bl => {
+      if (!bl) return;
+      const url = URL.createObjectURL(bl);
+      const w = window.open(url, '_blank');
+      if (w) {
+        w.onload = () => w.print();
+      }
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    });
+    return;
+  }
+});
+  
 /* ---------- mobile menu ---------- */
 const N=$('#nav'),B=$('#mn');
 function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
@@ -818,9 +838,7 @@ if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
 
 /* ---------- history, profile, contact ---------- */
-function renderHist(){
-  ensureAlertStyle();
-  function renderHist(){
+ function renderHist(){
   ensureAlertStyle();
   const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
   $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
@@ -833,7 +851,14 @@ function renderHist(){
         <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash"><b>Admin Note:</b> ${esc(x.remark)}</div>`:''}</td>
         <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
         <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
-        <td data-l="Result">${x.file?`<div style="display:flex;gap:8px;align-items:center"><button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button><button class="link" style="color:#16a34a" data-pr="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Print</button></div>`:'<span class="sub">Not ready</span>'}</td>
+        <td data-l="Result">${x.file?`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download
+          </button>
+          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;color:#12803f;border-color:#12803f" data-pr="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Print
+          </button>
+        </div>`:'<span class="sub">Not ready</span>'}</td>
       </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
     </table></div>`;
 }
