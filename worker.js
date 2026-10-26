@@ -287,6 +287,16 @@ export default {
           return reply(req, env, { ok: true });
         }
 
+        if (M === 'PUT' && (m = p.match(/^\/api\/admin\/requests\/([^/]+)\/remark$/))) {
+          const rid = decodeURIComponent(m[1]);
+          const { remark } = await readJson();
+          const u = await owner(rid);
+          if (!u) return bad(404, 'not_found');
+          u.orders.find(o => o.id === rid).remark = String(remark ?? '').trim().slice(0, 500);
+          await saveRow(env, u);
+          return reply(req, env, { ok: true });
+        }
+
         if (M === 'DELETE' && (m = p.match(/^\/api\/admin\/requests\/([^/]+)\/file$/))) {
           const rid = decodeURIComponent(m[1]);
           const u = await owner(rid);
