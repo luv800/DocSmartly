@@ -545,7 +545,13 @@ paint();go(0);
 const mem={};
 const st={get(k){try{return localStorage.getItem(k)}catch(e){return k in mem?mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}},del(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}};
 const users=()=>{try{return JSON.parse(st.get('ds_users')||'[]')}catch(e){return[]}};
-const saveUsers=u=>st.set('ds_users',JSON.stringify(u));
+const saveUsers=a=>st.set('ds_users',JSON.stringify(a));
+const API='https://docsmartly-api.YOUR-SUBDOMAIN.workers.dev';
+const tokenHdr=()=>({'x-user-token':st.get('ds_token')||''});
+const api=(m,p,b)=>fetch(API+p,{method:m,headers:{'content-type':'application/json',...tokenHdr()},body:b===undefined?undefined:JSON.stringify(b)});
+async function serverLogin(id,pw){const s=await fetch(API+'/api/salt/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);if(!s)return null;const r=await fetch(API+'/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id,hash:await hash(pw,s.salt)})}).catch(()=>null);if(!r||!r.ok)return null;const j=await r.json();st.set('ds_token',j.token);saveUsers([j.user]);return j}
+async function lookupUser(id){const r=await fetch(API+'/api/lookup/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);return r&&r.exists?r:null}
+async function restore(){if(!st.get('ds_session')||!st.get('ds_token'))return;const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);if(r&&r.ok){saveUsers([(await r.json()).user])}else if(r&&r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users')}}
 const user=()=>{const id=st.get('ds_session');return id?users().find(u=>u.id==id):null};
 const b2h=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 const salt=()=>b2h(crypto.getRandomValues(new Uint8Array(16)));
@@ -609,17 +615,17 @@ wasAuth=isA||isP}
 addEventListener('hashchange',route);
 
 /* ---------- forms ---------- */
-$('#fLogin').onsubmit=e=>{e.preventDefault();const f=e.target;ban('lBan');if(!validate(f))return;run(f,'Logging in…',async()=>{try{const u=findUser($('#lId').value),ok=u&&await hash($('#lPw').value,u.salt)==u.hash;if(!ok){ban('lBan','We couldn’t log you in. Check your mobile number or email and your password, then try again.');return}login(u,false)}catch(x){ban('lBan',GEN)}})};
+$('#fLogin').onsubmit=e=>{e.preventDefault();const f=e.target;ban('lBan');if(!validate(f))return;run(f,'Logging in…',async()=>{try{const lr=await serverLogin($('#lId').value,$('#lPw').value),u=lr&&lr.user,ok=!!lr;if(!ok){ban('lBan','We couldn’t log you in. Check your mobile number or email and your password, then try again.');return}login(u,false)}catch(x){ban('lBan',GEN)}})};
 $('#fReg').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;
 const mob=normMob($('#rMob').value),mail=$('#rMail').value.trim().toLowerCase(),all=users();
 if(all.some(u=>u.mob==mob)){setErr($('#rMob'),'This mobile number is already registered. Log in instead.');$('#rMob').focus();return}
 if(all.some(u=>u.mail==mail)){setErr($('#rMail'),'This email is already registered. Log in instead.');$('#rMail').focus();return}
-run(f,'Creating account…',async()=>{try{const sl=salt(),u={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:await hash($('#rPw').value,sl),bal:0,tx:[],fav:[],refs:[],orders:[],code:gen(),first:false};const rc=st.get('ds_ref'),rf=rc&&all.find(x=>x.code==rc);if(rf){u.refBy=rf.id;(rf.refs=rf.refs||[]).push({id:u.id,name:u.name,t:Date.now(),st:'Pending',bonus:0})}all.push(u);saveUsers(all);login(u,true)}catch(x){toast(GEN)}})};
+run(f,'Creating account…',async()=>{try{const sl=salt(),hh=await hash($('#rPw').value,sl);const rr=await api('POST','/api/register',{user:{name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:hh},ref:st.get('ds_ref')||''});if(rr.status==409){toast('This account already exists. Log in instead.');return}if(!rr.ok)throw new Error(String(rr.status));const j=await rr.json();st.set('ds_token',j.token);saveUsers([j.user]);login(j.user,true)}catch(x){toast(GEN)}})};
 const mask=v=>idType(v)=='m'?'XXXXXX'+normMob(v).slice(-4):v.trim().replace(/^(.).*(@.*)$/,'$1•••$2');
-$('#fF1').onsubmit=e=>{e.preventDefault();if(!validate(e.target))return;const v=$('#fId').value,u=findUser(v);if(!u){setErr($('#fId'),'We couldn’t find an account with these details. Check them, or use New registration.');$('#fId').focus();return}
+$('#fF1').onsubmit=async e=>{e.preventDefault();if(!validate(e.target))return;const v=$('#fId').value,u=await lookupUser(v);if(!u){setErr($('#fId'),'We couldn’t find an account with these details. Check them, or use New registration.');$('#fId').focus();return}
 fu=u;fid=v.trim();$('#fSent').textContent='Enter the 6-digit reset code for '+mask(v)+'.';$('#fp1').hidden=true;$('#fp2').hidden=false;$('#fCode').focus()};
 $('#fF2').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;if($('#fCode').value.trim()!='123456'){setErr($('#fCode'),'That code doesn’t match. Check the code and try again.');$('#fCode').focus();return}
-run(f,'Resetting password…',async()=>{try{const all=users(),u=all.find(x=>x.id==fu.id),sl=salt();u.salt=sl;u.hash=await hash($('#fPw').value,sl);saveUsers(all);pre=fid;to('login');toast('Password updated. Log in with your new password.')}catch(x){toast(GEN)}})};
+run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fPw').value,sl);const rr=await api('POST','/api/reset',{id:fid,code:$('#fCode').value.trim(),salt:sl,hash:hh});if(!rr.ok)throw new Error(String(rr.status));pre=fid;to('login');toast('Password updated. Log in with your new password.')}catch(x){toast(GEN)}})};
 
 /* ---------- page-level clicks ---------- */
 document.addEventListener('click',e=>{
@@ -661,7 +667,7 @@ const gen=()=>Math.random().toString(36).slice(2,8).toUpperCase();
 const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
 const dt=t=>new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
 function me(){const u=user();if(!u)return null;let ch=0;['tx','fav','refs','orders'].forEach(k=>{if(!u[k]){u[k]=[];ch=1}});if(u.bal==null){u.bal=0;ch=1}if(!u.code){u.code=gen();ch=1}if(ch)save(u);return u}
-function save(u){const a=users(),i=a.findIndex(x=>x.id==u.id);a[i]=u;saveUsers(a)}
+function save(u){const a=users(),i=a.findIndex(x=>x.id==u.id);a[i]=u;saveUsers(a);if(u.fav)api('PUT','/api/me',{fav:u.fav}).catch(()=>{})}
 const WA='https://wa.me/917300277557?text=Hello%20DocSmartly%20Support';
 /* top bar */
 $('#aS').innerHTML=ic('search');$('#aR').innerHTML=ic('gift');$('#aP').innerHTML=ic('book');$('#aA').innerHTML=ic('plus');$('#aW').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
@@ -779,13 +785,10 @@ $('#fRq').innerHTML=F.map((l,i)=>{const o=l.endsWith('?'),n=o?l.slice(0,-1):l,v=
 return `<div class="fld"><label for="rq${i}">${esc(n)}${o?' (optional)':''}</label>${ta?`<textarea id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'}></textarea>`:`<input type="${ty}" ${at}>`}<p class="err" role="alert" hidden></p></div>`}).join('')+`<button class="btn" type="submit">Submit request · ${inr(p)}</button>`;
 $('#rm').classList.add('open');$('#rq0').focus()}
 $('#rx').onclick=closeRq;$('#rm').onclick=e=>{if(e.target.id=='rm')closeRq()};document.addEventListener('keydown',e=>{if(e.key=='Escape')closeRq()});
-document.addEventListener('submit',e=>{if(e.target.id!='fRq')return;e.preventDefault();const els=[...e.target.querySelectorAll('[data-l]')];let bad=null;
+document.addEventListener('submit',async e=>{if(e.target.id!='fRq')return;e.preventDefault();const els=[...e.target.querySelectorAll('[data-l]')];let bad=null;
 els.forEach(i=>{const m=i.nextElementSibling,x=i.hasAttribute('data-req')&&!i.value.trim();m.hidden=!x;m.textContent=x?'This field is required.':'';if(x&&!bad)bad=i});if(bad){bad.focus();return}
-const u=me(),a=ALL.find(x=>x.k==rqk),p=DP[rqk];if(u.bal<p){toast('Not enough wallet balance. Add money first.');return}
-const d={};els.forEach(i=>{if(i.value.trim())d[i.dataset.l]=i.value.trim()});const n=Date.now();
-u.bal-=p;u.tx.push({t:n,type:'debit',amt:p,note:a.n});u.orders.push({id:'REQ-'+n.toString(36).toUpperCase(),t:n,n:a.n,sec:SVC[a.s]||a.s,s:'pending',amt:p,data:d});save(u);closeRq();setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]();toast('Request submitted. Track it in History.')});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-dl]');if(!b)return;const d=st.get('ds_f_'+b.dataset.dl);if(!d){toast('This file is not available in this browser.');return}
-fetch(d).then(r=>r.blob()).then(bl=>{const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=b.dataset.n||'result';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)})});
+const a=ALL.find(x=>x.k==rqk),p=DP[rqk];const d={};els.forEach(i=>{if(i.value.trim())d[i.dataset.l]=i.value.trim()});const rr=await api('POST','/api/requests',{k:rqk,sec:SVC[a.s]||a.s,data:d});if(rr.status==402){toast('Not enough wallet balance. Add money first.');return}if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);closeRq();setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]();toast('Request submitted. Track it in History.')});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dl]');if(!b)return;fetch(API+'/api/requests/'+encodeURIComponent(b.dataset.dl)+'/file',{headers:tokenHdr()}).then(r=>{if(!r.ok)throw 0;return r.blob()}).catch(()=>{toast('Could not download the file. Try again.');return null}).then(bl=>{if(!bl)return;const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=b.dataset.n||'result';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)})});
 /* events */
 document.addEventListener('click',e=>{const t=e.target;let b;
 if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
@@ -798,16 +801,14 @@ if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hi
 if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
 if(t.id=='sQ'){const q=t.value.trim().toLowerCase(),r=q?ALL.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8):[];$('#sR').innerHTML=r.map(a=>`<button type="button" class="sri" data-it="${esc(a.k)}">${esc(a.n)}<small>${esc(a.s)}</small></button>`).join('')||(q?'<p class="sub" style="padding:8px 4px">No service matches that search.</p>':'')}});
-document.addEventListener('submit',e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
+document.addEventListener('submit',async e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
 if(!(v>=200)){setErr(a,'Enter an amount of ₹200 or more.');a.focus();return}
-const all=users(),u=all.find(x=>x.id==user().id);u.bal=(u.bal||0)+v;u.tx=u.tx||[];u.tx.push({t:Date.now(),type:'credit',amt:v,note:'Added via UPI'});
-if(u.refBy&&!u.first){const r=all.find(x=>x.id==u.refBy);if(r){r.bal=(r.bal||0)+10;(r.tx=r.tx||[]).push({t:Date.now(),type:'credit',amt:10,note:'Referral bonus: '+u.name});const f=(r.refs||[]).find(x=>x.id==u.id);if(f){f.st='Credited';f.bonus=10}}}
-u.first=true;saveUsers(all);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
+const rr=await api('POST','/api/topup',{amt:v});if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
 const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
 
 $('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
-hdr();route();
+restore().finally(()=>{hdr();route()});
 
 </script>
 </body>

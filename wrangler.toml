@@ -1,0 +1,16 @@
+name = "docsmartly-api"
+main = "src/worker.js"
+compatibility_date = "2026-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "docsmartly"
+database_id = "PASTE_D1_ID_HERE"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "docsmartly-files"
+
+[vars]
+# Comma-separated. Add the customer site origin AND the admin page origin.
+ALLOWED_ORIGINS = "https://your-site.pages.dev"
