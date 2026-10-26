@@ -767,7 +767,7 @@ if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
 
 /* ---------- history, profile, contact ---------- */
-function renderHist(){const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);$('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">History</h1><p class="lead">Every request and its result. Download a result again anytime.</p><div class="tw" style="margin-top:18px"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead><tbody>${o.map(x=>`<tr><td data-l="Date">${dt(x.t)}</td><td data-l="Service">${esc(x.n||'')}</td><td data-l="Status">${esc(x.s)}</td><td data-l="Amount"><b>${inr(x.amt||0)}</b></td><td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td></tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody></table></div>`}
+function renderHist(){const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);$('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">History</h1><p class="lead">Every request and its result. Download a result again anytime.</p><div class="tw" style="margin-top:18px"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead><tbody>${o.map(x=>`<tr><td data-l="Date">${dt(x.t)}</td><td data-l="Service">${esc(x.n||'')}${x.remark?`<br><small class="sub">Note from DocSmartly: ${esc(x.remark)}</small>`:''}</td><td data-l="Status">${esc(x.s)}</td><td data-l="Amount"><b>${inr(x.amt||0)}</b></td><td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td></tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody></table></div>`}
 const resList=u=>{const l=u.orders.filter(o=>o.file&&o.id).sort((a,b)=>b.t-a.t);return l.length?`<ul class="rd">${l.map(o=>`<li><span>${esc(o.n)}<small>${dt(o.t)} · ${esc(o.file.name)}</small></span><button class="btn" type="button" data-dl="${esc(o.id)}" data-n="${esc(o.file.name)}">Download</button></li>`).join('')}</ul>`:'<p class="sub">Result documents uploaded by our team will appear here.</p>'};
 function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form><h2 class="sh">My results</h2>${resList(u)}`}
 function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
@@ -809,6 +809,22 @@ const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',
 $('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
 restore().finally(()=>{hdr();route()});
+// Live updates: pull the latest account every 15 s so admin status/remark/result changes appear without reload.
+// Skipped while the tab is hidden or the request form is open, so nothing the customer is typing gets wiped.
+setInterval(async()=>{
+  if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
+  const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
+  if(!r)return;
+  if(r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users');hdr();route();return}
+  if(!r.ok)return;
+  const j=await r.json();
+  const changed=JSON.stringify(user())!==JSON.stringify(j.user);
+  if(!changed)return;
+  saveUsers([j.user]);setBal();
+  const h=location.hash.slice(1);
+  if(VIEWS[h])VIEWS[h]();
+},15000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)window.dispatchEvent(new Event('hashchange'))});
 
 </script>
 </body>
