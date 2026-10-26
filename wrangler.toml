@@ -13,4 +13,4 @@ bucket_name = "docsmartly-files"
 
 [vars]
 # Comma-separated. Add the customer site origin AND the admin page origin.
-ALLOWED_ORIGINS = "https://docsmartly.pages.dev,https://docsmatlyadmin.pages.dev"
+ALLOWED_ORIGINS = "https://docsmartly.pages.dev,https://docsmartlyadmin.pages.dev"
