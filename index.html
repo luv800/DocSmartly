@@ -546,7 +546,7 @@ const mem={};
 const st={get(k){try{return localStorage.getItem(k)}catch(e){return k in mem?mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}},del(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}};
 const users=()=>{try{return JSON.parse(st.get('ds_users')||'[]')}catch(e){return[]}};
 const saveUsers=a=>st.set('ds_users',JSON.stringify(a));
-const API='https://docsmartly-api.YOUR-SUBDOMAIN.workers.dev';
+const API='https://docsmartly-api.hm2351994.workers.dev';
 const tokenHdr=()=>({'x-user-token':st.get('ds_token')||''});
 const api=(m,p,b)=>fetch(API+p,{method:m,headers:{'content-type':'application/json',...tokenHdr()},body:b===undefined?undefined:JSON.stringify(b)});
 async function serverLogin(id,pw){const s=await fetch(API+'/api/salt/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);if(!s)return null;const r=await fetch(API+'/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id,hash:await hash(pw,s.salt)})}).catch(()=>null);if(!r||!r.ok)return null;const j=await r.json();st.set('ds_token',j.token);saveUsers([j.user]);return j}

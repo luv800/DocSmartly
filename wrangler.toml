@@ -5,7 +5,7 @@ compatibility_date = "2026-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "docsmartly"
-database_id = "PASTE_D1_ID_HERE"
+database_id = "5d37bccc-a0dd-49f1-b441-ade77f44d474"
 
 [[r2_buckets]]
 binding = "FILES"
@@ -13,4 +13,4 @@ bucket_name = "docsmartly-files"
 
 [vars]
 # Comma-separated. Add the customer site origin AND the admin page origin.
-ALLOWED_ORIGINS = "https://your-site.pages.dev"
+ALLOWED_ORIGINS = "https://docsmartly.pages.dev,https://docsmatlyadmin.pages.dev"
