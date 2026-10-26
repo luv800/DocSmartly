@@ -365,11 +365,19 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="tb"><button type="button" class="ib" id="aS" aria-label="Search services" title="Search services"></button><a class="ib" id="aR" href="#referral" aria-label="Refer & Earn" title="Refer & Earn"></a><a class="ib" id="aP" href="#passbook" aria-label="Passbook" title="Passbook"></a><a class="ib" id="aW" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp help" title="WhatsApp help"></a><a class="chip" id="aB" href="#passbook" title="Wallet balance" aria-label="Wallet balance"></a><a class="ib pl" id="aA" href="#addmoney" aria-label="Add balance" title="Add balance"></a></div></div>
 <div class="sp" id="sP" hidden><div class="w"><label for="sQ">Search services</label><input id="sQ" type="search" autocomplete="off"><div id="sR"></div></div></div></header>
 <div class="shell"><aside id="sb" aria-label="Menu"></aside><main class="apm"><section data-v="dashboard" hidden></section><section data-v="referral" hidden></section><section data-v="passbook" hidden></section><section data-v="addmoney" hidden></section><section data-v="history" hidden></section><section data-v="profile" hidden></section><section data-v="contact" hidden></section></main></div></div>
-<div class="modal" id="wm"><div class="box" role="dialog" aria-modal="true" aria-labelledby="wt"><button class="x" id="wx" aria-label="Close welcome message">✕</button>
-<h2 id="wt">Welcome</h2><p class="sub" id="ws"></p>
-<div class="wl"><div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><div><b><i class="live"></i>All services working</b><span>RC, DL, Voter, PAN and every other service is live.</span></div></div>
-<div class="wr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg></span><div><b>Auto refund if a service fails</b><span>The amount returns to your wallet automatically.</span></div></div></div>
-<button class="btn" id="wGo" type="button">Explore services</button></div></div>
+<div class="modal" id="wm">
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="wt">
+    <button class="x" id="wx" aria-label="Close welcome message">✕</button>
+    <h2 id="wt" style="font-size: 1.25rem; font-weight: 700; color: #13233f;">Welcome</h2>
+    <p class="sub" id="ws" style="font-size: 0.9rem; color: #5a6a85; margin-top: 4px;"></p>
+    <div class="wl" style="margin: 14px 0;">
+      <div class="wr" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;">
+        <div style="font-size: 0.88rem; color: #1e293b;"><b><i class="live"></i>All services active</b><span style="display: block; color: #64748b; font-size: 0.8rem;">RC, DL, Voter and PAN services are fully live.</span></div>
+      </div>
+    </div>
+    <button class="btn" id="wGo" type="button" style="width: 100%; margin-top: 4px;">Continue to Dashboard</button>
+  </div>
+</div>
 
 <div class="modal" id="rm"><div class="box" role="dialog" aria-modal="true" aria-labelledby="rt"><button class="x" id="rx" type="button" aria-label="Close">✕</button><h2 id="rt">Service request</h2><p class="sub" id="rp"></p><form id="fRq" novalidate></form></div></div>
 
@@ -584,7 +592,6 @@ let prog=false;
 function setErr(f,m){f.setAttribute('aria-invalid','true');const e=$('#'+f.id+'-e');e.textContent=m;e.hidden=false;const h=$('#'+f.id+'-h');if(h)h.hidden=true}
 function clearErr(f){f.removeAttribute('aria-invalid');const e=$('#'+f.id+'-e');e.hidden=true;e.textContent='';const h=$('#'+f.id+'-h');if(h)h.hidden=false}
 function check(f){const m=RULES[f.dataset.rule](f.value);m?setErr(f,m):clearErr(f);return !m}
-function validate(form){let first=null;form.querySelectorAll('[data-rule]').forEach(f=>{if(!check(f)&&!first)first=f});if(first){first.scrollIntoView({block:'center',behavior:'smooth'});prog=true;first.focus({preventScroll:true});prog=false}return !first}
 document.querySelectorAll('[data-rule]').forEach(f=>{f.addEventListener('blur',()=>check(f));f.addEventListener('focus',()=>{if(!prog)clearErr(f)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')=='true')clearErr(f)})});
 function ban(id,m){const b=$('#'+id);if(!m){b.hidden=true;return}b.textContent=m;b.hidden=false}
 async function run(form,label,fn){if(form.dataset.busy)return;form.dataset.busy='1';const b=form.querySelector('button[type=submit]'),o=b.textContent;b.textContent=label;b.setAttribute('aria-busy','true');try{await fn()}finally{delete form.dataset.busy;b.textContent=o;b.removeAttribute('aria-busy')}}
@@ -606,9 +613,7 @@ const APP=['dashboard','referral','passbook','addmoney','history','profile','con
 let wasAuth=false,pre=null,fu=null,fid='';
 function resetPanes(){document.querySelectorAll('#auth form').forEach(f=>{f.reset();f.querySelectorAll('[data-rule]').forEach(clearErr)});document.querySelectorAll('#auth .show').forEach(b=>{b.textContent='Show';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Show password')});document.querySelectorAll('#auth input[type=text][id$=Pw]').forEach(i=>i.type='password');ban('lBan');$('#fp1').hidden=false;$('#fp2').hidden=true;fu=null}
 
-/* ---------- must-see update alerts ----------
-   Shows a flashing banner for every admin change (status, remark, result file)
-   until the customer presses "Got it" or "Open History". Survives page reloads. */
+/* ---------- must-see update alerts (Clean Professional Style) ---------- */
 const updKey=o=>[o.id,o.s,o.remark||'',o.file?o.file.t:''].join('|');
 const updAlertable=o=>o.s!=='pending'||!!o.remark||!!o.file;
 const updSeenKey=()=>'ds_seen_'+st.get('ds_session');
@@ -618,105 +623,20 @@ function pendingUpdates(){
   const seen=updSeen();
   return(u.orders||[]).filter(o=>updAlertable(o)&&!seen.has(updKey(o)));
 }
-```[cite: 1]
-
----
-
-### 2. Dhoondhein: `function ensureAlertStyle()`
-*(Yeh `pendingUpdates` ke bilkul niche milegi[cite: 1])*
-
-* **Isko replace karke yeh lagayein:**
-```javascript
-function ensureAlertStyle(){
-  if(document.getElementById('upd-style'))return;
-  const s=document.createElement('style');s.id='upd-style';
-  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:10px;pointer-events:none}'+
-  '#upd .upd-i{pointer-events:auto;background:#fff4e5;border:2.5px solid #d9480f;color:#1b1f2a;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 28px rgba(217,72,15,.35)}'+
-  '#upd .upd-i p{margin:3px 0;font-size:.95rem}#upd .upd-i b{color:#b02a00}'+
-  '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
-  '.sb{display:inline-block;border-radius:99px;padding:3px 11px;font-size:.76rem;font-weight:800;text-transform:capitalize}'+
-  '.s-pending{background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d}'+
-  '.s-processing{background:#dbe7ff;color:#1b44ad;border:1px solid #a9c4ff}'+
-  '.s-success{background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0}'+
-  '.s-failed{background:#fdecea;color:#7a1a12;border:1px solid #f3b8b2}'+
-  '.rk-flash{margin-top:6px;padding:7px 11px;border-radius:8px;background:#fff0eb;border:2px solid #e03131;color:#9b1c1c;font-weight:700;font-size:.84rem;display:inline-block}'+
-  '@media (prefers-reduced-motion:no-preference){#upd .upd-i{animation:updFlash .85s ease-in-out infinite alternate}.rk-flash{animation:rkPulse .9s ease-in-out infinite alternate}}'+
-  '@keyframes updFlash{from{background:#fff4e5;transform:scale(1)}to{background:#ffc999;transform:scale(1.005)}}'+
-  '@keyframes rkPulse{from{background:#fff0eb;border-color:#e03131;box-shadow:0 0 0 0 rgba(224,49,49,.4)}to{background:#ffe066;border-color:#d9480f;color:#7a1a12;box-shadow:0 0 0 5px rgba(224,49,49,0)}}';
-  document.head.appendChild(s);
-}
-```[cite: 1]
-
----
-
-### 3. Dhoondhein: `function renderHist()`
-*(Yeh lagbhag line 450 ke aas-pass milegi[cite: 1])*
-
-* **Isko replace karke yeh lagayein:**
-```javascript
-function renderHist(){
-  ensureAlertStyle();
-  const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
-  $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
-    <h1 tabindex="-1">History</h1>
-    <p class="lead">Every request and its result. Download a result again anytime.</p>
-    <div class="tw" style="margin-top:18px"><table>
-      <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
-      <tbody>${o.map(x=>`<tr>
-        <td data-l="Date">${dt(x.t)}</td>
-        <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash">🔔 Remark: ${esc(x.remark)}</div>`:''}</td>
-        <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
-        <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
-        <td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td>
-      </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
-    </table></div>`;
-}
-```[cite: 1]
-
----
-
-### 4. Dhoondhein: File ka Aakhri Hissa (`setInterval`)
-*(Yeh file ke bilkul aakhri lines me milega[cite: 1])*
-
-* **Isko replace karke yeh lagayein:**
-```javascript
-async function syncNow(){
-  if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
-  const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
-  if(!r)return;
-  if(r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users');hdr();route();return}
-  if(!r.ok)return;
-  const j=await r.json();
-  const changed=JSON.stringify(user())!==JSON.stringify(j.user);
-  if(changed){
-    saveUsers([j.user]);
-    setBal();
-    const h=location.hash.slice(1);
-    if(VIEWS[h])VIEWS[h]();
-  }
-  renderAlerts();
-}
-setInterval(syncNow, 5000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
-```[cite: 1]
-
 function ackUpdate(key){const s=updSeen();s.add(key);st.set(updSeenKey(),JSON.stringify([...s]));renderAlerts()}
 function ensureAlertStyle(){
   if(document.getElementById('upd-style'))return;
   const s=document.createElement('style');s.id='upd-style';
-  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:10px;pointer-events:none}'+
-  '#upd .upd-i{pointer-events:auto;background:#fff4e5;border:2.5px solid #d9480f;color:#1b1f2a;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 28px rgba(217,72,15,.35)}'+
-  '#upd .upd-i p{margin:3px 0;font-size:.95rem}#upd .upd-i b{color:#b02a00}'+
+  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:12px;pointer-events:none}'+
+  '#upd .upd-i{pointer-events:auto;background:#ffffff;border:1px solid #dbe5f6;border-left:4px solid #2457d6;color:#13233f;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 30px rgba(19,35,63,.12)}'+
+  '#upd .upd-i p{margin:2px 0;font-size:.92rem}#upd .upd-i b{color:#1b44ad}'+
   '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
   '.sb{display:inline-block;border-radius:99px;padding:3px 11px;font-size:.76rem;font-weight:800;text-transform:capitalize}'+
   '.s-pending{background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d}'+
   '.s-processing{background:#dbe7ff;color:#1b44ad;border:1px solid #a9c4ff}'+
   '.s-success{background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0}'+
   '.s-failed{background:#fdecea;color:#7a1a12;border:1px solid #f3b8b2}'+
-  '.rk-flash{margin-top:6px;padding:7px 11px;border-radius:8px;background:#fff0eb;border:2px solid #e03131;color:#9b1c1c;font-weight:700;font-size:.84rem;display:inline-block}'+
-  '@media (prefers-reduced-motion:no-preference){#upd .upd-i{animation:updFlash .85s ease-in-out infinite alternate}.rk-flash{animation:rkPulse .9s ease-in-out infinite alternate}}'+
-  '@keyframes updFlash{from{background:#fff4e5;transform:scale(1)}to{background:#ffc999;transform:scale(1.005)}}'+
-  '@keyframes rkPulse{from{background:#fff0eb;border-color:#e03131;box-shadow:0 0 0 0 rgba(224,49,49,.4)}to{background:#ffe066;border-color:#d9480f;color:#7a1a12;box-shadow:0 0 0 5px rgba(224,49,49,0)}}';
+  '.rk-flash{margin-top:8px;padding:8px 12px;border-radius:8px;background:#f8fafc;border:1px solid #cbd5e1;color:#334155;font-weight:600;font-size:.85rem;display:block;box-shadow:inset 0 1px 2px rgba(0,0,0,.02)}';
   document.head.appendChild(s);
 }
 function renderAlerts(){
@@ -729,7 +649,7 @@ function renderAlerts(){
   box.innerHTML=list.slice(0,3).map(o=>{
     const key=updKey(o),bits=[];
     if(o.s!=='pending')bits.push('Status: <b>'+esc(o.s)+'</b>');
-    if(o.remark)bits.push('Note from DocSmartly: <b>'+esc(o.remark)+'</b>');
+    if(o.remark)bits.push('Admin Note: <b>'+esc(o.remark)+'</b>');
     if(o.file)bits.push('Result ready: <b>'+esc(o.file.name)+'</b> (download in History)');
     return '<div class="upd-i"><div><p><b>'+esc(o.n||'Your request')+'</b> ('+esc(o.id)+')</p>'+bits.map(b=>'<p>'+b+'</p>').join('')+'</div>'+
       '<div class="upd-b"><a class="btn" href="#history" data-ack="'+esc(key)+'">Open History</a><button class="btn" type="button" data-ack="'+esc(key)+'">Got it</button></div></div>';
@@ -898,7 +818,23 @@ if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
 
 /* ---------- history, profile, contact ---------- */
-function renderHist(){ensureAlertStyle();const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);$('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">History</h1><p class="lead">Every request and its result. Download a result again anytime.</p><div class="tw" style="margin-top:18px"><table><thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead><tbody>${o.map(x=>`<tr><td data-l="Date">${dt(x.t)}</td><td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash">🔔 Remark: ${esc(x.remark)}</div>`:''}</td><td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td><td data-l="Amount"><b>${inr(x.amt||0)}</b></td><td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td></tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody></table></div>`}
+function renderHist(){
+  ensureAlertStyle();
+  const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
+  $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
+    <h1 tabindex="-1">History</h1>
+    <p class="lead">Every request and its result. Download a result again anytime.</p>
+    <div class="tw" style="margin-top:18px"><table>
+      <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
+      <tbody>${o.map(x=>`<tr>
+        <td data-l="Date">${dt(x.t)}</td>
+        <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash"><b>Admin Note:</b> ${esc(x.remark)}</div>`:''}</td>
+        <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
+        <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
+        <td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td>
+      </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
+    </table></div>`;
+}
 const resList=u=>{const l=u.orders.filter(o=>o.file&&o.id).sort((a,b)=>b.t-a.t);return l.length?`<ul class="rd">${l.map(o=>`<li><span>${esc(o.n)}<small>${dt(o.t)} · ${esc(o.file.name)}</small></span><button class="btn" type="button" data-dl="${esc(o.id)}" data-n="${esc(o.file.name)}">Download</button></li>`).join('')}</ul>`:'<p class="sub">Result documents uploaded by our team will appear here.</p>'};
 function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form><h2 class="sh">My results</h2>${resList(u)}`}
 function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
@@ -940,8 +876,7 @@ const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',
 $('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
 restore().finally(()=>{hdr();route();renderAlerts()});
-// Live updates: pull the latest account every 15 s so admin status/remark/result changes appear without reload.
-// Skipped while the tab is hidden or the request form is open, so nothing the customer is typing gets wiped.
+
 async function syncNow(){
   if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
   const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
@@ -950,10 +885,15 @@ async function syncNow(){
   if(!r.ok)return;
   const j=await r.json();
   const changed=JSON.stringify(user())!==JSON.stringify(j.user);
-  if(changed){saveUsers([j.user]);setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]()}
+  if(changed){
+    saveUsers([j.user]);
+    setBal();
+    const h=location.hash.slice(1);
+    if(VIEWS[h])VIEWS[h]();
+  }
   renderAlerts();
 }
-setInterval(syncNow,5000);
+setInterval(syncNow, 5000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
 
 </script>
