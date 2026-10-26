@@ -820,10 +820,12 @@ document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
 /* ---------- history, profile, contact ---------- */
 function renderHist(){
   ensureAlertStyle();
+  function renderHist(){
+  ensureAlertStyle();
   const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
   $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
     <h1 tabindex="-1">History</h1>
-    <p class="lead">Every request and its result. Download a result again anytime.</p>
+    <p class="lead">Every request and its result. Download or print your result anytime.</p>
     <div class="tw" style="margin-top:18px"><table>
       <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
       <tbody>${o.map(x=>`<tr>
@@ -831,7 +833,7 @@ function renderHist(){
         <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash"><b>Admin Note:</b> ${esc(x.remark)}</div>`:''}</td>
         <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
         <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
-        <td data-l="Result">${x.file?`<button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button>`:'<span class="sub">Not ready</span>'}</td>
+        <td data-l="Result">${x.file?`<div style="display:flex;gap:8px;align-items:center"><button class="link" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Download</button><button class="link" style="color:#16a34a" data-pr="${esc(x.id||'')}" data-n="${esc(x.file.name)}">Print</button></div>`:'<span class="sub">Not ready</span>'}</td>
       </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
     </table></div>`;
 }
@@ -856,7 +858,25 @@ document.addEventListener('submit',async e=>{if(e.target.id!='fRq')return;e.prev
 els.forEach(i=>{const m=i.nextElementSibling,x=i.hasAttribute('data-req')&&!i.value.trim();m.hidden=!x;m.textContent=x?'This field is required.':'';if(x&&!bad)bad=i});if(bad){bad.focus();return}
 const a=ALL.find(x=>x.k==rqk),p=DP[rqk];const d={};els.forEach(i=>{if(i.value.trim())d[i.dataset.l]=i.value.trim()});const rr=await api('POST','/api/requests',{k:rqk,sec:SVC[a.s]||a.s,data:d});if(rr.status==402){toast('Not enough wallet balance. Add money first.');return}if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);closeRq();setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]();toast('Request submitted. Track it in History.')});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-dl]');if(!b)return;fetch(API+'/api/requests/'+encodeURIComponent(b.dataset.dl)+'/file',{headers:tokenHdr()}).then(r=>{if(!r.ok)throw 0;return r.blob()}).catch(()=>{toast('Could not download the file. Try again.');return null}).then(bl=>{if(!bl)return;const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=b.dataset.n||'result';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)})});
-/* events */
+document.addEventListener('click',async e=>{
+  const pb=e.target.closest('[data-pr]');
+  if(pb){
+    fetch(API+'/api/requests/'+encodeURIComponent(pb.dataset.pr)+'/file',{headers:tokenHdr()})
+    .then(r=>{if(!r.ok)throw 0;return r.blob()})
+    .catch(()=>{toast('Could not open file for printing.');return null})
+    .then(bl=>{
+      if(!bl)return;
+      const url=URL.createObjectURL(bl);
+      const w=window.open(url,'_blank');
+      if(w){
+        w.onload=()=>w.print();
+      }
+      setTimeout(()=>URL.revokeObjectURL(url),10000);
+    });
+    return;
+  }
+});
+  /* events */
 document.addEventListener('click',e=>{const t=e.target;let b;
 if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
 if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
