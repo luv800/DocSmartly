@@ -7,7 +7,11 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
+/* ==========================================================================
+   CSS 01: VARIABLES & GLOBAL RESETS
+   ========================================================================== */
 :root{--bg:#f5f8ff;--sf:#fff;--ink:#13233f;--mut:#5a6a85;--ac:#2457d6;--ac2:#1b44ad;--ln:#dbe5f6;--tint:#eaf1ff;--er:#b42318;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#f5f8ff}}
 :root[data-theme="dark"]{--bg:#f5f8ff}
@@ -17,20 +21,15 @@ h1,h2,h3{font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.2;le
 h1{font-size:clamp(2rem,5.2vw,3.4rem);font-weight:700}h2{font-size:clamp(1.55rem,3.4vw,2.3rem);font-weight:700}h3{font-size:1.05rem;font-weight:600}
 a{color:inherit;text-decoration:none}p{margin:0}
 .w{max-width:1120px;margin:0 auto;padding-inline:20px}.sec{padding-block:60px}
-header{position:sticky;top:0;z-index:20;background:rgba(245,248,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
-header .w{display:flex;align-items:center;gap:16px;height:60px}
-.logo{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:8px}
-.logo b{background:var(--ac);color:#fff;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:1rem}
-nav{display:flex;gap:16px;font-size:.88rem;color:var(--mut);margin-left:auto}nav a:hover{color:var(--ink)}
+
+/* ==========================================================================
+   CSS 02: BASE UI (BUTTONS, INPUTS, CARDS, ICONS)
+   ========================================================================== */
 .btn{display:inline-block;border:0;border-radius:10px;padding:11px 20px;font:700 .95rem 'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;background:var(--ac);color:#fff;min-height:44px;transition:transform .2s,box-shadow .2s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -8px var(--ac)}.btn.o{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
 :focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
-.mn{display:none;border:1.5px solid var(--ln);background:#fff;border-radius:10px;width:44px;height:44px;font-size:1.2rem;cursor:pointer}
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:52px}
 .tag{display:inline-block;background:var(--tint);border:1px solid var(--ln);border-radius:99px;padding:5px 14px;font-size:.82rem;font-weight:700;color:var(--ac2);margin-bottom:16px}
-.hero p.l{color:var(--mut);font-size:1.05rem;margin:16px 0 24px;max-width:540px}.row{display:flex;gap:12px;flex-wrap:wrap}
-.stats{background:var(--ink);color:#f5f8ff}.stats .w{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-block:28px;text-align:center}
-.stats b{font:800 2rem 'Plus Jakarta Sans',system-ui,sans-serif;color:#a9c4ff;display:block}.stats span{font-size:.85rem;opacity:.75}
+.row{display:flex;gap:12px;flex-wrap:wrap}
 .head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:26px}
 .sub{color:var(--mut);max-width:640px;margin-top:10px}
 input,select{background:var(--sf);border:1.5px solid var(--ln);border-radius:10px;padding:10px 14px;font:500 .95rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);min-height:44px}
@@ -44,6 +43,20 @@ input,select{background:var(--sf);border:1.5px solid var(--ln);border-radius:10p
 .sa{fill:none;stroke:var(--a);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.sw{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .rk{position:absolute;right:22px;top:22px;z-index:2;background:var(--ink);color:#fff;font-size:.7rem;font-weight:700;border-radius:99px;padding:2px 9px}
 .mt{width:48px;aspect-ratio:1.586;border-radius:6px;display:grid;place-items:center;flex:none}.mt svg{width:20px;height:20px;color:#fff}.rn{display:flex;align-items:center;gap:12px}
+
+/* ==========================================================================
+   CSS 03: PUBLIC LANDING PAGE (HEADER, HERO, STATS, FAQ, FOOTER)
+   ========================================================================== */
+header{position:sticky;top:0;z-index:20;background:rgba(245,248,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
+header .w{display:flex;align-items:center;gap:16px;height:60px}
+.logo{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:8px}
+.logo b{background:var(--ac);color:#fff;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:1rem}
+nav{display:flex;gap:16px;font-size:.88rem;color:var(--mut);margin-left:auto}nav a:hover{color:var(--ink)}
+.mn{display:none;border:1.5px solid var(--ln);background:#fff;border-radius:10px;width:44px;height:44px;font-size:1.2rem;cursor:pointer}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:52px}
+.hero p.l{color:var(--mut);font-size:1.05rem;margin:16px 0 24px;max-width:540px}
+.stats{background:var(--ink);color:#f5f8ff}.stats .w{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-block:28px;text-align:center}
+.stats b{font:800 2rem 'Plus Jakarta Sans',system-ui,sans-serif;color:#a9c4ff;display:block}.stats span{font-size:.85rem;opacity:.75}
 .alt{background:var(--tint);border-block:1px solid var(--ln)}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
 .step{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:22px}.step i{font:800 2.3rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ac);font-style:normal;display:block}
@@ -64,21 +77,10 @@ footer .c{margin-top:30px;padding-top:18px;border-top:1px solid #2b3f66;font-siz
 .box{background:#fff;border-radius:18px;padding:28px;width:100%;max-width:380px;position:relative}.box label{display:block;font-weight:700;font-size:.85rem;margin-top:14px}.box input{width:100%;margin-top:6px}.box .btn{width:100%;margin-top:20px}
 .x{position:absolute;right:12px;top:12px;border:0;background:var(--tint);width:44px;height:44px;border-radius:50%;cursor:pointer}
 #toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;translate:-50% 0}
-@media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
-@media(max-width:820px){.mn{display:block}.logo{margin-right:auto}header .w{gap:10px}
-nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--ln);flex-direction:column;gap:0;padding:8px 20px 14px;margin:0}nav.open{display:flex}nav a{padding:13px 0;border-bottom:1px solid var(--ln);font-size:1rem;color:var(--ink)}
-.hero{grid-template-columns:1fr;padding-block:34px 24px;text-align:center}.hero p.l{margin-inline:auto}.row{justify-content:center}
-.steps{grid-template-columns:1fr}.stats .w{grid-template-columns:repeat(2,1fr)}.sec{padding-block:44px}.head{align-items:stretch}.head input,.head select{width:100%}.head>div[style]{width:100%}.head>div[style]>*{flex:1 1 140px}}
-@media(max-width:560px){.w{padding-inline:16px}.hm{display:none}.btn{padding:11px 16px}.hero .row .btn{flex:1 1 140px;text-align:center}.grid{grid-template-columns:1fr 1fr;gap:10px}.card{padding:10px}
-.cats{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding:0 16px 6px;scrollbar-width:none}.cats button{flex:none}
-.tw{border:0;background:none;overflow:visible}table{min-width:0}thead{display:none}tr,td{display:block}tr{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:10px 14px;margin-bottom:10px}td{border:0;padding:4px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}td::before{content:attr(data-l);color:var(--mut);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}td:last-child{justify-content:flex-end}td:last-child::before{content:none}
-footer .g{grid-template-columns:1fr 1fr}}
-@media(max-width:360px){.grid{grid-template-columns:1fr}}
 
-[hidden]{display:none!important}
-.hero>*{min-width:0}
-.hi{font-size:.9rem;font-weight:700;color:var(--mut);margin-right:4px}
-/* hero slider */
+/* ==========================================================================
+   CSS 04: HERO SLIDER
+   ========================================================================== */
 .sl{width:100%;max-width:520px;margin-inline:auto;text-align:left}
 .sl-v{overflow:hidden;border-radius:20px;border:1px solid var(--ln);background:var(--sf);box-shadow:0 26px 44px -28px rgba(19,35,63,.45);touch-action:pan-y}
 .sl-t{display:flex;transition:transform .55s cubic-bezier(.22,.8,.3,1)}
@@ -94,7 +96,10 @@ footer .g{grid-template-columns:1fr 1fr}}
 .ctl{display:flex;gap:6px}
 .ib{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ln);background:var(--sf);color:var(--ink);cursor:pointer;display:grid;place-items:center;padding:0}
 .ib:hover{border-color:var(--ac);color:var(--ac)}.ib svg{width:20px;height:20px}
-/* auth */
+
+/* ==========================================================================
+   CSS 05: AUTHENTICATION VIEWS (LOGIN, REGISTER, FORGOT)
+   ========================================================================== */
 #auth{min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
 .ah{border-bottom:1px solid var(--ln);background:var(--bg)}
 .ah .w{display:flex;align-items:center;justify-content:space-between;height:60px}
@@ -119,17 +124,16 @@ footer .g{grid-template-columns:1fr 1fr}}
 .banner.err{background:#fdecea;border-color:#f3b8b2;color:#7a1a12}.banner.inf{background:var(--tint);border-color:#bfd0f3;color:var(--ink)}
 .pane .btn{width:100%;margin-top:22px}
 .alt2{margin-top:18px;text-align:center;color:var(--mut);font-size:.92rem}.alt2 a{display:inline-block;padding:8px 4px}
-/* welcome popup */
 .wl{display:grid;gap:10px;margin:18px 0 0}
 .wr{display:flex;gap:12px;align-items:flex-start;background:var(--tint);border:1px solid var(--ln);border-radius:12px;padding:12px 14px}
 .wr .ic{width:36px;height:36px;border-radius:10px;background:#fff;display:grid;place-items:center;flex:none;color:var(--ac)}.wr svg{width:20px;height:20px}
 .wr b{display:block;font-size:.97rem}.wr span{color:var(--mut);font-size:.86rem}
 .live{display:inline-block;width:9px;height:9px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 3px #c5ecd2;margin-right:8px;vertical-align:1px}
 #wm .box{max-width:400px}#wm h2{font-size:1.5rem;padding-right:36px}#wm .sub{margin-top:6px}
-@media(max-width:820px){.as{grid-template-columns:1fr}.ai{display:none}.af{place-items:start center;padding-top:32px}}
-@media(max-width:560px){.sl-c{padding:12px 16px 16px}.ib{width:44px;height:44px}}
 
-/* app */
+/* ==========================================================================
+   CSS 06: DASHBOARD PANEL & SHELL ARCHITECTURE
+   ========================================================================== */
 #app{min-height:100vh;background:var(--bg)}
 .ap{position:sticky;top:0;z-index:20;background:rgba(245,248,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
 .ap>.w{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-block:8px;min-height:60px}
@@ -160,10 +164,6 @@ footer .g{grid-template-columns:1fr 1fr}}
 #app .pn .btn{width:100%;margin-top:18px}
 .rd{list-style:none;margin:0;padding:0;max-width:520px;display:grid;gap:8px}.rd li{display:flex;justify-content:space-between;align-items:center;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px 16px}.rd small{display:block;color:var(--mut);font-size:.8rem}.rd b{color:var(--ac2)}
 .srt{display:flex;gap:8px;align-items:center}.srt input{width:200px}
-@media(max-width:820px){.stt{grid-template-columns:repeat(2,1fr)}.stt.s3{grid-template-columns:1fr}.srt input{width:100%}.srt{flex:1}}
-@media(max-width:560px){.ap .lt{display:none}.ap>.w{padding-inline:12px;gap:6px}.tb{gap:4px}.chip{padding:0 10px}.gc{padding:18px}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-/* ---- dashboard shell, sidebar, cards, search ---- */
 .ap>.w{max-width:1400px}
 .shell{display:grid;grid-template-columns:272px minmax(0,1fr);max-width:1400px;margin:0 auto}
 .apm{padding-inline:24px;min-width:0}
@@ -188,10 +188,6 @@ footer .g{grid-template-columns:1fr 1fr}}
 .sp input{background:#fff;border-color:#9db6e8}#sR{max-height:56vh;overflow:auto}
 .sri{background:#fff;border:1.5px solid #9db6e8;color:var(--ink)}
 .sri:hover,.sri:focus-visible{background:var(--ink);border-color:var(--ink);color:#fff}.sri:hover small,.sri:focus-visible small{color:#c5d6f5}
-@media(max-width:900px){.shell{display:block}.sbt{display:grid}.apm{padding-inline:16px}
-#sb{position:fixed;left:0;top:0;height:100%;width:min(300px,86vw);z-index:30;translate:-105% 0;transition:translate .25s;padding-top:env(safe-area-inset-top,0px)}
-#sb.open{translate:0 0;box-shadow:0 0 0 100vmax rgba(19,35,63,.5)}}
-@media(max-width:560px){.ig{grid-template-columns:1fr 1fr;gap:8px}}
 .tg{position:absolute;left:8px;top:8px;z-index:2;background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0;font:700 .72rem 'Plus Jakarta Sans',system-ui,sans-serif;border-radius:99px;padding:2px 9px}
 .pr{display:inline-block;background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d;border-radius:99px;padding:2px 12px;font-weight:800}
 .pr.fre{background:#12803f;border-color:#12803f;color:#fff}
@@ -201,7 +197,9 @@ footer .g{grid-template-columns:1fr 1fr}}
 .wal svg{width:19px;height:19px}.card .wal{position:static;margin-top:8px}.it.wq .itb{padding-bottom:52px}
 .logo .lg{width:34px;height:34px;flex:none}
 
-/* ---- v2: polish, smaller type, tags, cards, mobile header ---- */
+/* ==========================================================================
+   CSS 07: TYPOGRAPHY, MARQUEE & UTILITY DETAILS
+   ========================================================================== */
 html{font-size:93.75%}
 h1{font-size:clamp(1.8rem,4.6vw,3rem)}h2{font-size:clamp(1.4rem,3vw,2rem)}
 .sec{padding-block:52px}.tag{font-size:.76rem}.stats b{font-size:1.7rem}
@@ -215,8 +213,6 @@ header,.ap{box-shadow:0 1px 0 var(--ln),0 10px 24px -20px rgba(19,35,63,.35)}
 .fv{width:34px;height:34px;right:9px;top:9px}.fv svg{width:17px;height:17px}
 .grid{grid-template-columns:repeat(auto-fill,minmax(185px,1fr))}
 header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
-@media(max-width:560px){.ig{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}header .w{gap:8px}header .btn{padding:8px 11px;font-size:.8rem}.logo{font-size:1.05rem}.logo .lg{width:30px;height:30px}.mn{width:40px;height:40px}}
-@media(max-width:350px){header:not(.ap) .lt{display:none}}
 .hero{position:relative;isolation:isolate}.hero::before{content:"";position:absolute;right:-30px;top:-30px;width:380px;height:380px;max-width:80vw;background:radial-gradient(closest-side,rgba(59,115,245,.2),transparent);z-index:-1;pointer-events:none}
 .sl-v{position:relative}.sl-v::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);transform:translateX(-120%);animation:shn 6s ease-in-out infinite;pointer-events:none}
 @keyframes shn{0%,65%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
@@ -225,8 +221,13 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 @keyframes mq{to{transform:translateX(-50%)}}
 #rm .box{max-width:440px;max-height:92vh;overflow:auto}#rm h2{font-size:1.3rem;padding-right:44px}#rm .box textarea{width:100%;margin-top:0}
 .fld textarea{width:100%;background:var(--sf);border:1.5px solid var(--ln);border-radius:10px;padding:10px 14px;font:500 .95rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);min-height:76px;resize:vertical}
+[hidden]{display:none!important}
+.hero>*{min-width:0}
+.hi{font-size:.9rem;font-weight:700;color:var(--mut);margin-right:4px}
 
-/* ---- v3: professional + fully responsive layer ---- */
+/* ==========================================================================
+   CSS 08: RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 img,svg,video,canvas{max-width:100%}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -252,160 +253,354 @@ footer .g{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .it{transition:transform .2s,box-shadow .2s,border-color .2s}.it:hover{transform:translateY(-2px)}
 .modal .box,#rm .box{width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 input,select,textarea{max-width:100%;font-size:max(16px,.95rem)}
-@media(max-width:900px){nav{display:none}.mn{display:grid;place-items:center}
-.hero{grid-template-columns:1fr;gap:28px;padding-block:32px}
-#sb{height:100dvh;padding-bottom:env(safe-area-inset-bottom,0px)}}
-@media(max-width:640px){.gc{padding:18px}.gw{width:100%;justify-content:space-between}
-.stt{grid-template-columns:repeat(2,1fr)}.stt>div:first-child{grid-column:1/-1}
-.row .btn{flex:1 1 100%;text-align:center}.head{align-items:flex-start}}
-@media(max-width:400px){.ig{gap:6px}.itb{font-size:.76rem}.chip b{font-size:.8rem}}
-html{overflow-x:clip}.hero::before{right:0;top:-20px}
-.ap .w{flex-wrap:nowrap;gap:10px}.ap .tb{margin-left:auto;display:flex;align-items:center;gap:8px;min-width:0}.ap .logo{min-width:0}.ap .lt{white-space:nowrap}
-@media(max-width:640px){.ap #aR,.ap #aP{display:none}.ap .w{gap:8px}.ap .tb{gap:6px}}
+@media(max-width:1000px){footer .g{grid-template-columns:1fr 1fr 1fr}footer .g>div:first-child{grid-column:1/-1}}
+@media(max-width:900px){nav{display:none}.mn{display:grid;place-items:center}.hero{grid-template-columns:1fr;gap:28px;padding-block:32px}.shell{display:block}.sbt{display:grid}.apm{padding-inline:16px}#sb{position:fixed;left:0;top:0;height:100dvh;width:min(300px,86vw);z-index:30;translate:-105% 0;transition:translate .25s;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}#sb.open{translate:0 0;box-shadow:0 0 0 100vmax rgba(19,35,63,.5)}}
+@media(max-width:820px){.mn{display:block}.logo{margin-right:auto}header .w{gap:10px}nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--ln);flex-direction:column;gap:0;padding:8px 20px 14px;margin:0}nav.open{display:flex}nav a{padding:13px 0;border-bottom:1px solid var(--ln);font-size:1rem;color:var(--ink)}.hero{grid-template-columns:1fr;padding-block:34px 24px;text-align:center}.hero p.l{margin-inline:auto}.row{justify-content:center}.steps{grid-template-columns:1fr}.stats .w{grid-template-columns:repeat(2,1fr)}.sec{padding-block:44px}.head{align-items:stretch}.head input,.head select{width:100%}.head>div[style]{width:100%}.head>div[style]>*{flex:1 1 140px}.as{grid-template-columns:1fr}.ai{display:none}.af{place-items:start center;padding-top:32px}.stt{grid-template-columns:repeat(2,1fr)}.stt.s3{grid-template-columns:1fr}.srt input{width:100%}.srt{flex:1}}
+@media(max-width:640px){.gc{padding:18px}.gw{width:100%;justify-content:space-between}.stt{grid-template-columns:repeat(2,1fr)}.stt>div:first-child{grid-column:1/-1}.row .btn{flex:1 1 100%;text-align:center}.head{align-items:flex-start}.ap #aR,.ap #aP{display:none}.ap .w{gap:8px}.ap .tb{gap:6px}}
+@media(max-width:560px){.w{padding-inline:16px}.hm{display:none}.btn{padding:11px 16px}.hero .row .btn{flex:1 1 140px;text-align:center}.grid{grid-template-columns:1fr 1fr;gap:10px}.card{padding:10px}.cats{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding:0 16px 6px;scrollbar-width:none}.cats button{flex:none}.tw{border:0;background:none;overflow:visible}table{min-width:0}thead{display:none}tr,td{display:block}tr{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:10px 14px;margin-bottom:10px}td{border:0;padding:4px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}td::before{content:attr(data-l);color:var(--mut);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}td:last-child{justify-content:flex-end}td:last-child::before{content:none}footer .g{grid-template-columns:1fr 1fr}.sl-c{padding:12px 16px 16px}.ib{width:44px;height:44px}.ap .lt{display:none}.ap>.w{padding-inline:12px;gap:6px}.tb{gap:4px}.chip{padding:0 10px}.gc{padding:18px}.ig{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}header .w{gap:8px}header .btn{padding:8px 11px;font-size:.8rem}.logo{font-size:1.05rem}.logo .lg{width:30px;height:30px}.mn{width:40px;height:40px}}
 @media(max-width:430px){.ap .lt{display:none}}
+@media(max-width:400px){.ig{gap:6px}.itb{font-size:.76rem}.chip b{font-size:.8rem}}
+@media(max-width:360px){.grid{grid-template-columns:1fr}}
+@media(max-width:350px){header:not(.ap) .lt{display:none}}
 @media(min-width:1500px){html{font-size:100%}}
 @media(hover:none){.card:hover,.it:hover,.btn:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+html{overflow-x:clip}.hero::before{right:0;top:-20px}
+.ap .w{flex-wrap:nowrap;gap:10px}.ap .tb{margin-left:auto;display:flex;align-items:center;gap:8px;min-width:0}.ap .logo{min-width:0}.ap .lt{white-space:nowrap}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="lgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b73f5"/><stop offset="1" stop-color="#16337a"/></linearGradient><symbol id="lg" viewBox="0 0 36 36"><rect width="36" height="36" rx="9" fill="url(#lgG)"/><path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/><path d="M20 7.5v6h6" fill="#c9dbff"/><path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/><rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/><rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/><path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/></symbol></defs></svg>
+
+<!-- ==========================================================================
+     GLOBAL SVG ASSET SYMBOLS
+     ========================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lgG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b73f5"/>
+      <stop offset="1" stop-color="#16337a"/>
+    </linearGradient>
+    <symbol id="lg" viewBox="0 0 36 36">
+      <rect width="36" height="36" rx="9" fill="url(#lgG)"/>
+      <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+      <path d="M20 7.5v6h6" fill="#c9dbff"/>
+      <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+      <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+      <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+      <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ==========================================================================
+     SECTION: LANDING PAGE (#home)
+     ========================================================================== -->
 <div id="home">
-<header><div class="w">
-<a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg><span class="lt">DocSmartly</span></a>
-<nav id="nav"><a href="#services">Services</a><a href="#tools">Free Tools</a><a href="#pan">PAN</a><a href="#govt">Govt Services</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
-<div id="hdrAct" style="display:flex;gap:8px;align-items:center"><button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button></div>
-<button class="mn" id="mn" aria-label="Menu" aria-expanded="false" aria-controls="nav">☰</button>
-</div></header>
 
-<main id="top">
-<section class="w hero">
-<div><span class="tag">India’s fast PVC card print portal</span>
-<h1>PVC Card Print Portal – RC, DL, Voter, Aadhaar &amp; PAN Print in Seconds</h1>
-<p class="l">DocSmartly is the all-in-one print portal for CSC, cyber café and printing shops: RC PDF, DL PDF, Voter PDF, Ration card, Farmer ID and more. Pay from wallet, download instantly, print on PVC.</p>
-<div class="row" id="heroAct"><button class="btn" data-auth="1">Start Free – Register</button><button class="btn o" data-auth="0">Login</button></div></div>
-<div class="sl" role="region" aria-roledescription="carousel" aria-label="DocSmartly highlights">
-<div class="sl-v" id="slV" aria-live="off"><div class="sl-t" id="slT"></div></div>
-<div class="sl-b"><div class="dots" id="slD"></div><div class="ctl"><button type="button" class="ib" id="slP" aria-label="Pause slideshow" title="Pause slideshow"></button><button type="button" class="ib" id="slPrev" aria-label="Previous slide" title="Previous slide"></button><button type="button" class="ib" id="slNext" aria-label="Next slide" title="Next slide"></button></div></div>
+  <!-- Sub-section: Public Header -->
+  <header>
+    <div class="w">
+      <a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg><span class="lt">DocSmartly</span></a>
+      <nav id="nav">
+        <a href="#services">Services</a>
+        <a href="#tools">Free Tools</a>
+        <a href="#pan">PAN</a>
+        <a href="#govt">Govt Services</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div id="hdrAct" style="display:flex;gap:8px;align-items:center">
+        <button class="btn o" data-auth="0">Login</button>
+        <button class="btn" data-auth="1">Register</button>
+      </div>
+      <button class="mn" id="mn" aria-label="Menu" aria-expanded="false" aria-controls="nav">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Sub-section: Hero Section & Carousel Slider -->
+    <section class="w hero">
+      <div>
+        <span class="tag">India’s fast PVC card print portal</span>
+        <h1>PVC Card Print Portal – RC, DL, Voter, Aadhaar &amp; PAN Print in Seconds</h1>
+        <p class="l">DocSmartly is the all-in-one print portal for CSC, cyber café and printing shops: RC PDF, DL PDF, Voter PDF, Ration card, Farmer ID and more. Pay from wallet, download instantly, print on PVC.</p>
+        <div class="row" id="heroAct">
+          <button class="btn" data-auth="1">Start Free – Register</button>
+          <button class="btn o" data-auth="0">Login</button>
+        </div>
+      </div>
+      <div class="sl" role="region" aria-roledescription="carousel" aria-label="DocSmartly highlights">
+        <div class="sl-v" id="slV" aria-live="off"><div class="sl-t" id="slT"></div></div>
+        <div class="sl-b">
+          <div class="dots" id="slD"></div>
+          <div class="ctl">
+            <button type="button" class="ib" id="slP" aria-label="Pause slideshow" title="Pause slideshow"></button>
+            <button type="button" class="ib" id="slPrev" aria-label="Previous slide" title="Previous slide"></button>
+            <button type="button" class="ib" id="slNext" aria-label="Next slide" title="Next slide"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sub-section: Platform Counters & Marquee Ticker -->
+    <div class="stats">
+      <div class="w">
+        <div><b>38+</b><span>Print services</span></div>
+        <div><b>62+</b><span>Free online tools</span></div>
+        <div><b>24×7</b><span>Instant results</span></div>
+        <div><b>100%</b><span>Auto refund on failure</span></div>
+      </div>
+    </div>
+    <div class="mq" aria-hidden="true"><div class="mq-t" id="mqT"></div></div>
+
+    <!-- Sub-section: Main Printing Services Grid -->
+    <section class="sec w" id="services">
+      <div class="head">
+        <div>
+          <h2>Everything your print shop needs</h2>
+          <p class="sub">One login, one wallet. RC, DL, Voter, Ration, Farmer and more services for PVC card printing.</p>
+        </div>
+        <input id="q" placeholder="Search services" aria-label="Search services">
+      </div>
+      <div class="grid" id="svc"></div>
+    </section>
+
+    <!-- Sub-section: PAN Card Online Services -->
+    <section class="sec alt" id="pan">
+      <div class="w">
+        <span class="tag" style="background:#fff">PAN Card Services</span>
+        <h2>Apply for New PAN or PAN Correction online</h2>
+        <p class="sub">Assisted New PAN application and PAN update / correction (name, DOB, parents, address) with document upload and live status tracking.</p>
+        <div class="grid" id="panG" style="margin-top:24px;max-width:560px"></div>
+      </div>
+    </section>
+
+    <!-- Sub-section: Document to PVC Converter Section -->
+    <section class="sec w" id="converter">
+      <span class="tag">PVC Converter Tools</span>
+      <h2>Document PDF se PVC card: front &amp; back, print-ready</h2>
+      <p class="sub">Aadhaar, PAN, Voter ID, Driving Licence, Vehicle RC ya koi bhi document. Exact 85.60 × 53.98 mm card size me PDF, JPG, PNG aur ZIP.</p>
+      <div class="grid" id="conv" style="margin-top:24px"></div>
+    </section>
+
+    <!-- Sub-section: Govt & Contractor Support Section -->
+    <section class="sec alt" id="govt">
+      <div class="w">
+        <span class="tag" style="background:#fff">Govt Department &amp; Civil Contractor Services</span>
+        <h2>Tender, estimate and bill work for departments and contractors</h2>
+        <p class="sub">Digital signature, e-procurement registration, tender upload, BOQ, estimates, bills and QC registers in one account.</p>
+        <div class="grid" id="govG" style="margin-top:24px"></div>
+      </div>
+    </section>
+
+    <!-- Sub-section: 62 Free Online Tools -->
+    <section class="sec free" id="tools">
+      <div class="w">
+        <div class="head">
+          <div>
+            <span class="tag" style="background:#fff">Free Online Tools</span>
+            <h2>62 free tools for PDF, photos, QR &amp; documents</h2>
+            <p class="sub">No sign-up, no watermark. Files are processed in your own browser.</p>
+            <div class="pills"><span>No sign-up</span><span>No watermark</span><span>Runs in your browser</span></div>
+          </div>
+          <input id="tq" placeholder="Search 62 tools" aria-label="Search tools">
+        </div>
+        <div class="cats" id="cats"></div>
+        <div class="grid" id="tg"></div>
+      </div>
+    </section>
+
+    <!-- Sub-section: 3-Step Workflow -->
+    <section class="sec w" id="how">
+      <span class="tag">How it works</span>
+      <h2>Start printing in 3 simple steps</h2>
+      <div class="steps">
+        <div class="step"><i>1</i><h3>Register free</h3><p class="sub">Create your account with mobile number. Dashboard opens instantly.</p></div>
+        <div class="step"><i>2</i><h3>Add wallet balance</h3><p class="sub">Recharge wallet securely with any UPI app. Balance is added automatically after payment.</p></div>
+        <div class="step"><i>3</i><h3>Download &amp; print</h3><p class="sub">Enter RC / DL / EPIC number, get the PDF, print on PVC card. Re-download anytime from History.</p></div>
+      </div>
+    </section>
+
+    <!-- Sub-section: Why Choose Us Grid -->
+    <section class="sec alt why">
+      <div class="w">
+        <span class="tag" style="background:#fff">Why DocSmartly</span>
+        <h2 style="margin-bottom:24px">Built for speed, trust &amp; earnings</h2>
+        <div class="grid" id="why" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
+      </div>
+    </section>
+
+    <!-- Sub-section: Frequently Asked Questions (FAQ) -->
+    <section class="sec alt" id="faq">
+      <div class="w" style="max-width:780px">
+        <h2 style="margin-bottom:24px">Frequently asked questions</h2>
+        <div id="fq"></div>
+      </div>
+    </section>
+
+    <!-- Sub-section: Final Call-To-Action (CTA) -->
+    <section class="sec cta">
+      <div class="w">
+        <h2>Ready to grow your print shop?</h2>
+        <p style="opacity:.9;margin-top:10px">Join DocSmartly today. Free registration, instant dashboard.</p>
+        <button class="btn" data-auth="1">Get Started</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sub-section: Public Footer -->
+  <footer id="contact">
+    <div class="w">
+      <div class="g">
+        <div>
+          <span class="logo"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</span>
+          <p style="max-width:280px">Online Smart Document Services – fast document download services for printing across India.</p>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <a href="#services">RC Services</a><a href="#services">DL Services</a><a href="#services">Voter Services</a><a href="#services">Farmer Services</a><a href="#pan">PAN Services</a><a href="#govt">Govt &amp; Contractor</a>
+        </div>
+        <div>
+          <h4>Free Tools</h4>
+          <a href="#tools">JPG / PNG to PDF</a><a href="#tools">Photo Compressor</a><a href="#tools">PDF Merge</a><a href="#tools">Passport Photo Sheet</a><a href="#tools"><b>All free tools →</b></a>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <a href="#" data-auth="0">Login</a><a href="#" data-auth="1">Register</a><a href="#faq">FAQ</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener">+91 73002 77557</a>
+        </div>
+      </div>
+      <div class="c">© 2026 DocSmartly. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Sub-section: Floating WhatsApp Support Button -->
+  <a class="wa" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp support"><span id="wi"></span></a>
 </div>
-</section>
-<div class="stats"><div class="w"><div><b>38+</b><span>Print services</span></div><div><b>62+</b><span>Free online tools</span></div><div><b>24×7</b><span>Instant results</span></div><div><b>100%</b><span>Auto refund on failure</span></div></div></div>
-<div class="mq" aria-hidden="true"><div class="mq-t" id="mqT"></div></div>
 
-<section class="sec w" id="services">
-<div class="head"><div><h2>Everything your print shop needs</h2><p class="sub">One login, one wallet. RC, DL, Voter, Ration, Farmer and more services for PVC card printing.</p></div><input id="q" placeholder="Search services" aria-label="Search services"></div>
-<div class="grid" id="svc"></div>
-</section>
-
-<section class="sec alt" id="pan"><div class="w">
-<span class="tag" style="background:#fff">PAN Card Services</span>
-<h2>Apply for New PAN or PAN Correction online</h2>
-<p class="sub">Assisted New PAN application and PAN update / correction (name, DOB, parents, address) with document upload and live status tracking.</p>
-<div class="grid" id="panG" style="margin-top:24px;max-width:560px"></div>
-</div></section>
-
-<section class="sec w" id="converter">
-<span class="tag">PVC Converter Tools</span>
-<h2>Document PDF se PVC card: front &amp; back, print-ready</h2>
-<p class="sub">Aadhaar, PAN, Voter ID, Driving Licence, Vehicle RC ya koi bhi document. Exact 85.60 × 53.98 mm card size me PDF, JPG, PNG aur ZIP.</p>
-<div class="grid" id="conv" style="margin-top:24px"></div>
-</section>
-
-<section class="sec alt" id="govt"><div class="w">
-<span class="tag" style="background:#fff">Govt Department &amp; Civil Contractor Services</span>
-<h2>Tender, estimate and bill work for departments and contractors</h2>
-<p class="sub">Digital signature, e-procurement registration, tender upload, BOQ, estimates, bills and QC registers in one account.</p>
-<div class="grid" id="govG" style="margin-top:24px"></div></div></section>
-
-<section class="sec free" id="tools"><div class="w">
-<div class="head"><div><span class="tag" style="background:#fff">Free Online Tools</span><h2>62 free tools for PDF, photos, QR &amp; documents</h2>
-<p class="sub">No sign-up, no watermark. Files are processed in your own browser.</p>
-<div class="pills"><span>No sign-up</span><span>No watermark</span><span>Runs in your browser</span></div></div>
-<input id="tq" placeholder="Search 62 tools" aria-label="Search tools"></div>
-<div class="cats" id="cats"></div><div class="grid" id="tg"></div>
-</div></section>
-
-<section class="sec w" id="how">
-<span class="tag">How it works</span><h2>Start printing in 3 simple steps</h2>
-<div class="steps">
-<div class="step"><i>1</i><h3>Register free</h3><p class="sub">Create your account with mobile number. Dashboard opens instantly.</p></div>
-<div class="step"><i>2</i><h3>Add wallet balance</h3><p class="sub">Recharge wallet securely with any UPI app. Balance is added automatically after payment.</p></div>
-<div class="step"><i>3</i><h3>Download &amp; print</h3><p class="sub">Enter RC / DL / EPIC number, get the PDF, print on PVC card. Re-download anytime from History.</p></div>
-</div></section>
-
-<section class="sec alt why"><div class="w">
-<span class="tag" style="background:#fff">Why DocSmartly</span><h2 style="margin-bottom:24px">Built for speed, trust &amp; earnings</h2>
-<div class="grid" id="why" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
-</div></section>
-
-
-
-<section class="sec alt" id="faq"><div class="w" style="max-width:780px"><h2 style="margin-bottom:24px">Frequently asked questions</h2><div id="fq"></div></div></section>
-<section class="sec cta"><div class="w"><h2>Ready to grow your print shop?</h2><p style="opacity:.9;margin-top:10px">Join DocSmartly today. Free registration, instant dashboard.</p><button class="btn" data-auth="1">Get Started</button></div></section>
-</main>
-
-<footer id="contact"><div class="w"><div class="g">
-<div><span class="logo"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</span><p style="max-width:280px">Online Smart Document Services – fast document download services for printing across India.</p></div>
-<div><h4>Services</h4><a href="#services">RC Services</a><a href="#services">DL Services</a><a href="#services">Voter Services</a><a href="#services">Farmer Services</a><a href="#pan">PAN Services</a><a href="#govt">Govt &amp; Contractor</a></div>
-<div><h4>Free Tools</h4><a href="#tools">JPG / PNG to PDF</a><a href="#tools">Photo Compressor</a><a href="#tools">PDF Merge</a><a href="https://docsmartly.pages.dev/freetools/passport_photo">Passport Photo Sheet</a><a href="#tools"><b>All free tools →</b></a></div>
-<div><h4>Account</h4><a href="#" data-auth="0">Login</a><a href="#" data-auth="1">Register</a><a href="#faq">FAQ</a></div>
-<div><h4>Contact</h4><a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener">+91 73002 77557</a></div>
-</div><div class="c">© 2026 DocSmartly. All rights reserved.</div></div></footer>
-<a class="wa" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp support"><span id="wi"></span></a>
-</div>
-
+<!-- ==========================================================================
+     SECTION: AUTHENTICATION PORTAL (#auth)
+     ========================================================================== -->
 <section id="auth" hidden>
-<div class="ah"><div class="w"><a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</a><a class="back" href="#top">Back to home</a></div></div>
-<div class="as">
-<aside class="ai"><h2>Your print shop, one login away</h2>
-<ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><div><b>All services working</b><span>RC, DL, Voter, PAN and more, live and ready.</span></div></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg><div><b>Auto refund if a service fails</b><span>Pay only for results that arrive.</span></div></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></svg><div><b>Every PDF saved in History</b><span>Download again whenever you need it.</span></div></li></ul></aside>
-<div class="af">
+  <div class="ah">
+    <div class="w">
+      <a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</a>
+      <a class="back" href="#top">Back to home</a>
+    </div>
+  </div>
+  <div class="as">
+    <aside class="ai">
+      <h2>Your print shop, one login away</h2>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><div><b>All services working</b><span>RC, DL, Voter, PAN and more, live and ready.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg><div><b>Auto refund if a service fails</b><span>Pay only for results that arrive.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></svg><div><b>Every PDF saved in History</b><span>Download again whenever you need it.</span></div></li>
+      </ul>
+    </aside>
+    <div class="af">
 
-<div class="pane" data-r="login" hidden>
-<h1 tabindex="-1">Log in</h1><p class="lead">Welcome back. Log in to use your wallet and services.</p>
-<div class="banner err" id="lBan" role="alert" hidden></div>
-<form id="fLogin" novalidate>
-<div class="fld"><label for="lId">Mobile number or email</label><input id="lId" name="lId" type="text" autocomplete="username" data-rule="idn" required aria-required="true" aria-describedby="lId-e" inputmode="email" placeholder="9876543210 or name@domain.com"><p class="err" id="lId-e" role="alert" hidden></p></div>
-<div class="fld"><div class="lr"><label for="lPw">Password</label><a class="t" href="#forgot">Forgot password?</a></div><div class="pwr"><input id="lPw" name="lPw" type="password" autocomplete="current-password" data-rule="lpw" required aria-required="true" aria-describedby="lPw-e"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="lPw">Show</button></div><p class="err" id="lPw-e" role="alert" hidden></p></div>
-<button class="btn" type="submit">Log in</button></form>
-<p class="alt2">New to DocSmartly? <a class="t" href="#register">New registration</a></p>
-</div>
+      <!-- Sub-pane: Login Form -->
+      <div class="pane" data-r="login" hidden>
+        <h1 tabindex="-1">Log in</h1><p class="lead">Welcome back. Log in to use your wallet and services.</p>
+        <div class="banner err" id="lBan" role="alert" hidden></div>
+        <form id="fLogin" novalidate>
+          <div class="fld"><label for="lId">Mobile number or email</label><input id="lId" name="lId" type="text" autocomplete="username" data-rule="idn" required aria-required="true" aria-describedby="lId-e" inputmode="email" placeholder="9876543210 or name@domain.com"><p class="err" id="lId-e" role="alert" hidden></p></div>
+          <div class="fld"><div class="lr"><label for="lPw">Password</label><a class="t" href="#forgot">Forgot password?</a></div><div class="pwr"><input id="lPw" name="lPw" type="password" autocomplete="current-password" data-rule="lpw" required aria-required="true" aria-describedby="lPw-e"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="lPw">Show</button></div><p class="err" id="lPw-e" role="alert" hidden></p></div>
+          <button class="btn" type="submit">Log in</button>
+        </form>
+        <p class="alt2">New to DocSmartly? <a class="t" href="#register">New registration</a></p>
+      </div>
 
-<div class="pane" data-r="register" hidden>
-<h1 tabindex="-1">New registration</h1><p class="lead">Create your free account. All fields are required.</p>
-<form id="fReg" novalidate>
-<div class="fld"><label for="rName">Full name</label><input id="rName" name="rName" type="text" autocomplete="name" data-rule="name" required aria-required="true" aria-describedby="rName-e"><p class="err" id="rName-e" role="alert" hidden></p></div>
-<div class="fld"><label for="rMob">Mobile number</label><input id="rMob" name="rMob" type="tel" autocomplete="tel" data-rule="mob" required aria-required="true" aria-describedby="rMob-e rMob-h" inputmode="numeric"><p class="hint" id="rMob-h">10-digit Indian mobile number</p><p class="err" id="rMob-e" role="alert" hidden></p></div>
-<div class="fld"><label for="rMail">Email</label><input id="rMail" name="rMail" type="email" autocomplete="email" data-rule="mail" required aria-required="true" aria-describedby="rMail-e" placeholder="name@domain.com"><p class="err" id="rMail-e" role="alert" hidden></p></div>
-<div class="fld"><label for="rPw">Password</label><div class="pwr"><input id="rPw" name="rPw" type="password" autocomplete="new-password" data-rule="pw" required aria-required="true" aria-describedby="rPw-e rPw-h"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="rPw">Show</button></div><p class="hint" id="rPw-h">At least 8 characters</p><p class="err" id="rPw-e" role="alert" hidden></p></div>
-<button class="btn" type="submit">Create account</button></form>
-<p class="alt2">Already registered? <a class="t" href="#login">Log in</a></p>
-</div>
+      <!-- Sub-pane: Register Form -->
+      <div class="pane" data-r="register" hidden>
+        <h1 tabindex="-1">New registration</h1><p class="lead">Create your free account. All fields are required.</p>
+        <form id="fReg" novalidate>
+          <div class="fld"><label for="rName">Full name</label><input id="rName" name="rName" type="text" autocomplete="name" data-rule="name" required aria-required="true" aria-describedby="rName-e"><p class="err" id="rName-e" role="alert" hidden></p></div>
+          <div class="fld"><label for="rMob">Mobile number</label><input id="rMob" name="rMob" type="tel" autocomplete="tel" data-rule="mob" required aria-required="true" aria-describedby="rMob-e rMob-h" inputmode="numeric"><p class="hint" id="rMob-h">10-digit Indian mobile number</p><p class="err" id="rMob-e" role="alert" hidden></p></div>
+          <div class="fld"><label for="rMail">Email</label><input id="rMail" name="rMail" type="email" autocomplete="email" data-rule="mail" required aria-required="true" aria-describedby="rMail-e" placeholder="name@domain.com"><p class="err" id="rMail-e" role="alert" hidden></p></div>
+          <div class="fld"><label for="rPw">Password</label><div class="pwr"><input id="rPw" name="rPw" type="password" autocomplete="new-password" data-rule="pw" required aria-required="true" aria-describedby="rPw-e rPw-h"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="rPw">Show</button></div><p class="hint" id="rPw-h">At least 8 characters</p><p class="err" id="rPw-e" role="alert" hidden></p></div>
+          <button class="btn" type="submit">Create account</button>
+        </form>
+        <p class="alt2">Already registered? <a class="t" href="#login">Log in</a></p>
+      </div>
 
-<div class="pane" data-r="forgot" hidden>
-<h1 tabindex="-1">Forgot password</h1>
-<div id="fp1"><p class="lead">Enter the mobile number or email you registered with.</p>
-<form id="fF1" novalidate>
-<div class="fld"><label for="fId">Mobile number or email</label><input id="fId" name="fId" type="text" autocomplete="username" data-rule="idn" required aria-required="true" aria-describedby="fId-e" inputmode="email" placeholder="9876543210 or name@domain.com"><p class="err" id="fId-e" role="alert" hidden></p></div>
-<button class="btn" type="submit">Send reset code</button></form></div>
-<div id="fp2" hidden><p class="lead" id="fSent"></p>
-<div class="banner inf">Preview build: no message is sent. Use code 123456.</div>
-<form id="fF2" novalidate>
-<div class="fld"><label for="fCode">Reset code</label><input id="fCode" name="fCode" type="text" autocomplete="one-time-code" data-rule="code" required aria-required="true" aria-describedby="fCode-e" inputmode="numeric" maxlength="6"><p class="err" id="fCode-e" role="alert" hidden></p></div>
-<div class="fld"><label for="fPw">New password</label><div class="pwr"><input id="fPw" name="fPw" type="password" autocomplete="new-password" data-rule="pw" required aria-required="true" aria-describedby="fPw-e fPw-h"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="fPw">Show</button></div><p class="hint" id="fPw-h">At least 8 characters</p><p class="err" id="fPw-e" role="alert" hidden></p></div>
-<button class="btn" type="submit">Reset password</button></form></div>
-<p class="alt2"><a class="t" href="#login">Back to log in</a></p>
-</div>
+      <!-- Sub-pane: Forgot Password Form -->
+      <div class="pane" data-r="forgot" hidden>
+        <h1 tabindex="-1">Forgot password</h1>
+        <div id="fp1">
+          <p class="lead">Enter the mobile number or email you registered with.</p>
+          <form id="fF1" novalidate>
+            <div class="fld"><label for="fId">Mobile number or email</label><input id="fId" name="fId" type="text" autocomplete="username" data-rule="idn" required aria-required="true" aria-describedby="fId-e" inputmode="email" placeholder="9876543210 or name@domain.com"><p class="err" id="fId-e" role="alert" hidden></p></div>
+            <button class="btn" type="submit">Send reset code</button>
+          </form>
+        </div>
+        <div id="fp2" hidden>
+          <p class="lead" id="fSent"></p>
+          <div class="banner inf">Preview build: no message is sent. Use code 123456.</div>
+          <form id="fF2" novalidate>
+            <div class="fld"><label for="fCode">Reset code</label><input id="fCode" name="fCode" type="text" autocomplete="one-time-code" data-rule="code" required aria-required="true" aria-describedby="fCode-e" inputmode="numeric" maxlength="6"><p class="err" id="fCode-e" role="alert" hidden></p></div>
+            <div class="fld"><label for="fPw">New password</label><div class="pwr"><input id="fPw" name="fPw" type="password" autocomplete="new-password" data-rule="pw" required aria-required="true" aria-describedby="fPw-e fPw-h"><button type="button" class="show" aria-pressed="false" aria-label="Show password" data-for="fPw">Show</button></div><p class="hint" id="fPw-h">At least 8 characters</p><p class="err" id="fPw-e" role="alert" hidden></p></div>
+            <button class="btn" type="submit">Reset password</button>
+          </form>
+        </div>
+        <p class="alt2"><a class="t" href="#login">Back to log in</a></p>
+      </div>
 
-</div></div></section>
+    </div>
+  </div>
+</section>
 
+<!-- ==========================================================================
+     SECTION: LOGGED-IN PORTAL DASHBOARD (#app)
+     ========================================================================== -->
 <div id="app" hidden>
-<header class="ap"><div class="w"><button type="button" class="ib sbt" id="sbT" aria-label="Open menu" aria-expanded="false" aria-controls="sb"></button><a class="logo" href="#dashboard"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg><span class="lt">DocSmartly</span></a>
-<div class="tb"><button type="button" class="ib" id="aS" aria-label="Search services" title="Search services"></button><a class="ib" id="aR" href="#referral" aria-label="Refer & Earn" title="Refer & Earn"></a><a class="ib" id="aP" href="#passbook" aria-label="Passbook" title="Passbook"></a><a class="ib" id="aW" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp help" title="WhatsApp help"></a><a class="chip" id="aB" href="#passbook" title="Wallet balance" aria-label="Wallet balance"></a><a class="ib pl" id="aA" href="#addmoney" aria-label="Add balance" title="Add balance"></a></div></div>
-<div class="sp" id="sP" hidden><div class="w"><label for="sQ">Search services</label><input id="sQ" type="search" autocomplete="off"><div id="sR"></div></div></div></header>
-<div class="shell"><aside id="sb" aria-label="Menu"></aside><main class="apm"><section data-v="dashboard" hidden></section><section data-v="referral" hidden></section><section data-v="passbook" hidden></section><section data-v="addmoney" hidden></section><section data-v="history" hidden></section><section data-v="profile" hidden></section><section data-v="contact" hidden></section></main></div></div>
+  <!-- App Top Navigation Bar -->
+  <header class="ap">
+    <div class="w">
+      <button type="button" class="ib sbt" id="sbT" aria-label="Open menu" aria-expanded="false" aria-controls="sb"></button>
+      <a class="logo" href="#dashboard"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg><span class="lt">DocSmartly</span></a>
+      <div class="tb">
+        <button type="button" class="ib" id="aS" aria-label="Search services" title="Search services"></button>
+        <a class="ib" id="aR" href="#referral" aria-label="Refer & Earn" title="Refer & Earn"></a>
+        <a class="ib" id="aP" href="#passbook" aria-label="Passbook" title="Passbook"></a>
+        <a class="ib" id="aW" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" aria-label="WhatsApp help" title="WhatsApp help"></a>
+        <a class="chip" id="aB" href="#passbook" title="Wallet balance" aria-label="Wallet balance"></a>
+        <a class="ib pl" id="aA" href="#addmoney" aria-label="Add balance" title="Add balance"></a>
+      </div>
+    </div>
+    <!-- Quick Search Dropdown Drawer -->
+    <div class="sp" id="sP" hidden>
+      <div class="w">
+        <label for="sQ">Search services</label>
+        <input id="sQ" type="search" autocomplete="off">
+        <div id="sR"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Main Content Shell -->
+  <div class="shell">
+    <aside id="sb" aria-label="Menu"></aside>
+    <main class="apm">
+      <section data-v="dashboard" hidden></section>
+      <section data-v="referral" hidden></section>
+      <section data-v="passbook" hidden></section>
+      <section data-v="addmoney" hidden></section>
+      <section data-v="history" hidden></section>
+      <section data-v="profile" hidden></section>
+      <section data-v="contact" hidden></section>
+    </main>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     SECTION: MODALS & OVERLAYS
+     ========================================================================== -->
+<!-- Welcome Dialog Modal -->
 <div class="modal" id="wm">
   <div class="box" role="dialog" aria-modal="true" aria-labelledby="wt">
     <button class="x" id="wx" aria-label="Close welcome message">✕</button>
@@ -420,579 +615,25 @@ html{overflow-x:clip}.hero::before{right:0;top:-20px}
   </div>
 </div>
 
-<div class="modal" id="rm"><div class="box" role="dialog" aria-modal="true" aria-labelledby="rt"><button class="x" id="rx" type="button" aria-label="Close">✕</button><h2 id="rt">Service request</h2><p class="sub" id="rp"></p><form id="fRq" novalidate></form></div></div>
+<!-- Dynamic Order Request Modal -->
+<div class="modal" id="rm">
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="rt">
+    <button class="x" id="rx" type="button" aria-label="Close">✕</button>
+    <h2 id="rt">Service request</h2>
+    <p class="sub" id="rp"></p>
+    <form id="fRq" novalidate></form>
+  </div>
+</div>
 
+<!-- Toast Alert Container -->
 <div id="toast" role="status" aria-live="polite"></div>
 
+<!-- ==========================================================================
+     JAVASCRIPT LOGIC
+     ========================================================================== -->
 <script>
+/* --------------------------------------------------------------------------
+   JS 01: CONSTANTS, SVG PATH DATA & ICON BUILDERS
+   -------------------------------------------------------------------------- */
 const $=s=>document.querySelector(s);
-const I={car:'M5 16v-5l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3',id:'M3 7h18v12H3zM8 13a2 2 0 1 0 0-.01M6 17c1-2 4-2 5 0M14 11h4M14 15h4',vote:'M4 9h16v11H4zM8 9V5h8v4M9 14l2 2 4-4',leaf:'M12 20V10M12 10c0-4 3-6 6-6 0 4-2 6-6 6M12 14c0-3-2-5-5-5 0 3 2 5 5 5',pan:'M3 5h18v14H3zM7 10h6M7 14h10M15 8h3v3h-3z',basket:'M4 10h16l-1.5 9h-13zM8 10l3-5M16 10l-3-5',phone:'M7 3h10v18H7zM11 18h2',pct:'M6 18L18 6M7 7m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M17 17m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0',inv:'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18',shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',img:'M3 5h18v14H3zM9 10m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',merge:'M3 4h8v10H3zM13 10h8v10h-8z',zip:'M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5',resize:'M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6',qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',sign:'M3 17c3-6 5-9 6-6s-2 7 1 6 3-5 5-5 1 4 3 3M3 21h18',edit:'M4 20l1-4 11-11 3 3L8 19zM14 7l3 3',search:'M11 11m-6 0a6 6 0 1 0 12 0a6 6 0 1 0-12 0M16 16l4 4',globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',lock:'M5 11h14v10H5zM8 11V8a4 4 0 0 1 8 0v3',calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M12 15h2',stamp:'M9 4h6v6l3 4v3H6v-3l3-4zM5 21h14',clock:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M12 7v5l3 2',cash:'M3 7h18v10H3zM12 12m-2.500 0a2.500 2.500 0 1 0 5 0a2.500 2.500 0 1 0-5 0',print:'M7 9V4h10v5M7 17H5v-6h14v6h-2M7 14h10v6H7z',text:'M5 6h14M5 10h14M5 14h10M5 18h8',split:'M12 3v18M4 6h6v12H4zM14 6h6v12h-6z',rot:'M20 12a8 8 0 1 1-3-6.200M20 4v5h-5',conv:'M4 8h14l-3-3M20 16H6l3 3',layers:'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',drop:'M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z',blur:'M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0',frame:'M4 4h16v16H4zM8 8h8v8H8z',a4:'M6 3h12v18H6zM8 6h8v5H8z',check:'M5 12l5 5 9-10',zap:'M13 3L5 14h6l-1 7 8-11h-6z',fing:'M8 12a4 4 0 0 1 8 0M6 12a6 6 0 0 1 12 0M12 12v6',cloud:'M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.500-1A4.500 4.500 0 0 1 17 18z',users:'M9 11a3 3 0 1 0 0-.01M3 20c1-4 11-4 12 0M17 8a3 3 0 0 1 0 6M21 20c0-2-1-3-3-3.500',mob:'M7 3h10v18H7zM11 18h2',gift:'M4 9h16v4H4zM6 13v8h12v-8M12 9v12M12 9c-3 0-4-4-1-4s1 4 1 4zM12 9c3 0 4-4 1-4'};
-const ic=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${I[k]}"/></svg>`;
-$('#wi').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
-const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
-const R=(x,y,w,h,c,r=3)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
-const C=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
-const X=(x,y,t,s,c='fk',a='middle')=>`<text x="${x}" y="${y}" font-size="${s}" class="${c}" text-anchor="${a}" font-weight="700">${t}</text>`;
-const Pa=(d,c)=>`<path d="${d}" class="${c}"/>`;
-const L=(x,y,w,n=3,g=6,c='fl')=>Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*.6:w,2.4,c,1.2)).join('');
-const H=(x,y,w,h,c='fb')=>R(x,y,w,h,c,3)+C(x+w/2,y+h*.38,w*.2,'fw')+Pa(`M${x+w*.15} ${y+h}q${w*.35} ${-h*.5} ${w*.7} 0z`,'fw');
-const PG=(x=52,y=8,w=56,h=84)=>R(x,y,w,h,'fw',4);
-const AR=(x,y,c='sa')=>Pa(`M${x} ${y}h16m-5-5 5 5-5 5`,c);
-const CAR=(x,y,s=1,c='fw')=>`<g transform="translate(${x} ${y}) scale(${s})">${R(0,8,44,12,c,4)}${R(8,0,28,10,c,4)}${C(11,22,4,'fk')}${C(33,22,4,'fk')}</g>`;
-const CARD=(x,y,w,h,c='fa')=>R(x,y,w,h,c,7);
-const IMG=(x,y,w,h,c='fb')=>R(x,y,w,h,c,4)+C(x+w*.74,y+h*.27,h*.1,'fy')+Pa(`M${x+3} ${y+h-1}L${x+w*.34} ${y+h*.48}L${x+w*.55} ${y+h*.74}L${x+w*.7} ${y+h*.6}L${x+w-3} ${y+h-1}z`,'fa');
-const PDF=(x,y,w,h)=>PG(x,y,w,h)+R(x+w-26,y+4,22,12,'fa',3)+X(x+w-15,y+13,'PDF',6.5,'fw')+L(x+8,y+24,w-16,3,7);
-const PHN=(x,y,w,h)=>R(x,y,w,h,'fk',6)+R(x+3,y+5,w-6,h-10,'fw',3);
-const QR=(x,y,s=72)=>{let o=R(x,y,s,s,'fw',5);const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);return o};
-const CALC=d=>R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c==3?'fy':'fb',2)).join('')).join('');
-const BRW=(x,y,w,h)=>R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
-const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6,'fb');
-const conv=l=>PG(14,16,48,68)+X(38,32,'PDF',7,'fa')+L(22,40,32,3,7)+AR(66,46)+CARD(88,28,60,44)+H(94,36,18,24)+L(118,40,22,3,6,'fo')+X(118,66,l,5.5,'fw');
-const V={
-"RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
-"DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw')+Pa('M112 70h16M120 70v8','sw'),
-"Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo')+X(126,78,'EPIC',6,'fw'),
-"Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw')+[0,1,2,3].map(i=>`<ellipse cx="114" cy="${48+i*8}" rx="5" ry="2.5" class="fw" transform="rotate(-30 114 ${48+i*8})"/><ellipse cx="126" cy="${48+i*8}" rx="5" ry="2.5" class="fw" transform="rotate(30 126 ${48+i*8})"/>`).join(''),
-"PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,42,'PERMANENT ACCOUNT NUMBER',4.6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36)+L(30,68,50,2,6,'fo'),
-"RC Full Details":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+X(46,19,'VEHICLE DETAILS',6.5,'fw','start')+[0,1,2,3,4].map(i=>R(44,32+i*11,26,3,'fl',1.5)+R(78,32+i*11,36,3,'fb',1.5)).join(''),
-"Udyam Services":()=>PG(24,10,112,80)+`<rect x="30" y="16" width="100" height="68" rx="3" class="sa" style="stroke-width:1"/>`+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+R(64,44,32,20,'fb',2)+R(76,52,8,12,'fw',1)+L(46,70,68,2,6)+C(122,74,8,'fy'),
-"LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
-"Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+Pa('M104 62h28l-3 14h-22z','fw')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
-"Mobile Services":()=>PHN(56,6,48,88)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb')+Pa('M76 68h8','sw')+R(116,40,5,10,'fb',1)+R(124,32,5,18,'fb',1)+R(132,24,5,26,'fb',1),
-"GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+L(54,30,52,2,6)+C(80,62,17,'fa')+X(80,69,'%',20,'fw')+X(80,88,'09ABCDE1234F1Z5',4.6,'fk'),
-"Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.500,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
-"Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+PHN(100,16,34,68)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
-"Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')+L(38,30,48,3,7)+X(62,68,'₹500',15,'fr')+R(106,22,26,56,'fk',7)+C(119,34,6,'fr')+C(119,50,6,'fy')+C(119,66,6,'fg'),
-"DBT Seeding Status":()=>Pa('M80 14l46 22H34z','fa')+[0,1,2,3].map(i=>R(42+i*19,40,10,32,'fb',2)).join('')+R(30,74,100,8,'fa',2)+C(130,24,13,'fg')+Pa('M123 24l5 5 9-10','sw'),
-"TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7)+Pa('M116 22l22 8v18c0 14-10 22-22 26-12-4-22-12-22-26V30z','fa')+Pa('M106 50l8 8 14-16','sw'),
-"New PAN Card Apply":()=>V["PAN Services"]()+C(138,22,14,'fy')+Pa('M138 14v16M130 22h16','sa'),
-"PAN Update / Correction":()=>V["PAN Services"]()+C(138,22,14,'fy')+Pa('M132 28l1-6 9-9 5 5-9 9z','sa')};
-const TA={
-"Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
-"QR Code Generator":()=>QR(44,14),
-"Stamp Designer":()=>`<g transform="rotate(-12 80 50)">${C(80,50,38,'sa')}${C(80,50,30,'sa')}${X(80,48,'DOCSMARTLY',8,'fa')}${X(80,60,'★ ★ ★',6,'fa')}</g>`,
-"ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
-"What Is My IP":()=>C(52,50,30,'sa')+Pa('M22 50h60M52 20c-14 14-14 46 0 60M52 20c14 14 14 46 0 60','sa')+R(84,38,62,24,'fk',6)+X(115,54,'103.xx.xx.12',6.5,'fw'),
-"Letterhead Maker":()=>PG(44,6,72,88)+C(58,22,7,'fa')+R(70,17,36,3,'fa',1.5)+R(70,23,26,2.4,'fl',1)+R(50,34,60,1.5,'fb',0)+L(52,44,56,6,7),
-"Visiting Card Designer":()=>R(60,46,76,46,'fw',5)+C(74,62,7,'fb')+L(86,56,40,3,6)+R(24,10,76,46,'fa',5)+X(36,30,'DocSmartly',8,'fw','start')+L(36,38,40,2,6,'fo'),
-"Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8)+Pa('M80 86c-8-6-10-10-6-13s6 0 6 2 3-5 6-2-2 7-6 13z','fr'),
-"Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+[0,1,2].map(r=>[0,1,2,3,4].map(c=>R(46+c*15,32+r*14,10,9,r==1&&c==2?'fa':'fl',2)).join('')).join('')+X(80,84,'Age: 28 years',7),
-"Photo & Signature Resizer":()=>IMG(30,18,76,56)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+R(26,70,8,8,'fw',2)+R(102,70,8,8,'fw',2)+Pa('M112 24l22-8M112 24l22 8','sa')+X(118,88,'35×45 mm',7),
-"JPG / PNG to PDF":()=>IMG(14,26,48,40)+AR(68,44)+PDF(92,14,52,72),
-"PDF Merge":()=>PDF(14,22,36,50)+PDF(30,34,36,50)+AR(74,48)+PDF(98,14,46,72),
-"PDF Split & Page Extract":()=>PDF(14,14,46,72)+AR(66,48)+PDF(92,8,38,40)+PDF(92,54,38,40),
-"PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+IMG(90,28,52,44)+X(116,86,'JPG',7,'fa'),
-"PDF Rotate & Reorder":()=>PDF(30,14,46,72)+Pa('M146 58a20 20 0 1 1-6-14','sa')+Pa('M140 34v12h-12','sa'),
-"PDF Compressor (KB)":()=>PDF(18,14,52,72)+R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8)+Pa('M118 46v10m-4-4 4 4 4-4','sa')+R(90,62,56,18,'fa',9)+X(118,75,'200 KB',8,'fw'),
-"Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5)+Pa('M34 20v-8h8M126 20v-8h-8M34 80v8h8M126 80v8h-8','sa'),
-"PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.500,'1',8,'fw'),
-"PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw')+L(52,30,56,6,8)+R(44,80,72,12,'fb',4)+X(80,89,'FOOTER',6.5,'fw'),
-"Photo Compressor (KB)":()=>IMG(18,16,70,56)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+Pa('M122 45v8m-4-4 4 4 4-4','sa')+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
-"Image Format Converter":()=>IMG(14,26,48,40)+X(38,80,'JPG',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'PNG',8),
-"Background Remover":()=>R(36,10,88,80,'fl',6)+[0,1,2,3,4,5,6,7].map(i=>[0,1,2,3,4,5,6].map(j=>(i+j)%2?R(36+i*11,10+j*11.4,11,11.4,'fw',0):'').join('')).join('')+H(58,22,44,66,'fa'),
-"WebP to JPG Converter":()=>IMG(14,26,48,40)+X(38,80,'WEBP',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'JPG',8),
-"ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+IMG(90,28,52,44)+X(116,86,'PNG',7),
-"ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(32,20,40,10,'fw',3)+R(34,22,6,6,'fa',1.5)+R(48,24,20,2.4,'fl',1)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
-"Thumbnail Resizer":()=>IMG(16,14,84,66)+IMG(112,34,32,26)+X(128,74,'150×150',6)+Pa('M100 46h8m-3-3 3 3-3 3','sa'),
-"Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,18,44,10,'fw',3)+R(30,20,6,6,'fa',1.5)+R(28,40,100,3,'fl',1.5)+R(30,68,24,24,'fa',6)+R(62,72,16,16,'fb',4)+R(86,76,10,10,'fy',3)+X(120,86,'16·32·64',6),
-"Image Watermark Maker":()=>IMG(24,16,112,68)+`<g transform="rotate(-20 80 50)">${X(80,56,'DOCSMARTLY',13,'fo')}</g>`,
-"Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa')+R(44,68,72,1.5,'fk',0)+X(44,78,'Sign here',6,'fm','start'),
-"Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa')+C(124,30,10,'fy')+C(100,58,10,'fr')+C(124,58,10,'fg'),
-"Photo Blur Tool":()=>IMG(14,22,56,48)+AR(74,42)+IMG(92,22,56,48)+C(118,46,20,'fo')+C(106,40,14,'fo')+C(130,52,12,'fo'),
-"Image to Black & White":()=>IMG(14,22,56,48)+AR(74,42)+R(92,22,56,48,'fk',4)+C(134,34,5,'fw')+Pa('M95 69L112 46l14 14 8-8 12 17z','fm'),
-"Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44)+H(90,14,56,72,'fk'),
-"Photo Border Maker":()=>R(28,10,104,80,'fa',6)+R(34,16,92,68,'fw',3)+IMG(40,22,80,56),
-"Color Picker from Image":()=>IMG(16,16,90,68)+Pa('M108 56l22-22 8 8-22 22z','fa')+Pa('M128 28l8-8 8 8-8 8z','fb')+R(112,66,34,18,'fa',4),
-"ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw')+H(34,38,28,38)+L(70,42,56,4,8),
-"QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
-"Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
-"Student ID Card Maker":()=>IDV(52,4,56,92,'STUDENT','fb'),
-"A4 Photo Print Layout":()=>PG(36,4,88,92)+[0,1,2,3].map(r=>[0,1,2].map(c=>H(44+c*26,12+r*21,20,16)).join('')).join(''),
-"Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7)+AR(82,46)+PDF(104,18,42,64),
-"Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2)+L(74,24,42,2,6)+R(44,52,72,3,'fb',1.5)+L(44,60,72,4,7),
-"Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+R(44,30,72,8,'fl',2)+L(44,44,72,4,8)+R(76,76,40,12,'fa',3)+X(96,85,'₹ 4,500',6.5,'fw'),
-"Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+R(44,30,72,8,'fl',2)+L(44,44,72,4,8)+R(76,76,40,12,'fb',3)+X(96,85,'₹ 12,000',6.5,'fw'),
-"Hindi Typing Tool":()=>X(80,34,'अ आ इ ई',15,'fa')+R(16,44,128,44,'fw',6)+[0,1,2].map(r=>[0,1,2,3,4,5,6,7,8].map(c=>R(24+c*13,50+r*12,10,8,'fl',2)).join('')).join(''),
-"GST Calculator":()=>CALC('18%'),
-"GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
-"Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+R(32,24,40,18,'fw',2)+R(32,62,40,24,'fw',2)+L(36,68,28,2,6)+C(118,50,24,'fy')+X(118,59,'₹',24),
-"Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw')+R(48,44,80,40,'fb',4)+X(88,70,'₹100',12,'fw')+C(130,24,11,'fy')+X(130,28,'₹',11),
-"Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7)+R(44,66,72,16,'fa',4)+X(80,77,'₹ 25,000',8,'fw'),
-"Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa')+Pa('M54 80L106 20','sa')+X(120,32,'%',22,'fa'),
-"Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+[0,1,2].map(i=>R(56+i*18,46,8,22,'fb',2)).join('')+R(48,70,64,7,'fa',2)+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw')+X(112,92,'₹ / month',6),
-"Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8)+Pa('M60 44V34a20 20 0 0 1 40 0v10','sa')+C(80,66,6,'fw')};
-const art=h=>`<svg class="art" viewBox="0 0 160 100" aria-hidden="true">${h}</svg>`;
-const T=["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
-const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
-const th=(t,k,n,i)=>`<div class="sv" style="${sty(i)}">${art(t.startsWith('conv:')?conv(t.slice(5)):(V[t]||(()=>CARD(30,20,100,60)))())}</div>`;
-const tt=(n,i)=>`<div class="tl" style="${sty(i)}">${art((TA[n]||(()=>PG()))())}</div>`;
-/* name|category|price */
-const P="RC PDF INSTANT|RC Services|40;RC PDF Server 1|RC Services|30;RC PDF Server 2|RC Services|40;DL PDF INSTANT|DL Services|50;DL PDF Server 1|DL Services|50;DL PDF Server 2 (Blue)|DL Services|50;Voter Mobile Link|Voter Services|40;Voter Mobile Link S1|Voter Services|40;Voter PDF|Voter Services|100;Farmer PDF S1|Farmer Services|25;Farmer PDF All State|Farmer Services|30;AgriStack Farmer PDF|Farmer Services|30;Aadhaar to PAN|PAN Services|40;Aadhaar to PAN S1|PAN Services|40;PAN Details|PAN Services|40;RC Full Details|RC Full Details|50;PAN to Udyam S2|Udyam Services|100;LL PDF|LL Services|30;LL Exam Request|LL Services|80;Ration PDF S1|Aadhaar & Ration|20;Ration PDF S2 (Aadhaar)|Aadhaar & Ration|30;Mobile Details Find|Mobile Services|30;Mobile Details S1|Mobile Services|30;Mobile Details S2|Mobile Services|30;PAN to GST|GST Services|10;GST Details|GST Services|10;Chassis to RC|Chassis to RC|70;Vehicle to Mobile Find|Vehicle To Mobile Find|80;Challan Details|Challan Details|10;DBT Seeding Status|DBT Seeding Status|20;TAN Verification|TAN Verification|30".split(";").map(r=>r.split("|"));
-/* title|icon|sample number */
-const S="RC Services|car|XX 00 XX 0000;DL Services|id|XX00 0000000000;Voter Services|vote|XXX0000000;Farmer Services|leaf|0000 0000 0000;PAN Services|pan|XXXXX0000X;RC Full Details|doc|XX 00 XX 0000;Udyam Services|store|UDYAM-XX-00-000;LL Services|id|LL 0000 0000;Aadhaar & Ration|basket|0000 0000 0000;Mobile Services|phone|+91 00000 00000;GST Services|pct|00XXXXX0000X;Chassis to RC|car|MA3XXXXXX00;Vehicle To Mobile Find|phone|XX 00 XX 0000;Challan Details|inv|CHALLAN 0000000;DBT Seeding Status|bank|0000 0000 0000;TAN Verification|shield|XXXX00000X".split(";").map(r=>r.split("|"));
-const min=c=>Math.min(...P.filter(p=>p[1]==c).map(p=>+p[2])),cnt=c=>P.filter(p=>p[1]==c).length;
-function rs(){const q=$('#q').value.toLowerCase();$('#svc').innerHTML=S.map((s,i)=>[s,i]).filter(([s])=>s[0].toLowerCase().includes(q)).map(([s,i])=>`<button class="card" data-svc>${th(s[0],s[1],s[2],i)}<h3>${s[0]}</h3><p>${cnt(s[0])} service${cnt(s[0])>1?'s':''}</p><div class="pr">From ₹${min(s[0])}</div></button>`).join('')||'<p class="sub">No services match.</p>'}
-$('#q').oninput=rs;rs();
-$('#panG').innerHTML=[["New PAN Card Apply","newdoc"],["PAN Update / Correction","edit"]].map((p,i)=>`<button class="card" data-svc>${th(p[0],p[1]==="newdoc"?"doc":"edit","XXXXX0000X",4+i)}<h3>${p[0]}</h3><div class="pr">₹500</div></button>`).join('');
-$('#conv').innerHTML=[["Aadhaar","fing","0000 0000 0000"],["PAN Card","pan","XXXXX0000X"],["Voter ID","vote","XXX0000000"],["Driving Licence (DL)","id","XX00 0000000000"],["Vehicle RC","car","XX 00 XX 0000"],["Any Other Document","doc","XXXX XXXX"]].map((c,i)=>`<button class="card" data-svc>${th("conv:"+c[0],c[1],c[2],i+1)}<h3>${c[0]} PVC Converter</h3><div class="pr">₹5</div></button>`).join('');
-/* name|category|icon */
-const TL={"Most Used":"Passport Photo Sheet|img;QR Code Generator|qr;Stamp Designer|stamp;ID Card Front & Back to A4|a4;What Is My IP|globe;Letterhead Maker|text;Visiting Card Designer|id;Marriage Biodata Maker|doc;Age Calculator|clock;Photo & Signature Resizer|resize",
-"PDF":"JPG / PNG to PDF|img;PDF Merge|merge;PDF Split & Page Extract|split;PDF to JPG|conv;PDF Rotate & Reorder|rot;PDF Compressor (KB)|zip;Document Scanner & PDF|scan;PDF Page Number Adder|text;PDF Header & Footer Maker|text",
-"Image":"Photo Compressor (KB)|zip;Image Format Converter|conv;Background Remover|layers;WebP to JPG Converter|conv;ICO to PNG|conv;ICO Converter (Favicon)|frame;Thumbnail Resizer|resize;Favicon Preview Tool & Maker|frame",
-"Photo Editing":"Image Watermark Maker|drop;Digital Signature Maker|sign;Photo Color Changer|drop;Photo Blur Tool|blur;Image to Black & White|blur;Background Black & White|layers;Photo Border Maker|frame;Color Picker from Image|drop;Name, Date & Text on Photo|text;Instagram Reel Cover Maker|img",
-"Print & ID":"ID Card Maker|id;QR Code Designer & Modifier|qr;Employee ID Card Maker|id;Student ID Card Maker|id;A4 Photo Print Layout|a4",
-"Documents":"Text to PDF / Application|text;Resume Maker|doc;Invoice Maker|inv;Quotation Maker|inv",
-"Hindi & Shop":"Hindi Typing Tool|text;GST Calculator|pct;GST Inclusive & Exclusive Calculator|pct;Printing Cost Calculator|print;Cash Denomination Calculator|cash;Salary Calculator|calc",
-"Calculators":"Percentage Calculator|pct;Loan / EMI Calculator|bank;Password to MD5 / SHA-256|lock;Online Stopwatch|clock;Calculator — Basic & Scientific|calc","Exam & Typing":"OMR Sheet Generator & Checker|doc;Typing Speed Test — Hindi & English|text;Online Exam System — Teacher & Student|id","Text & SEO":"Meta Title & Description Generator|pct;Word Counter|text"};
-I.scan='M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M4 12h16';
-const cats=Object.keys(TL),all=[];cats.forEach((c,ci)=>TL[c].split(";").forEach((t,ti)=>{const [n,k]=t.split("|");all.push({n,k,c,ci,ix:all.length,r:c=="Most Used"?ti+1:0})}));
-let cat="Most Used";
-function rt(){const q=$('#tq').value.toLowerCase();$('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
-const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
-$('#tg').innerHTML=L.map(t=>`<div class="card" data-svc data-tool="${t.n.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${t.r?`<span class="rk">#${t.r}</span>`:''}${tt(t.n,t.ix)}<h3>${t.n}</h3><div class="pr fre">FREE</div></div>`).join('')||'<p class="sub">No tools match.</p>'}
-$('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
-$('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
-
-$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 62 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
-Object.assign(I,{pause:'M8 5v14M16 5v14',play:'M8 5l11 7-11 7z',prev:'M15 5l-7 7 7 7',next:'M9 5l7 7-7 7'});
-const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let tmr;function toast(m,ms=3400){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>t.classList.remove('on'),ms)}
-
-/* ---------- hero image slider (self-drawn art) ---------- */
-const rot=(a,x,y,h)=>`<g transform="rotate(${a} ${x} ${y})">${h}</g>`;
-const SL=[
-{t:'RC, DL & Voter PVC cards',p:'38+ print services for CSC, cyber cafés and print shops, in one portal.',
- a:()=>rot(-8,46,36,CARD(10,12,72,46,'fa')+X(18,23,'VEHICLE RC',5,'fw','start')+R(18,30,38,9,'fy',2)+X(37,37,'RJ14 AB 1234',4.6)+L(18,45,40,2,5,'fo'))
- +rot(6,114,48,R(78,26,72,46,'fb',7)+X(86,37,'DRIVING LICENCE',5,'fw','start')+H(86,42,18,26,'fa')+L(110,46,34,3,6,'fo'))
- +rot(-2,70,74,R(34,52,76,44,'fw',7)+R(34,52,76,10,'fa',5)+X(42,60,'ELECTION CARD',4.6,'fw','start')+H(42,65,18,26,'fb')+L(66,68,36,3,6,'fl'))},
-{t:'PDF ready in seconds',p:'Enter the number, download the PDF, print on PVC. Re-download from History anytime.',
- a:()=>conv('PVC')+C(138,18,12,'fy')+Pa('M138 11v7l4 3','sa')+X(118,88,'85.60 × 53.98 mm',5)},
-{t:'Recharge with any UPI app',p:'Wallet balance is added automatically after payment.',
- a:()=>R(12,30,84,56,'fa',9)+R(12,24,84,14,'fb',7)+R(72,50,34,20,'fy',7)+C(84,60,3.5,'fk')+X(42,66,'₹ 500',10,'fw')+`<g transform="translate(110 16) scale(.55)">${QR(0,0)}</g>`+X(130,66,'UPI',8,'fa')},
-{t:'Auto refund if a service fails',p:'Pay only for successful results. Failed requests go back to your wallet.',
- a:()=>C(44,54,28,'fy')+X(44,64,'₹',28)+Pa('M80 34q18-22 42-8','sa')+Pa('M114 18l9 8-11 4','sa')+R(98,46,48,36,'fa',7)+R(98,40,48,10,'fb',5)+C(138,62,4,'fy')+C(142,34,11,'fg')+Pa('M136.500 34l4 4 7-8','sw')}
-];
-(function(){
-const T=$('#slT'),D=$('#slD'),P=$('#slP'),V=$('#slV'),n=SL.length;let i=0,play=!matchMedia('(prefers-reduced-motion:reduce)').matches,hold=false,tm,x0=null;
-T.innerHTML=SL.map((s,k)=>`<div class="sl-s" role="group" aria-roledescription="slide" aria-label="${k+1} of ${n}"><div class="sv" style="${sty(k)}">${art(s.a())}</div><div class="sl-c"><h3>${s.t}</h3><p>${s.p}</p></div></div>`).join('');
-D.innerHTML=SL.map((s,k)=>`<button type="button" class="dot" data-k="${k}" aria-label="Show slide ${k+1}: ${esc(s.t)}"></button>`).join('');
-$('#slPrev').innerHTML=ic('prev');$('#slNext').innerHTML=ic('next');
-function paint(){P.innerHTML=ic(play?'pause':'play');const l=play?'Pause slideshow':'Play slideshow';P.setAttribute('aria-label',l);P.title=l;V.setAttribute('aria-live',play?'off':'polite')}
-function tick(){clearTimeout(tm);if(play&&!hold&&!document.hidden)tm=setTimeout(()=>go(i+1),5200)}
-function go(k){i=(k+n)%n;T.style.transform=`translateX(${-i*100}%)`;[...T.children].forEach((e,q)=>e.setAttribute('aria-hidden',q==i?'false':'true'));[...D.children].forEach((e,q)=>e.setAttribute('aria-current',q==i));tick()}
-$('#slPrev').onclick=()=>go(i-1);$('#slNext').onclick=()=>go(i+1);P.onclick=()=>{play=!play;paint();tick()};
-D.onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};
-const R0=V.parentElement;R0.addEventListener('mouseenter',()=>{hold=true;tick()});R0.addEventListener('mouseleave',()=>{hold=false;tick()});
-R0.addEventListener('focusin',()=>{hold=true;tick()});R0.addEventListener('focusout',()=>{hold=false;tick()});
-R0.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')go(i-1);if(e.key=='ArrowRight')go(i+1)});
-document.addEventListener('visibilitychange',tick);
-V.addEventListener('pointerdown',e=>{x0=e.clientX});V.addEventListener('pointerup',e=>{if(x0===null)return;const d=e.clientX-x0;x0=null;if(Math.abs(d)>45)go(d<0?i+1:i-1)});V.addEventListener('pointercancel',()=>{x0=null});
-paint();go(0);
-})();
-
-/* ---------- storage (browser only: preview build, no server) ---------- */
-const mem={};
-const st={get(k){try{return localStorage.getItem(k)}catch(e){return k in mem?mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}},del(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}};
-const users=()=>{try{return JSON.parse(st.get('ds_users')||'[]')}catch(e){return[]}};
-const saveUsers=a=>st.set('ds_users',JSON.stringify(a));
-const API='https://docsmartly-api.hm2351994.workers.dev';
-const tokenHdr=()=>({'x-user-token':st.get('ds_token')||''});
-const api=(m,p,b)=>fetch(API+p,{method:m,headers:{'content-type':'application/json',...tokenHdr()},body:b===undefined?undefined:JSON.stringify(b)});
-async function serverLogin(id,pw){const s=await fetch(API+'/api/salt/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);if(!s)return null;const r=await fetch(API+'/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id,hash:await hash(pw,s.salt)})}).catch(()=>null);if(!r||!r.ok)return null;const j=await r.json();st.set('ds_token',j.token);saveUsers([j.user]);return j}
-async function lookupUser(id){const r=await fetch(API+'/api/lookup/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);return r&&r.exists?r:null}
-async function restore(){if(!st.get('ds_session')||!st.get('ds_token'))return;const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);if(r&&r.ok){saveUsers([(await r.json()).user])}else if(r&&r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users')}}
-const user=()=>{const id=st.get('ds_session');return id?users().find(u=>u.id==id):null};
-const b2h=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-const salt=()=>b2h(crypto.getRandomValues(new Uint8Array(16)));
-async function hashS(pw,sl){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return b2h(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new TextEncoder().encode(sl),iterations:100000},k,256))}
-
-function sha(s){const K=[],H=[];for(let p=2,n=0;n<64;p++){let q=1;for(let i=2;i*i<=p;i++)if(p%i==0){q=0;break}if(q){if(n<8)H[n]=Math.pow(p,.5)%1*4294967296|0;K[n++]=Math.pow(p,1/3)%1*4294967296|0}}
-const m=[...new TextEncoder().encode(s)],l=m.length*8,r=(x,k)=>x>>>k|x<<32-k;m.push(128);while(m.length%64!=56)m.push(0);for(let i=7;i>=0;i--)m.push(i>3?0:l>>>i*8&255);
-const w=[];for(let o=0;o<m.length;o+=64){for(let i=0;i<16;i++)w[i]=m[o+i*4]<<24|m[o+i*4+1]<<16|m[o+i*4+2]<<8|m[o+i*4+3];
-for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=w[i-16]+(r(a,7)^r(a,18)^a>>>3)+w[i-7]+(r(c,17)^r(c,19)^c>>>10)|0}
-let [a,b,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){const t=h+(r(e,6)^r(e,11)^r(e,25))+(e&f^~e&g)+K[i]+w[i]|0,u=(r(a,2)^r(a,13)^r(a,22))+(a&b^a&c^b&c)|0;h=g;g=f;f=e;e=d+t|0;d=c;c=b;b=a;a=t+u|0}
-[a,b,c,d,e,f,g,h].forEach((v,i)=>H[i]=H[i]+v|0)}
-return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
-async function hash(pw,sl){if(window.crypto&&crypto.subtle){try{return await hashS(pw,sl)}catch(e){}}let x=pw+':'+sl;for(let i=0;i<2000;i++)x=sha(x);return x}
-
-/* ---------- validation ---------- */
-const normMob=v=>{let d=v.replace(/\D/g,'');if(d.length==12&&d.startsWith('91'))d=d.slice(2);else if(d.length==11&&d[0]=='0')d=d.slice(1);return d};
-const okMob=v=>/^[\d\s+\-()]+$/.test(v.trim())&&/^[6-9]\d{9}$/.test(normMob(v));
-const okMail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-const idType=v=>okMob(v)?'m':okMail(v)?'e':'';
-const findUser=v=>{const t=idType(v);return t?users().find(u=>t=='m'?u.mob==normMob(v):u.mail==v.trim().toLowerCase()):null};
-const RULES={
-name:v=>v.trim().length>=2?'':'Enter your full name, for example Rahul Sharma.',
-mob:v=>okMob(v)?'':'Enter a 10-digit mobile number, for example 9876543210.',
-mail:v=>okMail(v)?'':'Enter an email like name@domain.com.',
-pw:v=>v.length>=8?'':'Use at least 8 characters for your password.',
-idn:v=>idType(v)?'':'Enter a 10-digit mobile number or an email like name@domain.com.',
-lpw:v=>v?'':'Enter your password.',
-code:v=>/^\d{6}$/.test(v.trim())?'':'Enter the 6-digit reset code.'};
-let prog=false;
-function setErr(f,m){f.setAttribute('aria-invalid','true');const e=$('#'+f.id+'-e');e.textContent=m;e.hidden=false;const h=$('#'+f.id+'-h');if(h)h.hidden=true}
-function clearErr(f){f.removeAttribute('aria-invalid');const e=$('#'+f.id+'-e');e.hidden=true;e.textContent='';const h=$('#'+f.id+'-h');if(h)h.hidden=false}
-function check(f){const m=RULES[f.dataset.rule](f.value);m?setErr(f,m):clearErr(f);return !m}
-document.querySelectorAll('[data-rule]').forEach(f=>{f.addEventListener('blur',()=>check(f));f.addEventListener('focus',()=>{if(!prog)clearErr(f)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')=='true')clearErr(f)})});
-function ban(id,m){const b=$('#'+id);if(!m){b.hidden=true;return}b.textContent=m;b.hidden=false}
-async function run(form,label,fn){if(form.dataset.busy)return;form.dataset.busy='1';const b=form.querySelector('button[type=submit]'),o=b.textContent;b.textContent=label;b.setAttribute('aria-busy','true');try{await fn()}finally{delete form.dataset.busy;b.textContent=o;b.removeAttribute('aria-busy')}}
-const GEN='We couldn’t complete that right now. Please try again in a moment.';
-document.addEventListener('click',e=>{const sh=e.target.closest('.show');if(sh){const f=$('#'+sh.dataset.for),v=f.type=='password';f.type=v?'text':'password';sh.textContent=v?'Hide':'Show';sh.setAttribute('aria-pressed',v);sh.setAttribute('aria-label',v?'Hide password':'Show password')}});
-
-/* ---------- header, session ---------- */
-function hdr(){const u=user();$('#heroAct').hidden=!!u;$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="#dashboard">Dashboard</a><button class="btn o" id="lo">Log out</button>`:'<button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
-const to=h=>{location.hash=h};
-const W=$('#wm');
-function welcome(u,fresh){$('#wt').textContent='Welcome, '+u.name.trim().split(/\s+/)[0];$('#ws').textContent=fresh?'Your account is ready.':'You’re logged in.';W.classList.add('open');$('#wGo').focus()}
-const closeW=()=>W.classList.remove('open');
-$('#wx').onclick=closeW;W.onclick=e=>{if(e.target===W)closeW()};$('#wGo').onclick=closeW;
-W.addEventListener('keydown',e=>{if(e.key!='Tab')return;const f=[$('#wx'),$('#wGo')],k=f.indexOf(document.activeElement);e.preventDefault();f[(k+(e.shiftKey?-1:1)+2)%2].focus()});
-function login(u,fresh){st.set('ds_session',u.id);st.del('ds_ref');hdr();to('dashboard');route();welcome(u,fresh)}
-
-/* ---------- routing: #login  #register  #forgot ---------- */
-const APP=['dashboard','referral','passbook','addmoney','history','profile','contact'],AUTH=['login','register','forgot'],TT={login:'Log in',register:'New registration',forgot:'Forgot password'},BASE=document.title;
-let wasAuth=false,pre=null,fu=null,fid='';
-function resetPanes(){document.querySelectorAll('#auth form').forEach(f=>{f.reset();f.querySelectorAll('[data-rule]').forEach(clearErr)});document.querySelectorAll('#auth .show').forEach(b=>{b.textContent='Show';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Show password')});document.querySelectorAll('#auth input[type=text][id$=Pw]').forEach(i=>i.type='password');ban('lBan');$('#fp1').hidden=false;$('#fp2').hidden=true;fu=null}
-
-/* ---------- must-see update alerts (Clean Professional Style) ---------- */
-const updKey=o=>[o.id,o.s,o.remark||'',o.file?o.file.t:''].join('|');
-const updAlertable=o=>o.s!=='pending'||!!o.remark||!!o.file;
-const updSeenKey=()=>'ds_seen_'+st.get('ds_session');
-const updSeen=()=>{try{return new Set(JSON.parse(st.get(updSeenKey())||'[]'))}catch(e){return new Set()}};
-function pendingUpdates(){
-  const u=user();if(!u)return[];
-  const seen=updSeen();
-  return(u.orders||[]).filter(o=>updAlertable(o)&&!seen.has(updKey(o)));
-}
-function ackUpdate(key){const s=updSeen();s.add(key);st.set(updSeenKey(),JSON.stringify([...s]));renderAlerts()}
-function ensureAlertStyle(){
-  if(document.getElementById('upd-style'))return;
-  const s=document.createElement('style');s.id='upd-style';
-  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:12px;pointer-events:none}'+
-  '#upd .upd-i{pointer-events:auto;background:#ffffff;border:1px solid #dbe5f6;border-left:4px solid #2457d6;color:#13233f;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 30px rgba(19,35,63,.12)}'+
-  '#upd .upd-i p{margin:2px 0;font-size:.92rem}#upd .upd-i b{color:#1b44ad}'+
-  '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
-  '.sb{display:inline-block;border-radius:99px;padding:3px 11px;font-size:.76rem;font-weight:800;text-transform:capitalize}'+
-  '.s-pending{background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d}'+
-  '.s-processing{background:#dbe7ff;color:#1b44ad;border:1px solid #a9c4ff}'+
-  '.s-success{background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0}'+
-  '.s-failed{background:#fdecea;color:#7a1a12;border:1px solid #f3b8b2}'+
-  '.rk-flash{margin-top:8px;padding:8px 12px;border-radius:8px;background:#f8fafc;border:1px solid #cbd5e1;color:#334155;font-weight:600;font-size:.85rem;display:block;box-shadow:inset 0 1px 2px rgba(0,0,0,.02)}';
-  document.head.appendChild(s);
-}
-function renderAlerts(){
-  ensureAlertStyle();
-  let box=document.getElementById('upd');
-  if(!box){box=document.createElement('div');box.id='upd';box.setAttribute('role','alert');box.setAttribute('aria-live','assertive');document.body.appendChild(box)}
-  const list=pendingUpdates();
-  if(window.__baseTitle==null)window.__baseTitle=document.title;
-  document.title=(list.length?'('+list.length+' new) ':'')+window.__baseTitle;
-  box.innerHTML=list.slice(0,3).map(o=>{
-    const key=updKey(o),bits=[];
-    if(o.s!=='pending')bits.push('Status: <b>'+esc(o.s)+'</b>');
-    if(o.remark)bits.push('Admin Note: <b>'+esc(o.remark)+'</b>');
-    if(o.file)bits.push('Result ready: <b>'+esc(o.file.name)+'</b> (download in History)');
-    return '<div class="upd-i"><div><p><b>'+esc(o.n||'Your request')+'</b> ('+esc(o.id)+')</p>'+bits.map(b=>'<p>'+b+'</p>').join('')+'</div>'+
-      '<div class="upd-b"><a class="btn" href="#history" data-ack="'+esc(key)+'">Open History</a><button class="btn" type="button" data-ack="'+esc(key)+'">Got it</button></div></div>';
-  }).join('')+(list.length>3?'<div class="upd-i"><p><b>'+(list.length-3)+' more updates.</b> Open History to see all.</p></div>':'');
-}
-document.addEventListener('click',e=>{const a=e.target.closest('[data-ack]');if(a)ackUpdate(a.dataset.ack)});
-function route(){if(location.hash=='#login'){location.replace('login.html');return}if(location.hash=='#register'){location.replace('register.html');return}renderAlerts();const h=location.hash.slice(1),isA=AUTH.includes(h);
-const isP=APP.includes(h);if(isP&&!user()){location.replace('#login');return}if(isA&&user()){location.replace('#dashboard');return}
-$('#home').hidden=isA||isP;$('#auth').hidden=!isA;$('#app').hidden=!isP;
-if(isA){resetPanes();document.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.r!=h);document.title=TT[h]+' – DocSmartly';scrollTo(0,0);if(h=='login'&&pre){$('#lId').value=pre;pre=null;$('#lPw').focus()}else $('.pane:not([hidden]) h1').focus({preventScroll:true})}
-else if(isP)showView(h);
-else{document.title=BASE;if(wasAuth){const el=h&&document.getElementById(h);el?el.scrollIntoView():scrollTo(0,0)}}
-wasAuth=isA||isP}
-addEventListener('hashchange',route);
-
-/* ---------- forms ---------- */
-$('#fLogin').onsubmit=e=>{e.preventDefault();const f=e.target;ban('lBan');if(!validate(f))return;run(f,'Logging in…',async()=>{try{const lr=await serverLogin($('#lId').value,$('#lPw').value),u=lr&&lr.user,ok=!!lr;if(!ok){ban('lBan','We couldn’t log you in. Check your mobile number or email and your password, then try again.');return}login(u,false)}catch(x){ban('lBan',GEN)}})};
-$('#fReg').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;
-const mob=normMob($('#rMob').value),mail=$('#rMail').value.trim().toLowerCase(),all=users();
-if(all.some(u=>u.mob==mob)){setErr($('#rMob'),'This mobile number is already registered. Log in instead.');$('#rMob').focus();return}
-if(all.some(u=>u.mail==mail)){setErr($('#rMail'),'This email is already registered. Log in instead.');$('#rMail').focus();return}
-run(f,'Creating account…',async()=>{try{const sl=salt(),hh=await hash($('#rPw').value,sl);const rr=await api('POST','/api/register',{user:{name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:hh},ref:st.get('ds_ref')||''});if(rr.status==409){toast('This account already exists. Log in instead.');return}if(!rr.ok)throw new Error(String(rr.status));const j=await rr.json();st.set('ds_token',j.token);saveUsers([j.user]);login(j.user,true)}catch(x){toast(GEN)}})};
-const mask=v=>idType(v)=='m'?'XXXXXX'+normMob(v).slice(-4):v.trim().replace(/^(.).*(@.*)$/,'$1•••$2');
-$('#fF1').onsubmit=async e=>{e.preventDefault();if(!validate(e.target))return;const v=$('#fId').value,u=await lookupUser(v);if(!u){setErr($('#fId'),'We couldn’t find an account with these details. Check them, or use New registration.');$('#fId').focus();return}
-fu=u;fid=v.trim();$('#fSent').textContent='Enter the 6-digit reset code for '+mask(v)+'.';$('#fp1').hidden=true;$('#fp2').hidden=false;$('#fCode').focus()};
-$('#fF2').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;if($('#fCode').value.trim()!='123456'){setErr($('#fCode'),'That code doesn’t match. Check the code and try again.');$('#fCode').focus();return}
-run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fPw').value,sl);const rr=await api('POST','/api/reset',{id:fid,code:$('#fCode').value.trim(),salt:sl,hash:hh});if(!rr.ok)throw new Error(String(rr.status));pre=fid;to('login');toast('Password updated. Log in with your new password.')}catch(x){toast(GEN)}})};
-
-/* ---------- page-level clicks ---------- */
-document.addEventListener('click',e=>{
-if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-const a=e.target.closest('[data-auth]');
-if(a){
-  e.preventDefault();
-  if(user()){
-    to('dashboard');
-  }else{
-    location.href=+a.dataset.auth?'register.html':'login.html';
-  }
-  return;
-}if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
-
-document.addEventListener('click', async e => {
-  const pb = e.target.closest('[data-pr]');
-  if (pb) {
-    fetch(API + '/api/requests/' + encodeURIComponent(pb.dataset.pr) + '/file', { headers: tokenHdr() })
-    .then(r => { if (!r.ok) throw 0; return r.blob(); })
-    .catch(() => { toast('Could not open file for printing.'); return null; })
-    .then(bl => {
-      if (!bl) return;
-      const url = URL.createObjectURL(bl);
-      const w = window.open(url, '_blank');
-      if (w) {
-        w.onload = () => w.print();
-      }
-      setTimeout(() => URL.revokeObjectURL(url), 10000);
-    });
-    return;
-  }
-});
-  
-/* ---------- mobile menu ---------- */
-const N=$('#nav'),B=$('#mn');
-function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
-B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
-Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
-const DS=[
-['Lost Document Service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
-['PAN Card Service','',['New PAN apply','PAN update / correction']],
-['PVC Tools','',['Voter ID','Aadhaar Card','PAN Card','Driving License','Vehicle RC','Any Other Document']],
-['Govt Department & Civil Contractor Services','',['New Digital Signature (DSC)','E-procurement registration','Tender upload (for contractor)','Tender upload (for department)','Building estimate creator','BOQ creator','Govt civil & electric bill maker (Excel)','Govt civil & electric bill maker (Measurement Book)','Bill form','Extra item sheet','Excess item sheet','QC register creator','Work escalation statement']]];
-const FT=Object.keys(TL).filter(c=>c!=='Most Used').map(c=>[c,TL[c].split(';').map(t=>t.split('|')[0])]);
-const TOP=(TL['Most Used']||'').split(';').map(t=>t.split('|')[0]);
-const SVD=[['RC Services','RC Services',[['RC PDF INSTANT',40]]],['DL Services','DL Services',[['DL PDF INSTANT',50]]],['Voter Services','Voter Services',[['Voter Mobile Link',40]]],['Farmer Services','Farmer Services',[['KISAN CARD',25]]],['PAN Services','PAN Services',[['Aadhaar to PAN',250]]],['Udyam Services','Udyam Services',[['New UDYAM CERTIFICATE',200]]],['Aadhaar Update & Ration Service','Aadhaar & Ration',[['AADHAAR Update',150]]],['Mobile Services','Mobile Services',[['Mobile Details Find',30],['Other Mobile Issue',50]]],['GST Services','GST Services',[['New GST Certificate',1200],['GST Download',200]]],['Chassis & Engine To RC','Chassis to RC',[['Chassis to RC',70]]],['Challan Check','Challan Details',[['Challan Details',10]]],['Bank Seeding','DBT Seeding Status',[['DBT Seeding Status',20]]]],SVC=Object.fromEntries(SVD.map(a=>[a[0],a[1]])),DP={};
-DS.unshift(...SVD.map(a=>[a[0],'',a[2].map(x=>{DP[a[0]+'|'+x[0]]=x[1];return x[0]})]));
-const GT='Govt Department & Civil Contractor Services';
-[['Lost Document Service',50],['PAN Card Service',600],['PVC Tools',10]].forEach(([t,p])=>DS.find(x=>x[0]==t)[2].forEach(n=>DP[t+'|'+n]=p));
-Object.entries({'New Digital Signature (DSC)':2500,'E-procurement registration':500,'Tender upload (for contractor)':300,'Tender upload (for department)':700,'Building estimate creator':200,'BOQ creator':200,'Govt civil & electric bill maker (Excel)':1000,'Bill form':400,'Extra item sheet':200,'Excess item sheet':200,'QC register creator':500,'Work escalation statement':700}).forEach(([n,p])=>DP[GT+'|'+n]=p);
-const FREEG=new Set(FT.map(g=>g[0])),MBK=GT+'|Govt civil & electric bill maker (Measurement Book)';
-const WAI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.2-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.4-2.4-2.4L11 10l-1-2z"/></svg>';
-const waLink=n=>`<a class="wal" href="https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for '+n)}" target="_blank" rel="noopener" aria-label="Ask price of ${esc(n)} on WhatsApp" title="Ask price on WhatsApp">₹ ${WAI}</a>`;
-const ALL=[];DS.forEach(s=>s[2].forEach(n=>ALL.push({k:s[0]+'|'+n,n,s:s[0]})));FT.forEach(g=>g[1].forEach(n=>ALL.push({k:g[0]+'|'+n,n,s:g[0]})));
-TOP.forEach(n=>{if(n&&!ALL.some(x=>x.n==n)){ALL.push({k:'Trending Tools|'+n,n,s:'Trending Tools'})}});FREEG.add('Trending Tools');
-const cPaid=DS.reduce((a,s)=>a+s[2].length,0),cFree=FT.reduce((a,g)=>a+g[1].length,0);
-const gen=()=>Math.random().toString(36).slice(2,8).toUpperCase();
-const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
-const dt=t=>new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-function me(){const u=user();if(!u)return null;let ch=0;['tx','fav','refs','orders'].forEach(k=>{if(!u[k]){u[k]=[];ch=1}});if(u.bal==null){u.bal=0;ch=1}if(!u.code){u.code=gen();ch=1}if(ch)save(u);return u}
-function save(u){const a=users(),i=a.findIndex(x=>x.id==u.id);a[i]=u;saveUsers(a);if(u.fav)api('PUT','/api/me',{fav:u.fav}).catch(()=>{})}
-const WA='https://wa.me/917300277557?text=Hello%20DocSmartly%20Support';
-/* top bar */
-$('#aS').innerHTML=ic('search');$('#aR').innerHTML=ic('gift');$('#aP').innerHTML=ic('book');$('#aA').innerHTML=ic('plus');$('#aW').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
-function setBal(){const u=me();if(u)$('#aB').innerHTML=ic('wal')+'<b>'+inr(u.bal)+'</b>'}
-const sec=(t,c,inner,open,id)=>`<details class="ds" open data-sec="${esc(t)}"${id?` id="${id}"`:''}><summary><span>${t}</span><em>${c}</em></summary>${inner}</details>`;
-const itm=(k,n,fv)=>{const sc=k.split('|')[0],i=ALL.findIndex(a=>a.k==k);return `<div class="it${k==MBK?' wq':''}" data-card="${esc(k)}"><button type="button" class="itb" data-it="${esc(k)}"><span class="sv" style="${sty(i<0?0:i)}">${FREEG.has(sc)?'<span class="tg">Free</span>':''}${art(dart(sc,n))}</span><span class="nm">${esc(n)}</span>${DP[k]!=null?`<span class="pr nm">${inr(DP[k])}</span>`:''}</button><button type="button" class="fv" data-fav="${esc(k)}" aria-pressed="${fv.includes(k)}" aria-label="Favourite ${esc(n)}" title="Favourite">${ic('heart')}</button>${k==MBK?waLink(n):''}</div>`};
-const grid=(h)=>`<div class="ig">${h}</div>`;
-function favHTML(){const u=me(),l=ALL.filter(a=>u.fav.includes(a.k));return l.length?grid(l.map(a=>itm(a.k,a.n,u.fav)).join('')):'<p class="sub">Tap the heart on any service to keep it here.</p>'}
-function renderFav(){const u=me();$('#favC').innerHTML=favHTML();$('#favN').textContent=u.fav.length}
-function renderDash(){const u=me(),h=new Date().getHours(),g=h<12?'Good morning':h<17?'Good afternoon':'Good evening',o=u.orders,cnt=s=>o.filter(x=>x.s==s).length;
-const stat=[['Total services',cPaid+cFree],['Pending',cnt('pending')],['Processing',cnt('processing')],['Success',cnt('success')],['Failed',cnt('failed')]];
-const paid=DS.map(s=>sec(s[0],s[2].length,(s[1]?`<p class="sub" style="margin:0 0 12px">${s[1]}</p>`:'')+grid(s[2].map(n=>itm(s[0]+'|'+n,n,u.fav)).join('')),1));
-const free=FT.map(g=>sec(g[0],g[1].length,grid(g[1].map(n=>itm(g[0]+'|'+n,n,u.fav)).join(''))));
-$('[data-v=dashboard]').innerHTML=`<div class="gc"><div><p class="gs">${g}</p><h1 tabindex="-1">${esc(u.name)}</h1><button type="button" class="link" id="lo2" style="padding-left:0">Log out</button></div>
-<div class="gw"><div><small>Wallet balance</small><b>${inr(u.bal)}</b></div><div class="ctl"><a class="ib" href="#addmoney" aria-label="Add money" title="Add money">${ic('plus')}</a><a class="ib" href="#passbook" aria-label="Passbook" title="Passbook">${ic('book')}</a><a class="ib" href="#referral" aria-label="Refer & Earn" title="Refer & Earn">${ic('gift')}</a></div></div></div>
-<div class="stt">${stat.map(s=>`<div><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
-<h2 class="sh">My Favourites (<span id="favN">${u.fav.length}</span>)</h2><div id="favC">${favHTML()}</div>
-<h2 class="sh">All Services (${cPaid})</h2>${paid.join('')}
-<h2 class="sh">Free & Trending Tools (${cFree})</h2>
-${sec('Trending Tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map(n=>{const a=ALL.find(x=>x.n==n);return a?itm(a.k,n,u.fav):''}).join('')),true,'trend')}
-${sec('Free Tools',cFree,free.join(''),false)}`}
-/* referral */
-const rlink=u=>location.href.split('#')[0].split('?')[0]+'?ref='+u.code;
-function refRows(q){const u=me(),r=u.refs.filter(x=>x.name.toLowerCase().includes(q.toLowerCase()));$('#rfB').innerHTML=r.map(x=>`<tr><td data-l="Name">${esc(x.name)}</td><td data-l="Join date">${dt(x.t)}</td><td data-l="Status">${x.st}</td><td data-l="Bonus"><b>${inr(x.bonus)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.refs.length?'No referral matches that name.':'No referrals yet. Share your link to start earning ₹10 per referral.'}</td></tr>`}
-function renderRef(){const u=me();$('[data-v=referral]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Refer & Earn</h1><p class="lead">Per referral ₹10 bonus, added to your wallet after your friend’s first recharge.</p>
-<div class="pn"><label for="rl">Your referral link</label><input id="rl" readonly value="${esc(rlink(u))}"><div class="row" style="margin-top:12px"><button class="btn" id="cpL" type="button">Copy link</button><button class="btn o" id="shL" type="button">Share link</button></div></div>
-<div class="head" style="margin-top:28px;margin-bottom:12px"><h2 class="sh" style="margin:0">My Referral (${u.refs.length})</h2><div class="srt"><input id="rfQ" type="search" placeholder="Referral name" aria-label="Search referral name" hidden><button type="button" class="ib" id="rfT" aria-label="Search referrals" title="Search referrals">${ic('search')}</button></div></div>
-<div class="tw"><table><thead><tr><th>Name</th><th>Join date</th><th>Status</th><th>Bonus</th></tr></thead><tbody id="rfB"></tbody></table></div>`;refRows('')}
-/* passbook */
-function renderPass(){const u=me(),add=u.tx.filter(t=>t.type=='credit').reduce((a,t)=>a+t.amt,0),sp=u.tx.filter(t=>t.type=='debit').reduce((a,t)=>a+t.amt,0);
-$('[data-v=passbook]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Passbook</h1>
-<div class="stt s3"><div><b>${inr(u.bal)}</b><span>Current balance</span></div><div><b>${inr(add)}</b><span>Total added</span></div><div><b>${inr(sp)}</b><span>Total spent</span></div></div>
-<div class="head" style="margin:26px 0 12px"><h2 class="sh" style="margin:0">Wallet transactions (${u.tx.length})</h2><div class="srt"><input id="pbQ" type="search" placeholder="Search transactions" aria-label="Search transactions" hidden><button type="button" class="ib" id="pbT" aria-label="Search transactions" title="Search transactions">${ic('search')}</button></div></div>
-<div class="tw"><table><thead><tr><th>Date</th><th>Details</th><th>Type</th><th>Amount</th></tr></thead><tbody id="pbB"></tbody></table></div>`;passRows('')}
-function passRows(q){const u=me(),r=u.tx.filter(t=>(t.note+' '+t.type+' '+t.amt+' '+dt(t.t)).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.t-a.t);$('#pbB').innerHTML=r.map(t=>`<tr><td data-l="Date">${dt(t.t)}</td><td data-l="Details">${esc(t.note)}</td><td data-l="Type">${t.type=='credit'?'Credit':'Debit'}</td><td data-l="Amount"><b>${t.type=='credit'?'+':'−'}${inr(t.amt)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.tx.length?'No transaction matches your search.':'No transactions yet. Add money to see it here.'}</td></tr>`}
-/* add money */
-let quick=false;
-function recent(){const u=me(),r=u.tx.filter(t=>t.type=='credit'&&t.note.startsWith('Added')).sort((a,b)=>b.t-a.t).slice(0,5);return r.length?r.map(t=>`<li><span>${esc(t.note)}<small>${dt(t.t)}</small></span><b>+${inr(t.amt)}</b></li>`).join(''):'<li class="sub">No deposits yet.</li>'}
-function renderAdd(){const u=me();quick=false;$('[data-v=addmoney]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Add money to wallet</h1>
-<div class="pn"><small>Current balance</small><div class="big">${inr(u.bal)}</div>
-<form id="fAdd" novalidate><div class="fld"><label for="amt">Amount</label><input id="amt" type="number" inputmode="numeric" min="200" step="1" aria-describedby="amt-h amt-e"><p class="hint" id="amt-h">Minimum ₹200</p><p class="err" id="amt-e" role="alert" hidden></p></div>
-<div class="chips" role="group" aria-label="Quick amounts">${[100,200,500,1000].map(v=>`<button type="button" class="chp" data-q="${v}">+${v}</button>`).join('')}</div>
-<button class="btn" type="submit">Pay with UPI</button></form></div>
-<h2 class="sh">Recent deposits</h2><ul class="rd" id="rdL">${recent()}</ul>`}
-/* ---------- thumbnails for every dashboard service ---------- */
-Object.assign(I,{menu:'M4 7h16M4 12h16M4 17h16',grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',hist:'M4 12a8 8 0 1 0 3-6.2M4 4v4h4M12 8v5l3 2',user:'M12 12a4 4 0 1 0 0-.01M4 20c1-4 4-6 8-6s7 2 8 6',out:'M10 4H5v16h5M15 8l4 4-4 4M19 12H9'});
-const MG=(x,y)=>C(x,y,12,'fw')+C(x,y,12,'sa')+Pa(`M${x+9} ${y+9}l11 11`,'sa')+X(x,y+5,'?',14,'fa');
-const TK=(x,y)=>`<path d="M${x} ${y}l3 3 6-7" class="sa" style="stroke-width:1.8"/>`;
-const AAD=()=>CARD(18,14,124,72)+R(18,14,124,6,'fy',0)+X(30,34,'AADHAAR',7,'fw','start')+H(28,40,26,34)+L(64,46,40,3,8,'fo')+Pa('M114 70a10 10 0 0 1 20 0M118 70a6 6 0 0 1 12 0','sw');
-const UP=(x,y)=>Pa(`M${x} ${y+20}V${y}m-8 8 8-8 8 8`,'sa')+R(x-14,y+26,28,5,'fa',2);
-const GOV=(x,y)=>Pa(`M${x+20} ${y}l20 10H${x}z`,'fa')+[0,1,2].map(i=>R(x+5+i*11,y+13,6,16,'fb',1)).join('')+R(x,y+31,40,5,'fa',1);
-const HAT=(x,y)=>Pa(`M${x} ${y+14}a16 14 0 0 1 32 0z`,'fy')+R(x-4,y+14,40,5,'fy',2)+R(x+12,y-2,8,8,'fy',1);
-const ROWS=(x,y,n,w)=>Array.from({length:n},(_,i)=>R(x,y+i*9,w*.3,4,'fl',1)+R(x+w*.36,y+i*9,w*.64,4,'fb',1)).join('');
-const SHEET=(t,b)=>PG(28,8,92,84)+X(74,22,t,6.5,'fa')+ROWS(36,30,3,76)+R(34,56,84,11,'fy',2)+R(40,60,26,4,'fk',1)+R(72,60,38,4,'fk',1)+C(122,76,13,b);
-const DA={
-'New Digital Signature (DSC)':()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa')+L(26,32,50,3,7)+Pa('M26 66c6-10 9-14 10-9s-4 11 0 10 4-6 8-8 3 5 5 4','sa')+R(98,36,34,24,'fb',5)+R(130,42,14,12,'fm',2)+X(115,52,'DSC',8,'fw')+C(106,41,2,'fy')+C(76,80,10,'fg')+Pa('M71 80l4 4 7-8','sw'),
-'E-procurement registration':()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa')+R(30,42,100,8,'fl',2)+R(30,54,100,8,'fl',2)+R(50,68,60,12,'fa',4)+X(80,77,'Register',6.5,'fw'),
-'Tender upload (for contractor)':()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7)+UP(110,8)+HAT(100,52),
-'Tender upload (for department)':()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7)+UP(110,8)+GOV(92,50),
-'Building estimate creator':()=>R(12,12,136,76,'fb',6)+Pa('M26 52l31-22 31 22z','fy')+R(32,52,50,30,'fw',2)+R(40,60,12,12,'fb',1)+R(64,62,12,20,'fb',1)+PG(100,18,40,64)+X(120,34,'₹',13,'fa')+L(106,44,28,4,7),
-'BOQ creator':()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2)+[0,1,2,3,4].map(i=>R(34,39+i*9,22,5,'fl',1)+R(60,39+i*9,28,5,'fl',1)+R(92,39+i*9,14,5,'fb',1)+R(110,39+i*9,16,5,'fb',1)).join('')+R(94,84,32,6,'fa',2),
-'Govt civil & electric bill maker (Excel)':()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw')+[0,1,2,3].map(r=>[0,1,2].map(c=>R(32+c*30,28+r*13,26,9,(r+c)%2?'fl':'fb',2)).join('')).join('')+Pa('M126 54l-14 20h9l-5 18 17-24h-9l5-14z','fy'),
-'Govt civil & electric bill maker (Measurement Book)':()=>R(14,14,64,72,'fw',5)+R(82,14,64,72,'fw',5)+X(46,28,'M.B.',8,'fa')+L(22,36,48,5,9)+L(90,24,48,6,9)+R(76,14,8,72,'fa',2)+R(92,66,52,14,'fy',2)+[0,1,2,3,4,5,6].map(i=>R(97+i*7.5,66,1.5,i%2?5:8,'fk',0)).join(''),
-'Bill form':()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw')+[0,1,2,3].map(i=>R(40,28+i*11,26,3,'fl',1.5)+R(72,28+i*11,48,3,'fb',1.5)).join('')+R(40,76,80,12,'fa',3)+X(80,85,'Total ₹',7,'fw'),
-'Extra item sheet':()=>SHEET('EXTRA ITEMS','fg')+Pa('M122 69v14M115 76h14','sw'),
-'Excess item sheet':()=>SHEET('EXCESS ITEMS','fr')+Pa('M122 83V70m-6 6 6-6 6 6','sw'),
-'QC register creator':()=>R(30,10,100,82,'fb',6)+R(62,5,36,10,'fk',3)+R(37,20,86,66,'fw',3)+[0,1,2,3].map(i=>R(44,28+i*14,9,9,'fl',2)+TK(45.5,33+i*14)+R(59,31+i*14,52,3,'fl',1.5)).join('')+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
-'Work escalation statement':()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa')+L(26,30,50,5,8)+R(94,62,12,22,'fb',2)+R(110,50,12,34,'fb',2)+R(126,36,12,48,'fa',2)+Pa('M92 52l16-10 12 6 20-24','sa')+Pa('M130 24h10v10','sa'),
-'Student / Employee ID card maker':()=>IDV(18,4,56,92,'STUDENT','fb')+IDV(86,4,56,92,'EMPLOYEE','fa'),
-'Typing speed test (Hindi & English)':()=>TA['Hindi Typing Tool']()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
-'Online exam system':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+i*16,4,i==1?'fa':'fl')+R(56,32+i*16,56,4,'fl',2)).join('')+C(120,78,12,'fy')+Pa('M120 71v7l5 3','sa'),
-'Word counter':()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')+X(120,77,'words',6.5,'fw'),
-'Calculator (basic & scientific)':()=>CALC('√ π'),
-'Typing Speed Test — Hindi & English':function(){return DA['Typing speed test (Hindi & English)']()},
-'Online Exam System — Teacher & Student':function(){return DA['Online exam system']()},
-'Word Counter':function(){return DA['Word counter']()},
-'Calculator — Basic & Scientific':function(){return DA['Calculator (basic & scientific)']()},
-'OMR Sheet Generator & Checker':()=>PG(32,6,96,88)+[0,1,2,3,4].map(r=>[0,1,2,3].map(c=>C(52+c*16,22+r*13,3.5,(r*4+c)%3==0?'fa':'fl')).join('')).join('')+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
-'Meta Title & Description Generator':()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')+R(30,46,100,6,'fl',2)+R(30,56,80,6,'fl',2)+R(30,66,60,6,'fl',2),
-'Online Stopwatch':()=>C(80,52,34,'fw')+C(80,52,34,'sa')+Pa('M80 18v-8','sa')+Pa('M74 10h12','sa')+Pa('M106 26l4-4','sa')+Pa('M80 52V34','sa')+Pa('M80 52l14 10','sa')+X(62,76,'00:00',9,'fa'),
-'Name, Date & Text on Photo':()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw')+X(80,60,'28 Oct 2026',7,'fw'),
-'Instagram Reel Cover Maker':()=>PHN(48,4,64,92)+IMG(54,12,52,48)+R(58,66,44,6,'fl',2)+R(58,76,32,6,'fl',2)};
-const TM={'Photo to PDF':'JPG / PNG to PDF','PDF merge':'PDF Merge','PDF split & add page':'PDF Split & Page Extract','PDF to JPG':'PDF to JPG','PDF rotate & page reorder':'PDF Rotate & Reorder','PDF compressor':'PDF Compressor (KB)','Add page numbers to PDF':'PDF Page Number Adder','PDF header & footer':'PDF Header & Footer Maker','Photo compressor':'Photo Compressor (KB)','Photo resizer':'Photo & Signature Resizer','Photo format converter':'Image Format Converter','Background remove':'Background Remover','Background change':'Photo Color Changer','Favicon maker':'Favicon Preview Tool & Maker','Watermark maker':'Image Watermark Maker','Signature maker':'Digital Signature Maker','Colour picker from image':'Color Picker from Image','Application format':'Text to PDF / Application','Resume':'Resume Maker','Invoice':'Invoice Maker','Letterhead':'Letterhead Maker','Quotation':'Quotation Maker','Passport photo sheet':'Passport Photo Sheet','QR code generator':'QR Code Generator','ID card front & back to A4':'ID Card Front & Back to A4','Visiting card maker':'Visiting Card Designer','Stamp designer':'Stamp Designer','A4 photo print sheet':'A4 Photo Print Layout','GST calculator':'GST Calculator','Cash calculator':'Cash Denomination Calculator','Salary calculator':'Salary Calculator','Loan / EMI calculator':'Loan / EMI Calculator','Age calculator':'Age Calculator','Percentage calculator':'Percentage Calculator'};
-function dart(s,n){
-if(SVC[s])return V[SVC[s]]();
-if(s=='Lost Document Service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
-if(s=='PVC Tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
-if(s=='PAN Card Service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
-const f=DA[n]||TA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
-$('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>{const mb=GT+'|'+n==MBK,p=DP[GT+'|'+n];return `<${mb?'div tabindex="0" role="button"':'button'} class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3>${mb?waLink(n):p!=null?`<div class="pr">${inr(p)}</div>`:''}</${mb?'div':'button'}>`}).join('');
-$('#sbT').innerHTML=ic('menu');
-
-/* ---------- left menu ---------- */
-function renderSB(){const lk=(h,k,t)=>`<a class="mi" href="${h}">${ic(k)}${t}</a>`,grp=g=>`<details class="sm"><summary data-sg="${esc(g[0])}">${esc(g[0])}<em>${g[1].length}</em></summary>${g[1].map(n=>`<button type="button" class="mi" data-go="${esc(g[0]+'|'+n)}">${esc(n)}</button>`).join('')}</details>`;
-$('#sb').innerHTML=`<div class="sbs">${lk('#dashboard','grid','Dashboard')}${lk('#passbook','book','Passbook')}${lk('#history','hist','History')}${lk('#referral','gift','Refer &amp; Earn')}${lk('#profile','user','Profile')}${lk('#contact','phone','Contact Us')}<p class="mh">Paid services</p>${DS.map(g=>grp([g[0],g[2]])).join('')}<p class="mh">Free tools</p>${FT.map(grp).join('')}</div><div class="sbf"><button type="button" class="mi" id="lo3">${ic('out')}Log Out</button></div>`}
-function sbCur(h){if(!$('#sb').firstChild)renderSB();document.querySelectorAll('#sb a.mi').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')=='#'+h?'page':'false'))}
-const closeSB=()=>{$('#sb').classList.remove('open');$('#sbT').setAttribute('aria-expanded','false')};
-function jump(k,sec){const run=()=>{const el=sec?[...document.querySelectorAll('.ds[data-sec]')].find(x=>x.dataset.sec==k):[...document.querySelectorAll('.ds:not(#trend) [data-card]')].find(x=>x.dataset.card==k);if(!el)return;for(let p=el.closest('details');p;p=p.parentElement&&p.parentElement.closest('details'))p.open=true;el.scrollIntoView({behavior:'smooth',block:sec?'start':'center'});if(!sec){el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),1800)}};
-if(location.hash=='#dashboard')run();else{addEventListener('hashchange',()=>setTimeout(run,0),{once:true});to('dashboard')}}
-document.addEventListener('click',e=>{const t=e.target;let b;
-if(t.closest('#sbT')){const o=$('#sb').classList.toggle('open');$('#sbT').setAttribute('aria-expanded',o);return}
-if(t.closest('#lo3')){st.del('ds_session');closeSB();hdr();to('top');toast('You’ve been logged out.');return}
-if(b=t.closest('[data-go]')){jump(b.dataset.go,0);closeSB();return}
-if(b=t.closest('summary[data-sg]'))jump(b.dataset.sg,1);
-if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
-document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
-
-/* ---------- history, profile, contact ---------- */
- function renderHist(){
-  ensureAlertStyle();
-  const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
-  $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
-    <h1 tabindex="-1">History</h1>
-    <p class="lead">Every request and its result. Download or print your result anytime.</p>
-    <div class="tw" style="margin-top:18px"><table>
-      <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
-      <tbody>${o.map(x=>`<tr>
-        <td data-l="Date">${dt(x.t)}</td>
-        <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash"><b>Admin Note:</b> ${esc(x.remark)}</div>`:''}</td>
-        <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
-        <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
-        <td data-l="Result">${x.file?`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download
-          </button>
-          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;color:#12803f;border-color:#12803f" data-pr="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Print
-          </button>
-        </div>`:'<span class="sub">Not ready</span>'}</td>
-      </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
-    </table></div>`;
-}
-const resList=u=>{const l=u.orders.filter(o=>o.file&&o.id).sort((a,b)=>b.t-a.t);return l.length?`<ul class="rd">${l.map(o=>`<li><span>${esc(o.n)}<small>${dt(o.t)} · ${esc(o.file.name)}</small></span><button class="btn" type="button" data-dl="${esc(o.id)}" data-n="${esc(o.file.name)}">Download</button></li>`).join('')}</ul>`:'<p class="sub">Result documents uploaded by our team will appear here.</p>'};
-function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form><h2 class="sh">My results</h2>${resList(u)}`}
-function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
-document.addEventListener('submit',e=>{if(e.target.id!='fPro')return;e.preventDefault();const i=$('#pfN'),v=i.value.trim().replace(/\s+/g,' ');if(v.length<2){setErr(i,'Enter your full name, for example Rahul Sharma.');i.focus();return}const u=me();u.name=v;save(u);renderProf();hdr();toast('Name updated.')});
-const VIEWS={dashboard:renderDash,referral:renderRef,passbook:renderPass,addmoney:renderAdd,history:renderHist,profile:renderProf,contact:renderContact},VT={dashboard:'Dashboard',referral:'Refer & Earn',passbook:'Passbook',addmoney:'Add money',history:'History',profile:'Profile',contact:'Contact Us'};
-
-function showView(h){document.querySelectorAll('#app [data-v]').forEach(v=>v.hidden=v.dataset.v!=h);VIEWS[h]();setBal();sbCur(h);$('#sP').hidden=true;document.title=VT[h]+' – DocSmartly';scrollTo(0,0);$(`[data-v=${h}] h1`).focus({preventScroll:true})}
-/* ---------- service request form (saved to order.data, shown in admin) ---------- */
-const FM={'RC Services':['Vehicle number','Owner name?','Remarks?'],'DL Services':['DL number','Date of birth','Holder name?','Remarks?'],'Voter Services':['EPIC / Voter ID number','Voter name?','Mobile number?','Remarks?'],'Farmer Services':['Farmer ID / Aadhaar number','Farmer name?','State?','Remarks?'],'PAN Services':['Aadhaar number','Applicant name?','Mobile number?','Remarks?'],'Udyam Services':['PAN / Aadhaar number','Business name','Mobile number','Remarks?'],'Aadhaar & Ration':['Aadhaar / Ration card number','Name','Mobile number?','Remarks?'],'Mobile Services':['Mobile number','Issue details?'],'GST Services':['GSTIN / PAN','Business name?','Remarks?'],'Chassis to RC':['Chassis number','Engine number?'],'Challan Details':['Vehicle number'],'DBT Seeding Status':['Aadhaar number','Bank name?'],'Lost Document Service':['Name','Date of birth','Father name?','Document number (if known)?','Mobile number','Address?'],'PAN Card Service':['Applicant name','Father name','Date of birth','Aadhaar number','Mobile number','Email','Address','Remarks?'],'PVC Tools':['Document number','Holder name?','Remarks?'],[GT]:['Name / firm name','Mobile number','Work / tender details','Remarks?']};
-let rqk=null;const closeRq=()=>$('#rm').classList.remove('open');
-function openRq(k){const a=ALL.find(x=>x.k==k),p=DP[k];if(!a||p==null){toast((a?a.n:'This service')+' is available on request. Message us on WhatsApp for the price.');return}
-rqk=k;const u=me(),F=FM[SVC[a.s]||a.s]||FM[a.s]||['Details / number','Remarks?'];
-$('#rt').textContent=a.n;$('#rp').textContent='Fee '+inr(p)+'. Wallet balance '+inr(u.bal)+'.';
-$('#fRq').innerHTML=F.map((l,i)=>{const o=l.endsWith('?'),n=o?l.slice(0,-1):l,v=/^(Applicant name|Name)$/.test(n)?u.name:n=='Mobile number'?u.mob:n=='Email'?u.mail:'',ty=/date of birth/i.test(n)?'date':/mobile number/i.test(n)?'tel':/email/i.test(n)?'email':'text',ta=/address|details|remarks/i.test(n),at=`id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'} value="${esc(v)}"`;
-return `<div class="fld"><label for="rq${i}">${esc(n)}${o?' (optional)':''}</label>${ta?`<textarea id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'}></textarea>`:`<input type="${ty}" ${at}>`}<p class="err" role="alert" hidden></p></div>`}).join('')+`<button class="btn" type="submit">Submit request · ${inr(p)}</button>`;
-$('#rm').classList.add('open');$('#rq0').focus()}
-$('#rx').onclick=closeRq;$('#rm').onclick=e=>{if(e.target.id=='rm')closeRq()};document.addEventListener('keydown',e=>{if(e.key=='Escape')closeRq()});
-document.addEventListener('submit',async e=>{if(e.target.id!='fRq')return;e.preventDefault();const els=[...e.target.querySelectorAll('[data-l]')];let bad=null;
-els.forEach(i=>{const m=i.nextElementSibling,x=i.hasAttribute('data-req')&&!i.value.trim();m.hidden=!x;m.textContent=x?'This field is required.':'';if(x&&!bad)bad=i});if(bad){bad.focus();return}
-const a=ALL.find(x=>x.k==rqk),p=DP[rqk];const d={};els.forEach(i=>{if(i.value.trim())d[i.dataset.l]=i.value.trim()});const rr=await api('POST','/api/requests',{k:rqk,sec:SVC[a.s]||a.s,data:d});if(rr.status==402){toast('Not enough wallet balance. Add money first.');return}if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);closeRq();setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]();toast('Request submitted. Track it in History.')});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-dl]');if(!b)return;fetch(API+'/api/requests/'+encodeURIComponent(b.dataset.dl)+'/file',{headers:tokenHdr()}).then(r=>{if(!r.ok)throw 0;return r.blob()}).catch(()=>{toast('Could not download the file. Try again.');return null}).then(bl=>{if(!bl)return;const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=b.dataset.n||'result';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)})});
-document.addEventListener('click',async e=>{
-  const pb=e.target.closest('[data-pr]');
-  if(pb){
-    fetch(API+'/api/requests/'+encodeURIComponent(pb.dataset.pr)+'/file',{headers:tokenHdr()})
-    .then(r=>{if(!r.ok)throw 0;return r.blob()})
-    .catch(()=>{toast('Could not open file for printing.');return null})
-    .then(bl=>{
-      if(!bl)return;
-      const url=URL.createObjectURL(bl);
-      const w=window.open(url,'_blank');
-      if(w){
-        w.onload=()=>w.print();
-      }
-      setTimeout(()=>URL.revokeObjectURL(url),10000);
-    });
-    return;
-  }
-});
-  /* events */
-document.addEventListener('click',e=>{const t=e.target;let b;
-if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
-if(b=t.closest('[data-fav]')){const u=me(),k=b.dataset.fav,i=u.fav.indexOf(k);i<0?u.fav.push(k):u.fav.splice(i,1);save(u);document.querySelectorAll('[data-fav]').forEach(x=>{if(x.dataset.fav==k)x.setAttribute('aria-pressed',i<0)});renderFav();return}
-if(b=t.closest('#app [data-it]')){const a=ALL.find(x=>x.k==b.dataset.it);$('#sP').hidden=true;openRq(b.dataset.it);return}
-if(t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
-if(t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
-if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hidden;if(!q.hidden)q.focus();else{q.value='';(b.id=='rfT'?refRows:passRows)('')}return}
-if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
-document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
-if(t.id=='sQ'){const q=t.value.trim().toLowerCase(),r=q?ALL.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8):[];$('#sR').innerHTML=r.map(a=>`<button type="button" class="sri" data-it="${esc(a.k)}">${esc(a.n)}<small>${esc(a.s)}</small></button>`).join('')||(q?'<p class="sub" style="padding:8px 4px">No service matches that search.</p>':'')}});
-document.addEventListener('submit',async e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
-if(!(v>=200)){setErr(a,'Enter an amount of ₹200 or more.');a.focus();return}
-const rr=await api('POST','/api/topup',{amt:v});if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
-const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
-
-$('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
-if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
-restore().finally(()=>{hdr();route();renderAlerts()});
-
-async function syncNow(){
-  if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
-  const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
-  if(!r)return;
-  if(r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users');hdr();route();return}
-  if(!r.ok)return;
-  const j=await r.json();
-  const changed=JSON.stringify(user())!==JSON.stringify(j.user);
-  if(changed){
-    saveUsers([j.user]);
-    setBal();
-    const h=location.hash.slice(1);
-    if(VIEWS[h])VIEWS[h]();
-  }
-  renderAlerts();
-}
-setInterval(syncNow, 5000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
-
-</script>
-<script src="tools.js"></script>
-</body>
-</html>
+const I={car:'M5 16v-5l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3',id:'M3 7h18v12H3zM8 13a2 2 0 1 0 0-.01M6 17c1-2 4-2 5 0M14 11h4M14 15h4',vote:'M4 9h16v11H4zM8 9V5h8v4M9 14l2 2 4-4',leaf:'M12 20V10M12 10c0-4 3-6 6-6 0 4-2 6-6 6M12 14c0-3-2-5-5-5 0 3 2 5 5 5',pan:'M3 5h18v14H3zM7 10h6M7 14h10M15 8h3v3h-3z',basket:'M4 10h16l-1.5 9h-13zM8 10l3-5M16 10l-3-5',phone:'M7 3h10v18H7zM11 18h2',pct:'M6 18L18 6M7 7m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M17 17m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0',inv:'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18',shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',img:'M3 5h18v14H3zM9 10m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',merge:'M3 4h8v10H3zM13 10h8v10h-8z',zip:'M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5',resize:'M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6',qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',sign:'M3 17c3-6 5-9 6-6s-2 7 1 6 3-5 5-5 1 4 3 3M3 21h18',edit:'M4 20l1-4 11-11 3 3L8 19zM14 7l3 3',search:'M11 11m-6 0a6 6 0 1 0 12 0a6 6 0 1 0-12 0M16 16l4 4',globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',lock:'M5 11h14v10H5zM8 11V8a4 4 0 0 1 8 0v3',calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M
