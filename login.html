@@ -2,144 +2,86 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Log in – DocSmartly</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Login – DocSmartly</title>
+<link rel="stylesheet" href="css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --navy:#13223d; --ink:#13233f; --muted:#5b6b85; --line:#dbe5f6; --field:#eef3fb; --brand:#2457d6; --bg:#f4f8fd; --err:#b42318; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; }
-  header { display:flex; justify-content:space-between; align-items:center; padding:14px 40px; background:#f4f8fd; border-bottom:1px solid var(--line); }
-  .logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); font-weight:800; font-size:1.15rem; }
-  .logo-mark { width:36px; height:36px; border-radius:9px; background:var(--brand); display:grid; place-items:center; }
-  .logo-mark svg { width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2; }
-  .back { color:var(--brand); font-weight:600; text-decoration:none; font-size:.95rem; }
-  .split { flex:1; display:grid; grid-template-columns:1fr 1fr; }
-  .info { background:var(--navy); color:#fff; padding:64px 56px; display:flex; flex-direction:column; justify-content:center; }
-  .info h2 { font-size:2rem; line-height:1.2; margin:0 0 28px; max-width:360px; }
-  .info ul { list-style:none; padding:0; margin:0; display:grid; gap:22px; }
-  .info li { display:flex; gap:14px; align-items:flex-start; }
-  .info li svg { width:20px; height:20px; flex:none; margin-top:3px; stroke:#fff; fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
-  .info b { display:block; font-size:1rem; margin-bottom:2px; }
-  .info span { color:#a9b8d4; font-size:.92rem; }
-  .formwrap { display:flex; align-items:center; justify-content:center; padding:48px 24px; }
-  .form { width:100%; max-width:420px; }
-  h1 { font-size:2rem; margin:0 0 6px; }
-  .lead { color:var(--muted); margin:0 0 26px; font-size:.98rem; }
-  label { display:block; font-size:.92rem; font-weight:600; margin:16px 0 7px; }
-  .row { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
-  .row label { margin:0; }
-  .row a { color:var(--brand); font-size:.9rem; font-weight:600; text-decoration:underline; }
-  input { width:100%; padding:13px 14px; border:1.5px solid var(--line); background:var(--field); border-radius:10px; font:inherit; font-size:1rem; color:var(--ink); }
-  input:focus { outline:3px solid #cfe0ff; border-color:var(--brand); background:#fff; }
-  .pw { position:relative; }
-  .pw input { padding-right:64px; }
-  .pw button { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:0; color:var(--brand); font:inherit; font-size:.9rem; font-weight:600; cursor:pointer; }
-  .btn { width:100%; margin-top:24px; padding:14px; border:0; border-radius:10px; background:var(--brand); color:#fff; font:inherit; font-weight:700; font-size:1.02rem; cursor:pointer; }
-  .btn:hover { background:#1d4ac0; }
-  .btn[disabled] { opacity:.6; cursor:wait; }
-  .msg { margin-top:16px; padding:11px 14px; border-radius:10px; font-size:.92rem; display:none; }
-  .msg.err { display:block; background:#fef3f2; color:var(--err); border:1px solid #fecdca; }
-  .alt { margin-top:24px; font-size:.95rem; color:var(--muted); text-align:center; }
-  .alt a { color:var(--brand); font-weight:700; text-decoration:underline; }
-  @media (max-width:860px) {
-    header { padding:12px 20px; }
-    .split { grid-template-columns:1fr; }
-    .info { display:none; }
-    .formwrap { padding:32px 20px; align-items:flex-start; }
-    h1 { font-size:1.7rem; }
-  }
+body { display: grid; place-items: center; min-height: 100vh; padding: 20px; background: var(--bg); }
+.box-auth { background: #fff; border: 1px solid var(--ln); border-radius: 16px; padding: 32px; width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(19,35,63,.08); }
+.err-box { background: #fdecea; border: 1px solid #f3b8b2; color: #7a1a12; padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 16px; }
 </style>
 </head>
 <body>
-<header>
-  <a class="logo" href="index.html"><span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M9 13h6M9 17h4"/></svg></span>DocSmartly</a>
-  <a class="back" href="index.html">Back to home</a>
-</header>
+<div class="box-auth">
+  <a href="index.html" style="font-weight:700;color:var(--ac);display:inline-block;margin-bottom:16px">← Home</a>
+  <h1 style="font-size:1.8rem;margin-bottom:6px">Log in</h1>
+  <p style="color:var(--mut);margin-bottom:20px;font-size:0.92rem">Access your DocSmartly dashboard & wallet</p>
+  
+  <div id="err" class="err-box" hidden></div>
 
-<div class="split">
-  <aside class="info" aria-hidden="true">
-    <h2>Your print shop, one login away</h2>
-    <ul>
-      <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><div><b>All services working</b><span>RC, DL, Voter, PAN and more, live and ready.</span></div></li>
-      <li><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1"/><circle cx="12" cy="12" r="2.5"/></svg><div><b>Auto refund if a service fails</b><span>Pay only for results that arrive.</span></div></li>
-      <li><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg><div><b>Every PDF saved in History</b><span>Download again whenever you need it.</span></div></li>
-    </ul>
-  </aside>
-
-  <section class="formwrap">
-    <form class="form" id="fLogin" novalidate>
-      <h1>Log in</h1>
-      <p class="lead">Welcome back. Log in to use your wallet and services.</p>
-
-      <label for="lId">Mobile number or email</label>
-      <input id="lId" name="lId" type="text" autocomplete="username" inputmode="email" placeholder="9876543210 or name@domain.com" required>
-
-      <div class="row"><label for="lPw">Password</label><a href="index.html#forgot">Forgot password?</a></div>
-      <div class="pw">
-        <input id="lPw" name="lPw" type="password" autocomplete="current-password" required>
-        <button type="button" id="togglePw" aria-label="Show password">Show</button>
-      </div>
-
-      <button class="btn" id="lBtn" type="submit">Log in</button>
-      <div class="msg err" id="lMsg" role="alert"></div>
-      <p class="alt">New to DocSmartly? <a href="register.html">New registration</a></p>
-    </form>
-  </section>
+  <form id="fLog">
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:6px">Mobile or Email</label>
+      <input id="lId" type="text" placeholder="9876543210 or email@domain.com" required>
+    </div>
+    <div style="margin-bottom:18px">
+      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:6px">Password</label>
+      <input id="lPw" type="password" required>
+    </div>
+    <button class="btn" type="submit" style="width:100%">Log in to Dashboard</button>
+  </form>
+  
+  <p style="text-align:center;color:var(--mut);font-size:.9rem;margin-top:20px">
+    New to DocSmartly? <a href="register.html" style="color:var(--ac);font-weight:700">Register free</a>
+  </p>
 </div>
 
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const st = {
-  get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
-  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
-  del: k => { try { localStorage.removeItem(k); } catch (e) {} }
-};
-const b2h = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
-// Same password hashing as the dashboard, so the server accepts it.
-const hashPw = async (pw, salt) => {
-  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']);
-  return b2h(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(salt), iterations: 100000 }, key, 256));
-};
 
-const form = document.getElementById('fLogin'), btn = document.getElementById('lBtn'), msg = document.getElementById('lMsg');
-const pwInput = document.getElementById('lPw'), toggle = document.getElementById('togglePw');
-const showErr = t => { msg.textContent = t; msg.style.display = 'block'; };
+async function hash(pw, salt) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(salt), iterations: 100000 }, key, 256);
+  return [...new Uint8Array(bits)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
-toggle.addEventListener('click', () => {
-  const show = pwInput.type === 'password';
-  pwInput.type = show ? 'text' : 'password';
-  toggle.textContent = show ? 'Hide' : 'Show';
-  toggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-});
-
-form.addEventListener('submit', async e => {
+document.getElementById('fLog').onsubmit = async e => {
   e.preventDefault();
-  msg.style.display = 'none';
-  const id = document.getElementById('lId').value.trim(), pw = pwInput.value;
-  if (!id) return showErr('Enter your mobile number or email.');
-  if (!pw) return showErr('Enter your password.');
-  btn.disabled = true; btn.textContent = 'Logging in…';
+  const err = document.getElementById('err');
+  err.hidden = true;
+  const id = document.getElementById('lId').value.trim();
+  const pw = document.getElementById('lPw').value;
+
   try {
-    const sr = await fetch(API + '/api/salt/' + encodeURIComponent(id));
-    if (!sr.ok) return showErr('We couldn’t log you in. Check your mobile number or email and your password, then try again.');
-    const { salt } = await sr.json();
-    const r = await fetch(API + '/api/login', {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id, hash: await hashPw(pw, salt) })
+    const saltRes = await fetch(API + '/api/salt/' + encodeURIComponent(id));
+    if (!saltRes.ok) throw new Error('Account not found.');
+    const { salt } = await saltRes.json();
+    const pwHash = await hash(pw, salt);
+
+    const logRes = await fetch(API + '/api/login', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id, hash: pwHash })
     });
-    if (!r.ok) return showErr('We couldn’t log you in. Check your mobile number or email and your password, then try again.');
-    const j = await r.json();
-    st.set('ds_token', j.token);
-    st.set('ds_users', JSON.stringify([j.user]));
-    st.set('ds_session', j.user.id);
-    st.del('ds_ref');
-    location.replace('index.html#dashboard');
-  } catch (err) {
-    showErr('Could not reach the server. Check your internet connection and try again.');
-  } finally {
-    btn.disabled = false; btn.textContent = 'Log in';
+    if (!logRes.ok) throw new Error('Invalid mobile/email or password.');
+    const j = await logRes.json();
+
+    localStorage.setItem('ds_session', j.user.id);
+    localStorage.setItem('ds_token', j.token);
+    localStorage.setItem('ds_users', JSON.stringify([j.user]));
+
+    window.location.replace('dashboard.html');
+  } catch (ex) {
+    err.textContent = ex.message || 'Login failed.';
+    err.hidden = false;
   }
-});
+};
+
+if (localStorage.getItem('ds_session') && localStorage.getItem('ds_token')) {
+  window.location.replace('dashboard.html');
+}
 </script>
 </body>
 </html>

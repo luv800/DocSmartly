@@ -274,7 +274,7 @@ html{overflow-x:clip}.hero::before{right:0;top:-20px}
 <header><div class="w">
 <a class="logo" href="#top"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg><span class="lt">DocSmartly</span></a>
 <nav id="nav"><a href="#services">Services</a><a href="#tools">Free Tools</a><a href="#pan">PAN</a><a href="#govt">Govt Services</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
-<div id="hdrAct" style="display:flex;gap:8px;align-items:center"><button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button></div>
+<div id="hdrAct" style="display:flex;gap:8px;align-items:center"><a class="btn o" href="login.html">Login</a><a class="btn" href="register.html">Register</a></div>
 <button class="mn" id="mn" aria-label="Menu" aria-expanded="false" aria-controls="nav">☰</button>
 </div></header>
 
@@ -283,7 +283,7 @@ html{overflow-x:clip}.hero::before{right:0;top:-20px}
 <div><span class="tag">India’s fast PVC card print portal</span>
 <h1>PVC Card Print Portal – RC, DL, Voter, Aadhaar &amp; PAN Print in Seconds</h1>
 <p class="l">DocSmartly is the all-in-one print portal for CSC, cyber café and printing shops: RC PDF, DL PDF, Voter PDF, Ration card, Farmer ID and more. Pay from wallet, download instantly, print on PVC.</p>
-<div class="row" id="heroAct"><button class="btn" data-auth="1">Start Free – Register</button><button class="btn o" data-auth="0">Login</button></div></div>
+<div class="row" id="heroAct"><a class="btn" href="register.html">Start Free – Register</a><a class="btn o" href="login.html">Login</a></div></div>
 <div class="sl" role="region" aria-roledescription="carousel" aria-label="DocSmartly highlights">
 <div class="sl-v" id="slV" aria-live="off"><div class="sl-t" id="slT"></div></div>
 <div class="sl-b"><div class="dots" id="slD"></div><div class="ctl"><button type="button" class="ib" id="slP" aria-label="Pause slideshow" title="Pause slideshow"></button><button type="button" class="ib" id="slPrev" aria-label="Previous slide" title="Previous slide"></button><button type="button" class="ib" id="slNext" aria-label="Next slide" title="Next slide"></button></div></div>
@@ -547,9 +547,61 @@ const TL={"Most Used":"Passport Photo Sheet|img;QR Code Generator|qr;Stamp Desig
 I.scan='M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M4 12h16';
 const cats=Object.keys(TL),all=[];cats.forEach((c,ci)=>TL[c].split(";").forEach((t,ti)=>{const [n,k]=t.split("|");all.push({n,k,c,ci,ix:all.length,r:c=="Most Used"?ti+1:0})}));
 let cat="Most Used";
-function rt(){const q=$('#tq').value.toLowerCase();$('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
-const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
-$('#tg').innerHTML=L.map(t=>`<div class="card" data-svc data-tool="${t.n.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${t.r?`<span class="rk">#${t.r}</span>`:''}${tt(t.n,t.ix)}<h3>${t.n}</h3><div class="pr fre">FREE</div></div>`).join('')||'<p class="sub">No tools match.</p>'}
+function getToolUrl(name) {
+  const slugMap = {
+    "Passport Photo Sheet": "passport-photo-sheet.html",
+    "QR Code Generator": "qr-code-generator.html",
+    "Stamp Designer": "stamp-designer.html",
+    "ID Card Front & Back to A4": "id-card-front-back-a4.html",
+    "What Is My IP": "what-is-my-ip.html",
+    "Letterhead Maker": "letterhead-maker.html",
+    "Visiting Card Designer": "visiting-card-designer.html",
+    "Marriage Biodata Maker": "marriage-biodata-maker.html",
+    "Age Calculator": "age-calculator.html",
+    "Photo & Signature Resizer": "photo-signature-resizer.html",
+    "JPG / PNG to PDF": "jpg-png-to-pdf.html",
+    "PDF Merge": "pdf-merge.html",
+    "PDF Split & Page Extract": "pdf-split-extract.html",
+    "PDF to JPG": "pdf-to-jpg.html",
+    "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
+    "PDF Compressor (KB)": "pdf-compressor.html",
+    "Document Scanner & PDF": "document-scanner.html",
+    "Photo Compressor (KB)": "photo-compressor.html",
+    "Image Format Converter": "image-converter.html",
+    "Background Remover": "background-remover.html",
+    "WebP to JPG Converter": "webp-to-jpg.html",
+    "Digital Signature Maker": "digital-signature-maker.html",
+    "Photo Color Changer": "photo-color-changer.html",
+    "Photo Blur Tool": "photo-blur.html",
+    "Image to Black & White": "image-black-and-white.html",
+    "Hindi Typing Tool": "hindi-typing.html",
+    "GST Calculator": "gst-calculator.html",
+    "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
+    "Printing Cost Calculator": "printing-cost-calculator.html",
+    "Cash Denomination Calculator": "cash-denomination-calculator.html",
+    "Salary Calculator": "salary-calculator.html",
+    "Percentage Calculator": "percentage-calculator.html",
+    "Loan / EMI Calculator": "loan-emi-calculator.html",
+    "Word Counter": "word-counter.html"
+  };
+  if (slugMap[name]) return `freetools/${slugMap[name]}`;
+  const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return `freetools/${fallback}.html`;
+}
+
+function rt(){
+  const q=$('#tq').value.toLowerCase();
+  $('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
+  const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
+  $('#tg').innerHTML=L.map(t=>`
+    <a href="${getToolUrl(t.n)}" class="card" data-tool="${t.n.replace(/"/g,'&quot;')}">
+      ${t.r?`<span class="rk">#${t.r}</span>`:''}
+      ${tt(t.n,t.ix)}
+      <h3>${t.n}</h3>
+      <div class="pr fre">FREE</div>
+    </a>
+  `).join('')||'<p class="sub">No tools match.</p>';
+}
 $('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
 $('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
 
@@ -640,7 +692,16 @@ const GEN='We couldn’t complete that right now. Please try again in a moment.'
 document.addEventListener('click',e=>{const sh=e.target.closest('.show');if(sh){const f=$('#'+sh.dataset.for),v=f.type=='password';f.type=v?'text':'password';sh.textContent=v?'Hide':'Show';sh.setAttribute('aria-pressed',v);sh.setAttribute('aria-label',v?'Hide password':'Show password')}});
 
 /* ---------- header, session ---------- */
-function hdr(){const u=user();$('#heroAct').hidden=!!u;$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="#dashboard">Dashboard</a><button class="btn o" id="lo">Log out</button>`:'<button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
+function hdr(){
+  const u = user();
+  if (u) {
+    $('#heroAct').innerHTML = '<a class="btn" href="dashboard.html">Go to Dashboard</a>';
+    $('#hdrAct').innerHTML = `<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="dashboard.html">Dashboard</a><button class="btn o" id="lo">Log out</button>`;
+  } else {
+    $('#heroAct').innerHTML = '<a class="btn" href="register.html">Start Free – Register</a><a class="btn o" href="login.html">Login</a>';
+    $('#hdrAct').innerHTML = '<a class="btn o" href="login.html">Login</a><a class="btn" href="register.html">Register</a>';
+  }
+}
 const to=h=>{location.hash=h};
 const W=$('#wm');
 function welcome(u,fresh){$('#wt').textContent='Welcome, '+u.name.trim().split(/\s+/)[0];$('#ws').textContent=fresh?'Your account is ready.':'You’re logged in.';W.classList.add('open');$('#wGo').focus()}

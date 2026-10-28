@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard – DocSmartly</title>
+<link rel="stylesheet" href="css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
+  window.location.replace('login.html');
+}
+</script>
+<style>
+#app { min-height: 100vh; background: var(--bg); }
+.ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
+.ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-block: 8px; min-height: 60px; max-width: 1400px; }
+.tb { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .95rem; font-weight: 700; color: var(--ac2); }
+.shell { display: grid; grid-template-columns: 272px minmax(0,1fr); max-width: 1400px; margin: 0 auto; }
+.apm { padding-inline: 24px; padding-block: 28px 64px; min-width: 0; }
+#sb { position: sticky; top: 61px; height: calc(100vh - 61px); display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--ln); z-index: 6; }
+.sbs { flex: 1; overflow-y: auto; padding: 10px; }
+.sbf { padding: 10px; border-top: 1px solid var(--ln); }
+.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; }
+.mi:hover { background: var(--tint); }
+.gc { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; background: var(--ink); color: #e3ebfb; border-radius: 18px; padding: 24px; }
+.gc h1 { color: #fff; }
+.gw { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.gw b { font: 800 1.9rem 'Plus Jakarta Sans',system-ui,sans-serif; color: #fff; }
+.stt { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
+.stt > div { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 14px 16px; }
+.stt b { font: 800 1.6rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ac2); display: block; }
+.ds { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 4px 16px; margin-bottom: 10px; }
+.ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
+.ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.it { display: block; position: relative; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; overflow: hidden; }
+.itb { display: block; width: 100%; border: 0; background: none; padding: 8px; text-align: left; cursor: pointer; }
+.tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 520px; }
+th, td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .92rem; }
+th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); background: var(--tint); }
+.sb { display: inline-block; border-radius: 99px; padding: 3px 11px; font-size: .76rem; font-weight: 800; text-transform: capitalize; }
+.s-pending { background: #fff1cc; color: #6b4200; }
+.s-processing { background: #dbe7ff; color: #1b44ad; }
+.s-success { background: #e0f5ea; color: #0f6b45; }
+.s-failed { background: #fdecea; color: #7a1a12; }
+@media (max-width: 900px) { .shell { display: block; } #sb { display: none; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="ap">
+    <div class="w">
+      <a class="logo" href="dashboard.html"><span class="lt">DocSmartly</span></a>
+      <div class="tb">
+        <a class="chip" id="aB" href="#passbook">₹0.00</a>
+        <a class="btn" href="#addmoney">+ Add Balance</a>
+        <button class="btn o" id="btnLogOut">Logout</button>
+      </div>
+    </div>
+  </header>
+  <div class="shell">
+    <aside id="sb">
+      <div class="sbs">
+        <a class="mi" href="#dashboard">Dashboard</a>
+        <a class="mi" href="#passbook">Passbook</a>
+        <a class="mi" href="#history">History</a>
+        <a class="mi" href="#referral">Refer &amp; Earn</a>
+        <a class="mi" href="#profile">Profile</a>
+        <a class="mi" href="#contact">Contact Support</a>
+        <a class="mi" href="index.html#tools">All Free Tools →</a>
+      </div>
+      <div class="sbf"><button class="mi" id="loSb" style="color:var(--er)">Log Out</button></div>
+    </aside>
+    <main class="apm">
+      <section data-v="dashboard"></section>
+      <section data-v="passbook" hidden></section>
+      <section data-v="history" hidden></section>
+      <section data-v="addmoney" hidden></section>
+      <section data-v="referral" hidden></section>
+      <section data-v="profile" hidden></section>
+      <section data-v="contact" hidden></section>
+    </main>
+  </div>
+</div>
+
+<div class="modal" id="rm">
+  <div class="box">
+    <button class="x" id="rx" type="button">✕</button>
+    <h2 id="rt" style="font-size:1.3rem;margin-bottom:6px">Service request</h2>
+    <p id="rp" style="color:var(--mut);font-size:.85rem;margin-bottom:16px"></p>
+    <form id="fRq"></form>
+  </div>
+</div>
+
+<script>
+const API = 'https://docsmartly-api.hm2351994.workers.dev';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
+const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '-';
+const tokenHdr = () => ({ 'x-user-token': localStorage.getItem('ds_token') || '' });
+const api = (m, p, b) => fetch(API + p, { method: m, headers: { 'content-type': 'application/json', ...tokenHdr() }, body: b === undefined ? undefined : JSON.stringify(b) });
+
+function user() {
+  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+  return list.find(u => u.id === localStorage.getItem('ds_session')) || null;
+}
+function saveUser(u) {
+  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+  const idx = list.findIndex(x => x.id === u.id);
+  if (idx >= 0) list[idx] = u; else list.push(u);
+  localStorage.setItem('ds_users', JSON.stringify(list));
+}
+function updateBalance() {
+  const u = user();
+  if (u) document.getElementById('aB').textContent = inr(u.bal);
+}
+
+const SERVICES = [
+  ['RC Services', [['RC PDF INSTANT', 40]]],
+  ['DL Services', [['DL PDF INSTANT', 50]]],
+  ['Voter Services', [['Voter Mobile Link', 40]]],
+  ['Farmer Services', [['KISAN CARD', 25]]],
+  ['PAN Services', [['Aadhaar to PAN', 250]]],
+  ['Udyam Services', [['New UDYAM CERTIFICATE', 200]]],
+  ['Aadhaar & Ration', [['AADHAAR Update', 150]]],
+  ['Mobile Services', [['Mobile Details Find', 30], ['Other Mobile Issue', 50]]],
+  ['GST Services', [['New GST Certificate', 1200], ['GST Download', 200]]],
+  ['Chassis to RC', [['Chassis to RC', 70]]],
+  ['Challan Details', [['Challan Details', 10]]],
+  ['DBT Seeding Status', [['DBT Seeding Status', 20]]]
+];
+
+function renderDashboard() {
+  const u = user(); if (!u) return;
+  const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
+  const secHtml = SERVICES.map(g => `
+    <details class="ds" open>
+      <summary><span>${g[0]}</span><em>${g[1].length}</em></summary>
+      <div class="ig">
+        ${g[1].map(s => `
+          <div class="it">
+            <button class="itb" data-svc="${esc(g[0] + '|' + s[0])}" data-amt="${s[1]}">
+              <span style="font-weight:700;display:block">${esc(s[0])}</span>
+              <span class="pr" style="margin-top:4px">${inr(s[1])}</span>
+            </button>
+          </div>
+        `).join('')}
+      </div>
+    </details>
+  `).join('');
+
+  document.querySelector('[data-v="dashboard"]').innerHTML = `
+    <div class="gc">
+      <div><p style="color:#a9c4ff;font-weight:700">Welcome back,</p><h1>${esc(u.name)}</h1></div>
+      <div class="gw"><div><small style="opacity:.8">Wallet Balance</small><br><b>${inr(u.bal)}</b></div><a class="btn" href="#addmoney">+ Add Money</a></div>
+    </div>
+    <div class="stt">
+      <div><b>${o.length}</b><span>Total Requests</span></div>
+      <div><b>${cnt('pending')}</b><span>Pending</span></div>
+      <div><b>${cnt('processing')}</b><span>Processing</span></div>
+      <div><b>${cnt('success')}</b><span>Success</span></div>
+      <div><b>${cnt('failed')}</b><span>Failed</span></div>
+    </div>
+    <h2 style="margin:26px 0 12px">Available Services</h2>
+    ${secHtml}
+  `;
+}
+
+function renderHistory() {
+  const u = user(), o = (u.orders || []).slice().sort((a,b) => b.t - a.t);
+  document.querySelector('[data-v="history"]').innerHTML = `
+    <h1 style="margin-bottom:14px">Request History</h1>
+    <div class="tw"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead>
+    <tbody>${o.map(x => `
+      <tr>
+        <td>${dt(x.t)}</td>
+        <td><b>${esc(x.n)}</b>${x.remark ? `<br><small style="color:var(--mut)">Remark: ${esc(x.remark)}</small>` : ''}</td>
+        <td><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
+        <td>${inr(x.amt)}</td>
+        <td>${x.file ? `<button class="btn o" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:4px 10px;min-height:32px;font-size:.8rem">Download</button>` : '<span style="color:var(--mut)">In progress</span>'}</td>
+      </tr>
+    `).join('') || '<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}</tbody></table></div>
+  `;
+}
+
+function renderPassbook() {
+  const u = user(), tx = (u.tx || []).slice().sort((a,b) => b.t - a.t);
+  document.querySelector('[data-v="passbook"]').innerHTML = `
+    <h1 style="margin-bottom:14px">Passbook</h1>
+    <div class="tw"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead>
+    <tbody>${tx.map(t => `
+      <tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td><b>${t.type}</b></td><td><b>${t.type==='credit'?'+':'-'}${inr(t.amt)}</b></td></tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center">No transactions yet.</td></tr>'}</tbody></table></div>
+  `;
+}
+
+function renderAddMoney() {
+  const u = user();
+  document.querySelector('[data-v="addmoney"]').innerHTML = `
+    <h1>Add Money</h1>
+    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px;margin-top:14px">
+      <p style="margin-bottom:10px">Current Balance: <b>${inr(u.bal)}</b></p>
+      <form id="fAdd">
+        <label style="display:block;font-weight:700;margin-bottom:6px">Amount (Min ₹200)</label>
+        <input id="amt" type="number" min="200" value="500" required style="margin-bottom:14px">
+        <button class="btn" type="submit" style="width:100%">Pay via UPI</button>
+      </form>
+    </div>
+  `;
+}
+
+const VIEWS = { dashboard: renderDashboard, history: renderHistory, passbook: renderPassbook, addmoney: renderAddMoney };
+function route() {
+  const h = location.hash.slice(1) || 'dashboard';
+  document.querySelectorAll('[data-v]').forEach(el => el.hidden = el.dataset.v !== h);
+  if (VIEWS[h]) VIEWS[h]();
+  updateBalance();
+}
+window.addEventListener('hashchange', route);
+
+let curKey = '', curAmt = 0;
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-svc]');
+  if (!btn) return;
+  curKey = btn.dataset.svc; curAmt = Number(btn.dataset.amt);
+  const u = user();
+  document.getElementById('rt').textContent = curKey.split('|')[1] || curKey;
+  document.getElementById('rp').textContent = 'Charge: ' + inr(curAmt) + ' | Wallet Balance: ' + inr(u.bal);
+  document.getElementById('fRq').innerHTML = `
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
+      <input id="rqDoc" type="text" required placeholder="Enter number">
+    </div>
+    <button class="btn" type="submit" style="width:100%">Confirm & Deduct ${inr(curAmt)}</button>
+  `;
+  document.getElementById('rm').classList.add('open');
+});
+
+document.getElementById('rx').onclick = () => document.getElementById('rm').classList.remove('open');
+
+document.getElementById('fRq').onsubmit = async e => {
+  e.preventDefault();
+  const doc = document.getElementById('rqDoc').value.trim();
+  const u = user();
+  if (u.bal < curAmt) {
+    alert('Insufficient balance. Please add money first.');
+    location.hash = '#addmoney';
+    document.getElementById('rm').classList.remove('open');
+    return;
+  }
+  const res = await api('POST', '/api/requests', {
+    k: curKey, sec: curKey.split('|')[0], data: { 'Document Number': doc }
+  });
+  if (!res.ok) { alert('Failed to submit request.'); return; }
+  const j = await res.json();
+  saveUser(j.user);
+  document.getElementById('rm').classList.remove('open');
+  alert('Request submitted successfully!');
+  route();
+};
+
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'fAdd') return;
+  e.preventDefault();
+  const amt = Number(document.getElementById('amt').value);
+  const res = await api('POST', '/api/topup', { amt });
+  if (res.ok) {
+    const j = await res.json();
+    saveUser(j.user);
+    alert('Wallet recharged: ' + inr(amt));
+    location.hash = '#dashboard';
+    route();
+  }
+});
+
+document.addEventListener('click', async e => {
+  const dl = e.target.closest('[data-dl]');
+  if (!dl) return;
+  const r = await fetch(API + '/api/requests/' + encodeURIComponent(dl.dataset.dl) + '/file', { headers: tokenHdr() });
+  if (!r.ok) { alert('File not available.'); return; }
+  const b = await r.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = dl.dataset.fn || 'result.pdf'; a.click();
+});
+
+function logout() {
+  localStorage.removeItem('ds_session');
+  localStorage.removeItem('ds_token');
+  window.location.replace('index.html');
+}
+document.getElementById('btnLogOut').onclick = logout;
+document.getElementById('loSb').onclick = logout;
+
+route();
+</script>
+</body>
+</html>

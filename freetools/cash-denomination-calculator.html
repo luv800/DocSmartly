@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cash Denomination Calculator – DocSmartly Free Online Tools</title>
+<link rel="stylesheet" href="../css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
+.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
+.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
+.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
+.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
+.bk-btn:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<header>
+  <div class="w">
+    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
+    <nav>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#tools">Free Tools</a>
+      <a href="../dashboard.html">Dashboard</a>
+    </nav>
+  </div>
+</header>
+
+<main class="w">
+  <div class="tb-card">
+    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
+    <div class="tb-head">
+      <h1>Cash Denomination Calculator</h1>
+      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    </div>
+    <div id="mount-point"></div>
+  </div>
+</main>
+
+<script src="../tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mount = document.getElementById('mount-point');
+  const tool = window.DSTools && window.DSTools['Cash Denomination Calculator'];
+  if (tool) {
+    mount.innerHTML = tool.html;
+    if (tool.init) tool.init(mount);
+  } else {
+    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
+  }
+});
+</script>
+</body>
+</html>
