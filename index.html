@@ -282,74 +282,6 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="pills"><span>No sign-up</span><span>No watermark</span><span>Runs in your browser</span></div></div>
 <input id="tq" placeholder="Search 53 tools" aria-label="Search tools"></div>
 <div class="cats" id="cats"></div><div class="grid" id="tg"></div>
-
-<!-- Auto PDF Split & Page Modifier Tool Section -->
-<section id="pdf-modifier-tool" class="mt-12 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden font-sans">
-  <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6">
-    <span class="text-xs uppercase tracking-wider bg-blue-500/30 px-3 py-1 rounded-full font-semibold">Free Tool</span>
-    <h2 class="text-2xl font-bold mt-2">Auto PDF Split & Page Modifier</h2>
-    <p class="text-blue-100 text-sm mt-1">Upload any PDF, delete unwanted pages, insert extra blank pages, and export instantly in your browser.</p>
-  </div>
-
-  <div class="p-6 md:p-8 space-y-6">
-    <!-- Step 1: Upload Box -->
-    <div id="pdf-upload-container" class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:border-blue-500 transition-all bg-slate-50 cursor-pointer relative">
-      <input type="file" id="pdf-file-input" accept="application/pdf" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
-      <div class="flex flex-col items-center justify-center space-y-3">
-        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">📄</div>
-        <div>
-          <p class="text-slate-700 font-medium">Drag & drop your PDF here, or <span class="text-blue-600 underline">browse files</span></p>
-          <p class="text-slate-400 text-xs mt-1">Supports multi-page PDF documents securely client-side</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Workspace (Hidden Initially) -->
-    <div id="pdf-workspace" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-100 p-4 rounded-xl gap-3">
-        <div>
-          <h3 id="file-name-display" class="font-semibold text-slate-800 text-sm truncate max-w-xs">document.pdf</h3>
-          <p id="page-count-display" class="text-xs text-slate-500">Total Pages: 0</p>
-        </div>
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <button type="button" id="add-blank-page-btn" class="flex-1 sm:flex-none px-4 py-2 bg-white border border-slate-300 text-slate-700 text-xs font-semibold rounded-lg hover:bg-slate-50 shadow-sm transition">
-            + Add Blank Page
-          </button>
-          <button type="button" id="reset-pdf-btn" class="px-3 py-2 bg-rose-50 text-rose-600 text-xs font-semibold rounded-lg hover:bg-rose-100 transition">
-            Reset
-          </button>
-        </div>
-      </div>
-
-      <!-- Page Grid Container -->
-      <div>
-        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Pages Management (Click [-] to delete, [+] to insert after)</h4>
-        <div id="pdf-pages-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[380px] overflow-y-auto p-2 border border-slate-100 rounded-xl bg-slate-50/50"></div>
-      </div>
-
-      <!-- Result Download Section -->
-      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">✓</div>
-          <div>
-            <h5 class="text-sm font-semibold text-slate-800">Ready for export</h5>
-            <p class="text-xs text-slate-500" id="export-summary-text">0 pages configured & optimized</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-          <button type="button" id="download-zip-btn" class="flex-1 sm:flex-none px-4 py-2.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium text-xs rounded-xl shadow-sm transition">
-            Split as ZIP (.zip)
-          </button>
-          <button type="button" id="download-pdf-btn" class="flex-1 sm:flex-none px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-600/20 transition flex items-center justify-center gap-2">
-            <span>Download Modified PDF</span>
-            <span>↓</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 </div></section>
 
 <section class="sec w" id="how">
@@ -749,16 +681,43 @@ run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fP
 /* ---------- page-level clicks ---------- */
 document.addEventListener('click',e=>{
 if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-const a=e.target.closest('[data-auth]');if(a){e.preventDefault();user()?to('dashboard'):to(+a.dataset.auth?'register':'login');return}
-if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
+javascript
+const a=e.target.closest('[data-auth]');
+if(a){
+  e.preventDefault();
+  if(user()){
+    to('dashboard');
+  }else{
+    to(+a.dataset.auth?'register':'login');
+  }
+  return;
+}if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
 
+javascript
+document.addEventListener('click', async e => {
+  const pb = e.target.closest('[data-pr]');
+  if (pb) {
+    fetch(API + '/api/requests/' + encodeURIComponent(pb.dataset.pr) + '/file', { headers: tokenHdr() })
+    .then(r => { if (!r.ok) throw 0; return r.blob(); })
+    .catch(() => { toast('Could not open file for printing.'); return null; })
+    .then(bl => {
+      if (!bl) return;
+      const url = URL.createObjectURL(bl);
+      const w = window.open(url, '_blank');
+      if (w) {
+        w.onload = () => w.print();
+      }
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    });
+    return;
+  }
+});
+  
 /* ---------- mobile menu ---------- */
 const N=$('#nav'),B=$('#mn');
 function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
 B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});
-
-/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
 Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
 const DS=[
 ['Lost Document Service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
@@ -850,4 +809,146 @@ const DA={
 'Building estimate creator':()=>R(12,12,136,76,'fb',6)+Pa('M26 52l31-22 31 22z','fy')+R(32,52,50,30,'fw',2)+R(40,60,12,12,'fb',1)+R(64,62,12,20,'fb',1)+PG(100,18,40,64)+X(120,34,'₹',13,'fa')+L(106,44,28,4,7),
 'BOQ creator':()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2)+[0,1,2,3,4].map(i=>R(34,39+i*9,22,5,'fl',1)+R(60,39+i*9,28,5,'fl',1)+R(92,39+i*9,14,5,'fb',1)+R(110,39+i*9,16,5,'fb',1)).join('')+R(94,84,32,6,'fa',2),
 'Govt civil & electric bill maker (Excel)':()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw')+[0,1,2,3].map(r=>[0,1,2].map(c=>R(32+c*30,28+r*13,26,9,(r+c)%2?'fl':'fb',2)).join('')).join('')+Pa('M126 54l-14 20h9l-5 18 17-24h-9l5-14z','fy'),
-'Govt civil & electric bill maker (Measurement Book)':()=>R(14,
+'Govt civil & electric bill maker (Measurement Book)':()=>R(14,14,64,72,'fw',5)+R(82,14,64,72,'fw',5)+X(46,28,'M.B.',8,'fa')+L(22,36,48,5,9)+L(90,24,48,6,9)+R(76,14,8,72,'fa',2)+R(92,66,52,14,'fy',2)+[0,1,2,3,4,5,6].map(i=>R(97+i*7.5,66,1.5,i%2?5:8,'fk',0)).join(''),
+'Bill form':()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw')+[0,1,2,3].map(i=>R(40,28+i*11,26,3,'fl',1.5)+R(72,28+i*11,48,3,'fb',1.5)).join('')+R(40,76,80,12,'fa',3)+X(80,85,'Total ₹',7,'fw'),
+'Extra item sheet':()=>SHEET('EXTRA ITEMS','fg')+Pa('M122 69v14M115 76h14','sw'),
+'Excess item sheet':()=>SHEET('EXCESS ITEMS','fr')+Pa('M122 83V70m-6 6 6-6 6 6','sw'),
+'QC register creator':()=>R(30,10,100,82,'fb',6)+R(62,5,36,10,'fk',3)+R(37,20,86,66,'fw',3)+[0,1,2,3].map(i=>R(44,28+i*14,9,9,'fl',2)+TK(45.5,33+i*14)+R(59,31+i*14,52,3,'fl',1.5)).join('')+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
+'Work escalation statement':()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa')+L(26,30,50,5,8)+R(94,62,12,22,'fb',2)+R(110,50,12,34,'fb',2)+R(126,36,12,48,'fa',2)+Pa('M92 52l16-10 12 6 20-24','sa')+Pa('M130 24h10v10','sa'),
+'Student / Employee ID card maker':()=>IDV(18,4,56,92,'STUDENT','fb')+IDV(86,4,56,92,'EMPLOYEE','fa'),
+'Typing speed test (Hindi & English)':()=>TA['Hindi Typing Tool']()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
+'Online exam system':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+i*16,4,i==1?'fa':'fl')+R(56,32+i*16,56,4,'fl',2)).join('')+C(120,78,12,'fy')+Pa('M120 71v7l5 3','sa'),
+'Word counter':()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')+X(120,77,'words',6.5,'fw'),
+'Calculator (basic & scientific)':()=>CALC('√ π')};
+const TM={'Photo to PDF':'JPG / PNG to PDF','PDF merge':'PDF Merge','PDF split & add page':'PDF Split & Page Extract','PDF to JPG':'PDF to JPG','PDF rotate & page reorder':'PDF Rotate & Reorder','PDF compressor':'PDF Compressor (KB)','Add page numbers to PDF':'PDF Page Number Adder','PDF header & footer':'PDF Header & Footer Maker','Photo compressor':'Photo Compressor (KB)','Photo resizer':'Photo & Signature Resizer','Photo format converter':'Image Format Converter','Background remove':'Background Remover','Background change':'Photo Color Changer','Favicon maker':'Favicon Preview Tool & Maker','Watermark maker':'Image Watermark Maker','Signature maker':'Digital Signature Maker','Colour picker from image':'Color Picker from Image','Application format':'Text to PDF / Application','Resume':'Resume Maker','Invoice':'Invoice Maker','Letterhead':'Letterhead Maker','Quotation':'Quotation Maker','Passport photo sheet':'Passport Photo Sheet','QR code generator':'QR Code Generator','ID card front & back to A4':'ID Card Front & Back to A4','Visiting card maker':'Visiting Card Designer','Stamp designer':'Stamp Designer','A4 photo print sheet':'A4 Photo Print Layout','GST calculator':'GST Calculator','Cash calculator':'Cash Denomination Calculator','Salary calculator':'Salary Calculator','Loan / EMI calculator':'Loan / EMI Calculator','Age calculator':'Age Calculator','Percentage calculator':'Percentage Calculator'};
+function dart(s,n){
+if(SVC[s])return V[SVC[s]]();
+if(s=='Lost Document Service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
+if(s=='PVC Tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
+if(s=='PAN Card Service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
+const f=DA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
+$('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>{const mb=GT+'|'+n==MBK,p=DP[GT+'|'+n];return `<${mb?'div tabindex="0" role="button"':'button'} class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3>${mb?waLink(n):p!=null?`<div class="pr">${inr(p)}</div>`:''}</${mb?'div':'button'}>`}).join('');
+$('#sbT').innerHTML=ic('menu');
+
+/* ---------- left menu ---------- */
+function renderSB(){const lk=(h,k,t)=>`<a class="mi" href="${h}">${ic(k)}${t}</a>`,grp=g=>`<details class="sm"><summary data-sg="${esc(g[0])}">${esc(g[0])}<em>${g[1].length}</em></summary>${g[1].map(n=>`<button type="button" class="mi" data-go="${esc(g[0]+'|'+n)}">${esc(n)}</button>`).join('')}</details>`;
+$('#sb').innerHTML=`<div class="sbs">${lk('#dashboard','grid','Dashboard')}${lk('#passbook','book','Passbook')}${lk('#history','hist','History')}${lk('#referral','gift','Refer &amp; Earn')}${lk('#profile','user','Profile')}${lk('#contact','phone','Contact Us')}<p class="mh">Paid services</p>${DS.map(g=>grp([g[0],g[2]])).join('')}<p class="mh">Free tools</p>${FT.map(grp).join('')}</div><div class="sbf"><button type="button" class="mi" id="lo3">${ic('out')}Log Out</button></div>`}
+function sbCur(h){if(!$('#sb').firstChild)renderSB();document.querySelectorAll('#sb a.mi').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')=='#'+h?'page':'false'))}
+const closeSB=()=>{$('#sb').classList.remove('open');$('#sbT').setAttribute('aria-expanded','false')};
+function jump(k,sec){const run=()=>{const el=sec?[...document.querySelectorAll('.ds[data-sec]')].find(x=>x.dataset.sec==k):[...document.querySelectorAll('.ds:not(#trend) [data-card]')].find(x=>x.dataset.card==k);if(!el)return;for(let p=el.closest('details');p;p=p.parentElement&&p.parentElement.closest('details'))p.open=true;el.scrollIntoView({behavior:'smooth',block:sec?'start':'center'});if(!sec){el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),1800)}};
+if(location.hash=='#dashboard')run();else{addEventListener('hashchange',()=>setTimeout(run,0),{once:true});to('dashboard')}}
+document.addEventListener('click',e=>{const t=e.target;let b;
+if(t.closest('#sbT')){const o=$('#sb').classList.toggle('open');$('#sbT').setAttribute('aria-expanded',o);return}
+if(t.closest('#lo3')){st.del('ds_session');closeSB();hdr();to('top');toast('You’ve been logged out.');return}
+if(b=t.closest('[data-go]')){jump(b.dataset.go,0);closeSB();return}
+if(b=t.closest('summary[data-sg]'))jump(b.dataset.sg,1);
+if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
+
+/* ---------- history, profile, contact ---------- */
+ function renderHist(){
+  ensureAlertStyle();
+  const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
+  $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
+    <h1 tabindex="-1">History</h1>
+    <p class="lead">Every request and its result. Download or print your result anytime.</p>
+    <div class="tw" style="margin-top:18px"><table>
+      <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
+      <tbody>${o.map(x=>`<tr>
+        <td data-l="Date">${dt(x.t)}</td>
+        <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash"><b>Admin Note:</b> ${esc(x.remark)}</div>`:''}</td>
+        <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
+        <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
+        <td data-l="Result">${x.file?`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download
+          </button>
+          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;color:#12803f;border-color:#12803f" data-pr="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Print
+          </button>
+        </div>`:'<span class="sub">Not ready</span>'}</td>
+      </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
+    </table></div>`;
+}
+const resList=u=>{const l=u.orders.filter(o=>o.file&&o.id).sort((a,b)=>b.t-a.t);return l.length?`<ul class="rd">${l.map(o=>`<li><span>${esc(o.n)}<small>${dt(o.t)} · ${esc(o.file.name)}</small></span><button class="btn" type="button" data-dl="${esc(o.id)}" data-n="${esc(o.file.name)}">Download</button></li>`).join('')}</ul>`:'<p class="sub">Result documents uploaded by our team will appear here.</p>'};
+function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form><h2 class="sh">My results</h2>${resList(u)}`}
+function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
+document.addEventListener('submit',e=>{if(e.target.id!='fPro')return;e.preventDefault();const i=$('#pfN'),v=i.value.trim().replace(/\s+/g,' ');if(v.length<2){setErr(i,'Enter your full name, for example Rahul Sharma.');i.focus();return}const u=me();u.name=v;save(u);renderProf();hdr();toast('Name updated.')});
+const VIEWS={dashboard:renderDash,referral:renderRef,passbook:renderPass,addmoney:renderAdd,history:renderHist,profile:renderProf,contact:renderContact},VT={dashboard:'Dashboard',referral:'Refer & Earn',passbook:'Passbook',addmoney:'Add money',history:'History',profile:'Profile',contact:'Contact Us'};
+
+function showView(h){document.querySelectorAll('#app [data-v]').forEach(v=>v.hidden=v.dataset.v!=h);VIEWS[h]();setBal();sbCur(h);$('#sP').hidden=true;document.title=VT[h]+' – DocSmartly';scrollTo(0,0);$(`[data-v=${h}] h1`).focus({preventScroll:true})}
+/* ---------- service request form (saved to order.data, shown in admin) ---------- */
+const FM={'RC Services':['Vehicle number','Owner name?','Remarks?'],'DL Services':['DL number','Date of birth','Holder name?','Remarks?'],'Voter Services':['EPIC / Voter ID number','Voter name?','Mobile number?','Remarks?'],'Farmer Services':['Farmer ID / Aadhaar number','Farmer name?','State?','Remarks?'],'PAN Services':['Aadhaar number','Applicant name?','Mobile number?','Remarks?'],'Udyam Services':['PAN / Aadhaar number','Business name','Mobile number','Remarks?'],'Aadhaar & Ration':['Aadhaar / Ration card number','Name','Mobile number?','Remarks?'],'Mobile Services':['Mobile number','Issue details?'],'GST Services':['GSTIN / PAN','Business name?','Remarks?'],'Chassis to RC':['Chassis number','Engine number?'],'Challan Details':['Vehicle number'],'DBT Seeding Status':['Aadhaar number','Bank name?'],'Lost Document Service':['Name','Date of birth','Father name?','Document number (if known)?','Mobile number','Address?'],'PAN Card Service':['Applicant name','Father name','Date of birth','Aadhaar number','Mobile number','Email','Address','Remarks?'],'PVC Tools':['Document number','Holder name?','Remarks?'],[GT]:['Name / firm name','Mobile number','Work / tender details','Remarks?']};
+let rqk=null;const closeRq=()=>$('#rm').classList.remove('open');
+function openRq(k){const a=ALL.find(x=>x.k==k),p=DP[k];if(!a||p==null){toast((a?a.n:'This service')+' is available on request. Message us on WhatsApp for the price.');return}
+rqk=k;const u=me(),F=FM[SVC[a.s]||a.s]||FM[a.s]||['Details / number','Remarks?'];
+$('#rt').textContent=a.n;$('#rp').textContent='Fee '+inr(p)+'. Wallet balance '+inr(u.bal)+'.';
+$('#fRq').innerHTML=F.map((l,i)=>{const o=l.endsWith('?'),n=o?l.slice(0,-1):l,v=/^(Applicant name|Name)$/.test(n)?u.name:n=='Mobile number'?u.mob:n=='Email'?u.mail:'',ty=/date of birth/i.test(n)?'date':/mobile number/i.test(n)?'tel':/email/i.test(n)?'email':'text',ta=/address|details|remarks/i.test(n),at=`id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'} value="${esc(v)}"`;
+return `<div class="fld"><label for="rq${i}">${esc(n)}${o?' (optional)':''}</label>${ta?`<textarea id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'}></textarea>`:`<input type="${ty}" ${at}>`}<p class="err" role="alert" hidden></p></div>`}).join('')+`<button class="btn" type="submit">Submit request · ${inr(p)}</button>`;
+$('#rm').classList.add('open');$('#rq0').focus()}
+$('#rx').onclick=closeRq;$('#rm').onclick=e=>{if(e.target.id=='rm')closeRq()};document.addEventListener('keydown',e=>{if(e.key=='Escape')closeRq()});
+document.addEventListener('submit',async e=>{if(e.target.id!='fRq')return;e.preventDefault();const els=[...e.target.querySelectorAll('[data-l]')];let bad=null;
+els.forEach(i=>{const m=i.nextElementSibling,x=i.hasAttribute('data-req')&&!i.value.trim();m.hidden=!x;m.textContent=x?'This field is required.':'';if(x&&!bad)bad=i});if(bad){bad.focus();return}
+const a=ALL.find(x=>x.k==rqk),p=DP[rqk];const d={};els.forEach(i=>{if(i.value.trim())d[i.dataset.l]=i.value.trim()});const rr=await api('POST','/api/requests',{k:rqk,sec:SVC[a.s]||a.s,data:d});if(rr.status==402){toast('Not enough wallet balance. Add money first.');return}if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);closeRq();setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]();toast('Request submitted. Track it in History.')});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dl]');if(!b)return;fetch(API+'/api/requests/'+encodeURIComponent(b.dataset.dl)+'/file',{headers:tokenHdr()}).then(r=>{if(!r.ok)throw 0;return r.blob()}).catch(()=>{toast('Could not download the file. Try again.');return null}).then(bl=>{if(!bl)return;const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=b.dataset.n||'result';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)})});
+document.addEventListener('click',async e=>{
+  const pb=e.target.closest('[data-pr]');
+  if(pb){
+    fetch(API+'/api/requests/'+encodeURIComponent(pb.dataset.pr)+'/file',{headers:tokenHdr()})
+    .then(r=>{if(!r.ok)throw 0;return r.blob()})
+    .catch(()=>{toast('Could not open file for printing.');return null})
+    .then(bl=>{
+      if(!bl)return;
+      const url=URL.createObjectURL(bl);
+      const w=window.open(url,'_blank');
+      if(w){
+        w.onload=()=>w.print();
+      }
+      setTimeout(()=>URL.revokeObjectURL(url),10000);
+    });
+    return;
+  }
+});
+  /* events */
+document.addEventListener('click',e=>{const t=e.target;let b;
+if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
+if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
+if(b=t.closest('[data-fav]')){const u=me(),k=b.dataset.fav,i=u.fav.indexOf(k);i<0?u.fav.push(k):u.fav.splice(i,1);save(u);document.querySelectorAll('[data-fav]').forEach(x=>{if(x.dataset.fav==k)x.setAttribute('aria-pressed',i<0)});renderFav();return}
+if(b=t.closest('#app [data-it]')){const a=ALL.find(x=>x.k==b.dataset.it);$('#sP').hidden=true;openRq(b.dataset.it);return}
+if(t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
+if(t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
+if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hidden;if(!q.hidden)q.focus();else{q.value='';(b.id=='rfT'?refRows:passRows)('')}return}
+if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
+document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
+if(t.id=='sQ'){const q=t.value.trim().toLowerCase(),r=q?ALL.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8):[];$('#sR').innerHTML=r.map(a=>`<button type="button" class="sri" data-it="${esc(a.k)}">${esc(a.n)}<small>${esc(a.s)}</small></button>`).join('')||(q?'<p class="sub" style="padding:8px 4px">No service matches that search.</p>':'')}});
+document.addEventListener('submit',async e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
+if(!(v>=200)){setErr(a,'Enter an amount of ₹200 or more.');a.focus();return}
+const rr=await api('POST','/api/topup',{amt:v});if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
+const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
+
+$('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
+restore().finally(()=>{hdr();route();renderAlerts()});
+
+async function syncNow(){
+  if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
+  const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
+  if(!r)return;
+  if(r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users');hdr();route();return}
+  if(!r.ok)return;
+  const j=await r.json();
+  const changed=JSON.stringify(user())!==JSON.stringify(j.user);
+  if(changed){
+    saveUsers([j.user]);
+    setBal();
+    const h=location.hash.slice(1);
+    if(VIEWS[h])VIEWS[h]();
+  }
+  renderAlerts();
+}
+setInterval(syncNow, 5000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
+
+</script>
+</body>
+</html>
