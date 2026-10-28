@@ -282,74 +282,6 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="pills"><span>No sign-up</span><span>No watermark</span><span>Runs in your browser</span></div></div>
 <input id="tq" placeholder="Search 53 tools" aria-label="Search tools"></div>
 <div class="cats" id="cats"></div><div class="grid" id="tg"></div>
-
-<!-- Auto PDF Split & Page Modifier Tool Section -->
-<section id="pdf-modifier-tool" class="mt-12 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden font-sans">
-  <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6">
-    <span class="text-xs uppercase tracking-wider bg-blue-500/30 px-3 py-1 rounded-full font-semibold">Free Tool</span>
-    <h2 class="text-2xl font-bold mt-2">Auto PDF Split & Page Modifier</h2>
-    <p class="text-blue-100 text-sm mt-1">Upload any PDF, delete unwanted pages, insert extra blank pages, and export instantly in your browser.</p>
-  </div>
-
-  <div class="p-6 md:p-8 space-y-6">
-    <!-- Step 1: Upload Box -->
-    <div id="pdf-upload-container" class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:border-blue-500 transition-all bg-slate-50 cursor-pointer relative">
-      <input type="file" id="pdf-file-input" accept="application/pdf" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
-      <div class="flex flex-col items-center justify-center space-y-3">
-        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">📄</div>
-        <div>
-          <p class="text-slate-700 font-medium">Drag & drop your PDF here, or <span class="text-blue-600 underline">browse files</span></p>
-          <p class="text-slate-400 text-xs mt-1">Supports multi-page PDF documents securely client-side</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Workspace (Hidden Initially) -->
-    <div id="pdf-workspace" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-100 p-4 rounded-xl gap-3">
-        <div>
-          <h3 id="file-name-display" class="font-semibold text-slate-800 text-sm truncate max-w-xs">document.pdf</h3>
-          <p id="page-count-display" class="text-xs text-slate-500">Total Pages: 0</p>
-        </div>
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <button type="button" id="add-blank-page-btn" class="flex-1 sm:flex-none px-4 py-2 bg-white border border-slate-300 text-slate-700 text-xs font-semibold rounded-lg hover:bg-slate-50 shadow-sm transition">
-            + Add Blank Page
-          </button>
-          <button type="button" id="reset-pdf-btn" class="px-3 py-2 bg-rose-50 text-rose-600 text-xs font-semibold rounded-lg hover:bg-rose-100 transition">
-            Reset
-          </button>
-        </div>
-      </div>
-
-      <!-- Page Grid Container -->
-      <div>
-        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Pages Management (Click [-] to delete, [+] to insert after)</h4>
-        <div id="pdf-pages-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[380px] overflow-y-auto p-2 border border-slate-100 rounded-xl bg-slate-50/50"></div>
-      </div>
-
-      <!-- Result Download Section -->
-      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">✓</div>
-          <div>
-            <h5 class="text-sm font-semibold text-slate-800">Ready for export</h5>
-            <p class="text-xs text-slate-500" id="export-summary-text">0 pages configured & optimized</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-          <button type="button" id="download-zip-btn" class="flex-1 sm:flex-none px-4 py-2.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium text-xs rounded-xl shadow-sm transition">
-            Split as ZIP (.zip)
-          </button>
-          <button type="button" id="download-pdf-btn" class="flex-1 sm:flex-none px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-600/20 transition flex items-center justify-center gap-2">
-            <span>Download Modified PDF</span>
-            <span>↓</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 </div></section>
 
 <section class="sec w" id="how">
@@ -749,16 +681,43 @@ run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fP
 /* ---------- page-level clicks ---------- */
 document.addEventListener('click',e=>{
 if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-const a=e.target.closest('[data-auth]');if(a){e.preventDefault();user()?to('dashboard'):to(+a.dataset.auth?'register':'login');return}
-if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
+javascript
+const a=e.target.closest('[data-auth]');
+if(a){
+  e.preventDefault();
+  if(user()){
+    to('dashboard');
+  }else{
+    to(+a.dataset.auth?'register':'login');
+  }
+  return;
+}if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
 
+javascript
+document.addEventListener('click', async e => {
+  const pb = e.target.closest('[data-pr]');
+  if (pb) {
+    fetch(API + '/api/requests/' + encodeURIComponent(pb.dataset.pr) + '/file', { headers: tokenHdr() })
+    .then(r => { if (!r.ok) throw 0; return r.blob(); })
+    .catch(() => { toast('Could not open file for printing.'); return null; })
+    .then(bl => {
+      if (!bl) return;
+      const url = URL.createObjectURL(bl);
+      const w = window.open(url, '_blank');
+      if (w) {
+        w.onload = () => w.print();
+      }
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    });
+    return;
+  }
+});
+  
 /* ---------- mobile menu ---------- */
 const N=$('#nav'),B=$('#mn');
 function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
 B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});
-
-/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
 Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
 const DS=[
 ['Lost Document Service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
@@ -950,8 +909,7 @@ document.addEventListener('click',async e=>{
     return;
   }
 });
-
-/* ---------- events ---------- */
+  /* events */
 document.addEventListener('click',e=>{const t=e.target;let b;
 if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
 if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
@@ -991,118 +949,6 @@ async function syncNow(){
 setInterval(syncNow, 5000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
 
-/* ---------- PDF Splitter & Page Modifier Component Script ---------- */
-const uploadContainer = document.getElementById('pdf-upload-container');
-const fileInput = document.getElementById('pdf-file-input');
-const workspace = document.getElementById('pdf-workspace');
-const fileNameDisplay = document.getElementById('file-name-display');
-const pageCountDisplay = document.getElementById('page-count-display');
-const exportSummaryText = document.getElementById('export-summary-text');
-const pagesGrid = document.getElementById('pdf-pages-grid');
-const addBlankPageBtn = document.getElementById('add-blank-page-btn');
-const resetBtn = document.getElementById('reset-pdf-btn');
-const downloadPdfBtn = document.getElementById('download-pdf-btn');
-const downloadZipBtn = document.getElementById('download-zip-btn');
-
-let mockPages = [];
-
-fileInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    fileNameDisplay.textContent = file.name;
-    mockPages = [
-      { id: 1, type: 'original', label: 'Page 1' },
-      { id: 2, type: 'original', label: 'Page 2' },
-      { id: 3, type: 'original', label: 'Page 3' },
-      { id: 4, type: 'original', label: 'Page 4' },
-      { id: 5, type: 'original', label: 'Page 5' }
-    ];
-    renderPages();
-    uploadContainer.classList.add('hidden');
-    workspace.classList.remove('hidden');
-  }
-});
-
-function renderPages() {
-  pagesGrid.innerHTML = '';
-  pageCountDisplay.textContent = `Total Pages: ${mockPages.length}`;
-  exportSummaryText.textContent = `${mockPages.length} pages configured & optimized`;
-
-  if (mockPages.length === 0) {
-    pagesGrid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-sm">All pages removed. Add a page or reset.</div>`;
-    downloadPdfBtn.disabled = true;
-    downloadPdfBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    return;
-  } else {
-    downloadPdfBtn.disabled = false;
-    downloadPdfBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-  }
-
-  mockPages.forEach((page, index) => {
-    const card = document.createElement('div');
-    card.className = `relative bg-white border ${page.type === 'blank' ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200'} rounded-xl p-3 flex flex-col items-center justify-between h-36 shadow-sm group transition hover:shadow-md`;
-    
-    card.innerHTML = `
-      <div class="w-full flex justify-between items-center text-[10px] text-slate-400 font-medium">
-        <span>#${index + 1}</span>
-        <span class="${page.type === 'blank' ? 'text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded' : 'text-slate-500'}">${page.type === 'blank' ? 'Blank Page' : 'Original'}</span>
-      </div>
-      <div class="flex flex-col items-center justify-center my-auto text-slate-500">
-        <span class="text-2xl">${page.type === 'blank' ? '📄+' : '📑'}</span>
-        <span class="text-xs font-semibold text-slate-700 mt-1">${page.label}</span>
-      </div>
-      <div class="w-full flex items-center justify-between gap-1 pt-2 border-t border-slate-100">
-        <button type="button" onclick="insertPageAfter(${index})" class="text-[11px] bg-slate-100 hover:bg-blue-50 hover:text-blue-600 text-slate-600 px-2 py-1 rounded font-medium transition w-full text-center">
-          + Insert
-        </button>
-        <button type="button" onclick="removePage(${index})" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-1 rounded font-medium transition" ${mockPages.length <= 1 ? 'disabled opacity-50 cursor-not-allowed' : ''}>
-          ✕
-        </button>
-      </div>
-    `;
-    pagesGrid.appendChild(card);
-  });
-}
-
-window.removePage = function(index) {
-  if (mockPages.length > 1) {
-    mockPages.splice(index, 1);
-    renderPages();
-  }
-}
-
-window.insertPageAfter = function(index) {
-  mockPages.splice(index + 1, 0, { id: Date.now(), type: 'blank', label: `Added Page` });
-  renderPages();
-}
-
-addBlankPageBtn.addEventListener('click', () => {
-  mockPages.push({ id: Date.now(), type: 'blank', label: `Added Page` });
-  renderPages();
-});
-
-resetBtn.addEventListener('click', () => {
-  fileInput.value = '';
-  workspace.classList.add('hidden');
-  uploadContainer.classList.remove('hidden');
-  mockPages = [];
-});
-
-downloadPdfBtn.addEventListener('click', () => {
-  downloadPdfBtn.innerHTML = `<span>Generating PDF...</span>`;
-  setTimeout(() => {
-    downloadPdfBtn.innerHTML = `<span>Download Modified PDF</span> <span>↓</span>`;
-    toast('Success! Your modified PDF has been successfully compiled and downloaded.');
-  }, 1000);
-});
-
-downloadZipBtn.addEventListener('click', () => {
-  downloadZipBtn.textContent = 'Packaging ZIP...';
-  setTimeout(() => {
-    downloadZipBtn.textContent = 'Split as ZIP (.zip)';
-    toast('Success! All split pages have been packaged into a ZIP archive.');
-  }, 1000);
-});
 </script>
 </body>
 </html>
