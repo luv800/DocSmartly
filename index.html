@@ -248,7 +248,7 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="sl-b"><div class="dots" id="slD"></div><div class="ctl"><button type="button" class="ib" id="slP" aria-label="Pause slideshow" title="Pause slideshow"></button><button type="button" class="ib" id="slPrev" aria-label="Previous slide" title="Previous slide"></button><button type="button" class="ib" id="slNext" aria-label="Next slide" title="Next slide"></button></div></div>
 </div>
 </section>
-<div class="stats"><div class="w"><div><b>38+</b><span>Print services</span></div><div><b>53+</b><span>Free online tools</span></div><div><b>24×7</b><span>Instant results</span></div><div><b>100%</b><span>Auto refund on failure</span></div></div></div>
+<div class="stats"><div class="w"><div><b>38+</b><span>Print services</span></div><div><b>62+</b><span>Free online tools</span></div><div><b>24×7</b><span>Instant results</span></div><div><b>100%</b><span>Auto refund on failure</span></div></div></div>
 <div class="mq" aria-hidden="true"><div class="mq-t" id="mqT"></div></div>
 
 <section class="sec w" id="services">
@@ -277,10 +277,10 @@ header .btn{padding:8px 14px;min-height:40px;font-size:.84rem}
 <div class="grid" id="govG" style="margin-top:24px"></div></div></section>
 
 <section class="sec free" id="tools"><div class="w">
-<div class="head"><div><span class="tag" style="background:#fff">Free Online Tools</span><h2>53 free tools for PDF, photos, QR &amp; documents</h2>
+<div class="head"><div><span class="tag" style="background:#fff">Free Online Tools</span><h2>62 free tools for PDF, photos, QR &amp; documents</h2>
 <p class="sub">No sign-up, no watermark. Files are processed in your own browser.</p>
 <div class="pills"><span>No sign-up</span><span>No watermark</span><span>Runs in your browser</span></div></div>
-<input id="tq" placeholder="Search 53 tools" aria-label="Search tools"></div>
+<input id="tq" placeholder="Search 62 tools" aria-label="Search tools"></div>
 <div class="cats" id="cats"></div><div class="grid" id="tg"></div>
 </div></section>
 
@@ -498,21 +498,21 @@ $('#conv').innerHTML=[["Aadhaar","fing","0000 0000 0000"],["PAN Card","pan","XXX
 const TL={"Most Used":"Passport Photo Sheet|img;QR Code Generator|qr;Stamp Designer|stamp;ID Card Front & Back to A4|a4;What Is My IP|globe;Letterhead Maker|text;Visiting Card Designer|id;Marriage Biodata Maker|doc;Age Calculator|clock;Photo & Signature Resizer|resize",
 "PDF":"JPG / PNG to PDF|img;PDF Merge|merge;PDF Split & Page Extract|split;PDF to JPG|conv;PDF Rotate & Reorder|rot;PDF Compressor (KB)|zip;Document Scanner & PDF|scan;PDF Page Number Adder|text;PDF Header & Footer Maker|text",
 "Image":"Photo Compressor (KB)|zip;Image Format Converter|conv;Background Remover|layers;WebP to JPG Converter|conv;ICO to PNG|conv;ICO Converter (Favicon)|frame;Thumbnail Resizer|resize;Favicon Preview Tool & Maker|frame",
-"Photo Editing":"Image Watermark Maker|drop;Digital Signature Maker|sign;Photo Color Changer|drop;Photo Blur Tool|blur;Image to Black & White|blur;Background Black & White|layers;Photo Border Maker|frame;Color Picker from Image|drop",
+"Photo Editing":"Image Watermark Maker|drop;Digital Signature Maker|sign;Photo Color Changer|drop;Photo Blur Tool|blur;Image to Black & White|blur;Background Black & White|layers;Photo Border Maker|frame;Color Picker from Image|drop;Name, Date & Text on Photo|text;Instagram Reel Cover Maker|img",
 "Print & ID":"ID Card Maker|id;QR Code Designer & Modifier|qr;Employee ID Card Maker|id;Student ID Card Maker|id;A4 Photo Print Layout|a4",
 "Documents":"Text to PDF / Application|text;Resume Maker|doc;Invoice Maker|inv;Quotation Maker|inv",
 "Hindi & Shop":"Hindi Typing Tool|text;GST Calculator|pct;GST Inclusive & Exclusive Calculator|pct;Printing Cost Calculator|print;Cash Denomination Calculator|cash;Salary Calculator|calc",
-"Calculators":"Percentage Calculator|pct;Loan / EMI Calculator|bank;Password to MD5 / SHA-256|lock"};
+"Calculators":"Percentage Calculator|pct;Loan / EMI Calculator|bank;Password to MD5 / SHA-256|lock;Online Stopwatch|clock;Calculator — Basic & Scientific|calc","Exam & Typing":"OMR Sheet Generator & Checker|doc;Typing Speed Test — Hindi & English|text;Online Exam System — Teacher & Student|id","Text & SEO":"Meta Title & Description Generator|pct;Word Counter|text"};
 I.scan='M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M4 12h16';
 const cats=Object.keys(TL),all=[];cats.forEach((c,ci)=>TL[c].split(";").forEach((t,ti)=>{const [n,k]=t.split("|");all.push({n,k,c,ci,ix:all.length,r:c=="Most Used"?ti+1:0})}));
 let cat="Most Used";
 function rt(){const q=$('#tq').value.toLowerCase();$('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
 const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
-$('#tg').innerHTML=L.map(t=>`<div class="card" data-svc>${t.r?`<span class="rk">#${t.r}</span>`:''}${tt(t.n,t.ix)}<h3>${t.n}</h3><div class="pr fre">FREE</div></div>`).join('')||'<p class="sub">No tools match.</p>'}
+$('#tg').innerHTML=L.map(t=>`<div class="card" data-svc data-tool="${esc(t.n)}">${t.r?`<span class="rk">#${t.r}</span>`:''}${tt(t.n,t.ix)}<h3>${t.n}</h3><div class="pr fre">FREE</div></div>`).join('')||'<p class="sub">No tools match.</p>'}
 $('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
 $('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
 
-$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 53 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
+$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 62 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
 Object.assign(I,{pause:'M8 5v14M16 5v14',play:'M8 5l11 7-11 7z',prev:'M15 5l-7 7 7 7',next:'M9 5l7 7-7 7'});
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let tmr;function toast(m,ms=3400){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>t.classList.remove('on'),ms)}
@@ -681,7 +681,6 @@ run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fP
 /* ---------- page-level clicks ---------- */
 document.addEventListener('click',e=>{
 if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-javascript
 const a=e.target.closest('[data-auth]');
 if(a){
   e.preventDefault();
@@ -693,7 +692,6 @@ if(a){
   return;
 }if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
 
-javascript
 document.addEventListener('click', async e => {
   const pb = e.target.closest('[data-pr]');
   if (pb) {
@@ -950,5 +948,6 @@ setInterval(syncNow, 5000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
 
 </script>
+<script src="tools.js"></script>
 </body>
 </html>

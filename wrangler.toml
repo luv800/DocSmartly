@@ -1,16 +1,9 @@
-name = "docsmartly-api"
-main = "src/worker.js"
-compatibility_date = "2026-01-01"
+name = "docsmartly-exams"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
 
+# Replace database_id with the value printed by: npx wrangler d1 create docsmartly-exams
 [[d1_databases]]
 binding = "DB"
-database_name = "docsmartly"
-database_id = "5d37bccc-a0dd-49f1-b441-ade77f44d474"
-
-[[r2_buckets]]
-binding = "FILES"
-bucket_name = "docsmartly-files"
-
-[vars]
-# Comma-separated. Add the customer site origin AND the admin page origin.
-ALLOWED_ORIGINS = "https://docsmartly.pages.dev,https://docsmartlyadmin.pages.dev"
+database_name = "docsmartly-exams"
+database_id = "REPLACE_WITH_DATABASE_ID"
