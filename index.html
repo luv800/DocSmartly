@@ -722,14 +722,8 @@ const DS=[
 ['PAN Card Service','',['New PAN apply','PAN update / correction']],
 ['PVC Tools','',['Voter ID','Aadhaar Card','PAN Card','Driving License','Vehicle RC','Any Other Document']],
 ['Govt Department & Civil Contractor Services','',['New Digital Signature (DSC)','E-procurement registration','Tender upload (for contractor)','Tender upload (for department)','Building estimate creator','BOQ creator','Govt civil & electric bill maker (Excel)','Govt civil & electric bill maker (Measurement Book)','Bill form','Extra item sheet','Excess item sheet','QC register creator','Work escalation statement']]];
-const FT=[['PDF Tools',['Photo to PDF','PDF merge','PDF split & add page','PDF to JPG','PDF rotate & page reorder','PDF compressor','Add page numbers to PDF','PDF header & footer']],
-['Image Tools',['Photo compressor','Photo resizer','Photo format converter','Background remove','Background change','Favicon maker']],
-['Print Layout, ID Cards & QR',['Watermark maker','Signature maker','Photo format converter','Colour picker from image']],
-['Document Creators',['Application format','Resume','Invoice','Letterhead','Quotation','Passport photo sheet','QR code generator','ID card front & back to A4','Student / Employee ID card maker','Visiting card maker','Stamp designer','A4 photo print sheet']],
-['Business Tools',['GST calculator','Cash calculator','Salary calculator']],
-['Education Tools',['Typing speed test (Hindi & English)','Online exam system','Word counter']],
-['Utilities',['Loan / EMI calculator','Age calculator','Percentage calculator','Calculator (basic & scientific)']]];
-const TOP=['Photo to PDF','PDF merge','Photo compressor','Photo resizer','Background remove','Passport photo sheet','QR code generator','Resume','Invoice','GST calculator'];
+const FT=Object.keys(TL).filter(c=>c!=='Most Used').map(c=>[c,TL[c].split(';').map(t=>t.split('|')[0])]);
+const TOP=(TL['Most Used']||'').split(';').map(t=>t.split('|')[0]);
 const SVD=[['RC Services','RC Services',[['RC PDF INSTANT',40]]],['DL Services','DL Services',[['DL PDF INSTANT',50]]],['Voter Services','Voter Services',[['Voter Mobile Link',40]]],['Farmer Services','Farmer Services',[['KISAN CARD',25]]],['PAN Services','PAN Services',[['Aadhaar to PAN',250]]],['Udyam Services','Udyam Services',[['New UDYAM CERTIFICATE',200]]],['Aadhaar Update & Ration Service','Aadhaar & Ration',[['AADHAAR Update',150]]],['Mobile Services','Mobile Services',[['Mobile Details Find',30],['Other Mobile Issue',50]]],['GST Services','GST Services',[['New GST Certificate',1200],['GST Download',200]]],['Chassis & Engine To RC','Chassis to RC',[['Chassis to RC',70]]],['Challan Check','Challan Details',[['Challan Details',10]]],['Bank Seeding','DBT Seeding Status',[['DBT Seeding Status',20]]]],SVC=Object.fromEntries(SVD.map(a=>[a[0],a[1]])),DP={};
 DS.unshift(...SVD.map(a=>[a[0],'',a[2].map(x=>{DP[a[0]+'|'+x[0]]=x[1];return x[0]})]));
 const GT='Govt Department & Civil Contractor Services';
