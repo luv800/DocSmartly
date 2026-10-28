@@ -39,7 +39,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
 .it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
 
-/* SVG Art Thumbnails */
+/* SVG Art Thumbnails exactly matching homepage */
 .sv { position: relative; aspect-ratio: 16/10; border-radius: 9px; margin-bottom: 8px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
 .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
 .fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
@@ -100,12 +100,12 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
   <div class="shell">
     <aside id="sb">
       <div class="sbs">
-        <a class="mi" href="#dashboard">Dashboard Home</a>
         <a class="mi" href="#passbook">Passbook</a>
         <a class="mi" href="#history">History</a>
         <a class="mi" href="#referral">Refer &amp; Earn</a>
         <a class="mi" href="#profile">Profile</a>
         <a class="mi" href="#contact">Contact Support</a>
+        <a class="mi" href="index.html">Homepage →</a>
 
         <div class="sb-category">
           <p style="font-size:0.75rem;font-weight:700;color:var(--mut);text-transform:uppercase;margin:6px 12px 10px;letter-spacing:0.04em">Categories &amp; Tools</p>
@@ -160,7 +160,7 @@ function updateBalance() {
   if (u) document.getElementById('aB').textContent = inr(u.bal);
 }
 
-/* Graphics and Thumbnails Engine */
+/* ---------- Homepage Artwork Engines (Exact Replicas) ---------- */
 const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
 const T=["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
 const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
@@ -181,59 +181,138 @@ const PDF=(x,y,w,h)=>PG(x,y,w,h)+R(x+w-26,y+4,22,12,'fa',3)+X(x+w-15,y+13,'PDF',
 const PHN=(x,y,w,h)=>R(x,y,w,h,'fk',6)+R(x+3,y+5,w-6,h-10,'fw',3);
 const QR=(x,y,s=72)=>{let o=R(x,y,s,s,'fw',5);const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);return o};
 const CALC=d=>R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c==3?'fy':'fb',2)).join('')).join('');
+const BRW=(x,y,w,h)=>R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
+const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6,'fb');
 
-const ICONS_PATH={
-  car:'M5 16v-5l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3',
-  id:'M3 7h18v12H3zM8 13a2 2 0 1 0 0-.01M6 17c1-2 4-2 5 0M14 11h4M14 15h4',
-  vote:'M4 9h16v11H4zM8 9V5h8v4M9 14l2 2 4-4',
-  leaf:'M12 20V10M12 10c0-4 3-6 6-6 0 4-2 6-6 6M12 14c0-3-2-5-5-5 0 3 2 5 5 5',
-  pan:'M3 5h18v14H3zM7 10h6M7 14h10M15 8h3v3h-3z',
-  doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',
-  store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',
-  phone:'M7 3h10v18H7zM11 18h2',
-  pct:'M6 18L18 6M7 7m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M17 17m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0',
-  calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M12 15h2',
-  img:'M3 5h18v14H3zM9 10m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',
-  qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',
-  text:'M5 6h14M5 10h14M5 14h10M5 18h8',
-  globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
-  merge:'M3 4h8v10H3zM13 10h8v10h-8z',
-  zip:'M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5',
-  stamp:'M9 4h6v6l3 4v3H6v-3l3-4zM5 21h14',
-  shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',
-  bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18'
+const V={
+  "RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
+  "DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw'),
+  "Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo')+X(126,78,'EPIC',6,'fw'),
+  "Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw'),
+  "PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36),
+  "RC Full Details":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+X(46,19,'VEHICLE DETAILS',6.5,'fw','start')+[0,1,2,3,4].map(i=>R(44,32+i*11,26,3,'fl',1.5)+R(78,32+i*11,36,3,'fb',1.5)).join(''),
+  "Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+R(64,44,32,20,'fb',2)+R(76,52,8,12,'fw',1)+L(46,70,68,2,6),
+  "LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
+  "Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
+  "Mobile Services":()=>PHN(56,6,48,88)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb'),
+  "GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+L(54,30,52,2,6)+C(80,62,17,'fa')+X(80,69,'%',20,'fw'),
+  "Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.500,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
+  "Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+PHN(100,16,34,68)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
+  "Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')+L(38,30,48,3,7)+X(62,68,'₹500',15,'fr'),
+  "DBT Seeding Status":()=>Pa('M80 14l46 22H34z','fa')+R(30,74,100,8,'fa',2)+C(130,24,13,'fg')+Pa('M123 24l5 5 9-10','sw'),
+  "TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7),
+  "New PAN Card Apply":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+H(106,38,28,36)+C(138,22,14,'fy')+Pa('M138 14v16M130 22h16','sa'),
+  "PAN Update / Correction":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+H(106,38,28,36)+C(138,22,14,'fy')+Pa('M132 28l1-6 9-9 5 5-9 9z','sa')
 };
-const getMiniSvg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS_PATH[k]||ICONS_PATH.doc}"/></svg>`;
 
-const VISUALS={
-  "RC":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
-  "DL":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw'),
-  "Voter":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo'),
-  "Farmer":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw'),
-  "PAN":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36),
-  "GST":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+C(80,62,17,'fa')+X(80,69,'%',20,'fw'),
-  "GeneralDoc":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+L(44,32,60,5,8),
-  "Calc":()=>CALC('18%'),
-  "Photo":()=>IMG(24,16,112,68),
-  "PDF":()=>PDF(44,8,72,84)
+const TA={
+  "Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
+  "QR Code Generator":()=>QR(44,14),
+  "Stamp Designer":()=>C(80,50,38,'sa')+C(80,50,30,'sa')+X(80,48,'DOCSMARTLY',8,'fa')+X(80,60,'★ ★ ★',6,'fa'),
+  "ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
+  "What Is My IP":()=>C(52,50,30,'sa')+R(84,38,62,24,'fk',6)+X(115,54,'103.xx.xx.12',6.5,'fw'),
+  "Letterhead Maker":()=>PG(44,6,72,88)+C(58,22,7,'fa')+R(70,17,36,3,'fa',1.5)+L(52,44,56,6,7),
+  "Visiting Card Designer":()=>R(60,46,76,46,'fw',5)+R(24,10,76,46,'fa',5)+X(36,30,'DocSmartly',8,'fw','start')+L(36,38,40,2,6,'fo'),
+  "Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8),
+  "Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+X(80,84,'Age: 28 years',7),
+  "Photo & Signature Resizer":()=>IMG(30,18,76,56)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+X(118,88,'35×45 mm',7),
+  "JPG / PNG to PDF":()=>IMG(14,26,48,40)+AR(68,44)+PDF(92,14,52,72),
+  "PDF Merge":()=>PDF(14,22,36,50)+PDF(30,34,36,50)+AR(74,48)+PDF(98,14,46,72),
+  "PDF Split & Page Extract":()=>PDF(14,14,46,72)+AR(66,48)+PDF(92,8,38,40)+PDF(92,54,38,40),
+  "PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+IMG(90,28,52,44)+X(116,86,'JPG',7,'fa'),
+  "PDF Rotate & Reorder":()=>PDF(30,14,46,72)+Pa('M146 58a20 20 0 1 1-6-14','sa'),
+  "PDF Compressor (KB)":()=>PDF(18,14,52,72)+R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8)+R(90,62,56,18,'fa',9)+X(118,75,'200 KB',8,'fw'),
+  "Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5),
+  "PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.500,'1',8,'fw'),
+  "PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw')+L(52,30,56,6,8)+R(44,80,72,12,'fb',4)+X(80,89,'FOOTER',6.5,'fw'),
+  "Photo Compressor (KB)":()=>IMG(18,16,70,56)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
+  "Image Format Converter":()=>IMG(14,26,48,40)+X(38,80,'JPG',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'PNG',8),
+  "Background Remover":()=>R(36,10,88,80,'fl',6)+H(58,22,44,66,'fa'),
+  "WebP to JPG Converter":()=>IMG(14,26,48,40)+X(38,80,'WEBP',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'JPG',8),
+  "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+IMG(90,28,52,44),
+  "ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
+  "Thumbnail Resizer":()=>IMG(16,14,84,66)+IMG(112,34,32,26)+X(128,74,'150×150',6),
+  "Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,40,100,3,'fl',1.5)+R(30,68,24,24,'fa',6)+X(120,86,'16·32',6),
+  "Image Watermark Maker":()=>IMG(24,16,112,68)+X(80,56,'DOCSMARTLY',13,'fo'),
+  "Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa'),
+  "Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa')+C(124,30,10,'fy')+C(100,58,10,'fr'),
+  "Photo Blur Tool":()=>IMG(14,22,56,48)+AR(74,42)+IMG(92,22,56,48)+C(118,46,20,'fo'),
+  "Image to Black & White":()=>IMG(14,22,56,48)+AR(74,42)+R(92,22,56,48,'fk',4),
+  "Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44)+H(90,14,56,72,'fk'),
+  "Photo Border Maker":()=>R(28,10,104,80,'fa',6)+IMG(40,22,80,56),
+  "Color Picker from Image":()=>IMG(16,16,90,68)+Pa('M108 56l22-22 8 8-22 22z','fa'),
+  "ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw')+H(34,38,28,38),
+  "QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
+  "Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
+  "Student ID Card Maker":()=>IDV(52,4,56,92,'STUDENT','fb'),
+  "A4 Photo Print Layout":()=>PG(36,4,88,92)+[0,1,2,3].map(r=>[0,1,2].map(c=>H(44+c*26,12+r*21,20,16)).join('')).join(''),
+  "Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7)+AR(82,46)+PDF(104,18,42,64),
+  "Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2)+L(44,60,72,4,7),
+  "Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+L(44,44,72,4,8)+R(76,76,40,12,'fa',3)+X(96,85,'₹ 4,500',6.5,'fw'),
+  "Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+L(44,44,72,4,8)+R(76,76,40,12,'fb',3)+X(96,85,'₹ 12,000',6.5,'fw'),
+  "Hindi Typing Tool":()=>X(80,34,'अ आ इ ई',15,'fa')+R(16,44,128,44,'fw',6),
+  "GST Calculator":()=>CALC('18%'),
+  "GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
+  "Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+C(118,50,24,'fy')+X(118,59,'₹',24),
+  "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw')+R(48,44,80,40,'fb',4)+X(88,70,'₹100',12,'fw'),
+  "Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7)+R(44,66,72,16,'fa',4)+X(80,77,'₹ 25,000',8,'fw'),
+  "Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa')+Pa('M54 80L106 20','sa')+X(120,32,'%',22,'fa'),
+  "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw'),
+  "Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8),
+  "Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
+  "Name, Date & Text on Photo":()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw'),
+  "Instagram Reel Cover Maker":()=>PHN(48,4,64,92)+IMG(54,12,52,48),
+  "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
 };
+
+const DA={
+  "New Digital Signature (DSC)":()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa')+R(98,36,34,24,'fb',5)+X(115,52,'DSC',8,'fw'),
+  "E-procurement registration":()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa')+R(50,68,60,12,'fa',4)+X(80,77,'Register',6.5,'fw'),
+  "Tender upload (for contractor)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7),
+  "Tender upload (for department)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7),
+  "Building estimate creator":()=>R(12,12,136,76,'fb',6)+PG(100,18,40,64)+X(120,34,'₹',13,'fa'),
+  "BOQ creator":()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2),
+  "Govt civil & electric bill maker (Excel)":()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw'),
+  "Bill form":()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw'),
+  "Extra item sheet":()=>PG(28,8,92,84)+X(74,22,'EXTRA ITEMS',6.5,'fa')+C(122,76,13,'fg'),
+  "Excess item sheet":()=>PG(28,8,92,84)+X(74,22,'EXCESS ITEMS',6.5,'fa')+C(122,76,13,'fr'),
+  "QC register creator":()=>R(30,10,100,82,'fb',6)+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
+  "Work escalation statement":()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa'),
+  "OMR Sheet Generator & Checker":()=>PG(32,6,96,88)+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
+  "Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw'),
+  "Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
+  "Name, Date & Text on Photo":()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw'),
+  "Instagram Reel Cover Maker":()=>PHN(48,4,64,92)+IMG(54,12,52,48),
+  "Calculator — Basic & Scientific":()=>CALC('√ π'),
+  "Typing Speed Test — Hindi & English":()=>TA["Hindi Typing Tool"]()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
+  "Online Exam System — Teacher & Student":()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa'),
+  "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
+};
+
+function getArtworkFor(item) {
+  const n = item.n, sec = item.sec;
+  if (V[n]) return V[n]();
+  if (sec && V[sec]) return V[sec]();
+  if (DA[n]) return DA[n]();
+  if (TA[n]) return TA[n]();
+  const lower = n.toLowerCase();
+  if (lower.includes("rc")) return V["RC Services"]();
+  if (lower.includes("dl") || lower.includes("licence")) return V["DL Services"]();
+  if (lower.includes("voter")) return V["Voter Services"]();
+  if (lower.includes("farmer") || lower.includes("kisan")) return V["Farmer Services"]();
+  if (lower.includes("pan")) return V["PAN Services"]();
+  if (lower.includes("gst")) return V["GST Services"]();
+  if (lower.includes("calc")) return CALC('18%');
+  if (lower.includes("photo") || lower.includes("image") || lower.includes("jpg") || lower.includes("png")) return IMG(24,16,112,68);
+  if (lower.includes("pdf")) return PDF(44,8,72,84);
+  return PG();
+}
 
 const getThumbHtml=(item, idx)=>{
-  let fn = VISUALS.GeneralDoc;
-  const n = item.n.toLowerCase();
-  if(n.includes("rc")) fn = VISUALS.RC;
-  else if(n.includes("dl") || n.includes("licence") || n.includes("license")) fn = VISUALS.DL;
-  else if(n.includes("voter")) fn = VISUALS.Voter;
-  else if(n.includes("farmer") || n.includes("kisan")) fn = VISUALS.Farmer;
-  else if(n.includes("pan")) fn = VISUALS.PAN;
-  else if(n.includes("gst")) fn = VISUALS.GST;
-  else if(n.includes("calc")) fn = VISUALS.Calc;
-  else if(n.includes("photo") || n.includes("image") || n.includes("jpg") || n.includes("png")) fn = VISUALS.Photo;
-  else if(n.includes("pdf")) fn = VISUALS.PDF;
-  return `<div class="sv" style="${sty(idx)}">${art(fn())}</div>`;
+  return `<div class="sv" style="${sty(idx)}">${art(getArtworkFor(item))}</div>`;
 };
 
-/* Complete Catalog: 38+ Paid Services & 60+ Free Tools */
+/* Complete Categorized Collection (Free & Paid) */
 const CATEGORIES = {
   "Vehicle & Transport Services (Paid)": [
     { n: "RC PDF INSTANT", sec: "RC Services", amt: 40, isPaid: true, ic: "car" },
@@ -372,6 +451,7 @@ const CATEGORIES = {
 
 let curFilter = "All";
 
+// Populate Left Sidebar with Category Accordions and Exact Mini Icons
 function setupSidebarCategories() {
   const mount = document.getElementById('sbCategories');
   mount.innerHTML = Object.entries(CATEGORIES).map(([catName, items], idx) => `
@@ -396,6 +476,7 @@ function setupSidebarCategories() {
   `).join('');
 }
 
+// Render Dashboard Sections with Homepage SVGs
 function renderDashboardSections() {
   const q = (document.getElementById('dashToolQ')?.value || '').trim().toLowerCase();
   const mount = document.getElementById('bifurcatedSections');
@@ -444,7 +525,7 @@ function renderDashboardSections() {
     `;
   });
 
-  mount.innerHTML = html || '<p style="color:var(--mut);font-size:0.9rem;padding:12px">No tools or services match your criteria.</p>';
+  mount.innerHTML = html || '<p style="color:var(--mut);font-size:0.9rem;padding:12px">No tools or services match your search.</p>';
 }
 
 function renderDashboard() {
