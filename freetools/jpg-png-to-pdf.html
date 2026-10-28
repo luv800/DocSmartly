@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>JPG to PDF Converter – DocSmartly</title>
-<link rel="stylesheet" href="../css/styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- jsPDF library for 100% browser-based workable PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
 :root {
   --bg-page: #f5f8ff;
@@ -15,12 +17,15 @@
   --muted: #5a6a85;
   --border: #dbe5f6;
   --primary: #2457d6;
-  --primary-dark: #0f2c7a;
+  --primary-hover: #1b44ad;
   --success-bg: #e6f9ed;
   --success-text: #117a37;
   --success-border: #b8ebd0;
+  --danger-bg: #fee2e2;
+  --danger-text: #dc2626;
 }
 
+* { box-sizing: border-box; }
 body {
   margin: 0;
   background: var(--bg-page);
@@ -38,7 +43,7 @@ body {
   gap: 20px;
 }
 
-/* 1. Top Header Banner */
+/* 1. Header Banner */
 .hero-banner {
   background: linear-gradient(135deg, #1b44ad 0%, #0d215b 100%);
   color: #ffffff;
@@ -57,11 +62,6 @@ body {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.hero-icon-box svg {
-  width: 36px;
-  height: 36px;
 }
 .hero-text h1 {
   margin: 0;
@@ -74,7 +74,6 @@ body {
   font-size: 0.95rem;
   opacity: 0.9;
   line-height: 1.45;
-  max-width: 800px;
 }
 
 /* 2. Main Tool Card */
@@ -138,7 +137,6 @@ body {
   color: var(--primary);
 }
 
-/* Security Notice */
 .security-notice {
   background: var(--success-bg);
   border: 1px solid var(--success-border);
@@ -153,29 +151,29 @@ body {
   margin-bottom: 20px;
 }
 
-/* Dropzone Upload Area */
+/* Dropzone Area */
 .dropzone {
   border: 2px dashed #b9cbe8;
   border-radius: 16px;
-  padding: 50px 20px;
+  padding: 38px 20px;
   text-align: center;
   background: #fafcff;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition: all 0.2s;
 }
-.dropzone:hover {
+.dropzone.dragover {
   border-color: var(--primary);
-  background: #f2f7ff;
+  background: #eef4ff;
 }
 .dropzone .upload-circle {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: var(--primary);
   color: #ffffff;
   display: grid;
   place-items: center;
-  margin: 0 auto 12px;
+  margin: 0 auto 10px;
 }
 .dropzone h3 {
   margin: 0;
@@ -184,12 +182,207 @@ body {
   color: var(--ink);
 }
 .dropzone p {
-  margin: 6px 0 0;
+  margin: 4px 0 0;
   font-size: 0.84rem;
   color: var(--muted);
 }
 
-/* 3. Instructions & Features Grid */
+/* Image Thumbnails Area */
+.file-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  margin-bottom: 12px;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.file-btns {
+  display: flex;
+  gap: 8px;
+}
+.btn-mini {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.btn-mini:hover {
+  background: #f8fafc;
+  border-color: var(--primary);
+}
+
+.thumbs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.thumb-box {
+  width: 110px;
+  height: 130px;
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+}
+.thumb-box:active { cursor: grabbing; }
+.thumb-box.dragging { opacity: 0.4; }
+.thumb-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+.thumb-del {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+.thumb-img {
+  flex: 1;
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+.thumb-footer {
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 3px 4px;
+  background: #fafcff;
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Settings Controls Row */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.option-fld label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.option-fld select {
+  width: 100%;
+  height: 42px;
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  outline: none;
+}
+.option-fld select:focus {
+  border-color: var(--primary);
+}
+
+/* Action Buttons */
+.btn-create {
+  background: #0f6b45;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-create:hover {
+  background: #0d5939;
+}
+.btn-create:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ready Box */
+.pdf-ready-box {
+  background: var(--success-bg);
+  border: 1.5px solid var(--success-border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-top: 20px;
+  display: none;
+}
+.pdf-ready-box.active { display: block; }
+.pdf-ready-title {
+  color: var(--success-text);
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdf-ready-sub {
+  color: var(--muted);
+  font-size: 0.84rem;
+  margin: 4px 0 14px;
+}
+.btn-download {
+  background: #0f6b45;
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-download:hover { background: #0b5536; }
+
+/* 3. Instructions & Features */
 .info-columns {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -236,7 +429,7 @@ body {
   flex-shrink: 0;
 }
 
-/* 4. FAQ Accordion Section */
+/* 4. FAQ */
 .faq-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -252,9 +445,7 @@ body {
 .faq-item {
   border-bottom: 1px solid var(--border);
 }
-.faq-item:last-child {
-  border-bottom: none;
-}
+.faq-item:last-child { border-bottom: none; }
 .faq-item summary {
   padding: 14px 4px;
   font-size: 0.95rem;
@@ -266,18 +457,14 @@ body {
   align-items: center;
   gap: 10px;
 }
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
+.faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::before {
   content: "▶";
   font-size: 0.7rem;
   color: var(--muted);
   transition: transform 0.2s;
 }
-.faq-item[open] summary::before {
-  transform: rotate(90deg);
-}
+.faq-item[open] summary::before { transform: rotate(90deg); }
 .faq-item p {
   margin: 0 0 14px 20px;
   font-size: 0.9rem;
@@ -285,7 +472,7 @@ body {
   line-height: 1.55;
 }
 
-/* 5. Related Free Tools Section */
+/* 5. Related Tools */
 .related-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -323,18 +510,16 @@ body {
   box-shadow: 0 6px 16px rgba(36, 87, 214, 0.1);
   color: var(--primary);
 }
-.related-item svg {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
+.related-item svg { width: 22px; height: 22px; flex-shrink: 0; }
 
 @media (max-width: 820px) {
+  .options-grid { grid-template-columns: repeat(2, 1fr); }
   .info-columns { grid-template-columns: 1fr; }
   .related-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-banner { flex-direction: column; text-align: center; }
 }
 @media (max-width: 520px) {
+  .options-grid { grid-template-columns: 1fr; }
   .related-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -343,10 +528,9 @@ body {
 
 <div class="page-wrapper">
 
-  <!-- 1. Top Title & Tagline Banner -->
+  <!-- 1. Header Banner -->
   <header class="hero-banner">
     <div class="hero-icon-box">
-      <!-- Icon representation -->
       <svg viewBox="0 0 24 24" fill="none" stroke="#2457d6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
         <polyline points="14 2 14 8 20 8"></polyline>
@@ -361,7 +545,7 @@ body {
     </div>
   </header>
 
-  <!-- 2. Main Tool Action Card -->
+  <!-- 2. Main Workable Action Card -->
   <main class="tool-card">
     <div class="tool-top-bar">
       <div class="tool-title-info">
@@ -377,7 +561,6 @@ body {
           <p>Multiple photos ko ek PDF me badlein — reorder, A4 / original size.</p>
         </div>
       </div>
-      <!-- "All Tools" ki jagah "Dashboard" -->
       <a href="../dashboard.html" class="btn-dashboard">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
@@ -389,7 +572,6 @@ body {
       </a>
     </div>
 
-    <!-- Privacy Notice -->
     <div class="security-notice">
       <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
         <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
@@ -398,7 +580,7 @@ body {
     </div>
 
     <!-- Active Upload Box -->
-    <div class="dropzone" id="dropArea" onclick="document.getElementById('fileInp').click()">
+    <div class="dropzone" id="dropArea">
       <input type="file" id="fileInp" accept="image/jpeg,image/png,image/webp" multiple hidden>
       <div class="upload-circle">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -410,6 +592,73 @@ body {
       </div>
       <h3>JPG / PNG photos select karein</h3>
       <p>ya yahan drag &amp; drop karein · multiple allowed</p>
+    </div>
+
+    <!-- Thumbnails Container -->
+    <div id="thumbSection" style="display: none;">
+      <div class="file-actions-bar">
+        <span id="imgCountText">0 images · drag karke order badlein</span>
+        <div class="file-btns">
+          <button type="button" class="btn-mini" id="btnAddMore">+ Add more</button>
+          <button type="button" class="btn-mini" id="btnClearAll" style="color:var(--danger-text)">🗑 Clear</button>
+        </div>
+      </div>
+      <div class="thumbs-grid" id="thumbsGrid"></div>
+    </div>
+
+    <!-- Options Row -->
+    <div class="options-grid" style="margin-top: 18px;">
+      <div class="option-fld">
+        <label for="optPageSize">Page size</label>
+        <select id="optPageSize">
+          <option value="a4" selected>A4</option>
+          <option value="letter">Letter</option>
+          <option value="fit">Original (Fit to image)</option>
+        </select>
+      </div>
+      <div class="option-fld">
+        <label for="optOrientation">Orientation</label>
+        <select id="optOrientation">
+          <option value="auto" selected>Auto (image ke hisaab se)</option>
+          <option value="p">Portrait</option>
+          <option value="l">Landscape</option>
+        </select>
+      </div>
+      <div class="option-fld">
+        <label for="optMargin">Margin</label>
+        <select id="optMargin">
+          <option value="none">No margin</option>
+          <option value="small" selected>Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </div>
+      <div class="option-fld">
+        <label for="optQuality">Image quality</label>
+        <select id="optQuality">
+          <option value="0.95" selected>High</option>
+          <option value="0.8">Medium</option>
+          <option value="0.6">Low (Small file size)</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="button" class="btn-create" id="btnCreatePdf" disabled>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+      Create PDF
+    </button>
+
+    <!-- PDF Ready Download Box -->
+    <div class="pdf-ready-box" id="pdfReadyBox">
+      <div class="pdf-ready-title">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 11 14 15 10"></polyline></svg>
+        PDF ready
+      </div>
+      <div class="pdf-ready-sub" id="pdfReadyInfo">1 pages · 168.8 KB</div>
+      <button type="button" class="btn-download" id="btnDownloadPdf">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download PDF
+      </button>
     </div>
   </main>
 
@@ -427,57 +676,40 @@ body {
     <div class="info-card">
       <h3>Features</h3>
       <ul class="feature-list">
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          Unlimited images, any order
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          A4, Letter or original image size
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          Small file option for online forms
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          No watermark, no sign-up needed
-        </li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlimited images, any order</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> A4, Letter or original image size</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Small file option for online forms</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> No watermark, no sign-up needed</li>
       </ul>
     </div>
   </section>
 
-  <!-- 4. FAQ Section -->
+  <!-- 4. FAQ Accordion Section -->
   <section class="faq-card">
     <h3>FAQ – JPG / PNG to PDF</h3>
-    
     <details class="faq-item">
       <summary>Can I convert multiple JPG files into one PDF?</summary>
       <p>Yes, aap ek sath multiple photos select kar sakte hain aur unhe combine karke ek hi PDF file me download kar sakte hain.</p>
     </details>
-
     <details class="faq-item">
       <summary>Will the PDF be blurry?</summary>
-      <p>Nahi, original resolution maintain rehti hai. Agar aap quality setting high rakhenge to original quality me PDF generate hoga.</p>
+      <p>Nahi, original resolution maintain rehti hai. Quality setting High rakhne par photos crystal clear print hoti hain.</p>
     </details>
-
     <details class="faq-item">
       <summary>Is JPG / PNG to PDF free?</summary>
-      <p>Haan, ye tool 100% free hai aur isme koi watermark nahi lagta.</p>
+      <p>Haan, yeh tool 100% free hai aur isme koi watermark nahi lagta.</p>
     </details>
-
     <details class="faq-item">
       <summary>Are my files uploaded to a server?</summary>
-      <p>Nahi, sari processing client-side aapke browser me hoti hai. Aapka data private aur safe rehta hai.</p>
+      <p>Nahi, sari processing client-side aapke browser me hi hoti hai. Aapka data puri tarah safe rehta hai.</p>
     </details>
-
     <details class="faq-item">
       <summary>Does it work on mobile?</summary>
-      <p>Haan, ye Android, iPhone, tablet aur desktop sabhi devices par smoothly kaam karta hai.</p>
+      <p>Haan, yeh Android, iPhone, tablet aur desktop sabhi devices par smoothly kaam karta hai.</p>
     </details>
   </section>
 
-  <!-- 5. Related Free Tools Section -->
+  <!-- 5. Related Free Tools -->
   <section class="related-card">
     <h3>Related free tools</h3>
     <div class="related-grid">
@@ -517,6 +749,219 @@ body {
   </section>
 
 </div>
+
+<!-- Real Processing & Drag-Reorder Logic -->
+<script>
+let imagesList = [];
+let generatedPdfBlob = null;
+let draggedItemIndex = null;
+
+const dropArea = document.getElementById('dropArea');
+const fileInp = document.getElementById('fileInp');
+const thumbSection = document.getElementById('thumbSection');
+const thumbsGrid = document.getElementById('thumbsGrid');
+const imgCountText = document.getElementById('imgCountText');
+const btnAddMore = document.getElementById('btnAddMore');
+const btnClearAll = document.getElementById('btnClearAll');
+const btnCreatePdf = document.getElementById('btnCreatePdf');
+const pdfReadyBox = document.getElementById('pdfReadyBox');
+const pdfReadyInfo = document.getElementById('pdfReadyInfo');
+const btnDownloadPdf = document.getElementById('btnDownloadPdf');
+
+// Dropzone clicks & drag-drops
+dropArea.onclick = () => fileInp.click();
+btnAddMore.onclick = () => fileInp.click();
+
+['dragenter', 'dragover'].forEach(evt => {
+  dropArea.addEventListener(evt, e => { e.preventDefault(); dropArea.classList.add('dragover'); });
+});
+['dragleave', 'drop'].forEach(evt => {
+  dropArea.addEventListener(evt, e => { e.preventDefault(); dropArea.classList.remove('dragover'); });
+});
+
+dropArea.addEventListener('drop', e => {
+  if (e.dataTransfer.files && e.dataTransfer.files.length) {
+    handleFiles(e.dataTransfer.files);
+  }
+});
+
+fileInp.onchange = e => {
+  if (e.target.files && e.target.files.length) {
+    handleFiles(e.target.files);
+    fileInp.value = '';
+  }
+};
+
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    if (!f.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        imagesList.push({
+          name: f.name,
+          dataUrl: ev.target.result,
+          width: img.width,
+          height: img.height
+        });
+        renderThumbs();
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderThumbs() {
+  if (!imagesList.length) {
+    thumbSection.style.display = 'none';
+    btnCreatePdf.disabled = true;
+    pdfReadyBox.classList.remove('active');
+    return;
+  }
+
+  thumbSection.style.display = 'block';
+  btnCreatePdf.disabled = false;
+  imgCountText.textContent = `${imagesList.length} images · drag karke order badlein`;
+
+  thumbsGrid.innerHTML = imagesList.map((item, idx) => `
+    <div class="thumb-box" draggable="true" data-idx="${idx}">
+      <span class="thumb-badge">${idx + 1}</span>
+      <button type="button" class="thumb-del" onclick="removeImage(${idx})">✕</button>
+      <img class="thumb-img" src="${item.dataUrl}" alt="${esc(item.name)}">
+      <div class="thumb-footer">${esc(item.name)} · ${item.width}×${item.height}</div>
+    </div>
+  `).join('');
+
+  setupDragDropReorder();
+}
+
+window.removeImage = function(index) {
+  imagesList.splice(index, 1);
+  renderThumbs();
+};
+
+btnClearAll.onclick = () => {
+  imagesList = [];
+  renderThumbs();
+};
+
+function setupDragDropReorder() {
+  const boxes = thumbsGrid.querySelectorAll('.thumb-box');
+  boxes.forEach(box => {
+    box.addEventListener('dragstart', e => {
+      draggedItemIndex = Number(box.dataset.idx);
+      box.classList.add('dragging');
+    });
+    box.addEventListener('dragend', () => {
+      box.classList.remove('dragging');
+    });
+    box.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+    box.addEventListener('drop', e => {
+      e.preventDefault();
+      const targetIndex = Number(box.dataset.idx);
+      if (draggedItemIndex !== null && draggedItemIndex !== targetIndex) {
+        const moved = imagesList.splice(draggedItemIndex, 1)[0];
+        imagesList.splice(targetIndex, 0, moved);
+        renderThumbs();
+      }
+    });
+  });
+}
+
+// 100% Workable Real PDF Generation
+btnCreatePdf.onclick = async () => {
+  if (!imagesList.length) return;
+  btnCreatePdf.disabled = true;
+  btnCreatePdf.innerHTML = `Creating PDF...`;
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const pageSizeOpt = document.getElementById('optPageSize').value;
+    const orientOpt = document.getElementById('optOrientation').value;
+    const marginOpt = document.getElementById('optMargin').value;
+    const quality = parseFloat(document.getElementById('optQuality').value) || 0.95;
+
+    let doc = null;
+
+    const marginValues = { none: 0, small: 6, medium: 14, large: 22 };
+    const m = marginValues[marginOpt] !== undefined ? marginValues[marginOpt] : 6;
+
+    for (let i = 0; i < imagesList.length; i++) {
+      const item = imagesList[i];
+      const isLandscape = item.width > item.height;
+      let pageOrientation = orientOpt === 'auto' ? (isLandscape ? 'l' : 'p') : orientOpt;
+
+      if (pageSizeOpt === 'fit') {
+        const ptWidth = item.width * 0.75;
+        const ptHeight = item.height * 0.75;
+        if (i === 0) {
+          doc = new jsPDF({ unit: 'pt', format: [ptWidth, ptHeight] });
+        } else {
+          doc.addPage([ptWidth, ptHeight]);
+        }
+        doc.addImage(item.dataUrl, 'JPEG', 0, 0, ptWidth, ptHeight, undefined, 'FAST');
+      } else {
+        const format = pageSizeOpt === 'letter' ? 'letter' : 'a4';
+        if (i === 0) {
+          doc = new jsPDF({ unit: 'mm', format, orientation: pageOrientation });
+        } else {
+          doc.addPage(format, pageOrientation);
+        }
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const availWidth = pageWidth - (m * 2);
+        const availHeight = pageHeight - (m * 2);
+
+        const imgRatio = item.width / item.height;
+        const availRatio = availWidth / availHeight;
+
+        let renderW, renderH;
+        if (imgRatio > availRatio) {
+          renderW = availWidth;
+          renderH = availWidth / imgRatio;
+        } else {
+          renderH = availHeight;
+          renderW = availHeight * imgRatio;
+        }
+
+        const posX = m + ((availWidth - renderW) / 2);
+        const posY = m + ((availHeight - renderH) / 2);
+
+        doc.addImage(item.dataUrl, 'JPEG', posX, posY, renderW, renderH, undefined, 'FAST');
+      }
+    }
+
+    generatedPdfBlob = doc.output('blob');
+    const sizeKB = (generatedPdfBlob.size / 1024).toFixed(1);
+
+    pdfReadyInfo.textContent = `${imagesList.length} pages · ${sizeKB} KB`;
+    pdfReadyBox.classList.add('active');
+  } catch (err) {
+    alert("PDF create karne me problem aayi: " + err.message);
+  } finally {
+    btnCreatePdf.disabled = false;
+    btnCreatePdf.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> Create PDF`;
+  }
+};
+
+btnDownloadPdf.onclick = () => {
+  if (!generatedPdfBlob) return;
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(generatedPdfBlob);
+  link.download = `DocSmartly_Converted_${Date.now()}.pdf`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 4000);
+};
+
+function esc(str) {
+  return String(str || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+</script>
 
 </body>
 </html>
