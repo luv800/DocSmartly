@@ -733,6 +733,7 @@ const FREEG=new Set(FT.map(g=>g[0])),MBK=GT+'|Govt civil & electric bill maker (
 const WAI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.2-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.4-2.4-2.4L11 10l-1-2z"/></svg>';
 const waLink=n=>`<a class="wal" href="https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for '+n)}" target="_blank" rel="noopener" aria-label="Ask price of ${esc(n)} on WhatsApp" title="Ask price on WhatsApp">₹ ${WAI}</a>`;
 const ALL=[];DS.forEach(s=>s[2].forEach(n=>ALL.push({k:s[0]+'|'+n,n,s:s[0]})));FT.forEach(g=>g[1].forEach(n=>ALL.push({k:g[0]+'|'+n,n,s:g[0]})));
+TOP.forEach(n=>{if(n&&!ALL.some(x=>x.n==n)){ALL.push({k:'Trending Tools|'+n,n,s:'Trending Tools'})}});FREEG.add('Trending Tools');
 const cPaid=DS.reduce((a,s)=>a+s[2].length,0),cFree=FT.reduce((a,g)=>a+g[1].length,0);
 const gen=()=>Math.random().toString(36).slice(2,8).toUpperCase();
 const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
@@ -758,7 +759,7 @@ $('[data-v=dashboard]').innerHTML=`<div class="gc"><div><p class="gs">${g}</p><h
 <h2 class="sh">My Favourites (<span id="favN">${u.fav.length}</span>)</h2><div id="favC">${favHTML()}</div>
 <h2 class="sh">All Services (${cPaid})</h2>${paid.join('')}
 <h2 class="sh">Free & Trending Tools (${cFree})</h2>
-${sec('Trending Tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map((n,i)=>{const a=ALL.find(x=>x.n==n&&x.s!='Print Layout, ID Cards & QR');return itm(a.k,n,u.fav)}).join('')),true,'trend')}
+${sec('Trending Tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map(n=>{const a=ALL.find(x=>x.n==n);return a?itm(a.k,n,u.fav):''}).join('')),true,'trend')}
 ${sec('Free Tools',cFree,free.join(''),false)}`}
 /* referral */
 const rlink=u=>location.href.split('#')[0].split('?')[0]+'?ref='+u.code;
