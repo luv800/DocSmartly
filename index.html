@@ -547,25 +547,9 @@ const TL={"Most Used":"Passport Photo Sheet|img;QR Code Generator|qr;Stamp Desig
 I.scan='M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M4 12h16';
 const cats=Object.keys(TL),all=[];cats.forEach((c,ci)=>TL[c].split(";").forEach((t,ti)=>{const [n,k]=t.split("|");all.push({n,k,c,ci,ix:all.length,r:c=="Most Used"?ti+1:0})}));
 let cat="Most Used";
-function rt(){
-    const q=$('#tq').value.toLowerCase();
-    $('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
-    const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
-    $('#tg').innerHTML=L.map(t=>{
-        // Check if this tool is Passport Photo Sheet
-        const isPassport = t.n.toLowerCase().includes('passport photo sheet');
-        const hrefAttr = isPassport ? 'href="passport-photo-sheet.html"' : '';
-        const tag = isPassport ? 'a' : 'div';
-        const svcAttr = isPassport ? '' : 'data-svc';
-
-        return `<${tag} ${hrefAttr} class="card" ${svcAttr} data-tool="${t.n.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">
-            ${t.r?`<span class="rk">#${t.r}</span>`:''}
-            ${tt(t.n,t.ix)}
-            <h3>${t.n}</h3>
-            <div class="pr fre">FREE</div>
-        </${tag}>`;
-    }).join('')||'<p class="sub">No tools match.</p>';
-}
+function rt(){const q=$('#tq').value.toLowerCase();$('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
+const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
+$('#tg').innerHTML=L.map(t=>`<div class="card" data-svc data-tool="${t.n.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${t.r?`<span class="rk">#${t.r}</span>`:''}${tt(t.n,t.ix)}<h3>${t.n}</h3><div class="pr fre">FREE</div></div>`).join('')||'<p class="sub">No tools match.</p>'}
 $('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
 $('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
 
@@ -747,19 +731,8 @@ if(a){
     location.href=+a.dataset.auth?'register.html':'login.html';
   }
   return;
-}const svcEl = e.target.closest('[data-svc],[data-it]');
-if(svcEl && !e.target.closest('a')){
-    const toolName = (svcEl.dataset.tool || svcEl.dataset.it || svcEl.textContent || '').toLowerCase();
-    
-    // Direct redirect for Passport Photo Sheet tool
-    if(toolName.includes('passport photo sheet')){
-        window.location.href = 'passport-photo-sheet.html';
-        return;
-    }
+}if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
 
-    if(user()) toast('Your dashboard is coming next. Services will open from there.');
-    else to('login');
-}
 document.addEventListener('click', async e => {
   const pb = e.target.closest('[data-pr]');
   if (pb) {
