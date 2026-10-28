@@ -664,9 +664,10 @@ header {
         <div class="field-group">
           <label for="marginSelect">Margin</label>
           <select class="form-select" id="marginSelect">
-            <option value="0" selected>None (0 mm)</option>
-            <option value="5">Small (5 mm)</option>
-            <option value="10">Normal (10 mm)</option>
+            <option value="0">None (0 mm)</option>
+            <option value="2" selected>Small (2 mm)</option>
+            <option value="5">Normal (5 mm)</option>
+            <option value="10">Large (10 mm)</option>
           </select>
         </div>
 
@@ -983,7 +984,7 @@ btnCreatePdf.addEventListener('click', () => {
   const { jsPDF } = window.jspdf;
   const pageSize = document.getElementById('pageSizeSelect').value;
   const orientationSetting = document.getElementById('orientationSelect').value;
-  const marginMm = parseFloat(document.getElementById('marginSelect').value) || 0;
+  const marginMm = parseFloat(document.getElementById('marginSelect').value) || 2;
   const quality = parseFloat(document.getElementById('qualitySelect').value) || 0.92;
 
   let firstImg = uploadedImages[0];
