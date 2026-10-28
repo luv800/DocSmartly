@@ -1,55 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>QR Code Generator – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- QR Code Styling Library (Canvas/SVG rendering) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        /* Custom scrollbar and styling tweaks */
+        input[type="range"] {
+            accent-color: #2563eb;
+        }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>QR Code Generator</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+        
+        <!-- Header Section -->
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-6 mb-6">
+            <div class="flex items-start space-x-3">
+                <div class="bg-blue-50 text-blue-600 p-3 rounded-xl text-xl font-bold flex items-center justify-center">
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-slate-900">QR Code Generator</h1>
+                    <p class="text-sm text-slate-500 mt-0.5">URL, UPI, WhatsApp, Wi-Fi, vCard QR — colors, logo, PNG / SVG download.</p>
+                </div>
+            </div>
+            <div class="mt-4 sm:mt-0">
+                <button class="flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-medium px-4 py-2.5 rounded-xl border border-slate-200 transition">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span>All Tools</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Notice Banner -->
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm px-4 py-3 rounded-xl flex items-center space-x-3 mb-8">
+            <i class="fa-solid fa-lock text-emerald-600"></i>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </div>
+
+        <!-- Main Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Controls (7 cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- QR Type Selection -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">QR type</label>
+                    <div class="relative">
+                        <select id="qrType" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="url">Website URL</option>
+                            <option value="text">Plain Text</option>
+                            <option value="wifi">Wi-Fi Network</option>
+                            <option value="whatsapp">WhatsApp Message</option>
+                            <option value="upi">UPI Payment</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Input Field Container -->
+                <div id="dynamicInputContainer">
+                    <label id="dynamicInputLabel" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Website URL *</label>
+                    <input type="text" id="qrInputData" value="https://example.com" placeholder="https://example.com" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <!-- Design Section Header -->
+                <div class="pt-4 border-t border-slate-100 flex items-center space-x-2 text-blue-600 font-semibold text-sm">
+                    <i class="fa-solid fa-circle-dot"></i>
+                    <span>Design</span>
+                </div>
+
+                <!-- Size & Error Correction -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Size (PNG)</label>
+                        <div class="relative">
+                            <select id="qrSize" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="256">256 px</option>
+                                <option value="512">512 px</option>
+                                <option value="1024" selected>1024 px</option>
+                                <option value="2048">2048 px</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Error correction</label>
+                        <div class="relative">
+                            <select id="errorCorrection" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="L">L — 7%</option>
+                                <option value="M" selected>M — 15%</option>
+                                <option value="Q">Q — 25%</option>
+                                <option value="H">H — 30%</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiet Zone Slider -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-semibold text-slate-700 uppercase tracking-wider">Quiet zone: <span id="quietZoneVal">4</span></label>
+                    </div>
+                    <input type="range" id="quietZone" min="0" max="10" value="4" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <!-- Colors: QR Color & Background -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">QR color</label>
+                        <div class="flex items-center space-x-2 border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                            <input type="color" id="qrColor" value="#000000" class="w-8 h-8 rounded border-0 cursor-pointer bg-transparent">
+                            <input type="text" id="qrColorText" value="#000000" class="w-full text-sm font-mono focus:outline-none text-slate-800">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Background</label>
+                        <div class="flex items-center space-x-2 border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                            <input type="color" id="bgColor" value="#ffffff" class="w-8 h-8 rounded border-0 cursor-pointer bg-transparent">
+                            <input type="text" id="bgColorText" value="#ffffff" class="w-full text-sm font-mono focus:outline-none text-slate-800">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dots Style & Corner Eyes -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Dots style</label>
+                        <div class="relative">
+                            <select id="dotsStyle" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="square">Square (best)</option>
+                                <option value="dots">Dots</option>
+                                <option value="rounded">Rounded</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Corner eyes</label>
+                        <div class="relative">
+                            <select id="cornerStyle" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="square">Square</option>
+                                <option value="dot">Dot / Circle</option>
+                                <option value="rounded">Rounded</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Logo & Logo Size -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Center logo (optional)</label>
+                        <div class="flex items-center space-x-2 border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                            <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs px-3 py-1.5 rounded-lg border border-slate-300 transition">
+                                Choose File
+                                <input type="file" id="logoUpload" accept="image/*" class="hidden">
+                            </label>
+                            <span id="logoFileName" class="text-xs text-slate-500 truncate">No file chosen</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold text-slate-700 uppercase tracking-wider">Logo size: <span id="logoSizeVal">20</span>%</label>
+                        </div>
+                        <input type="range" id="logoSize" min="10" max="40" value="20" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Preview & Output (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col space-y-6">
+                
+                <!-- Live Preview Card -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center relative min-h-[340px]">
+                    <div id="previewContainer" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-center transition-all">
+                        <!-- QR Code Canvas Rendered Here -->
+                        <canvas id="qrCanvas" class="max-w-full h-auto rounded"></canvas>
+                    </div>
+                    <div id="placeholderText" class="hidden flex-col items-center justify-center text-slate-400">
+                        <i class="fa-solid fa-qrcode text-4xl mb-2"></i>
+                    </div>
+                    <div class="mt-4 flex items-center space-x-2 text-slate-500 text-xs">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Details bharte hi live preview yahan dikhega</span>
+                    </div>
+                </div>
+
+                <!-- QR Content Textbox -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">QR content</label>
+                    <textarea id="qrContentText" rows="3" readonly class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs font-mono text-slate-600 focus:outline-none resize-none"></textarea>
+                </div>
+
+                <!-- Functional Action Buttons -->
+                <div class="space-y-3">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button id="btnGenerate" class="col-span-2 sm:col-span-1 bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 transition shadow-sm">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Generate</span>
+                        </button>
+                        <button id="btnPng" class="bg-slate-700 hover:bg-slate-800 text-white font-medium text-sm py-2.5 px-3 rounded-xl flex items-center justify-center space-x-1.5 transition shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>PNG</span>
+                        </button>
+                        <button id="btnSvg" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-medium text-sm py-2.5 px-3 rounded-xl flex items-center justify-center space-x-1.5 transition">
+                            <i class="fa-solid fa-code"></i>
+                            <span>SVG</span>
+                        </button>
+                        <button id="btnCopy" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-medium text-xs sm:text-sm py-2.5 px-2 rounded-xl flex items-center justify-center space-x-1.5 transition">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copy content</span>
+                        </button>
+                    </div>
+                    <div class="flex justify-end">
+                        <button id="btnReset" class="text-slate-500 hover:text-slate-700 text-xs font-medium flex items-center space-x-1 py-1 px-2 transition">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer Scanning Note -->
+                <div class="text-center pt-2">
+                    <p class="text-xs text-slate-500">Download se pehle apne mobile camera / UPI app se QR scan karke check kar lein.</p>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['QR Code Generator'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Custom Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white text-sm px-4 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center space-x-2 z-50">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg">Action completed successfully</span>
+    </div>
+
+    <script>
+        // DOM Elements
+        const qrType = document.getElementById('qrType');
+        const dynamicInputContainer = document.getElementById('dynamicInputContainer');
+        const dynamicInputLabel = document.getElementById('dynamicInputLabel');
+        const qrInputData = document.getElementById('qrInputData');
+        const qrSize = document.getElementById('qrSize');
+        const errorCorrection = document.getElementById('errorCorrection');
+        const quietZone = document.getElementById('quietZone');
+        const quietZoneVal = document.getElementById('quietZoneVal');
+        const qrColor = document.getElementById('qrColor');
+        const qrColorText = document.getElementById('qrColorText');
+        const bgColor = document.getElementById('bgColor');
+        const bgColorText = document.getElementById('bgColorText');
+        const dotsStyle = document.getElementById('dotsStyle');
+        const cornerStyle = document.getElementById('cornerStyle');
+        const logoUpload = document.getElementById('logoUpload');
+        const logoFileName = document.getElementById('logoFileName');
+        const logoSize = document.getElementById('logoSize');
+        const logoSizeVal = document.getElementById('logoSizeVal');
+        const qrCanvas = document.getElementById('qrCanvas');
+        const qrContentText = document.getElementById('qrContentText');
+        
+        const btnGenerate = document.getElementById('btnGenerate');
+        const btnPng = document.getElementById('btnPng');
+        const btnSvg = document.getElementById('btnSvg');
+        const btnCopy = document.getElementById('btnCopy');
+        const btnReset = document.getElementById('btnReset');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+
+        let uploadedLogoImage = null;
+
+        // Show Toast Helper
+        function showToast(message, isError = false) {
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Handle QR Type dynamic inputs
+        qrType.addEventListener('change', () => {
+            const type = qrType.value;
+            if (type === 'url') {
+                dynamicInputLabel.textContent = 'Website URL *';
+                qrInputData.type = 'text';
+                qrInputData.value = 'https://example.com';
+                qrInputData.placeholder = 'https://example.com';
+            } else if (type === 'text') {
+                dynamicInputLabel.textContent = 'Plain Text *';
+                qrInputData.type = 'text';
+                qrInputData.value = 'Hello World!';
+                qrInputData.placeholder = 'Enter text here';
+            } else if (type === 'wifi') {
+                dynamicInputLabel.textContent = 'Wi-Fi Configuration (SSID;Password;Encryption) *';
+                qrInputData.type = 'text';
+                qrInputData.value = 'WIFI:S:MyHomeNetwork;T:WPA;P:mypassword;;';
+                qrInputData.placeholder = 'WIFI:S:NetworkName;T:WPA;P:Password;;';
+            } else if (type === 'whatsapp') {
+                dynamicInputLabel.textContent = 'WhatsApp Number & Message *';
+                qrInputData.type = 'text';
+                qrInputData.value = 'https://wa.me/919876543210?text=Hello';
+                qrInputData.placeholder = 'https://wa.me/919876543210?text=Hi';
+            } else if (type === 'upi') {
+                dynamicInputLabel.textContent = 'UPI ID / VPA *';
+                qrInputData.type = 'text';
+                qrInputData.value = 'upi://pay?pa=merchant@upi&pn=StoreName&am=100&cu=INR';
+                qrInputData.placeholder = 'upi://pay?pa=yourname@upi';
+            }
+            generateQRCode();
+        });
+
+        // Sync Color pickers and text inputs
+        qrColor.addEventListener('input', () => {
+            qrColorText.value = qrColor.value;
+            generateQRCode();
+        });
+        qrColorText.addEventListener('input', () => {
+            if(/^#[0-9A-F]{6}$/i.test(qrColorText.value)) {
+                qrColor.value = qrColorText.value;
+                generateQRCode();
+            }
+        });
+
+        bgColor.addEventListener('input', () => {
+            bgColorText.value = bgColor.value;
+            generateQRCode();
+        });
+        bgColorText.addEventListener('input', () => {
+            if(/^#[0-9A-F]{6}$/i.test(bgColorText.value)) {
+                bgColor.value = bgColorText.value;
+                generateQRCode();
+            }
+        });
+
+        quietZone.addEventListener('input', () => {
+            quietZoneVal.textContent = quietZone.value;
+            generateQRCode();
+        });
+
+        logoSize.addEventListener('input', () => {
+            logoSizeVal.textContent = logoSize.value;
+            generateQRCode();
+        });
+
+        qrInputData.addEventListener('input', generateQRCode);
+        errorCorrection.addEventListener('change', generateQRCode);
+        dotsStyle.addEventListener('change', generateQRCode);
+        cornerStyle.addEventListener('change', generateQRCode);
+
+        // Logo upload handler
+        logoUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                logoFileName.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedLogoImage = img;
+                        generateQRCode();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                logoFileName.textContent = 'No file chosen';
+                uploadedLogoImage = null;
+                generateQRCode();
+            }
+        });
+
+        // Core QR Generation Logic
+        function generateQRCode() {
+            const data = qrInputData.value.trim() || 'https://example.com';
+            qrContentText.value = data;
+
+            const errCorr = errorCorrection.value;
+            const qz = parseInt(quietZone.value);
+            const fg = qrColor.value;
+            const bg = bgColor.value;
+            const dotShape = dotsStyle.value;
+            const cornerShape = cornerStyle.value;
+
+            // Initialize qrcode-generator
+            // Type number 0 means automatic version detection
+            let qr;
+            try {
+                let typeNum = 0;
+                if (errCorr === 'L') qr = qrcode(typeNum, 'L');
+                else if (errCorr === 'M') qr = qrcode(typeNum, 'M');
+                else if (errCorr === 'Q') qr = qrcode(typeNum, 'Q');
+                else if (errCorr === 'H') qr = qrcode(typeNum, 'H');
+                
+                qr.addData(data);
+                qr.make();
+            } catch (err) {
+                console.error("Data too long for QR configuration", err);
+                return;
+            }
+
+            const moduleCount = qr.getModuleCount();
+            const totalModules = moduleCount + (qz * 2);
+            
+            // Render size for preview canvas
+            const canvasSize = 240;
+            qrCanvas.width = canvasSize;
+            qrCanvas.height = canvasSize;
+            const ctx = qrCanvas.getContext('2d');
+
+            // Clear background
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+            const cellSize = canvasSize / totalModules;
+
+            // Draw modules
+            for (let r = 0; r < moduleCount; r++) {
+                for (let c = 0; c < moduleCount; c++) {
+                    if (qr.isDark(r, c)) {
+                        const x = (c + qz) * cellSize;
+                        const y = (r + qz) * cellSize;
+
+                        // Check if part of finder pattern (corner eyes) for distinct styling
+                        const isFinder = (
+                            (r < 7 && c < 7) || 
+                            (r < 7 && c >= moduleCount - 7) || 
+                            (r >= moduleCount - 7 && c < 7)
+                        );
+
+                        ctx.fillStyle = fg;
+
+                        if (isFinder) {
+                            // Apply corner eyes style
+                            if (cornerShape === 'dot') {
+                                ctx.beginPath();
+                                ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize * 0.45, 0, Math.PI * 2);
+                                ctx.fill();
+                            } else if (cornerShape === 'rounded') {
+                                ctx.beginPath();
+                                ctx.roundRect(x, y, cellSize * 0.95, cellSize * 0.95, cellSize * 0.3);
+                                ctx.fill();
+                            } else {
+                                ctx.fillRect(x, y, cellSize * 1.02, cellSize * 1.02);
+                            }
+                        } else {
+                            // Apply dots style
+                            if (dotShape === 'dots') {
+                                ctx.beginPath();
+                                ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize * 0.4, 0, Math.PI * 2);
+                                ctx.fill();
+                            } else if (dotShape === 'rounded') {
+                                ctx.beginPath();
+                                ctx.roundRect(x, y, cellSize * 0.9, cellSize * 0.9, cellSize * 0.3);
+                                ctx.fill();
+                            } else {
+                                ctx.fillRect(x, y, cellSize * 1.02, cellSize * 1.02);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Draw Center Logo if uploaded
+            if (uploadedLogoImage) {
+                const lSizePct = parseInt(logoSize.value) / 100;
+                const logoW = canvasSize * lSizePct;
+                const logoH = canvasSize * lSizePct;
+                const logoX = (canvasSize - logoW) / 2;
+                const logoY = (canvasSize - logoH) / 2;
+
+                // Background box for logo contrast
+                ctx.fillStyle = bg;
+                ctx.beginPath();
+                ctx.roundRect(logoX - 4, logoY - 4, logoW + 8, logoH + 8, 8);
+                ctx.fill();
+
+                ctx.drawImage(uploadedLogoImage, logoX, logoY, logoW, logoH);
+            }
+        }
+
+        // Action Buttons Event Listeners
+        btnGenerate.addEventListener('click', () => {
+            generateQRCode();
+            showToast('QR Code generated successfully!');
+        });
+
+        // PNG Download Button
+        btnPng.addEventListener('click', () => {
+            const exportSize = parseInt(qrSize.value);
+            const exportCanvas = document.createElement('canvas');
+            exportCanvas.width = exportSize;
+            exportCanvas.height = exportSize;
+            const ctx = exportCanvas.getContext('2d');
+
+            // Re-render at high resolution for download
+            const data = qrInputData.value.trim() || 'https://example.com';
+            const errCorr = errorCorrection.value;
+            const qz = parseInt(quietZone.value);
+            const fg = qrColor.value;
+            const bg = bgColor.value;
+            const dotShape = dotsStyle.value;
+            const cornerShape = cornerStyle.value;
+
+            let qr = qrcode(0, errCorr);
+            qr.addData(data);
+            qr.make();
+
+            const moduleCount = qr.getModuleCount();
+            const totalModules = moduleCount + (qz * 2);
+            const cellSize = exportSize / totalModules;
+
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, exportSize, exportSize);
+
+            for (let r = 0; r < moduleCount; r++) {
+                for (let c = 0; c < moduleCount; c++) {
+                    if (qr.isDark(r, c)) {
+                        const x = (c + qz) * cellSize;
+                        const y = (r + qz) * cellSize;
+                        const isFinder = ((r < 7 && c < 7) || (r < 7 && c >= moduleCount - 7) || (r >= moduleCount - 7 && c < 7));
+
+                        ctx.fillStyle = fg;
+                        if (isFinder) {
+                            if (cornerShape === 'dot') {
+                                ctx.beginPath();
+                                ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize * 0.45, 0, Math.PI * 2);
+                                ctx.fill();
+                            } else if (cornerShape === 'rounded') {
+                                ctx.beginPath();
+                                ctx.roundRect(x, y, cellSize * 0.95, cellSize * 0.95, cellSize * 0.3);
+                                ctx.fill();
+                            } else {
+                                ctx.fillRect(x, y, cellSize * 1.02, cellSize * 1.02);
+                            }
+                        } else {
+                            if (dotShape === 'dots') {
+                                ctx.beginPath();
+                                ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize * 0.4, 0, Math.PI * 2);
+                                ctx.fill();
+                            } else if (dotShape === 'rounded') {
+                                ctx.beginPath();
+                                ctx.roundRect(x, y, cellSize * 0.9, cellSize * 0.9, cellSize * 0.3);
+                                ctx.fill();
+                            } else {
+                                ctx.fillRect(x, y, cellSize * 1.02, cellSize * 1.02);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (uploadedLogoImage) {
+                const lSizePct = parseInt(logoSize.value) / 100;
+                const logoW = exportSize * lSizePct;
+                const logoH = exportSize * lSizePct;
+                const logoX = (exportSize - logoW) / 2;
+                const logoY = (exportSize - logoH) / 2;
+
+                ctx.fillStyle = bg;
+                ctx.beginPath();
+                ctx.roundRect(logoX - 8, logoY - 8, logoW + 16, logoH + 16, 12);
+                ctx.fill();
+                ctx.drawImage(uploadedLogoImage, logoX, logoY, logoW, logoH);
+            }
+
+            const link = document.createElement('a');
+            link.download = 'qrcode.png';
+            link.href = exportCanvas.toDataURL('image/png');
+            link.click();
+            showToast('PNG downloaded successfully!');
+        });
+
+        // SVG Download Button
+        btnSvg.addEventListener('click', () => {
+            const data = qrInputData.value.trim() || 'https://example.com';
+            const errCorr = errorCorrection.value;
+            const qz = parseInt(quietZone.value);
+            const fg = qrColor.value;
+            const bg = bgColor.value;
+
+            let qr = qrcode(0, errCorr);
+            qr.addData(data);
+            qr.make();
+
+            const moduleCount = qr.getModuleCount();
+            const totalModules = moduleCount + (qz * 2);
+            const size = 512;
+            const cellSize = size / totalModules;
+
+            let svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">`;
+            svgString += `<rect width="100%" height="100%" fill="${bg}"/>`;
+
+            for (let r = 0; r < moduleCount; r++) {
+                for (let c = 0; c < moduleCount; c++) {
+                    if (qr.isDark(r, c)) {
+                        const x = (c + qz) * cellSize;
+                        const y = (r + qz) * cellSize;
+                        svgString += `<rect x="${x}" y="${y}" width="${cellSize * 1.02}" height="${cellSize * 1.02}" fill="${fg}" rx="${dotsStyle.value === 'rounded' ? cellSize * 0.3 : 0}"/>`;
+                    }
+                }
+            }
+            svgString += `</svg>`;
+
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'qrcode.svg';
+            link.href = url;
+            link.click();
+            showToast('SVG downloaded successfully!');
+        });
+
+        // Copy Content Button
+        btnCopy.addEventListener('click', () => {
+            const textToCopy = qrContentText.value;
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast('QR content copied to clipboard!');
+            } catch (err) {
+                showToast('Failed to copy content', true);
+            }
+            document.body.removeChild(textArea);
+        });
+
+        // Reset Button
+        btnReset.addEventListener('click', () => {
+            qrType.value = 'url';
+            qrInputData.value = 'https://example.com';
+            dynamicInputLabel.textContent = 'Website URL *';
+            qrSize.value = '1024';
+            errorCorrection.value = 'M';
+            quietZone.value = '4';
+            quietZoneVal.textContent = '4';
+            qrColor.value = '#000000';
+            qrColorText.value = '#000000';
+            bgColor.value = '#ffffff';
+            bgColorText.value = '#ffffff';
+            dotsStyle.value = 'square';
+            cornerStyle.value = 'square';
+            logoUpload.value = '';
+            logoFileName.textContent = 'No file chosen';
+            logoSize.value = '20';
+            logoSizeVal.textContent = '20';
+            uploadedLogoImage = null;
+            generateQRCode();
+            showToast('Settings reset to default');
+        });
+
+        // Initial generation on load
+        window.onload = () => {
+            generateQRCode();
+        };
+    </script>
 </body>
 </html>
