@@ -860,7 +860,7 @@ if(SVC[s])return V[SVC[s]]();
 if(s=='Lost Document Service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
 if(s=='PVC Tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
 if(s=='PAN Card Service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
-const f=DA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
+const f=DA[n]||TA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
 $('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>{const mb=GT+'|'+n==MBK,p=DP[GT+'|'+n];return `<${mb?'div tabindex="0" role="button"':'button'} class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3>${mb?waLink(n):p!=null?`<div class="pr">${inr(p)}</div>`:''}</${mb?'div':'button'}>`}).join('');
 $('#sbT').innerHTML=ic('menu');
 
