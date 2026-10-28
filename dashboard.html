@@ -39,7 +39,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
 .it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
 
-/* SVG Art Thumbnails exactly matching homepage */
+/* SVG Art Thumbnails */
 .sv { position: relative; aspect-ratio: 16/10; border-radius: 9px; margin-bottom: 8px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
 .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
 .fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
@@ -138,6 +138,49 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 
 <script src="tools.js"></script>
 <script>
+// Tool URL Helper
+function getToolUrl(name) {
+  const slugMap = {
+    "Passport Photo Sheet": "passport-photo-sheet.html",
+    "QR Code Generator": "qr-code-generator.html",
+    "Stamp Designer": "stamp-designer.html",
+    "ID Card Front & Back to A4": "id-card-front-back-a4.html",
+    "What Is My IP": "what-is-my-ip.html",
+    "Letterhead Maker": "letterhead-maker.html",
+    "Visiting Card Designer": "visiting-card-designer.html",
+    "Marriage Biodata Maker": "marriage-biodata-maker.html",
+    "Age Calculator": "age-calculator.html",
+    "Photo & Signature Resizer": "photo-signature-resizer.html",
+    "JPG / PNG to PDF": "jpg-png-to-pdf.html",
+    "PDF Merge": "pdf-merge.html",
+    "PDF Split & Page Extract": "pdf-split-extract.html",
+    "PDF to JPG": "pdf-to-jpg.html",
+    "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
+    "PDF Compressor (KB)": "pdf-compressor.html",
+    "Document Scanner & PDF": "document-scanner.html",
+    "Photo Compressor (KB)": "photo-compressor.html",
+    "Image Format Converter": "image-converter.html",
+    "Background Remover": "background-remover.html",
+    "WebP to JPG Converter": "webp-to-jpg.html",
+    "Digital Signature Maker": "digital-signature-maker.html",
+    "Photo Color Changer": "photo-color-changer.html",
+    "Photo Blur Tool": "photo-blur.html",
+    "Image to Black & White": "image-black-and-white.html",
+    "Hindi Typing Tool": "hindi-typing.html",
+    "GST Calculator": "gst-calculator.html",
+    "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
+    "Printing Cost Calculator": "printing-cost-calculator.html",
+    "Cash Denomination Calculator": "cash-denomination-calculator.html",
+    "Salary Calculator": "salary-calculator.html",
+    "Percentage Calculator": "percentage-calculator.html",
+    "Loan / EMI Calculator": "loan-emi-calculator.html",
+    "Word Counter": "word-counter.html"
+  };
+  if (slugMap[name]) return 'freetools/' + slugMap[name];
+  const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return 'freetools/' + fallback + '.html';
+}
+
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
@@ -146,8 +189,14 @@ const tokenHdr = () => ({ 'x-user-token': localStorage.getItem('ds_token') || ''
 const api = (m, p, b) => fetch(API + p, { method: m, headers: { 'content-type': 'application/json', ...tokenHdr() }, body: b === undefined ? undefined : JSON.stringify(b) });
 
 function user() {
-  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-  return list.find(u => u.id === localStorage.getItem('ds_session')) || null;
+  try {
+    const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+    const sess = localStorage.getItem('ds_session');
+    const u = list.find(x => x.id === sess);
+    return u || { name: 'User', bal: 0, orders: [], tx: [], code: '' };
+  } catch (e) {
+    return { name: 'User', bal: 0, orders: [], tx: [], code: '' };
+  }
 }
 function saveUser(u) {
   const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
@@ -160,7 +209,7 @@ function updateBalance() {
   if (u) document.getElementById('aB').textContent = inr(u.bal);
 }
 
-/* ---------- Homepage Artwork Engines (Exact Replicas) ---------- */
+/* ---------- Homepage SVG Graphic Engines ---------- */
 const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
 const T=["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
 const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
@@ -187,11 +236,11 @@ const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'f
 const V={
   "RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
   "DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw'),
-  "Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo')+X(126,78,'EPIC',6,'fw'),
+  "Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo'),
   "Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw'),
   "PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36),
   "RC Full Details":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+X(46,19,'VEHICLE DETAILS',6.5,'fw','start')+[0,1,2,3,4].map(i=>R(44,32+i*11,26,3,'fl',1.5)+R(78,32+i*11,36,3,'fb',1.5)).join(''),
-  "Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+R(64,44,32,20,'fb',2)+R(76,52,8,12,'fw',1)+L(46,70,68,2,6),
+  "Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+L(46,70,68,2,6),
   "LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
   "Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
   "Mobile Services":()=>PHN(56,6,48,88)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb'),
@@ -254,7 +303,7 @@ const TA={
   "GST Calculator":()=>CALC('18%'),
   "GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
   "Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+C(118,50,24,'fy')+X(118,59,'₹',24),
-  "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw')+R(48,44,80,40,'fb',4)+X(88,70,'₹100',12,'fw'),
+  "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw'),
   "Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7)+R(44,66,72,16,'fa',4)+X(80,77,'₹ 25,000',8,'fw'),
   "Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa')+Pa('M54 80L106 20','sa')+X(120,32,'%',22,'fa'),
   "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw'),
@@ -289,6 +338,29 @@ const DA={
   "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
 };
 
+const ICONS_PATH={
+  car:'M5 16v-5l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3',
+  id:'M3 7h18v12H3zM8 13a2 2 0 1 0 0-.01M6 17c1-2 4-2 5 0M14 11h4M14 15h4',
+  vote:'M4 9h16v11H4zM8 9V5h8v4M9 14l2 2 4-4',
+  leaf:'M12 20V10M12 10c0-4 3-6 6-6 0 4-2 6-6 6M12 14c0-3-2-5-5-5 0 3 2 5 5 5',
+  pan:'M3 5h18v14H3zM7 10h6M7 14h10M15 8h3v3h-3z',
+  doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',
+  store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',
+  phone:'M7 3h10v18H7zM11 18h2',
+  pct:'M6 18L18 6M7 7m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M17 17m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0',
+  calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M12 15h2',
+  img:'M3 5h18v14H3zM9 10m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',
+  qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',
+  text:'M5 6h14M5 10h14M5 14h10M5 18h8',
+  globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
+  merge:'M3 4h8v10H3zM13 10h8v10h-8z',
+  zip:'M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5',
+  stamp:'M9 4h6v6l3 4v3H6v-3l3-4zM5 21h14',
+  shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',
+  bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18'
+};
+const getMiniSvg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS_PATH[k]||ICONS_PATH.doc}"/></svg>`;
+
 function getArtworkFor(item) {
   const n = item.n, sec = item.sec;
   if (V[n]) return V[n]();
@@ -312,148 +384,11 @@ const getThumbHtml=(item, idx)=>{
   return `<div class="sv" style="${sty(idx)}">${art(getArtworkFor(item))}</div>`;
 };
 
-/* Complete Categorized Collection (Free & Paid) */
-const CATEGORIES = {
-  "Vehicle & Transport Services (Paid)": [
-    { n: "RC PDF INSTANT", sec: "RC Services", amt: 40, isPaid: true, ic: "car" },
-    { n: "RC PDF Server 1", sec: "RC Services", amt: 30, isPaid: true, ic: "car" },
-    { n: "RC PDF Server 2", sec: "RC Services", amt: 40, isPaid: true, ic: "car" },
-    { n: "RC Full Details", sec: "RC Full Details", amt: 50, isPaid: true, ic: "doc" },
-    { n: "Chassis to RC", sec: "Chassis to RC", amt: 70, isPaid: true, ic: "car" },
-    { n: "Vehicle to Mobile Find", sec: "Vehicle To Mobile Find", amt: 80, isPaid: true, ic: "phone" },
-    { n: "Challan Details", sec: "Challan Details", amt: 10, isPaid: true, ic: "doc" }
-  ],
-  "Licence & Identity Services (Paid)": [
-    { n: "DL PDF INSTANT", sec: "DL Services", amt: 50, isPaid: true, ic: "id" },
-    { n: "DL PDF Server 1", sec: "DL Services", amt: 50, isPaid: true, ic: "id" },
-    { n: "DL PDF Server 2 (Blue)", sec: "DL Services", amt: 50, isPaid: true, ic: "id" },
-    { n: "LL PDF", sec: "LL Services", amt: 30, isPaid: true, ic: "id" },
-    { n: "LL Exam Request", sec: "LL Services", amt: 80, isPaid: true, ic: "doc" },
-    { n: "Voter Mobile Link", sec: "Voter Services", amt: 40, isPaid: true, ic: "vote" },
-    { n: "Voter Mobile Link S1", sec: "Voter Services", amt: 40, isPaid: true, ic: "vote" },
-    { n: "Voter PDF", sec: "Voter Services", amt: 100, isPaid: true, ic: "vote" }
-  ],
-  "PAN, Tax & Business Services (Paid)": [
-    { n: "Aadhaar to PAN", sec: "PAN Services", amt: 250, isPaid: true, ic: "pan" },
-    { n: "Aadhaar to PAN S1", sec: "PAN Services", amt: 40, isPaid: true, ic: "pan" },
-    { n: "PAN Details", sec: "PAN Services", amt: 40, isPaid: true, ic: "pan" },
-    { n: "New PAN apply", sec: "PAN Card Service", amt: 600, isPaid: true, ic: "pan" },
-    { n: "PAN update / correction", sec: "PAN Card Service", amt: 600, isPaid: true, ic: "pan" },
-    { n: "PAN to Udyam S2", sec: "Udyam Services", amt: 100, isPaid: true, ic: "store" },
-    { n: "New UDYAM CERTIFICATE", sec: "Udyam Services", amt: 200, isPaid: true, ic: "store" },
-    { n: "New GST Certificate", sec: "GST Services", amt: 1200, isPaid: true, ic: "pct" },
-    { n: "GST Download", sec: "GST Services", amt: 200, isPaid: true, ic: "pct" },
-    { n: "PAN to GST", sec: "GST Services", amt: 10, isPaid: true, ic: "pct" },
-    { n: "GST Details", sec: "GST Services", amt: 10, isPaid: true, ic: "pct" },
-    { n: "TAN Verification", sec: "TAN Verification", amt: 30, isPaid: true, ic: "shield" }
-  ],
-  "Citizen, Banking & Farmer Services (Paid)": [
-    { n: "KISAN CARD", sec: "Farmer Services", amt: 25, isPaid: true, ic: "leaf" },
-    { n: "Farmer PDF S1", sec: "Farmer Services", amt: 25, isPaid: true, ic: "leaf" },
-    { n: "Farmer PDF All State", sec: "Farmer Services", amt: 30, isPaid: true, ic: "leaf" },
-    { n: "AgriStack Farmer PDF", sec: "Farmer Services", amt: 30, isPaid: true, ic: "leaf" },
-    { n: "AADHAAR Update", sec: "Aadhaar & Ration", amt: 150, isPaid: true, ic: "id" },
-    { n: "Ration PDF S1", sec: "Aadhaar & Ration", amt: 20, isPaid: true, ic: "doc" },
-    { n: "Ration PDF S2 (Aadhaar)", sec: "Aadhaar & Ration", amt: 30, isPaid: true, ic: "doc" },
-    { n: "DBT Seeding Status", sec: "DBT Seeding Status", amt: 20, isPaid: true, ic: "bank" },
-    { n: "Mobile Details Find", sec: "Mobile Services", amt: 30, isPaid: true, ic: "phone" },
-    { n: "Mobile Details S1", sec: "Mobile Services", amt: 30, isPaid: true, ic: "phone" },
-    { n: "Mobile Details S2", sec: "Mobile Services", amt: 30, isPaid: true, ic: "phone" },
-    { n: "Other Mobile Issue", sec: "Mobile Services", amt: 50, isPaid: true, ic: "phone" }
-  ],
-  "Govt & Contractor Work (Paid)": [
-    { n: "New Digital Signature (DSC)", sec: "Govt Contractor", amt: 2500, isPaid: true, ic: "shield" },
-    { n: "E-procurement registration", sec: "Govt Contractor", amt: 500, isPaid: true, ic: "doc" },
-    { n: "Tender upload (for contractor)", sec: "Govt Contractor", amt: 300, isPaid: true, ic: "doc" },
-    { n: "Tender upload (for department)", sec: "Govt Contractor", amt: 700, isPaid: true, ic: "doc" },
-    { n: "Building estimate creator", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "calc" },
-    { n: "BOQ creator", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "doc" },
-    { n: "Govt civil & electric bill maker (Excel)", sec: "Govt Contractor", amt: 1000, isPaid: true, ic: "doc" },
-    { n: "Bill form", sec: "Govt Contractor", amt: 400, isPaid: true, ic: "doc" },
-    { n: "Extra item sheet", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "doc" },
-    { n: "Excess item sheet", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "doc" },
-    { n: "QC register creator", sec: "Govt Contractor", amt: 500, isPaid: true, ic: "doc" },
-    { n: "Work escalation statement", sec: "Govt Contractor", amt: 700, isPaid: true, ic: "doc" }
-  ],
-  "PDF Tools (Free)": [
-    { n: "JPG / PNG to PDF", isPaid: false, ic: "img" },
-    { n: "PDF Merge", isPaid: false, ic: "merge" },
-    { n: "PDF Split & Page Extract", isPaid: false, ic: "doc" },
-    { n: "PDF to JPG", isPaid: false, ic: "img" },
-    { n: "PDF Rotate & Reorder", isPaid: false, ic: "doc" },
-    { n: "PDF Compressor (KB)", isPaid: false, ic: "zip" },
-    { n: "Document Scanner & PDF", isPaid: false, ic: "doc" },
-    { n: "PDF Page Number Adder", isPaid: false, ic: "text" },
-    { n: "PDF Header & Footer Maker", isPaid: false, ic: "text" }
-  ],
-  "Image & Photo Tools (Free)": [
-    { n: "Photo Compressor (KB)", isPaid: false, ic: "zip" },
-    { n: "Image Format Converter", isPaid: false, ic: "img" },
-    { n: "Background Remover", isPaid: false, ic: "img" },
-    { n: "WebP to JPG Converter", isPaid: false, ic: "img" },
-    { n: "ICO to PNG", isPaid: false, ic: "img" },
-    { n: "ICO Converter (Favicon)", isPaid: false, ic: "img" },
-    { n: "Thumbnail Resizer", isPaid: false, ic: "img" },
-    { n: "Favicon Preview Tool & Maker", isPaid: false, ic: "img" },
-    { n: "Image Watermark Maker", isPaid: false, ic: "img" },
-    { n: "Photo Color Changer", isPaid: false, ic: "img" },
-    { n: "Photo Blur Tool", isPaid: false, ic: "img" },
-    { n: "Image to Black & White", isPaid: false, ic: "img" },
-    { n: "Background Black & White", isPaid: false, ic: "img" },
-    { n: "Photo Border Maker", isPaid: false, ic: "img" },
-    { n: "Color Picker from Image", isPaid: false, ic: "img" },
-    { n: "Name, Date & Text on Photo", isPaid: false, ic: "text" },
-    { n: "Instagram Reel Cover Maker", isPaid: false, ic: "img" }
-  ],
-  "Print & ID Cards (Free)": [
-    { n: "Passport Photo Sheet", isPaid: false, ic: "img" },
-    { n: "ID Card Front & Back to A4", isPaid: false, ic: "id" },
-    { n: "ID Card Maker", isPaid: false, ic: "id" },
-    { n: "Employee ID Card Maker", isPaid: false, ic: "id" },
-    { n: "Student ID Card Maker", isPaid: false, ic: "id" },
-    { n: "A4 Photo Print Layout", isPaid: false, ic: "id" },
-    { n: "Photo & Signature Resizer", isPaid: false, ic: "id" },
-    { n: "Digital Signature Maker", isPaid: false, ic: "doc" },
-    { n: "Stamp Designer", isPaid: false, ic: "stamp" }
-  ],
-  "Documents & Letters (Free)": [
-    { n: "Text to PDF / Application", isPaid: false, ic: "text" },
-    { n: "Letterhead Maker", isPaid: false, ic: "text" },
-    { n: "Visiting Card Designer", isPaid: false, ic: "id" },
-    { n: "Marriage Biodata Maker", isPaid: false, ic: "doc" },
-    { n: "Resume Maker", isPaid: false, ic: "doc" },
-    { n: "Invoice Maker", isPaid: false, ic: "doc" },
-    { n: "Quotation Maker", isPaid: false, ic: "doc" }
-  ],
-  "Calculators & Utilities (Free)": [
-    { n: "GST Calculator", isPaid: false, ic: "pct" },
-    { n: "GST Inclusive & Exclusive Calculator", isPaid: false, ic: "pct" },
-    { n: "Printing Cost Calculator", isPaid: false, ic: "calc" },
-    { n: "Cash Denomination Calculator", isPaid: false, ic: "calc" },
-    { n: "Salary Calculator", isPaid: false, ic: "calc" },
-    { n: "Percentage Calculator", isPaid: false, ic: "calc" },
-    { n: "Loan / EMI Calculator", isPaid: false, ic: "calc" },
-    { n: "Age Calculator", isPaid: false, ic: "calc" },
-    { n: "Calculator — Basic & Scientific", isPaid: false, ic: "calc" },
-    { n: "Online Stopwatch", isPaid: false, ic: "calc" },
-    { n: "Password to MD5 / SHA-256", isPaid: false, ic: "shield" },
-    { n: "QR Code Generator", isPaid: false, ic: "qr" },
-    { n: "QR Code Designer & Modifier", isPaid: false, ic: "qr" },
-    { n: "Hindi Typing Tool", isPaid: false, ic: "text" },
-    { n: "Word Counter", isPaid: false, ic: "text" },
-    { n: "What Is My IP", isPaid: false, ic: "globe" },
-    { n: "Meta Title & Description Generator", isPaid: false, ic: "globe" },
-    { n: "OMR Sheet Generator & Checker", isPaid: false, ic: "doc" },
-    { n: "Typing Speed Test — Hindi & English", isPaid: false, ic: "text" },
-    { n: "Online Exam System — Teacher & Student", isPaid: false, ic: "doc" }
-  ]
-};
-
 let curFilter = "All";
 
-// Populate Left Sidebar with Category Accordions and Exact Mini Icons
 function setupSidebarCategories() {
   const mount = document.getElementById('sbCategories');
+  if (!mount) return;
   mount.innerHTML = Object.entries(CATEGORIES).map(([catName, items], idx) => `
     <details class="sb-group" ${idx < 2 ? 'open' : ''}>
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
@@ -476,7 +411,6 @@ function setupSidebarCategories() {
   `).join('');
 }
 
-// Render Dashboard Sections with Homepage SVGs
 function renderDashboardSections() {
   const q = (document.getElementById('dashToolQ')?.value || '').trim().toLowerCase();
   const mount = document.getElementById('bifurcatedSections');
@@ -529,7 +463,7 @@ function renderDashboardSections() {
 }
 
 function renderDashboard() {
-  const u = user(); if (!u) return;
+  const u = user();
   const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
   const cats = ["All", "Free Only", "Paid Only", "Vehicle", "Identity", "Tax", "Citizen", "Govt", "PDF", "Photo", "Print", "Documents", "Calculators"];
 
@@ -546,7 +480,6 @@ function renderDashboard() {
       <div><b>${cnt('failed')}</b><span>Failed</span></div>
     </div>
 
-    <!-- Category Filter & Search Bar -->
     <div class="tools-dash-head">
       <div>
         <h2 style="font-size:1.4rem;margin:0">Tools &amp; Services Portal (100+ Total)</h2>
@@ -561,7 +494,6 @@ function renderDashboard() {
       ${cats.map(c => `<button type="button" class="${c === curFilter ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
     </div>
 
-    <!-- Bifurcated Sections Container -->
     <div id="bifurcatedSections"></div>
   `;
 
