@@ -15,19 +15,19 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 #app { min-height: 100vh; background: var(--bg); }
 .ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
 .ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-block: 8px; min-height: 60px; max-width: 1400px; }
-.tb { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-wrap: wrap; }
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .95rem; font-weight: 700; color: var(--ac2); }
+.tb { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .92rem; font-weight: 700; color: var(--ac2); text-decoration: none; }
 .shell { display: grid; grid-template-columns: 272px minmax(0,1fr); max-width: 1400px; margin: 0 auto; }
 .apm { padding-inline: 24px; padding-block: 28px 64px; min-width: 0; }
 #sb { position: sticky; top: 61px; height: calc(100vh - 61px); display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--ln); z-index: 6; }
 .sbs { flex: 1; overflow-y: auto; padding: 10px; }
 .sbf { padding: 10px; border-top: 1px solid var(--ln); }
-.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; }
+.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; text-decoration: none; }
 .mi:hover { background: var(--tint); }
 .gc { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; background: var(--ink); color: #e3ebfb; border-radius: 18px; padding: 24px; }
 .gc h1 { color: #fff; }
-.gw { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-.gw b { font: 800 1.9rem 'Plus Jakarta Sans',system-ui,sans-serif; color: #fff; }
+.gw { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.gw b { font: 800 1.8rem 'Plus Jakarta Sans',system-ui,sans-serif; color: #fff; }
 .stt { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
 .stt > div { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 14px 16px; }
 .stt b { font: 800 1.6rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ac2); display: block; }
@@ -45,6 +45,24 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 .s-processing { background: #dbe7ff; color: #1b44ad; }
 .s-success { background: #e0f5ea; color: #0f6b45; }
 .s-failed { background: #fdecea; color: #7a1a12; }
+
+/* Right Dropdown Styling */
+.drop-wrap { position: relative; display: inline-block; }
+.drop-menu { position: absolute; right: 0; top: calc(100% + 8px); background: #fff; border: 1px solid var(--ln); border-radius: 12px; box-shadow: 0 14px 30px rgba(19,35,63,.15); width: 300px; max-height: 440px; overflow-y: auto; padding: 8px; display: none; z-index: 50; }
+.drop-menu.open { display: block; }
+.drop-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; font-size: 0.86rem; font-weight: 600; color: var(--ink); text-decoration: none; cursor: pointer; border: none; background: none; width: 100%; text-align: left; }
+.drop-item:hover { background: var(--tint); color: var(--ac); }
+.badge-free { background: var(--ok); color: #fff; font-size: 0.72rem; padding: 2px 7px; border-radius: 99px; font-weight: 700; }
+.badge-paid { background: #fff1cc; color: #6b4200; font-size: 0.72rem; padding: 2px 7px; border-radius: 99px; font-weight: 700; border: 1px solid #f0cf7d; }
+
+/* Unified Dashboard Tools Styling */
+.tools-dash-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 36px; margin-bottom: 14px; }
+.dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
+.dash-search-bar input { height: 40px; min-height: 40px; padding: 6px 12px; font-size: 0.88rem; }
+.dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.dash-cats button { border: 1px solid var(--ln); background: #fff; border-radius: 99px; padding: 6px 14px; font: 600 .8rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; }
+.dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+
 @media (max-width: 900px) { .shell { display: block; } #sb { display: none; } }
 </style>
 </head>
@@ -55,11 +73,19 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
       <a class="logo" href="dashboard.html"><span class="lt">DocSmartly</span></a>
       <div class="tb">
         <a class="chip" id="aB" href="#passbook">₹0.00</a>
-        <a class="btn" href="#addmoney">+ Add Balance</a>
-        <button class="btn o" id="btnLogOut">Logout</button>
+        <a class="btn" href="#addmoney" style="min-height:38px;padding:8px 14px;font-size:0.85rem">+ Add Balance</a>
+        
+        <!-- Right Dropdown Menu for All Free & Paid Tools -->
+        <div class="drop-wrap">
+          <button class="btn o" id="dropToolsBtn" type="button" style="min-height:38px;padding:8px 14px;font-size:0.85rem">All Tools &amp; Services ▾</button>
+          <div class="drop-menu" id="dropToolsMenu"></div>
+        </div>
+
+        <button class="btn o" id="btnLogOut" style="min-height:38px;padding:8px 14px;font-size:0.85rem">Logout</button>
       </div>
     </div>
   </header>
+
   <div class="shell">
     <aside id="sb">
       <div class="sbs">
@@ -69,10 +95,12 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
         <a class="mi" href="#referral">Refer &amp; Earn</a>
         <a class="mi" href="#profile">Profile</a>
         <a class="mi" href="#contact">Contact Support</a>
-        <a class="mi" href="index.html#tools">All Free Tools →</a>
+        <p style="font-size:.78rem;font-weight:700;color:var(--mut);margin:16px 12px 6px">External Link</p>
+        <a class="mi" href="index.html">Home Website →</a>
       </div>
       <div class="sbf"><button class="mi" id="loSb" style="color:var(--er)">Log Out</button></div>
     </aside>
+
     <main class="apm">
       <section data-v="dashboard"></section>
       <section data-v="passbook" hidden></section>
@@ -94,6 +122,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
   </div>
 </div>
 
+<script src="tools.js"></script>
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -117,39 +146,129 @@ function updateBalance() {
   if (u) document.getElementById('aB').textContent = inr(u.bal);
 }
 
-const SERVICES = [
-  ['RC Services', [['RC PDF INSTANT', 40]]],
-  ['DL Services', [['DL PDF INSTANT', 50]]],
-  ['Voter Services', [['Voter Mobile Link', 40]]],
-  ['Farmer Services', [['KISAN CARD', 25]]],
-  ['PAN Services', [['Aadhaar to PAN', 250]]],
-  ['Udyam Services', [['New UDYAM CERTIFICATE', 200]]],
-  ['Aadhaar & Ration', [['AADHAAR Update', 150]]],
-  ['Mobile Services', [['Mobile Details Find', 30], ['Other Mobile Issue', 50]]],
-  ['GST Services', [['New GST Certificate', 1200], ['GST Download', 200]]],
-  ['Chassis to RC', [['Chassis to RC', 70]]],
-  ['Challan Details', [['Challan Details', 10]]],
-  ['DBT Seeding Status', [['DBT Seeding Status', 20]]]
+// Complete Unified Catalog of Free Tools and Paid Services
+const ALL_CATALOG = [
+  // Paid Services
+  { n: "RC PDF INSTANT", sec: "RC Services", c: "Paid Services", amt: 40, isPaid: true },
+  { n: "DL PDF INSTANT", sec: "DL Services", c: "Paid Services", amt: 50, isPaid: true },
+  { n: "Voter Mobile Link", sec: "Voter Services", c: "Paid Services", amt: 40, isPaid: true },
+  { n: "KISAN CARD", sec: "Farmer Services", c: "Paid Services", amt: 25, isPaid: true },
+  { n: "Aadhaar to PAN", sec: "PAN Services", c: "Paid Services", amt: 250, isPaid: true },
+  { n: "New UDYAM CERTIFICATE", sec: "Udyam Services", c: "Paid Services", amt: 200, isPaid: true },
+  { n: "AADHAAR Update", sec: "Aadhaar & Ration", c: "Paid Services", amt: 150, isPaid: true },
+  { n: "Mobile Details Find", sec: "Mobile Services", c: "Paid Services", amt: 30, isPaid: true },
+  { n: "Other Mobile Issue", sec: "Mobile Services", c: "Paid Services", amt: 50, isPaid: true },
+  { n: "New GST Certificate", sec: "GST Services", c: "Paid Services", amt: 1200, isPaid: true },
+  { n: "GST Download", sec: "GST Services", c: "Paid Services", amt: 200, isPaid: true },
+  { n: "Chassis to RC", sec: "Chassis to RC", c: "Paid Services", amt: 70, isPaid: true },
+  { n: "Challan Details", sec: "Challan Details", c: "Paid Services", amt: 10, isPaid: true },
+  { n: "DBT Seeding Status", sec: "DBT Seeding Status", c: "Paid Services", amt: 20, isPaid: true },
+
+  // Free Online Tools
+  { n: "Passport Photo Sheet", c: "Print", isPaid: false },
+  { n: "QR Code Generator", c: "Utility", isPaid: false },
+  { n: "Stamp Designer", c: "Design", isPaid: false },
+  { n: "ID Card Front & Back to A4", c: "Print", isPaid: false },
+  { n: "What Is My IP", c: "Utility", isPaid: false },
+  { n: "Letterhead Maker", c: "Design", isPaid: false },
+  { n: "Visiting Card Designer", c: "Design", isPaid: false },
+  { n: "Marriage Biodata Maker", c: "Document", isPaid: false },
+  { n: "Age Calculator", c: "Calculator", isPaid: false },
+  { n: "Photo & Signature Resizer", c: "Photo", isPaid: false },
+  { n: "JPG / PNG to PDF", c: "PDF", isPaid: false },
+  { n: "PDF Merge", c: "PDF", isPaid: false },
+  { n: "PDF Split & Page Extract", c: "PDF", isPaid: false },
+  { n: "PDF to JPG", c: "PDF", isPaid: false },
+  { n: "PDF Rotate & Reorder", c: "PDF", isPaid: false },
+  { n: "PDF Compressor (KB)", c: "PDF", isPaid: false },
+  { n: "Document Scanner & PDF", c: "PDF", isPaid: false },
+  { n: "Photo Compressor (KB)", c: "Photo", isPaid: false },
+  { n: "Image Format Converter", c: "Photo", isPaid: false },
+  { n: "Background Remover", c: "Photo", isPaid: false },
+  { n: "WebP to JPG Converter", c: "Photo", isPaid: false },
+  { n: "Digital Signature Maker", c: "Design", isPaid: false },
+  { n: "Photo Color Changer", c: "Photo", isPaid: false },
+  { n: "Photo Blur Tool", c: "Photo", isPaid: false },
+  { n: "Image to Black & White", c: "Photo", isPaid: false },
+  { n: "Hindi Typing Tool", c: "Utility", isPaid: false },
+  { n: "GST Calculator", c: "Calculator", isPaid: false },
+  { n: "GST Inclusive & Exclusive Calculator", c: "Calculator", isPaid: false },
+  { n: "Printing Cost Calculator", c: "Calculator", isPaid: false },
+  { n: "Cash Denomination Calculator", c: "Calculator", isPaid: false },
+  { n: "Salary Calculator", c: "Calculator", isPaid: false },
+  { n: "Percentage Calculator", c: "Calculator", isPaid: false },
+  { n: "Loan / EMI Calculator", c: "Calculator", isPaid: false },
+  { n: "Word Counter", c: "Utility", isPaid: false }
 ];
+
+let curToolCat = "All";
+
+function setupToolsDropdown() {
+  const menu = document.getElementById('dropToolsMenu');
+  menu.innerHTML = ALL_CATALOG.map(t => {
+    if (t.isPaid) {
+      return `
+        <button type="button" class="drop-item" data-svc="${esc(t.sec + '|' + t.n)}" data-amt="${t.amt}">
+          <span>${esc(t.n)}</span>
+          <span class="badge-paid">${inr(t.amt)}</span>
+        </button>`;
+    } else {
+      return `
+        <a href="${getToolUrl(t.n)}" class="drop-item">
+          <span>${esc(t.n)}</span>
+          <span class="badge-free">FREE</span>
+        </a>`;
+    }
+  }).join('');
+
+  const btn = document.getElementById('dropToolsBtn');
+  btn.onclick = e => {
+    e.stopPropagation();
+    menu.classList.toggle('open');
+  };
+  document.addEventListener('click', () => menu.classList.remove('open'));
+}
+
+function renderDashTools() {
+  const q = (document.getElementById('dashToolQ')?.value || '').trim().toLowerCase();
+  const list = ALL_CATALOG.filter(t => {
+    let matchCat = true;
+    if (curToolCat === "Free Only") matchCat = !t.isPaid;
+    else if (curToolCat === "Paid Only") matchCat = t.isPaid;
+    else if (curToolCat !== "All") matchCat = t.c === curToolCat;
+
+    const matchQ = !q || t.n.toLowerCase().includes(q) || (t.sec && t.sec.toLowerCase().includes(q));
+    return matchCat && matchQ;
+  });
+
+  const mount = document.getElementById('dashToolsGrid');
+  if (!mount) return;
+  mount.innerHTML = list.map(t => {
+    if (t.isPaid) {
+      return `
+        <div class="it" style="cursor:pointer" data-svc="${esc(t.sec + '|' + t.n)}" data-amt="${t.amt}">
+          <div class="itb" style="padding:14px">
+            <h3 style="font-size:0.92rem;margin:0">${esc(t.n)}</h3>
+            <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(t.sec)}</p>
+            <div class="badge-paid" style="display:inline-block;margin-top:10px">${inr(t.amt)}</div>
+          </div>
+        </div>`;
+    } else {
+      return `
+        <a href="${getToolUrl(t.n)}" class="card" style="padding:14px;text-decoration:none">
+          <h3 style="font-size:0.92rem;margin:0">${esc(t.n)}</h3>
+          <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(t.c)}</p>
+          <div class="badge-free" style="display:inline-block;margin-top:10px">FREE</div>
+        </a>`;
+    }
+  }).join('') || '<p style="color:var(--mut);font-size:0.9rem">No tools or services matched your search.</p>';
+}
 
 function renderDashboard() {
   const u = user(); if (!u) return;
   const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
-  const secHtml = SERVICES.map(g => `
-    <details class="ds" open>
-      <summary><span>${g[0]}</span><em>${g[1].length}</em></summary>
-      <div class="ig">
-        ${g[1].map(s => `
-          <div class="it">
-            <button class="itb" data-svc="${esc(g[0] + '|' + s[0])}" data-amt="${s[1]}">
-              <span style="font-weight:700;display:block">${esc(s[0])}</span>
-              <span class="pr" style="margin-top:4px">${inr(s[1])}</span>
-            </button>
-          </div>
-        `).join('')}
-      </div>
-    </details>
-  `).join('');
+
+  const cats = ["All", "Free Only", "Paid Only", "PDF", "Photo", "Design", "Print", "Calculator", "Utility"];
 
   document.querySelector('[data-v="dashboard"]').innerHTML = `
     <div class="gc">
@@ -163,9 +282,36 @@ function renderDashboard() {
       <div><b>${cnt('success')}</b><span>Success</span></div>
       <div><b>${cnt('failed')}</b><span>Failed</span></div>
     </div>
-    <h2 style="margin:26px 0 12px">Available Services</h2>
-    ${secHtml}
+
+    <!-- Unified Free Tools & Paid Services Section -->
+    <div class="tools-dash-head">
+      <div>
+        <h2 style="font-size:1.4rem;margin:0">Tools &amp; Services Portal (48+)</h2>
+        <p style="color:var(--mut);font-size:0.85rem;margin-top:2px">Access both Free browser tools and Paid print services directly</p>
+      </div>
+      <div class="dash-search-bar">
+        <input id="dashToolQ" type="search" placeholder="Search by name (e.g. RC, PDF, PAN)..." aria-label="Search tools">
+        <button class="btn" type="button" id="dashSearchBtn" style="min-height:40px;padding:6px 14px;font-size:0.85rem">Search</button>
+      </div>
+    </div>
+    <div class="dash-cats" id="dashCats">
+      ${cats.map(c => `<button type="button" class="${c === curToolCat ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
+    </div>
+    <div class="grid" id="dashToolsGrid"></div>
   `;
+
+  renderDashTools();
+
+  // Search & Filter Handlers
+  document.getElementById('dashToolQ').oninput = renderDashTools;
+  document.getElementById('dashSearchBtn').onclick = renderDashTools;
+  document.getElementById('dashCats').onclick = e => {
+    const btn = e.target.closest('[data-cat]');
+    if (!btn) return;
+    curToolCat = btn.dataset.cat;
+    document.querySelectorAll('#dashCats button').forEach(b => b.classList.toggle('on', b.dataset.cat === curToolCat));
+    renderDashTools();
+  };
 }
 
 function renderHistory() {
@@ -211,7 +357,43 @@ function renderAddMoney() {
   `;
 }
 
-const VIEWS = { dashboard: renderDashboard, history: renderHistory, passbook: renderPassbook, addmoney: renderAddMoney };
+function renderReferral() {
+  const u = user();
+  const link = location.origin + '/register.html?ref=' + (u.code || '');
+  document.querySelector('[data-v="referral"]').innerHTML = `
+    <h1 style="margin-bottom:14px">Refer &amp; Earn</h1>
+    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
+      <p style="margin-bottom:10px">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
+      <input readonly value="${esc(link)}" style="margin-bottom:14px">
+      <button class="btn" onclick="navigator.clipboard.writeText('${esc(link)}');alert('Link copied!')">Copy Link</button>
+    </div>
+  `;
+}
+
+function renderProfile() {
+  const u = user();
+  document.querySelector('[data-v="profile"]').innerHTML = `
+    <h1 style="margin-bottom:14px">My Profile</h1>
+    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
+      <p><b>Name:</b> ${esc(u.name)}</p>
+      <p><b>Mobile:</b> ${esc(u.mob)}</p>
+      <p><b>Email:</b> ${esc(u.mail)}</p>
+      <p><b>Referral Code:</b> ${esc(u.code || '-')}</p>
+    </div>
+  `;
+}
+
+function renderContact() {
+  document.querySelector('[data-v="contact"]').innerHTML = `
+    <h1 style="margin-bottom:14px">Contact Support</h1>
+    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
+      <p style="margin-bottom:16px">Need help with an order, wallet balance, or custom requirement?</p>
+      <a class="btn" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank">Chat on WhatsApp</a>
+    </div>
+  `;
+}
+
+const VIEWS = { dashboard: renderDashboard, history: renderHistory, passbook: renderPassbook, addmoney: renderAddMoney, referral: renderReferral, profile: renderProfile, contact: renderContact };
 function route() {
   const h = location.hash.slice(1) || 'dashboard';
   document.querySelectorAll('[data-v]').forEach(el => el.hidden = el.dataset.v !== h);
@@ -220,11 +402,13 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 
+// Order Request Modal logic for Paid services
 let curKey = '', curAmt = 0;
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-svc]');
   if (!btn) return;
-  curKey = btn.dataset.svc; curAmt = Number(btn.dataset.amt);
+  curKey = btn.dataset.svc;
+  curAmt = Number(btn.dataset.amt);
   const u = user();
   document.getElementById('rt').textContent = curKey.split('|')[1] || curKey;
   document.getElementById('rp').textContent = 'Charge: ' + inr(curAmt) + ' | Wallet Balance: ' + inr(u.bal);
@@ -232,6 +416,10 @@ document.addEventListener('click', e => {
     <div style="margin-bottom:12px">
       <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
       <input id="rqDoc" type="text" required placeholder="Enter number">
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label>
+      <input id="rqRem" type="text" placeholder="Special instruction">
     </div>
     <button class="btn" type="submit" style="width:100%">Confirm & Deduct ${inr(curAmt)}</button>
   `;
@@ -243,6 +431,7 @@ document.getElementById('rx').onclick = () => document.getElementById('rm').clas
 document.getElementById('fRq').onsubmit = async e => {
   e.preventDefault();
   const doc = document.getElementById('rqDoc').value.trim();
+  const rem = document.getElementById('rqRem').value.trim();
   const u = user();
   if (u.bal < curAmt) {
     alert('Insufficient balance. Please add money first.');
@@ -251,7 +440,7 @@ document.getElementById('fRq').onsubmit = async e => {
     return;
   }
   const res = await api('POST', '/api/requests', {
-    k: curKey, sec: curKey.split('|')[0], data: { 'Document Number': doc }
+    k: curKey, sec: curKey.split('|')[0], data: { 'Document Number': doc, 'Remarks': rem }
   });
   if (!res.ok) { alert('Failed to submit request.'); return; }
   const j = await res.json();
@@ -293,6 +482,7 @@ function logout() {
 document.getElementById('btnLogOut').onclick = logout;
 document.getElementById('loSb').onclick = logout;
 
+setupToolsDropdown();
 route();
 </script>
 </body>
