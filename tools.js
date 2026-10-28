@@ -331,12 +331,26 @@ ${num('fs', 'Text size (% of photo width)', 5)}${go('Create image')}${out}`,
   }
 
   // Free tool cards open here, before the dashboard's generic card handler runs.
+  // Tools the dashboard lists but that are not built yet still open this message.
+  const COMING = ['Background Black & White', 'Background Remover'];
+  const isFreeTool = name => Object.prototype.hasOwnProperty.call(TOOLS, name) || COMING.includes(name);
+  const closePanels = () => {
+    const sb = document.getElementById('sb'); if (sb) sb.classList.remove('open');
+    const sp = document.getElementById('sP'); if (sp) sp.hidden = true;
+  };
+
   window.addEventListener('click', e => {
-    const card = e.target.closest && e.target.closest('[data-tool]');
-    if (!card) return;
-    e.preventDefault();
-    e.stopPropagation();
-    open(card.dataset.tool);
+    if (!e.target.closest) return;
+    const card = e.target.closest('[data-tool]');
+    if (card) { e.preventDefault(); e.stopPropagation(); open(card.dataset.tool); return; }
+    // Logged-in dashboard: sidebar, search and "Trending" items use "Group|Tool name".
+    const item = e.target.closest('[data-go],[data-it]');
+    if (!item) return;
+    const name = (item.dataset.go || item.dataset.it || '').split('|').slice(1).join('|');
+    if (!isFreeTool(name)) return;
+    e.preventDefault(); e.stopPropagation();
+    closePanels();
+    open(name);
   }, true);
 })();
 
