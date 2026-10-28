@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in – DocSmartly</title>
+<style>
+  :root { --ink:#13233f; --muted:#5b6b85; --line:#dbe5f6; --brand:#2457d6; --bg:#f4f7fc; --err:#b42318; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:28px; width:100%; max-width:420px; box-shadow:0 8px 30px rgba(19,35,63,.06); }
+  .brand { font-weight:800; color:var(--brand); text-decoration:none; font-size:1.1rem; }
+  h1 { font-size:1.5rem; margin:14px 0 4px; }
+  .lead { color:var(--muted); margin:0 0 18px; font-size:.95rem; }
+  label { display:block; font-size:.9rem; font-weight:600; margin:14px 0 6px; }
+  input { width:100%; padding:11px 12px; border:1.5px solid var(--line); border-radius:10px; font:inherit; font-size:1rem; }
+  input:focus { outline:3px solid #cfe0ff; border-color:var(--brand); }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .btn { width:100%; margin-top:20px; padding:13px; border:0; border-radius:10px; background:var(--brand); color:#fff; font:inherit; font-weight:700; font-size:1rem; cursor:pointer; }
+  .btn[disabled] { opacity:.6; cursor:wait; }
+  .msg { margin-top:14px; padding:10px 12px; border-radius:10px; font-size:.92rem; display:none; }
+  .msg.err { display:block; background:#fef3f2; color:var(--err); border:1px solid #fecdca; }
+  .alt { margin-top:18px; font-size:.95rem; color:var(--muted); text-align:center; }
+  a.t { color:var(--brand); font-weight:600; text-decoration:none; }
+</style>
+</head>
+<body>
+<main class="card">
+  <a class="brand" href="index.html">DocSmartly</a>
+  <h1>Log in</h1>
+  <p class="lead">Welcome back. Log in to use your wallet and services.</p>
+  <form id="fLogin" novalidate>
+    <label for="lId">Mobile number or email</label>
+    <input id="lId" name="lId" type="text" autocomplete="username" inputmode="email" placeholder="9876543210 or name@domain.com" required>
+    <div class="row"><label for="lPw">Password</label><a class="t" href="index.html#forgot" style="font-size:.9rem">Forgot password?</a></div>
+    <input id="lPw" name="lPw" type="password" autocomplete="current-password" required>
+    <button class="btn" id="lBtn" type="submit">Log in</button>
+  </form>
+  <div class="msg err" id="lMsg" role="alert"></div>
+  <p class="alt">New to DocSmartly? <a class="t" href="register.html">Create an account</a></p>
+</main>
+<script>
+const API = 'https://docsmartly-api.hm2351994.workers.dev';
+const st = {
+  get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
+  del: k => { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const b2h = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+// Same password hashing as the dashboard, so the server accepts it.
+const hashPw = async (pw, salt) => {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']);
+  return b2h(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(salt), iterations: 100000 }, key, 256));
+};
+
+const form = document.getElementById('fLogin'), btn = document.getElementById('lBtn'), msg = document.getElementById('lMsg');
+const showErr = t => { msg.textContent = t; msg.style.display = 'block'; };
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  msg.style.display = 'none';
+  const id = document.getElementById('lId').value.trim(), pw = document.getElementById('lPw').value;
+  if (!id) return showErr('Enter your mobile number or email.');
+  if (!pw) return showErr('Enter your password.');
+  btn.disabled = true; btn.textContent = 'Logging in…';
+  try {
+    const sr = await fetch(API + '/api/salt/' + encodeURIComponent(id));
+    if (!sr.ok) return showErr('We couldn’t log you in. Check your mobile number or email and your password, then try again.');
+    const { salt } = await sr.json();
+    const r = await fetch(API + '/api/login', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id, hash: await hashPw(pw, salt) })
+    });
+    if (!r.ok) return showErr('We couldn’t log you in. Check your mobile number or email and your password, then try again.');
+    const j = await r.json();
+    st.set('ds_token', j.token);
+    st.set('ds_users', JSON.stringify([j.user]));
+    st.set('ds_session', j.user.id);
+    st.del('ds_ref');
+    location.replace('index.html#dashboard');
+  } catch (err) {
+    showErr('Could not reach the server. Check your internet connection and try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Log in';
+  }
+});
+</script>
+</body>
+</html>

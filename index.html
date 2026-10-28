@@ -656,7 +656,7 @@ function renderAlerts(){
   }).join('')+(list.length>3?'<div class="upd-i"><p><b>'+(list.length-3)+' more updates.</b> Open History to see all.</p></div>':'');
 }
 document.addEventListener('click',e=>{const a=e.target.closest('[data-ack]');if(a)ackUpdate(a.dataset.ack)});
-function route(){renderAlerts();const h=location.hash.slice(1),isA=AUTH.includes(h);
+function route(){if(location.hash=='#login'){location.replace('login.html');return}if(location.hash=='#register'){location.replace('register.html');return}renderAlerts();const h=location.hash.slice(1),isA=AUTH.includes(h);
 const isP=APP.includes(h);if(isP&&!user()){location.replace('#login');return}if(isA&&user()){location.replace('#dashboard');return}
 $('#home').hidden=isA||isP;$('#auth').hidden=!isA;$('#app').hidden=!isP;
 if(isA){resetPanes();document.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.r!=h);document.title=TT[h]+' – DocSmartly';scrollTo(0,0);if(h=='login'&&pre){$('#lId').value=pre;pre=null;$('#lPw').focus()}else $('.pane:not([hidden]) h1').focus({preventScroll:true})}
@@ -687,7 +687,7 @@ if(a){
   if(user()){
     to('dashboard');
   }else{
-    to(+a.dataset.auth?'register':'login');
+    location.href=+a.dataset.auth?'register.html':'login.html';
   }
   return;
 }if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});

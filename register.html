@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New registration – DocSmartly</title>
+<style>
+  :root { --ink:#13233f; --muted:#5b6b85; --line:#dbe5f6; --brand:#2457d6; --bg:#f4f7fc; --err:#b42318; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:28px; width:100%; max-width:420px; box-shadow:0 8px 30px rgba(19,35,63,.06); }
+  .brand { font-weight:800; color:var(--brand); text-decoration:none; font-size:1.1rem; }
+  h1 { font-size:1.5rem; margin:14px 0 4px; }
+  .lead { color:var(--muted); margin:0 0 18px; font-size:.95rem; }
+  label { display:block; font-size:.9rem; font-weight:600; margin:14px 0 6px; }
+  input { width:100%; padding:11px 12px; border:1.5px solid var(--line); border-radius:10px; font:inherit; font-size:1rem; }
+  input:focus { outline:3px solid #cfe0ff; border-color:var(--brand); }
+  .hint { color:var(--muted); font-size:.82rem; margin:4px 0 0; }
+  .btn { width:100%; margin-top:20px; padding:13px; border:0; border-radius:10px; background:var(--brand); color:#fff; font:inherit; font-weight:700; font-size:1rem; cursor:pointer; }
+  .btn[disabled] { opacity:.6; cursor:wait; }
+  .msg { margin-top:14px; padding:10px 12px; border-radius:10px; font-size:.92rem; display:none; }
+  .msg.err { display:block; background:#fef3f2; color:var(--err); border:1px solid #fecdca; }
+  .alt { margin-top:18px; font-size:.95rem; color:var(--muted); text-align:center; }
+  a.t { color:var(--brand); font-weight:600; text-decoration:none; }
+</style>
+</head>
+<body>
+<main class="card">
+  <a class="brand" href="index.html">DocSmartly</a>
+  <h1>New registration</h1>
+  <p class="lead">Create your free account. All fields are required.</p>
+  <form id="fReg" novalidate>
+    <label for="rName">Full name</label>
+    <input id="rName" name="rName" type="text" autocomplete="name" required>
+    <label for="rMob">Mobile number</label>
+    <input id="rMob" name="rMob" type="tel" autocomplete="tel" inputmode="numeric" required>
+    <p class="hint">10-digit Indian mobile number</p>
+    <label for="rMail">Email</label>
+    <input id="rMail" name="rMail" type="email" autocomplete="email" placeholder="name@domain.com" required>
+    <label for="rPw">Password</label>
+    <input id="rPw" name="rPw" type="password" autocomplete="new-password" required>
+    <p class="hint">At least 8 characters</p>
+    <button class="btn" id="rBtn" type="submit">Create account</button>
+  </form>
+  <div class="msg err" id="rMsg" role="alert"></div>
+  <p class="alt">Already registered? <a class="t" href="login.html">Log in</a></p>
+</main>
+<script>
+const API = 'https://docsmartly-api.hm2351994.workers.dev';
+const st = {
+  get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
+  del: k => { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const b2h = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+const randomSalt = () => b2h(crypto.getRandomValues(new Uint8Array(16)));
+const hashPw = async (pw, salt) => {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']);
+  return b2h(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(salt), iterations: 100000 }, key, 256));
+};
+// Same mobile rules as the dashboard: +91 and leading 0 are removed.
+const normMob = v => {
+  let d = v.replace(/\D/g, '');
+  if (d.length === 12 && d.startsWith('91')) d = d.slice(2);
+  else if (d.length === 11 && d[0] === '0') d = d.slice(1);
+  return d;
+};
+
+const form = document.getElementById('fReg'), btn = document.getElementById('rBtn'), msg = document.getElementById('rMsg');
+const showErr = t => { msg.textContent = t; msg.style.display = 'block'; };
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  msg.style.display = 'none';
+  const name = document.getElementById('rName').value.trim().replace(/\s+/g, ' ');
+  const mob = normMob(document.getElementById('rMob').value);
+  const mail = document.getElementById('rMail').value.trim().toLowerCase();
+  const pw = document.getElementById('rPw').value;
+
+  if (name.length < 2) return showErr('Enter your full name.');
+  if (!/^[6-9]\d{9}$/.test(mob)) return showErr('Enter a valid 10-digit Indian mobile number.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return showErr('Enter a valid email address.');
+  if (pw.length < 8) return showErr('Password must be at least 8 characters.');
+
+  btn.disabled = true; btn.textContent = 'Creating account…';
+  try {
+    const salt = randomSalt(), hash = await hashPw(pw, salt);
+    const ref = new URLSearchParams(location.search).get('ref') || st.get('ds_ref') || '';
+    const r = await fetch(API + '/api/register', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ user: { name, mob, mail, salt, hash }, ref })
+    });
+    if (r.status === 409) return showErr('This mobile number or email is already registered. Log in instead.');
+    if (!r.ok) return showErr('We couldn’t create your account. Please try again.');
+    const j = await r.json();
+    st.set('ds_token', j.token);
+    st.set('ds_users', JSON.stringify([j.user]));
+    st.set('ds_session', j.user.id);
+    st.del('ds_ref');
+    location.replace('index.html#dashboard');
+  } catch (err) {
+    showErr('Could not reach the server. Check your internet connection and try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Create account';
+  }
+});
+</script>
+</body>
+</html>
