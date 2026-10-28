@@ -853,7 +853,16 @@ const DA={
 'Typing speed test (Hindi & English)':()=>TA['Hindi Typing Tool']()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
 'Online exam system':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+i*16,4,i==1?'fa':'fl')+R(56,32+i*16,56,4,'fl',2)).join('')+C(120,78,12,'fy')+Pa('M120 71v7l5 3','sa'),
 'Word counter':()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')+X(120,77,'words',6.5,'fw'),
-'Calculator (basic & scientific)':()=>CALC('√ π')};
+'Calculator (basic & scientific)':()=>CALC('√ π'),
+'Typing Speed Test — Hindi & English':function(){return DA['Typing speed test (Hindi & English)']()},
+'Online Exam System — Teacher & Student':function(){return DA['Online exam system']()},
+'Word Counter':function(){return DA['Word counter']()},
+'Calculator — Basic & Scientific':function(){return DA['Calculator (basic & scientific)']()},
+'OMR Sheet Generator & Checker':()=>PG(32,6,96,88)+[0,1,2,3,4].map(r=>[0,1,2,3].map(c=>C(52+c*16,22+r*13,3.5,(r*4+c)%3==0?'fa':'fl')).join('')).join('')+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
+'Meta Title & Description Generator':()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')+R(30,46,100,6,'fl',2)+R(30,56,80,6,'fl',2)+R(30,66,60,6,'fl',2),
+'Online Stopwatch':()=>C(80,52,34,'fw')+C(80,52,34,'sa')+Pa('M80 18v-8','sa')+Pa('M74 10h12','sa')+Pa('M106 26l4-4','sa')+Pa('M80 52V34','sa')+Pa('M80 52l14 10','sa')+X(62,76,'00:00',9,'fa'),
+'Name, Date & Text on Photo':()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw')+X(80,60,'28 Oct 2026',7,'fw'),
+'Instagram Reel Cover Maker':()=>PHN(48,4,64,92)+IMG(54,12,52,48)+R(58,66,44,6,'fl',2)+R(58,76,32,6,'fl',2)};
 const TM={'Photo to PDF':'JPG / PNG to PDF','PDF merge':'PDF Merge','PDF split & add page':'PDF Split & Page Extract','PDF to JPG':'PDF to JPG','PDF rotate & page reorder':'PDF Rotate & Reorder','PDF compressor':'PDF Compressor (KB)','Add page numbers to PDF':'PDF Page Number Adder','PDF header & footer':'PDF Header & Footer Maker','Photo compressor':'Photo Compressor (KB)','Photo resizer':'Photo & Signature Resizer','Photo format converter':'Image Format Converter','Background remove':'Background Remover','Background change':'Photo Color Changer','Favicon maker':'Favicon Preview Tool & Maker','Watermark maker':'Image Watermark Maker','Signature maker':'Digital Signature Maker','Colour picker from image':'Color Picker from Image','Application format':'Text to PDF / Application','Resume':'Resume Maker','Invoice':'Invoice Maker','Letterhead':'Letterhead Maker','Quotation':'Quotation Maker','Passport photo sheet':'Passport Photo Sheet','QR code generator':'QR Code Generator','ID card front & back to A4':'ID Card Front & Back to A4','Visiting card maker':'Visiting Card Designer','Stamp designer':'Stamp Designer','A4 photo print sheet':'A4 Photo Print Layout','GST calculator':'GST Calculator','Cash calculator':'Cash Denomination Calculator','Salary calculator':'Salary Calculator','Loan / EMI calculator':'Loan / EMI Calculator','Age calculator':'Age Calculator','Percentage calculator':'Percentage Calculator'};
 function dart(s,n){
 if(SVC[s])return V[SVC[s]]();
