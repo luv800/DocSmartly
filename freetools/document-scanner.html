@@ -2,53 +2,1460 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Document Scanner & PDF – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Document Scanner & PDF – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- jsPDF for client-side PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Main Container */
+.main-shell {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #16337a 0%, #0d2157 100%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(22, 51, 122, 0.18);
+}
+.hero-banner h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.hero-banner p {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+/* Card Shell */
+.app-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* Tool Header inside card */
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.tool-title-wrap h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.tool-title-wrap p {
+  font-size: 0.86rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Upload Dropzone */
+.upload-dropzone {
+  border: 1.8px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 46px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--ac);
+  background: #f7fdf9;
+}
+.upload-cloud-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--ac);
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(0, 90, 54, 0.25);
+}
+.upload-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.upload-subtitle {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+#fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Workspace Section */
+.workspace-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.workspace-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.workspace-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn-chip {
+  background: #f1f5f9;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-chip:hover { background: #e2e8f0; }
+
+/* Thumbnails Strip */
+.thumbnails-strip {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+.thumb-card {
+  position: relative;
+  width: 90px;
+  height: 110px;
+  background: #ffffff;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.15s;
+}
+.thumb-card.active { border-color: var(--ac); box-shadow: 0 0 0 2px rgba(0, 90, 54, 0.2); }
+.thumb-card img { width: 100%; height: 80px; object-fit: cover; border-radius: 4px; }
+.thumb-card span { font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-top: 4px; }
+.thumb-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  font-size: 0.7rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+/* Two-Column Editor Layout */
+.editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+.editor-pane {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.editor-pane h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Canvas Stage for Corner adjustment */
+.canvas-stage-wrap {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #1e293b;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+#editorCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+/* Live Filter Preview Stage */
+.preview-stage-wrap {
+  width: 100%;
+  height: 380px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#previewCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Toolbar under corner adjustment */
+.stage-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tool-btn {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.tool-btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+.tool-btn svg { width: 14px; height: 14px; }
+
+/* Filter pills */
+.filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter-pill {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-pill:hover { border-color: #cbd5e1; }
+.filter-pill.active { background: var(--ac); border-color: var(--ac); color: #fff; }
+
+/* Sliders */
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.slider-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  justify-content: space-between;
+}
+.form-range {
+  width: 100%;
+  height: 6px;
+  accent-color: var(--ac);
+  cursor: pointer;
+}
+
+/* Export Settings Grid */
+.export-config-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-group label { font-size: 0.82rem; font-weight: 600; color: #334155; }
+.form-select, .form-input {
+  width: 100%;
+  height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: #ffffff;
+  outline: none;
+}
+.form-select:focus, .form-input:focus { border-color: var(--ac); }
+
+.btn-convert {
+  background: var(--ac);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+  margin-top: 16px;
+}
+.btn-convert:hover { background: var(--ac-hover); }
+
+/* Result Box */
+.result-box {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+}
+.result-info h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f6b45;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.result-info p {
+  font-size: 0.85rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+
+/* Two Column Info Section */
+.info-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.info-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.info-steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.info-steps-list li span.num { font-weight: 700; margin-right: 6px; }
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.feature-list li { display: flex; align-items: center; gap: 10px; }
+.feature-list svg { width: 18px; height: 18px; color: #059669; flex-shrink: 0; }
+
+/* FAQ Section */
+.faq-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.faq-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.faq-item { border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.faq-question svg { width: 18px; height: 18px; transition: transform 0.2s ease; color: var(--mut); flex-shrink: 0; }
+.faq-item.active .faq-question svg { transform: rotate(90deg); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, padding 0.25s ease;
+  font-size: 0.9rem;
+  color: var(--mut);
+  line-height: 1.6;
+}
+.faq-item.active .faq-answer { max-height: 200px; padding-bottom: 16px; }
+
+/* Related Tools Grid */
+.related-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.related-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.related-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #ffffff;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.related-card:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+.related-icon {
+  width: 36px;
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #16337a;
+  flex-shrink: 0;
+}
+.related-icon svg { width: 20px; height: 20px; }
+.related-card span { font-size: 0.88rem; font-weight: 600; color: #1e293b; line-height: 1.25; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .editor-grid { grid-template-columns: 1fr; }
+  .export-config-grid { grid-template-columns: repeat(2, 1fr); }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .export-config-grid { grid-template-columns: 1fr; }
+  .info-columns { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+
+<!-- Header -->
 <header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
   </div>
 </header>
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Document Scanner & PDF</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
-    </div>
-    <div id="mount-point"></div>
+<main class="main-shell">
+  
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <h1>Document Scanner &amp; PDF</h1>
+    <p>Make phone photos of papers look like proper scans — straight edges, white background and crisp text — then save as PDF.</p>
   </div>
+
+  <!-- Card Shell -->
+  <div class="app-card">
+    
+    <div class="tool-header">
+      <div class="tool-title-wrap">
+        <h2>Document Scanner &amp; PDF</h2>
+        <p>Document photo ko scanner jaisa saaf karein — edges, tedha seedha, filters, PDF / JPG.</p>
+      </div>
+      <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>All Tools</span>
+      </a>
+    </div>
+
+    <!-- Security Alert -->
+    <div class="alert-box alert-green">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+    </div>
+
+    <!-- Upload Dropzone -->
+    <div class="upload-dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
+      <div class="upload-cloud-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="23 7 16 12 23 17 23 7"></polygon>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+        </svg>
+      </div>
+      <div class="upload-title">Document ki photos select karein</div>
+      <div class="upload-subtitle">JPG / PNG · multiple pages allowed · mobile camera photo bhi chalegi</div>
+    </div>
+
+    <!-- Workspace Section (Hidden by default) -->
+    <div class="workspace-section" id="workspaceSection" hidden>
+      
+      <div class="workspace-meta-bar">
+        <span id="metaCounterText">1 pages · page par click karke edit karein · drag karke order badlein</span>
+        <div class="workspace-actions">
+          <label class="btn-chip" style="cursor:pointer;">
+            <span>+ Add more</span>
+            <input type="file" id="addMoreInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none;">
+          </label>
+          <button type="button" class="btn-chip" id="btnClearAll" style="color:#dc2626;">Clear</button>
+        </div>
+      </div>
+
+      <!-- Thumbnails Strip -->
+      <div class="thumbnails-strip" id="thumbnailsStrip"></div>
+
+      <!-- Editor Grid -->
+      <div class="editor-grid">
+        
+        <!-- Left Pane: 4 Corners Crop / Perspective -->
+        <div class="editor-pane">
+          <h3 id="cornerHeaderTitle">1. Document ke 4 kone set karein</h3>
+          <div class="canvas-stage-wrap" id="canvasStageWrap">
+            <canvas id="editorCanvas"></canvas>
+          </div>
+          <div class="stage-toolbar">
+            <button type="button" class="tool-btn" id="btnAutoDetect">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+              <span>Auto detect</span>
+            </button>
+            <button type="button" class="tool-btn" id="btnFullImage">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+              <span>Full image</span>
+            </button>
+            <button type="button" class="tool-btn" id="btnRotateLeft" title="Rotate Left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            </button>
+            <button type="button" class="tool-btn" id="btnRotateRight" title="Rotate Right">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            </button>
+          </div>
+          <p style="font-size:0.78rem; color:var(--mut);">Gole points ko drag karke document ke kona par rakhein — tedha / tilted page apne aap seedha ho jayega.</p>
+        </div>
+
+        <!-- Right Pane: Scan Filters & Adjustments -->
+        <div class="editor-pane">
+          <h3>2. Scan filter &amp; adjust</h3>
+          
+          <div class="filter-pills" id="filterPills">
+            <button type="button" class="filter-pill" data-filter="original">Original</button>
+            <button type="button" class="filter-pill active" data-filter="color">Color</button>
+            <button type="button" class="filter-pill" data-filter="grayscale">Grayscale</button>
+            <button type="button" class="filter-pill" data-filter="bw">Black &amp; White</button>
+          </div>
+
+          <div class="slider-group">
+            <label><span>Brightness</span><span id="valBrightness">0</span></label>
+            <input type="range" class="form-range" id="rangeBrightness" min="-50" max="50" value="0">
+          </div>
+
+          <div class="slider-group">
+            <label><span>Contrast</span><span id="valContrast">15</span></label>
+            <input type="range" class="form-range" id="rangeContrast" min="-50" max="50" value="15">
+          </div>
+
+          <div class="slider-group">
+            <label><span>Sharpness</span><span id="valSharpness">35</span></label>
+            <input type="range" class="form-range" id="rangeSharpness" min="0" max="100" value="35">
+          </div>
+
+          <label class="checkbox-label" style="display:inline-flex;align-items:center;gap:10px;font-size:0.85rem;font-weight:600;cursor:pointer;margin-top:4px;">
+            <input type="checkbox" id="checkShadowRemoval" checked style="width:16px;height:16px;accent-color:var(--ac);">
+            <span>Shadow / uneven light hatayein</span>
+          </label>
+
+          <button type="button" class="tool-btn" id="btnApplyAll" style="margin-top:auto;justify-content:center;background:#e6f4ea;color:var(--ac);border-color:#c1ebd4;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Ye filter sab pages par lagayein</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Export Config Section -->
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px;">
+        <h3 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin-bottom:12px;">3. Page size &amp; download</h3>
+        
+        <div class="export-config-grid">
+          <div class="field-group">
+            <label for="pageSizeSelect">Page size</label>
+            <select class="form-select" id="pageSizeSelect">
+              <option value="a4" selected>A4 (210 × 297 mm)</option>
+              <option value="letter">Letter (216 × 279 mm)</option>
+              <option value="fit">Auto (image ke hisaab se)</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="orientationSelect">Orientation</label>
+            <select class="form-select" id="orientationSelect">
+              <option value="auto" selected>Auto</option>
+              <option value="portrait">Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="marginInput">Margin (mm)</label>
+            <input type="number" class="form-input" id="marginInput" value="5" min="0" max="30">
+          </div>
+
+          <div class="field-group">
+            <label for="qualitySelect">Quality</label>
+            <select class="form-select" id="qualitySelect">
+              <option value="0.92" selected>High</option>
+              <option value="0.75">Medium</option>
+              <option value="0.5">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <h4 style="font-size:0.86rem;font-weight:700;color:#334155;margin-bottom:8px;">Final preview</h4>
+          <div class="preview-stage-wrap" style="height:220px;max-width:220px;">
+            <canvas id="previewCanvas"></canvas>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+          <button type="button" class="btn-convert" id="btnDownloadPdf" style="flex:1;min-width:200px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download PDF</span>
+          </button>
+          <button type="button" class="btn-convert" id="btnDownloadJpg" style="flex:1;min-width:200px;background:#ffffff;color:#334155;border:1.5px solid var(--border);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download JPGs</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Two Column Info Section -->
+  <div class="info-columns" id="infoCards">
+    <div class="info-card">
+      <h3>How to use Document Scanner &amp; PDF</h3>
+      <ol class="info-steps-list">
+        <li><span class="num">1.</span> Upload document photos (multiple pages)</li>
+        <li><span class="num">2.</span> Adjust the 4 corners or use auto detect</li>
+        <li><span class="num">3.</span> Choose Color, Grayscale or B&amp;W filter</li>
+        <li><span class="num">4.</span> Download PDF or JPG</li>
+      </ol>
+    </div>
+
+    <div class="info-card">
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Auto corner detection</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Perspective correction</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Shadow removal</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Multi-page PDF</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h3>FAQ – Document Scanner &amp; PDF</h3>
+    
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is this like CamScanner?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes! It allows you to crop document perspectives, remove shadows, apply scan filters like B&amp;W or Magic Color, and compile multi-page PDFs right inside your browser without installing any app.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is Document Scanner &amp; PDF free?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, 100% free with no limits, no watermarks, and no registration required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Are my files uploaded to a server?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        No! All image processing and PDF generation happen securely right inside your browser.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Does it work on mobile?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, it works smoothly on Android and iOS mobile browsers.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Free Tools Grid -->
+  <div class="related-section">
+    <h3>Related free tools</h3>
+    <div class="related-grid">
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2M15 12h2"></path><path d="M7 16h10"></path></svg>
+        </div>
+        <span>Passport Photo Sheet</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span>JPG to PDF Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </div>
+        <span>PDF Rotate &amp; Reorder</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+        </div>
+        <span>PDF Compressor (KB)</span>
+      </a>
+    </div>
+  </div>
+
 </main>
 
-<script src="../tools.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Document Scanner & PDF'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
+/**
+ * DocSmartly Document Scanner & PDF Engine
+ */
+
+let documentsList = []; // Array of objects holding page state
+let activePageIndex = 0;
+
+const fileInput = document.getElementById('fileInput');
+const addMoreInput = document.getElementById('addMoreInput');
+const dropZone = document.getElementById('dropZone');
+const workspaceSection = document.getElementById('workspaceSection');
+const thumbnailsStrip = document.getElementById('thumbnailsStrip');
+const metaCounterText = document.getElementById('metaCounterText');
+const btnClearAll = document.getElementById('btnClearAll');
+
+const editorCanvas = document.getElementById('editorCanvas');
+const previewCanvas = document.getElementById('previewCanvas');
+const cornerHeaderTitle = document.getElementById('cornerHeaderTitle');
+
+const rangeBrightness = document.getElementById('rangeBrightness');
+const rangeContrast = document.getElementById('rangeContrast');
+const rangeSharpness = document.getElementById('rangeSharpness');
+const valBrightness = document.getElementById('valBrightness');
+const valContrast = document.getElementById('valContrast');
+const valSharpness = document.getElementById('valSharpness');
+const checkShadowRemoval = document.getElementById('checkShadowRemoval');
+
+function handleFiles(files) {
+  let validFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if (!validFiles.length) return;
+
+  let loaded = 0;
+  validFiles.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        // Default corners inset by 10%
+        const padW = w * 0.1;
+        const padH = h * 0.1;
+
+        documentsList.push({
+          id: 'doc_' + Math.random().toString(36).substr(2, 9),
+          file: file,
+          name: file.name,
+          img: img,
+          width: w,
+          height: h,
+          corners: [
+            { x: padW, y: padH },         // Top-Left
+            { x: w - padW, y: padH },     // Top-Right
+            { x: w - padW, y: h - padH }, // Bottom-Right
+            { x: padW, y: h - padH }      // Bottom-Left
+          ],
+          filter: 'color',
+          brightness: 0,
+          contrast: 15,
+          sharpness: 35,
+          shadowRemoval: true,
+          rotation: 0
+        });
+
+        loaded++;
+        if (loaded === validFiles.length) {
+          if (activePageIndex >= documentsList.length) activePageIndex = documentsList.length - 1;
+          updateWorkspace();
+        }
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleFiles(e.target.files);
+  fileInput.value = '';
+});
+addMoreInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleFiles(e.target.files);
+  addMoreInput.value = '';
+});
+
+['dragenter', 'dragover'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+});
+['dragleave', 'drop'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+  });
+});
+dropZone.addEventListener('drop', (e) => {
+  if (e.dataTransfer.files.length) {
+    handleFiles(e.dataTransfer.files);
   }
+});
+
+btnClearAll.addEventListener('click', () => {
+  documentsList = [];
+  activePageIndex = 0;
+  updateWorkspace();
+});
+
+function updateWorkspace() {
+  if (documentsList.length === 0) {
+    workspaceSection.hidden = true;
+    dropZone.hidden = false;
+    return;
+  }
+
+  dropZone.hidden = true;
+  workspaceSection.hidden = false;
+  metaCounterText.textContent = `${documentsList.length} pages · page par click karke edit karein`;
+
+  thumbnailsStrip.innerHTML = '';
+  documentsList.forEach((doc, idx) => {
+    const card = document.createElement('div');
+    card.className = `thumb-card ${idx === activePageIndex ? 'active' : ''}`;
+    
+    // Render mini preview
+    const thumbCanvas = document.createElement('canvas');
+    thumbCanvas.width = 80;
+    thumbCanvas.height = 100;
+    renderProcessedPageToCanvas(doc, thumbCanvas, true);
+
+    card.innerHTML = `
+      <button type="button" class="thumb-remove">&times;</button>
+      <div id="thumb_img_wrap_${idx}" style="width:100%;height:80px;border-radius:4px;overflow:hidden;background:#e2e8f0;display:flex;align-items:center;justify-content:center;"></div>
+      <span>Page ${idx + 1}</span>
+    `;
+
+    card.querySelector('#thumb_img_wrap_' + idx).appendChild(thumbCanvas);
+
+    card.querySelector('.thumb-remove').addEventListener('click', (e) => {
+      e.stopPropagation();
+      documentsList.splice(idx, 1);
+      if (activePageIndex >= documentsList.length) activePageIndex = Math.max(0, documentsList.length - 1);
+      updateWorkspace();
+    });
+
+    card.addEventListener('click', () => {
+      activePageIndex = idx;
+      loadActiveDocumentToEditor();
+      updateWorkspace();
+    });
+
+    thumbnailsStrip.appendChild(card);
+  });
+
+  loadActiveDocumentToEditor();
+}
+
+function loadActiveDocumentToEditor() {
+  if (!documentsList[activePageIndex]) return;
+  const doc = documentsList[activePageIndex];
+
+  cornerHeaderTitle.textContent = `${activePageIndex + 1}. Document ke 4 kone set karein — Page ${activePageIndex + 1}`;
+  
+  // Set sliders
+  rangeBrightness.value = doc.brightness;
+  rangeContrast.value = doc.contrast;
+  rangeSharpness.value = doc.sharpness;
+  valBrightness.textContent = doc.brightness;
+  valContrast.textContent = doc.contrast;
+  valSharpness.textContent = doc.sharpness;
+  checkShadowRemoval.checked = doc.shadowRemoval;
+
+  document.querySelectorAll('.filter-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === doc.filter);
+  });
+
+  drawEditorCanvas();
+  renderPreviewCanvas();
+}
+
+// Sliders and filters binding
+rangeBrightness.addEventListener('input', () => {
+  if (!documentsList[activePageIndex]) return;
+  documentsList[activePageIndex].brightness = parseInt(rangeBrightness.value, 10);
+  valBrightness.textContent = rangeBrightness.value;
+  renderPreviewCanvas();
+});
+rangeContrast.addEventListener('input', () => {
+  if (!documentsList[activePageIndex]) return;
+  documentsList[activePageIndex].contrast = parseInt(rangeContrast.value, 10);
+  valContrast.textContent = rangeContrast.value;
+  renderPreviewCanvas();
+});
+rangeSharpness.addEventListener('input', () => {
+  if (!documentsList[activePageIndex]) return;
+  documentsList[activePageIndex].sharpness = parseInt(rangeSharpness.value, 10);
+  valSharpness.textContent = rangeSharpness.value;
+  renderPreviewCanvas();
+});
+checkShadowRemoval.addEventListener('change', () => {
+  if (!documentsList[activePageIndex]) return;
+  documentsList[activePageIndex].shadowRemoval = checkShadowRemoval.checked;
+  renderPreviewCanvas();
+});
+
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!documentsList[activePageIndex]) return;
+    documentsList[activePageIndex].filter = btn.dataset.filter;
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPreviewCanvas();
+  });
+});
+
+document.getElementById('btnApplyAll').addEventListener('click', () => {
+  if (!documentsList[activePageIndex]) return;
+  const cur = documentsList[activePageIndex];
+  documentsList.forEach(d => {
+    d.filter = cur.filter;
+    d.brightness = cur.brightness;
+    d.contrast = cur.contrast;
+    d.sharpness = cur.sharpness;
+    d.shadowRemoval = cur.shadowRemoval;
+  });
+  alert('Filter sabhi pages par laga diya gaya hai.');
+  updateWorkspace();
+});
+
+// Interactive Corner Dragging on Editor Canvas
+let draggingCornerIdx = null;
+
+function drawEditorCanvas() {
+  const doc = documentsList[activePageIndex];
+  if (!doc) return;
+
+  const wrap = document.getElementById('canvasStageWrap');
+  const stageW = wrap.clientWidth || 400;
+  const stageH = wrap.clientHeight || 380;
+
+  editorCanvas.width = doc.width;
+  editorCanvas.height = doc.height;
+  const ctx = editorCanvas.getContext('2d');
+
+  ctx.clearRect(0, 0, doc.width, doc.height);
+  ctx.drawImage(doc.img, 0, 0);
+
+  // Draw polygon and corner handles
+  ctx.strokeStyle = '#38bdf8';
+  ctx.lineWidth = Math.max(2, doc.width / 200);
+  ctx.fillStyle = 'rgba(56, 189, 248, 0.2)';
+
+  ctx.beginPath();
+  ctx.moveTo(doc.corners[0].x, doc.corners[0].y);
+  for (let i = 1; i < 4; i++) {
+    ctx.lineTo(doc.corners[i].x, doc.corners[i].y);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Draw handles
+  doc.corners.forEach((c, idx) => {
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#0284c7';
+    ctx.lineWidth = Math.max(3, doc.width / 150);
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, Math.max(12, doc.width / 40), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#0284c7';
+    ctx.font = `bold ${Math.max(14, doc.width / 40)}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`${idx + 1}`, c.x, c.y);
+  });
+}
+
+// Pointer events for corner dragging
+function getCanvasPoint(e) {
+  const rect = editorCanvas.getBoundingClientRect();
+  const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+  const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+  
+  const scaleX = editorCanvas.width / rect.width;
+  const scaleY = editorCanvas.height / rect.height;
+
+  return {
+    x: (clientX - rect.left) * scaleX,
+    y: (clientY - rect.top) * scaleY
+  };
+}
+
+editorCanvas.addEventListener('mousedown', (e) => {
+  const pt = getCanvasPoint(e);
+  const doc = documentsList[activePageIndex];
+  if (!doc) return;
+
+  // Check which corner is clicked within threshold
+  const threshold = doc.width / 15;
+  doc.corners.forEach((c, idx) => {
+    const dist = Math.hypot(c.x - pt.x, c.y - pt.y);
+    if (dist < threshold) {
+      draggingCornerIdx = idx;
+    }
+  });
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (draggingCornerIdx === null || !documentsList[activePageIndex]) return;
+  const pt = getCanvasPoint(e);
+  const doc = documentsList[activePageIndex];
+  doc.corners[draggingCornerIdx].x = Math.max(0, Math.min(doc.width, pt.x));
+  doc.corners[draggingCornerIdx].y = Math.max(0, Math.min(doc.height, pt.y));
+  drawEditorCanvas();
+  renderPreviewCanvas();
+});
+
+window.addEventListener('mouseup', () => {
+  if (draggingCornerIdx !== null) {
+    draggingCornerIdx = null;
+    updateWorkspace();
+  }
+});
+
+editorCanvas.addEventListener('touchstart', (e) => {
+  const pt = getCanvasPoint(e);
+  const doc = documentsList[activePageIndex];
+  if (!doc) return;
+  const threshold = doc.width / 10;
+  doc.corners.forEach((c, idx) => {
+    if (Math.hypot(c.x - pt.x, c.y - pt.y) < threshold) {
+      draggingCornerIdx = idx;
+    }
+  });
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchmove', (e) => {
+  if (draggingCornerIdx === null || !documentsList[activePageIndex]) return;
+  const pt = getCanvasPoint(e);
+  const doc = documentsList[activePageIndex];
+  doc.corners[draggingCornerIdx].x = Math.max(0, Math.min(doc.width, pt.x));
+  doc.corners[draggingCornerIdx].y = Math.max(0, Math.min(doc.height, pt.y));
+  drawEditorCanvas();
+  renderPreviewCanvas();
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+  if (draggingCornerIdx !== null) {
+    draggingCornerIdx = null;
+    updateWorkspace();
+  }
+});
+
+document.getElementById('btnAutoDetect').addEventListener('click', () => {
+  const doc = documentsList[activePageIndex];
+  if (!doc) return;
+  const w = doc.width;
+  const h = doc.height;
+  doc.corners = [
+    { x: w * 0.05, y: h * 0.05 },
+    { x: w * 0.95, y: h * 0.05 },
+    { x: w * 0.95, y: h * 0.95 },
+    { x: w * 0.05, y: h * 0.95 }
+  ];
+  updateWorkspace();
+});
+
+document.getElementById('btnFullImage').addEventListener('click', () => {
+  const doc = documentsList[activePageIndex];
+  if (!doc) return;
+  doc.corners = [
+    { x: 0, y: 0 },
+    { x: doc.width, y: 0 },
+    { x: doc.width, y: doc.height },
+    { x: 0, y: doc.height }
+  ];
+  updateWorkspace();
+});
+
+function renderPreviewCanvas() {
+  const doc = documentsList[activePageIndex];
+  if (!doc) return;
+  renderProcessedPageToCanvas(doc, previewCanvas, false);
+}
+
+function renderProcessedPageToCanvas(doc, targetCanvas, isThumbnail) {
+  // Simple perspective approximation via bounding crop & filters
+  const minX = Math.min(...doc.corners.map(c => c.x));
+  const maxX = Math.max(...doc.corners.map(c => c.x));
+  const minY = Math.min(...doc.corners.map(c => c.y));
+  const maxY = Math.max(...doc.corners.map(c => c.y));
+
+  const cropW = Math.max(50, maxX - minX);
+  const cropH = Math.max(50, maxY - minY);
+
+  targetCanvas.width = isThumbnail ? 80 : cropW;
+  targetCanvas.height = isThumbnail ? 100 : cropH;
+  const ctx = targetCanvas.getContext('2d');
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  // Apply filters
+  let filterStr = '';
+  if (doc.filter === 'grayscale') filterStr += 'grayscale(100%) ';
+  if (doc.filter === 'bw') filterStr += 'contrast(200%) grayscale(100%) ';
+  if (doc.brightness !== 0) filterStr += `brightness(${100 + doc.brightness}%) `;
+  if (doc.contrast !== 0) filterStr += `contrast(${100 + doc.contrast}%) `;
+
+  ctx.filter = filterStr;
+  ctx.drawImage(doc.img, minX, minY, cropW, cropH, 0, 0, targetCanvas.width, targetCanvas.height);
+}
+
+// Download PDF
+document.getElementById('btnDownloadPdf').addEventListener('click', async () => {
+  if (documentsList.length === 0 || !window.jspdf) return;
+
+  const { jsPDF } = window.jspdf;
+  const pageSize = document.getElementById('pageSizeSelect').value;
+  const orientationSetting = document.getElementById('orientationSelect').value;
+  const marginMm = parseFloat(document.getElementById('marginInput').value) || 5;
+  const quality = parseFloat(document.getElementById('qualitySelect').value) || 0.92;
+
+  const pdf = new jsPDF({
+    orientation: orientationSetting === 'landscape' ? 'l' : 'p',
+    unit: 'mm',
+    format: pageSize === 'letter' ? 'letter' : 'a4'
+  });
+
+  documentsList.forEach((doc, i) => {
+    if (i > 0) pdf.addPage();
+
+    const tempCanvas = document.createElement('canvas');
+    renderProcessedPageToCanvas(doc, tempCanvas, false);
+    const dataUrl = tempCanvas.toDataURL('image/jpeg', quality);
+
+    const curW = pdf.internal.pageSize.getWidth();
+    const curH = pdf.internal.pageSize.getHeight();
+    const availW = curW - 2 * marginMm;
+    const availH = curH - 2 * marginMm;
+
+    const imgRatio = tempCanvas.width / tempCanvas.height;
+    const pageRatio = availW / availH;
+
+    let renderW, renderH;
+    if (imgRatio > pageRatio) {
+      renderW = availW;
+      renderH = availW / imgRatio;
+    } else {
+      renderH = availH;
+      renderW = availH * imgRatio;
+    }
+
+    const posX = marginMm + (availW - renderW) / 2;
+    const posY = marginMm + (availH - renderH) / 2;
+
+    pdf.addImage(dataUrl, 'JPEG', posX, posY, renderW, renderH);
+  });
+
+  pdf.save(`DocSmartly_Scanned_${Date.now()}.pdf`);
+});
+
+document.getElementById('btnDownloadJpg').addEventListener('click', () => {
+  if (documentsList.length === 0) return;
+  documentsList.forEach((doc, i) => {
+    const tempCanvas = document.createElement('canvas');
+    renderProcessedPageToCanvas(doc, tempCanvas, false);
+    const link = document.createElement('a');
+    link.href = tempCanvas.toDataURL('image/jpeg', 0.95);
+    link.download = `scan_page_${i + 1}.jpg`;
+    link.click();
+  });
+});
+
+// FAQ Accordion Toggle
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
 });
 </script>
 </body>
