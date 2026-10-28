@@ -24,6 +24,8 @@ function getToolUrl(name) {
     "Digital Signature Maker": "digital-signature-maker.html",
     "Photo Color Changer": "photo-color-changer.html",
     "Photo Blur Tool": "photo-blur.html",
+    "PDF Page Number Adder": "pdf-page-number-adder.html",
+    "PDF Header & Footer Maker": "pdf-header-footer-maker.html",
     "Image to Black & White": "image-black-and-white.html",
     "Hindi Typing Tool": "hindi-typing.html",
     "GST Calculator": "gst-calculator.html",
