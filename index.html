@@ -35,7 +35,7 @@ nav{display:flex;gap:16px;font-size:.88rem;color:var(--mut);margin-left:auto}nav
 .sub{color:var(--mut);max-width:640px;margin-top:10px}
 input,select{background:var(--sf);border:1.5px solid var(--ln);border-radius:10px;padding:10px 14px;font:500 .95rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);min-height:44px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
-.card{position:relative;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;transition:transform .25s,border-color .25s,box-shadow .25s;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.card{position:relative;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;transition:transform .25s,border-color .25s,box-shadow .25s;cursor:pointer;text-align:left;font:inherit;color:inherit;text-decoration:none;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-3px);border-color:var(--ac);box-shadow:0 14px 24px -16px rgba(36,87,214,.5)}
 .card p{color:var(--mut);font-size:.82rem;margin-top:2px}.pr{margin-top:8px;font-weight:700;color:var(--ac2);font-size:.9rem}
 .sv,.tl{position:relative;aspect-ratio:16/10;border-radius:12px;margin-bottom:12px;overflow:hidden;background:radial-gradient(rgba(19,35,63,.08) 1px,transparent 1.5px) 0 0/12px 12px,linear-gradient(135deg,var(--t),#fff)}
@@ -338,8 +338,6 @@ html{overflow-x:clip}.hero::before{right:0;top:-20px}
 <div class="grid" id="why" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
 </div></section>
 
-
-
 <section class="sec alt" id="faq"><div class="w" style="max-width:780px"><h2 style="margin-bottom:24px">Frequently asked questions</h2><div id="fq"></div></div></section>
 <section class="sec cta"><div class="w"><h2>Ready to grow your print shop?</h2><p style="opacity:.9;margin-top:10px">Join DocSmartly today. Free registration, instant dashboard.</p><button class="btn" data-auth="1">Get Started</button></div></section>
 </main>
@@ -347,7 +345,7 @@ html{overflow-x:clip}.hero::before{right:0;top:-20px}
 <footer id="contact"><div class="w"><div class="g">
 <div><span class="logo"><svg class="lg" aria-hidden="true"><use href="#lg"/></svg>DocSmartly</span><p style="max-width:280px">Online Smart Document Services – fast document download services for printing across India.</p></div>
 <div><h4>Services</h4><a href="#services">RC Services</a><a href="#services">DL Services</a><a href="#services">Voter Services</a><a href="#services">Farmer Services</a><a href="#pan">PAN Services</a><a href="#govt">Govt &amp; Contractor</a></div>
-<div><h4>Free Tools</h4><a href="#tools">JPG / PNG to PDF</a><a href="#tools">Photo Compressor</a><a href="#tools">PDF Merge</a><a href="https://docsmartly.pages.dev/freetools/passport_photo.html" class="card">Passport Photo Sheet</a><a href="https://docsmartly.pages.dev/freetools/qr_code_generator.html" class="card">QR Code Generator</a><a href="https://docsmartly.pages.dev/freetools/passport_photo.html" class="card"><b>All free tools →</b></a></div>
+<div><h4>Free Tools</h4><a href="freetools/jpg-png-to-pdf.html">JPG / PNG to PDF</a><a href="freetools/photo-compressor.html">Photo Compressor</a><a href="freetools/pdf-merge.html">PDF Merge</a><a href="freetools/passport-photo-sheet.html">Passport Photo Sheet</a><a href="#tools"><b>All free tools →</b></a></div>
 <div><h4>Account</h4><a href="#" data-auth="0">Login</a><a href="#" data-auth="1">Register</a><a href="#faq">FAQ</a></div>
 <div><h4>Contact</h4><a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener">+91 73002 77557</a></div>
 </div><div class="c">© 2026 DocSmartly. All rights reserved.</div></div></footer>
@@ -535,464 +533,46 @@ function rs(){const q=$('#q').value.toLowerCase();$('#svc').innerHTML=S.map((s,i
 $('#q').oninput=rs;rs();
 $('#panG').innerHTML=[["New PAN Card Apply","newdoc"],["PAN Update / Correction","edit"]].map((p,i)=>`<button class="card" data-svc>${th(p[0],p[1]==="newdoc"?"doc":"edit","XXXXX0000X",4+i)}<h3>${p[0]}</h3><div class="pr">₹500</div></button>`).join('');
 $('#conv').innerHTML=[["Aadhaar","fing","0000 0000 0000"],["PAN Card","pan","XXXXX0000X"],["Voter ID","vote","XXX0000000"],["Driving Licence (DL)","id","XX00 0000000000"],["Vehicle RC","car","XX 00 XX 0000"],["Any Other Document","doc","XXXX XXXX"]].map((c,i)=>`<button class="card" data-svc>${th("conv:"+c[0],c[1],c[2],i+1)}<h3>${c[0]} PVC Converter</h3><div class="pr">₹5</div></button>`).join('');
-/* name|category|icon */
-const TL={"Most Used":"Passport Photo Sheet|img;QR Code Generator|qr;Stamp Designer|stamp;ID Card Front & Back to A4|a4;What Is My IP|globe;Letterhead Maker|text;Visiting Card Designer|id;Marriage Biodata Maker|doc;Age Calculator|clock;Photo & Signature Resizer|resize",
-"PDF":"JPG / PNG to PDF|img;PDF Merge|merge;PDF Split & Page Extract|split;PDF to JPG|conv;PDF Rotate & Reorder|rot;PDF Compressor (KB)|zip;Document Scanner & PDF|scan;PDF Page Number Adder|text;PDF Header & Footer Maker|text",
-"Image":"Photo Compressor (KB)|zip;Image Format Converter|conv;Background Remover|layers;WebP to JPG Converter|conv;ICO to PNG|conv;ICO Converter (Favicon)|frame;Thumbnail Resizer|resize;Favicon Preview Tool & Maker|frame",
-"Photo Editing":"Image Watermark Maker|drop;Digital Signature Maker|sign;Photo Color Changer|drop;Photo Blur Tool|blur;Image to Black & White|blur;Background Black & White|layers;Photo Border Maker|frame;Color Picker from Image|drop;Name, Date & Text on Photo|text;Instagram Reel Cover Maker|img",
-"Print & ID":"ID Card Maker|id;QR Code Designer & Modifier|qr;Employee ID Card Maker|id;Student ID Card Maker|id;A4 Photo Print Layout|a4",
-"Documents":"Text to PDF / Application|text;Resume Maker|doc;Invoice Maker|inv;Quotation Maker|inv",
-"Hindi & Shop":"Hindi Typing Tool|text;GST Calculator|pct;GST Inclusive & Exclusive Calculator|pct;Printing Cost Calculator|print;Cash Denomination Calculator|cash;Salary Calculator|calc",
-"Calculators":"Percentage Calculator|pct;Loan / EMI Calculator|bank;Password to MD5 / SHA-256|lock;Online Stopwatch|clock;Calculator — Basic & Scientific|calc","Exam & Typing":"OMR Sheet Generator & Checker|doc;Typing Speed Test — Hindi & English|text;Online Exam System — Teacher & Student|id","Text & SEO":"Meta Title & Description Generator|pct;Word Counter|text"};
-I.scan='M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M4 12h16';
-const cats=Object.keys(TL),all=[];cats.forEach((c,ci)=>TL[c].split(";").forEach((t,ti)=>{const [n,k]=t.split("|");all.push({n,k,c,ci,ix:all.length,r:c=="Most Used"?ti+1:0})}));
-let cat="Most Used";
-function rt(){const q=$('#tq').value.toLowerCase();$('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
-const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
-$('#tg').innerHTML=L.map(t=>`<div class="card" data-svc data-tool="${t.n.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${t.r?`<span class="rk">#${t.r}</span>`:''}${tt(t.n,t.ix)}<h3>${t.n}</h3><div class="pr fre">FREE</div></div>`).join('')||'<p class="sub">No tools match.</p>'}
-$('#tq').oninput=rt;$('#cats').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;$('#tq').value='';rt()}};rt();
-$('#why').innerHTML=[["zap","Lightning fast","Multiple servers for RC and DL. If one is slow, switch to another in one click."],["check","Auto refund","Pay only for successful results. Failed requests are refunded to your wallet automatically."],["doc","Full history","Every PDF stays in your history with a download button. A2Z passbook for every rupee."],["shield","Secure payments","Verified UPI gateways, HTTPS everywhere and account-level protection."],["mob","Works on mobile","Run your print shop from phone, tablet or desktop with a fully responsive panel."],["gift","Refer & earn","Invite other shop owners and earn wallet bonus on their first recharge."]].map(w=>`<div class="card"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p style="font-size:.9rem">${w[2]}</p></div>`).join('');
 
-$('#fq').innerHTML=[["What is DocSmartly?","DocSmartly is an online PVC card print portal for CSC centres, cyber cafés and print shops. You can download print-ready RC, DL, Voter, Ration and Farmer documents and print them on PVC cards in seconds."],["How does wallet pricing work?","Add money to your wallet using UPI. Every request is charged from the wallet at the price shown on the service page. If a request fails, the amount is refunded to your wallet automatically."],["Which documents can I print?","RC (vehicle registration) PDF, Driving Licence PDF, Voter PDF, Ration card PDF, Farmer ID / AgriStack PDF, LL PDF, GST details, challan details and many more services."],["Is my data safe?","Yes. All requests run on secure servers over HTTPS, results are visible only in your own account history and payments are processed through verified UPI gateways."],["Can I download a result again later?","Yes. Every successful result is saved in History with a Download button, so you can print it again anytime."],["Do I earn anything by referring?","Yes. Share your referral link; when your friend registers and makes the first wallet recharge, you get a referral bonus in your wallet."],["Are the free tools really free?","Yes. 62 online tools such as JPG to PDF, PDF compressor, photo resize in KB, passport photo maker, background remover, QR code generator and resume maker work free in your browser, with no upload and no watermark."],["Can I apply for a new PAN card or PAN correction here?","Yes. Fill the New PAN or PAN Update form with documents, pay the service fee from your wallet and track the application status in your account."]].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
-Object.assign(I,{pause:'M8 5v14M16 5v14',play:'M8 5l11 7-11 7z',prev:'M15 5l-7 7 7 7',next:'M9 5l7 7-7 7'});
-const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let tmr;function toast(m,ms=3400){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>t.classList.remove('on'),ms)}
-
-/* ---------- hero image slider (self-drawn art) ---------- */
-const rot=(a,x,y,h)=>`<g transform="rotate(${a} ${x} ${y})">${h}</g>`;
-const SL=[
-{t:'RC, DL & Voter PVC cards',p:'38+ print services for CSC, cyber cafés and print shops, in one portal.',
- a:()=>rot(-8,46,36,CARD(10,12,72,46,'fa')+X(18,23,'VEHICLE RC',5,'fw','start')+R(18,30,38,9,'fy',2)+X(37,37,'RJ14 AB 1234',4.6)+L(18,45,40,2,5,'fo'))
- +rot(6,114,48,R(78,26,72,46,'fb',7)+X(86,37,'DRIVING LICENCE',5,'fw','start')+H(86,42,18,26,'fa')+L(110,46,34,3,6,'fo'))
- +rot(-2,70,74,R(34,52,76,44,'fw',7)+R(34,52,76,10,'fa',5)+X(42,60,'ELECTION CARD',4.6,'fw','start')+H(42,65,18,26,'fb')+L(66,68,36,3,6,'fl'))},
-{t:'PDF ready in seconds',p:'Enter the number, download the PDF, print on PVC. Re-download from History anytime.',
- a:()=>conv('PVC')+C(138,18,12,'fy')+Pa('M138 11v7l4 3','sa')+X(118,88,'85.60 × 53.98 mm',5)},
-{t:'Recharge with any UPI app',p:'Wallet balance is added automatically after payment.',
- a:()=>R(12,30,84,56,'fa',9)+R(12,24,84,14,'fb',7)+R(72,50,34,20,'fy',7)+C(84,60,3.5,'fk')+X(42,66,'₹ 500',10,'fw')+`<g transform="translate(110 16) scale(.55)">${QR(0,0)}</g>`+X(130,66,'UPI',8,'fa')},
-{t:'Auto refund if a service fails',p:'Pay only for successful results. Failed requests go back to your wallet.',
- a:()=>C(44,54,28,'fy')+X(44,64,'₹',28)+Pa('M80 34q18-22 42-8','sa')+Pa('M114 18l9 8-11 4','sa')+R(98,46,48,36,'fa',7)+R(98,40,48,10,'fb',5)+C(138,62,4,'fy')+C(142,34,11,'fg')+Pa('M136.500 34l4 4 7-8','sw')}
-];
-(function(){
-const T=$('#slT'),D=$('#slD'),P=$('#slP'),V=$('#slV'),n=SL.length;let i=0,play=!matchMedia('(prefers-reduced-motion:reduce)').matches,hold=false,tm,x0=null;
-T.innerHTML=SL.map((s,k)=>`<div class="sl-s" role="group" aria-roledescription="slide" aria-label="${k+1} of ${n}"><div class="sv" style="${sty(k)}">${art(s.a())}</div><div class="sl-c"><h3>${s.t}</h3><p>${s.p}</p></div></div>`).join('');
-D.innerHTML=SL.map((s,k)=>`<button type="button" class="dot" data-k="${k}" aria-label="Show slide ${k+1}: ${esc(s.t)}"></button>`).join('');
-$('#slPrev').innerHTML=ic('prev');$('#slNext').innerHTML=ic('next');
-function paint(){P.innerHTML=ic(play?'pause':'play');const l=play?'Pause slideshow':'Play slideshow';P.setAttribute('aria-label',l);P.title=l;V.setAttribute('aria-live',play?'off':'polite')}
-function tick(){clearTimeout(tm);if(play&&!hold&&!document.hidden)tm=setTimeout(()=>go(i+1),5200)}
-function go(k){i=(k+n)%n;T.style.transform=`translateX(${-i*100}%)`;[...T.children].forEach((e,q)=>e.setAttribute('aria-hidden',q==i?'false':'true'));[...D.children].forEach((e,q)=>e.setAttribute('aria-current',q==i));tick()}
-$('#slPrev').onclick=()=>go(i-1);$('#slNext').onclick=()=>go(i+1);P.onclick=()=>{play=!play;paint();tick()};
-D.onclick=e=>{const b=e.target.closest('[data-k]');if(b)go(+b.dataset.k)};
-const R0=V.parentElement;R0.addEventListener('mouseenter',()=>{hold=true;tick()});R0.addEventListener('mouseleave',()=>{hold=false;tick()});
-R0.addEventListener('focusin',()=>{hold=true;tick()});R0.addEventListener('focusout',()=>{hold=false;tick()});
-R0.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')go(i-1);if(e.key=='ArrowRight')go(i+1)});
-document.addEventListener('visibilitychange',tick);
-V.addEventListener('pointerdown',e=>{x0=e.clientX});V.addEventListener('pointerup',e=>{if(x0===null)return;const d=e.clientX-x0;x0=null;if(Math.abs(d)>45)go(d<0?i+1:i-1)});V.addEventListener('pointercancel',()=>{x0=null});
-paint();go(0);
-})();
-
-/* ---------- storage (browser only: preview build, no server) ---------- */
-const mem={};
-const st={get(k){try{return localStorage.getItem(k)}catch(e){return k in mem?mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}},del(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}};
-const users=()=>{try{return JSON.parse(st.get('ds_users')||'[]')}catch(e){return[]}};
-const saveUsers=a=>st.set('ds_users',JSON.stringify(a));
-const API='https://docsmartly-api.hm2351994.workers.dev';
-const tokenHdr=()=>({'x-user-token':st.get('ds_token')||''});
-const api=(m,p,b)=>fetch(API+p,{method:m,headers:{'content-type':'application/json',...tokenHdr()},body:b===undefined?undefined:JSON.stringify(b)});
-async function serverLogin(id,pw){const s=await fetch(API+'/api/salt/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);if(!s)return null;const r=await fetch(API+'/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id,hash:await hash(pw,s.salt)})}).catch(()=>null);if(!r||!r.ok)return null;const j=await r.json();st.set('ds_token',j.token);saveUsers([j.user]);return j}
-async function lookupUser(id){const r=await fetch(API+'/api/lookup/'+encodeURIComponent(id)).then(r=>r.ok?r.json():null).catch(()=>null);return r&&r.exists?r:null}
-async function restore(){if(!st.get('ds_session')||!st.get('ds_token'))return;const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);if(r&&r.ok){saveUsers([(await r.json()).user])}else if(r&&r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users')}}
-const user=()=>{const id=st.get('ds_session');return id?users().find(u=>u.id==id):null};
-const b2h=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-const salt=()=>b2h(crypto.getRandomValues(new Uint8Array(16)));
-async function hashS(pw,sl){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return b2h(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new TextEncoder().encode(sl),iterations:100000},k,256))}
-
-function sha(s){const K=[],H=[];for(let p=2,n=0;n<64;p++){let q=1;for(let i=2;i*i<=p;i++)if(p%i==0){q=0;break}if(q){if(n<8)H[n]=Math.pow(p,.5)%1*4294967296|0;K[n++]=Math.pow(p,1/3)%1*4294967296|0}}
-const m=[...new TextEncoder().encode(s)],l=m.length*8,r=(x,k)=>x>>>k|x<<32-k;m.push(128);while(m.length%64!=56)m.push(0);for(let i=7;i>=0;i--)m.push(i>3?0:l>>>i*8&255);
-const w=[];for(let o=0;o<m.length;o+=64){for(let i=0;i<16;i++)w[i]=m[o+i*4]<<24|m[o+i*4+1]<<16|m[o+i*4+2]<<8|m[o+i*4+3];
-for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=w[i-16]+(r(a,7)^r(a,18)^a>>>3)+w[i-7]+(r(c,17)^r(c,19)^c>>>10)|0}
-let [a,b,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){const t=h+(r(e,6)^r(e,11)^r(e,25))+(e&f^~e&g)+K[i]+w[i]|0,u=(r(a,2)^r(a,13)^r(a,22))+(a&b^a&c^b&c)|0;h=g;g=f;f=e;e=d+t|0;d=c;c=b;b=a;a=t+u|0}
-[a,b,c,d,e,f,g,h].forEach((v,i)=>H[i]=H[i]+v|0)}
-return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
-async function hash(pw,sl){if(window.crypto&&crypto.subtle){try{return await hashS(pw,sl)}catch(e){}}let x=pw+':'+sl;for(let i=0;i<2000;i++)x=sha(x);return x}
-
-/* ---------- validation ---------- */
-const normMob=v=>{let d=v.replace(/\D/g,'');if(d.length==12&&d.startsWith('91'))d=d.slice(2);else if(d.length==11&&d[0]=='0')d=d.slice(1);return d};
-const okMob=v=>/^[\d\s+\-()]+$/.test(v.trim())&&/^[6-9]\d{9}$/.test(normMob(v));
-const okMail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-const idType=v=>okMob(v)?'m':okMail(v)?'e':'';
-const findUser=v=>{const t=idType(v);return t?users().find(u=>t=='m'?u.mob==normMob(v):u.mail==v.trim().toLowerCase()):null};
-const RULES={
-name:v=>v.trim().length>=2?'':'Enter your full name, for example Rahul Sharma.',
-mob:v=>okMob(v)?'':'Enter a 10-digit mobile number, for example 9876543210.',
-mail:v=>okMail(v)?'':'Enter an email like name@domain.com.',
-pw:v=>v.length>=8?'':'Use at least 8 characters for your password.',
-idn:v=>idType(v)?'':'Enter a 10-digit mobile number or an email like name@domain.com.',
-lpw:v=>v?'':'Enter your password.',
-code:v=>/^\d{6}$/.test(v.trim())?'':'Enter the 6-digit reset code.'};
-let prog=false;
-function setErr(f,m){f.setAttribute('aria-invalid','true');const e=$('#'+f.id+'-e');e.textContent=m;e.hidden=false;const h=$('#'+f.id+'-h');if(h)h.hidden=true}
-function clearErr(f){f.removeAttribute('aria-invalid');const e=$('#'+f.id+'-e');e.hidden=true;e.textContent='';const h=$('#'+f.id+'-h');if(h)h.hidden=false}
-function check(f){const m=RULES[f.dataset.rule](f.value);m?setErr(f,m):clearErr(f);return !m}
-document.querySelectorAll('[data-rule]').forEach(f=>{f.addEventListener('blur',()=>check(f));f.addEventListener('focus',()=>{if(!prog)clearErr(f)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')=='true')clearErr(f)})});
-function ban(id,m){const b=$('#'+id);if(!m){b.hidden=true;return}b.textContent=m;b.hidden=false}
-async function run(form,label,fn){if(form.dataset.busy)return;form.dataset.busy='1';const b=form.querySelector('button[type=submit]'),o=b.textContent;b.textContent=label;b.setAttribute('aria-busy','true');try{await fn()}finally{delete form.dataset.busy;b.textContent=o;b.removeAttribute('aria-busy')}}
-const GEN='We couldn’t complete that right now. Please try again in a moment.';
-document.addEventListener('click',e=>{const sh=e.target.closest('.show');if(sh){const f=$('#'+sh.dataset.for),v=f.type=='password';f.type=v?'text':'password';sh.textContent=v?'Hide':'Show';sh.setAttribute('aria-pressed',v);sh.setAttribute('aria-label',v?'Hide password':'Show password')}});
-
-/* ---------- header, session ---------- */
-function hdr(){const u=user();$('#heroAct').hidden=!!u;$('#hdrAct').innerHTML=u?`<span class="hi hm">Hi, ${esc(u.name.trim().split(/\s+/)[0])}</span><a class="btn" href="#dashboard">Dashboard</a><button class="btn o" id="lo">Log out</button>`:'<button class="btn o" data-auth="0">Login</button><button class="btn" data-auth="1">Register</button>'}
-const to=h=>{location.hash=h};
-const W=$('#wm');
-function welcome(u,fresh){$('#wt').textContent='Welcome, '+u.name.trim().split(/\s+/)[0];$('#ws').textContent=fresh?'Your account is ready.':'You’re logged in.';W.classList.add('open');$('#wGo').focus()}
-const closeW=()=>W.classList.remove('open');
-$('#wx').onclick=closeW;W.onclick=e=>{if(e.target===W)closeW()};$('#wGo').onclick=closeW;
-W.addEventListener('keydown',e=>{if(e.key!='Tab')return;const f=[$('#wx'),$('#wGo')],k=f.indexOf(document.activeElement);e.preventDefault();f[(k+(e.shiftKey?-1:1)+2)%2].focus()});
-function login(u,fresh){st.set('ds_session',u.id);st.del('ds_ref');hdr();to('dashboard');route();welcome(u,fresh)}
-
-/* ---------- routing: #login  #register  #forgot ---------- */
-const APP=['dashboard','referral','passbook','addmoney','history','profile','contact'],AUTH=['login','register','forgot'],TT={login:'Log in',register:'New registration',forgot:'Forgot password'},BASE=document.title;
-let wasAuth=false,pre=null,fu=null,fid='';
-function resetPanes(){document.querySelectorAll('#auth form').forEach(f=>{f.reset();f.querySelectorAll('[data-rule]').forEach(clearErr)});document.querySelectorAll('#auth .show').forEach(b=>{b.textContent='Show';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Show password')});document.querySelectorAll('#auth input[type=text][id$=Pw]').forEach(i=>i.type='password');ban('lBan');$('#fp1').hidden=false;$('#fp2').hidden=true;fu=null}
-
-/* ---------- must-see update alerts (Clean Professional Style) ---------- */
-const updKey=o=>[o.id,o.s,o.remark||'',o.file?o.file.t:''].join('|');
-const updAlertable=o=>o.s!=='pending'||!!o.remark||!!o.file;
-const updSeenKey=()=>'ds_seen_'+st.get('ds_session');
-const updSeen=()=>{try{return new Set(JSON.parse(st.get(updSeenKey())||'[]'))}catch(e){return new Set()}};
-function pendingUpdates(){
-  const u=user();if(!u)return[];
-  const seen=updSeen();
-  return(u.orders||[]).filter(o=>updAlertable(o)&&!seen.has(updKey(o)));
-}
-function ackUpdate(key){const s=updSeen();s.add(key);st.set(updSeenKey(),JSON.stringify([...s]));renderAlerts()}
-function ensureAlertStyle(){
-  if(document.getElementById('upd-style'))return;
-  const s=document.createElement('style');s.id='upd-style';
-  s.textContent='#upd{position:fixed;top:0;left:0;right:0;z-index:9999;display:grid;gap:8px;padding:12px;pointer-events:none}'+
-  '#upd .upd-i{pointer-events:auto;background:#ffffff;border:1px solid #dbe5f6;border-left:4px solid #2457d6;color:#13233f;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 30px rgba(19,35,63,.12)}'+
-  '#upd .upd-i p{margin:2px 0;font-size:.92rem}#upd .upd-i b{color:#1b44ad}'+
-  '#upd .upd-b{display:flex;gap:8px;flex-shrink:0}'+
-  '.sb{display:inline-block;border-radius:99px;padding:3px 11px;font-size:.76rem;font-weight:800;text-transform:capitalize}'+
-  '.s-pending{background:#fff1cc;color:#6b4200;border:1px solid #f0cf7d}'+
-  '.s-processing{background:#dbe7ff;color:#1b44ad;border:1px solid #a9c4ff}'+
-  '.s-success{background:#e0f5ea;color:#0f6b45;border:1px solid #a9dcc0}'+
-  '.s-failed{background:#fdecea;color:#7a1a12;border:1px solid #f3b8b2}'+
-  '.rk-flash{margin-top:8px;padding:8px 12px;border-radius:8px;background:#f8fafc;border:1px solid #cbd5e1;color:#334155;font-weight:600;font-size:.85rem;display:block;box-shadow:inset 0 1px 2px rgba(0,0,0,.02)}';
-  document.head.appendChild(s);
-}
-function renderAlerts(){
-  ensureAlertStyle();
-  let box=document.getElementById('upd');
-  if(!box){box=document.createElement('div');box.id='upd';box.setAttribute('role','alert');box.setAttribute('aria-live','assertive');document.body.appendChild(box)}
-  const list=pendingUpdates();
-  if(window.__baseTitle==null)window.__baseTitle=document.title;
-  document.title=(list.length?'('+list.length+' new) ':'')+window.__baseTitle;
-  box.innerHTML=list.slice(0,3).map(o=>{
-    const key=updKey(o),bits=[];
-    if(o.s!=='pending')bits.push('Status: <b>'+esc(o.s)+'</b>');
-    if(o.remark)bits.push('Admin Note: <b>'+esc(o.remark)+'</b>');
-    if(o.file)bits.push('Result ready: <b>'+esc(o.file.name)+'</b> (download in History)');
-    return '<div class="upd-i"><div><p><b>'+esc(o.n||'Your request')+'</b> ('+esc(o.id)+')</p>'+bits.map(b=>'<p>'+b+'</p>').join('')+'</div>'+
-      '<div class="upd-b"><a class="btn" href="#history" data-ack="'+esc(key)+'">Open History</a><button class="btn" type="button" data-ack="'+esc(key)+'">Got it</button></div></div>';
-  }).join('')+(list.length>3?'<div class="upd-i"><p><b>'+(list.length-3)+' more updates.</b> Open History to see all.</p></div>':'');
-}
-document.addEventListener('click',e=>{const a=e.target.closest('[data-ack]');if(a)ackUpdate(a.dataset.ack)});
-function route(){if(location.hash=='#login'){location.replace('login.html');return}if(location.hash=='#register'){location.replace('register.html');return}renderAlerts();const h=location.hash.slice(1),isA=AUTH.includes(h);
-const isP=APP.includes(h);if(isP&&!user()){location.replace('#login');return}if(isA&&user()){location.replace('#dashboard');return}
-$('#home').hidden=isA||isP;$('#auth').hidden=!isA;$('#app').hidden=!isP;
-if(isA){resetPanes();document.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.r!=h);document.title=TT[h]+' – DocSmartly';scrollTo(0,0);if(h=='login'&&pre){$('#lId').value=pre;pre=null;$('#lPw').focus()}else $('.pane:not([hidden]) h1').focus({preventScroll:true})}
-else if(isP)showView(h);
-else{document.title=BASE;if(wasAuth){const el=h&&document.getElementById(h);el?el.scrollIntoView():scrollTo(0,0)}}
-wasAuth=isA||isP}
-addEventListener('hashchange',route);
-
-/* ---------- forms ---------- */
-$('#fLogin').onsubmit=e=>{e.preventDefault();const f=e.target;ban('lBan');if(!validate(f))return;run(f,'Logging in…',async()=>{try{const lr=await serverLogin($('#lId').value,$('#lPw').value),u=lr&&lr.user,ok=!!lr;if(!ok){ban('lBan','We couldn’t log you in. Check your mobile number or email and your password, then try again.');return}login(u,false)}catch(x){ban('lBan',GEN)}})};
-$('#fReg').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;
-const mob=normMob($('#rMob').value),mail=$('#rMail').value.trim().toLowerCase(),all=users();
-if(all.some(u=>u.mob==mob)){setErr($('#rMob'),'This mobile number is already registered. Log in instead.');$('#rMob').focus();return}
-if(all.some(u=>u.mail==mail)){setErr($('#rMail'),'This email is already registered. Log in instead.');$('#rMail').focus();return}
-run(f,'Creating account…',async()=>{try{const sl=salt(),hh=await hash($('#rPw').value,sl);const rr=await api('POST','/api/register',{user:{name:$('#rName').value.trim().replace(/\s+/g,' '),mob,mail,salt:sl,hash:hh},ref:st.get('ds_ref')||''});if(rr.status==409){toast('This account already exists. Log in instead.');return}if(!rr.ok)throw new Error(String(rr.status));const j=await rr.json();st.set('ds_token',j.token);saveUsers([j.user]);login(j.user,true)}catch(x){toast(GEN)}})};
-const mask=v=>idType(v)=='m'?'XXXXXX'+normMob(v).slice(-4):v.trim().replace(/^(.).*(@.*)$/,'$1•••$2');
-$('#fF1').onsubmit=async e=>{e.preventDefault();if(!validate(e.target))return;const v=$('#fId').value,u=await lookupUser(v);if(!u){setErr($('#fId'),'We couldn’t find an account with these details. Check them, or use New registration.');$('#fId').focus();return}
-fu=u;fid=v.trim();$('#fSent').textContent='Enter the 6-digit reset code for '+mask(v)+'.';$('#fp1').hidden=true;$('#fp2').hidden=false;$('#fCode').focus()};
-$('#fF2').onsubmit=e=>{e.preventDefault();const f=e.target;if(!validate(f))return;if($('#fCode').value.trim()!='123456'){setErr($('#fCode'),'That code doesn’t match. Check the code and try again.');$('#fCode').focus();return}
-run(f,'Resetting password…',async()=>{try{const sl=salt(),hh=await hash($('#fPw').value,sl);const rr=await api('POST','/api/reset',{id:fid,code:$('#fCode').value.trim(),salt:sl,hash:hh});if(!rr.ok)throw new Error(String(rr.status));pre=fid;to('login');toast('Password updated. Log in with your new password.')}catch(x){toast(GEN)}})};
-
-/* ---------- page-level clicks ---------- */
-document.addEventListener('click',e=>{
-if(e.target.closest('#lo')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-const a=e.target.closest('[data-auth]');
-if(a){
-  e.preventDefault();
-  if(user()){
-    to('dashboard');
-  }else{
-    location.href=+a.dataset.auth?'register.html':'login.html';
-  }
-  return;
-}if(e.target.closest('[data-svc]')&&!e.target.closest('a')){if(user())toast('Your dashboard is coming next. Services will open from there.');else to('login')}});
-
-document.addEventListener('click', async e => {
-  const pb = e.target.closest('[data-pr]');
-  if (pb) {
-    fetch(API + '/api/requests/' + encodeURIComponent(pb.dataset.pr) + '/file', { headers: tokenHdr() })
-    .then(r => { if (!r.ok) throw 0; return r.blob(); })
-    .catch(() => { toast('Could not open file for printing.'); return null; })
-    .then(bl => {
-      if (!bl) return;
-      const url = URL.createObjectURL(bl);
-      const w = window.open(url, '_blank');
-      if (w) {
-        w.onload = () => w.print();
-      }
-      setTimeout(() => URL.revokeObjectURL(url), 10000);
-    });
-    return;
-  }
-});
-  
-/* ---------- mobile menu ---------- */
-const N=$('#nav'),B=$('#mn');
-function cn(){N.classList.remove('open');B.setAttribute('aria-expanded','false');B.textContent='☰'}
-B.onclick=()=>{const o=N.classList.toggle('open');B.setAttribute('aria-expanded',o);B.textContent=o?'✕':'☰'};N.onclick=e=>{if(e.target.tagName=='A')cn()};
-document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeW();cn()}});/* ================= logged-in app: dashboard, referral, passbook, add money ================= */
-Object.assign(I,{book:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',wal:'M3 7h16a2 2 0 0 1 2 2v9H3zM3 7l12-3v3M16 13h3',plus:'M12 5v14M5 12h14',heart:'M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10z',copy:'M9 9h10v11H9zM5 15V4h10',share:'M12 3v12M7 8l5-5 5 5M5 14v7h14v-7',back:'M15 5l-7 7 7 7'});
-const DS=[
-['Lost Document Service','Use when you have the document number or details',['Voter ID','Aadhaar Card','PAN Card','Driving License']],
-['PAN Card Service','',['New PAN apply','PAN update / correction']],
-['PVC Tools','',['Voter ID','Aadhaar Card','PAN Card','Driving License','Vehicle RC','Any Other Document']],
-['Govt Department & Civil Contractor Services','',['New Digital Signature (DSC)','E-procurement registration','Tender upload (for contractor)','Tender upload (for department)','Building estimate creator','BOQ creator','Govt civil & electric bill maker (Excel)','Govt civil & electric bill maker (Measurement Book)','Bill form','Extra item sheet','Excess item sheet','QC register creator','Work escalation statement']]];
-const FT=Object.keys(TL).filter(c=>c!=='Most Used').map(c=>[c,TL[c].split(';').map(t=>t.split('|')[0])]);
-const TOP=(TL['Most Used']||'').split(';').map(t=>t.split('|')[0]);
-const SVD=[['RC Services','RC Services',[['RC PDF INSTANT',40]]],['DL Services','DL Services',[['DL PDF INSTANT',50]]],['Voter Services','Voter Services',[['Voter Mobile Link',40]]],['Farmer Services','Farmer Services',[['KISAN CARD',25]]],['PAN Services','PAN Services',[['Aadhaar to PAN',250]]],['Udyam Services','Udyam Services',[['New UDYAM CERTIFICATE',200]]],['Aadhaar Update & Ration Service','Aadhaar & Ration',[['AADHAAR Update',150]]],['Mobile Services','Mobile Services',[['Mobile Details Find',30],['Other Mobile Issue',50]]],['GST Services','GST Services',[['New GST Certificate',1200],['GST Download',200]]],['Chassis & Engine To RC','Chassis to RC',[['Chassis to RC',70]]],['Challan Check','Challan Details',[['Challan Details',10]]],['Bank Seeding','DBT Seeding Status',[['DBT Seeding Status',20]]]],SVC=Object.fromEntries(SVD.map(a=>[a[0],a[1]])),DP={};
-DS.unshift(...SVD.map(a=>[a[0],'',a[2].map(x=>{DP[a[0]+'|'+x[0]]=x[1];return x[0]})]));
-const GT='Govt Department & Civil Contractor Services';
-[['Lost Document Service',50],['PAN Card Service',600],['PVC Tools',10]].forEach(([t,p])=>DS.find(x=>x[0]==t)[2].forEach(n=>DP[t+'|'+n]=p));
-Object.entries({'New Digital Signature (DSC)':2500,'E-procurement registration':500,'Tender upload (for contractor)':300,'Tender upload (for department)':700,'Building estimate creator':200,'BOQ creator':200,'Govt civil & electric bill maker (Excel)':1000,'Bill form':400,'Extra item sheet':200,'Excess item sheet':200,'QC register creator':500,'Work escalation statement':700}).forEach(([n,p])=>DP[GT+'|'+n]=p);
-const FREEG=new Set(FT.map(g=>g[0])),MBK=GT+'|Govt civil & electric bill maker (Measurement Book)';
-const WAI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.2-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.4-2.4-2.4L11 10l-1-2z"/></svg>';
-const waLink=n=>`<a class="wal" href="https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for '+n)}" target="_blank" rel="noopener" aria-label="Ask price of ${esc(n)} on WhatsApp" title="Ask price on WhatsApp">₹ ${WAI}</a>`;
-const ALL=[];DS.forEach(s=>s[2].forEach(n=>ALL.push({k:s[0]+'|'+n,n,s:s[0]})));FT.forEach(g=>g[1].forEach(n=>ALL.push({k:g[0]+'|'+n,n,s:g[0]})));
-TOP.forEach(n=>{if(n&&!ALL.some(x=>x.n==n)){ALL.push({k:'Trending Tools|'+n,n,s:'Trending Tools'})}});FREEG.add('Trending Tools');
-const cPaid=DS.reduce((a,s)=>a+s[2].length,0),cFree=FT.reduce((a,g)=>a+g[1].length,0);
-const gen=()=>Math.random().toString(36).slice(2,8).toUpperCase();
-const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
-const dt=t=>new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-function me(){const u=user();if(!u)return null;let ch=0;['tx','fav','refs','orders'].forEach(k=>{if(!u[k]){u[k]=[];ch=1}});if(u.bal==null){u.bal=0;ch=1}if(!u.code){u.code=gen();ch=1}if(ch)save(u);return u}
-function save(u){const a=users(),i=a.findIndex(x=>x.id==u.id);a[i]=u;saveUsers(a);if(u.fav)api('PUT','/api/me',{fav:u.fav}).catch(()=>{})}
-const WA='https://wa.me/917300277557?text=Hello%20DocSmartly%20Support';
-/* top bar */
-$('#aS').innerHTML=ic('search');$('#aR').innerHTML=ic('gift');$('#aP').innerHTML=ic('book');$('#aA').innerHTML=ic('plus');$('#aW').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.200-4A8 8 0 1 1 8 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400L11 10l-1-2z"/></svg>';
-function setBal(){const u=me();if(u)$('#aB').innerHTML=ic('wal')+'<b>'+inr(u.bal)+'</b>'}
-const sec=(t,c,inner,open,id)=>`<details class="ds" open data-sec="${esc(t)}"${id?` id="${id}"`:''}><summary><span>${t}</span><em>${c}</em></summary>${inner}</details>`;
-const itm=(k,n,fv)=>{const sc=k.split('|')[0],i=ALL.findIndex(a=>a.k==k);return `<div class="it${k==MBK?' wq':''}" data-card="${esc(k)}"><button type="button" class="itb" data-it="${esc(k)}"><span class="sv" style="${sty(i<0?0:i)}">${FREEG.has(sc)?'<span class="tg">Free</span>':''}${art(dart(sc,n))}</span><span class="nm">${esc(n)}</span>${DP[k]!=null?`<span class="pr nm">${inr(DP[k])}</span>`:''}</button><button type="button" class="fv" data-fav="${esc(k)}" aria-pressed="${fv.includes(k)}" aria-label="Favourite ${esc(n)}" title="Favourite">${ic('heart')}</button>${k==MBK?waLink(n):''}</div>`};
-const grid=(h)=>`<div class="ig">${h}</div>`;
-function favHTML(){const u=me(),l=ALL.filter(a=>u.fav.includes(a.k));return l.length?grid(l.map(a=>itm(a.k,a.n,u.fav)).join('')):'<p class="sub">Tap the heart on any service to keep it here.</p>'}
-function renderFav(){const u=me();$('#favC').innerHTML=favHTML();$('#favN').textContent=u.fav.length}
-function renderDash(){const u=me(),h=new Date().getHours(),g=h<12?'Good morning':h<17?'Good afternoon':'Good evening',o=u.orders,cnt=s=>o.filter(x=>x.s==s).length;
-const stat=[['Total services',cPaid+cFree],['Pending',cnt('pending')],['Processing',cnt('processing')],['Success',cnt('success')],['Failed',cnt('failed')]];
-const paid=DS.map(s=>sec(s[0],s[2].length,(s[1]?`<p class="sub" style="margin:0 0 12px">${s[1]}</p>`:'')+grid(s[2].map(n=>itm(s[0]+'|'+n,n,u.fav)).join('')),1));
-const free=FT.map(g=>sec(g[0],g[1].length,grid(g[1].map(n=>itm(g[0]+'|'+n,n,u.fav)).join(''))));
-$('[data-v=dashboard]').innerHTML=`<div class="gc"><div><p class="gs">${g}</p><h1 tabindex="-1">${esc(u.name)}</h1><button type="button" class="link" id="lo2" style="padding-left:0">Log out</button></div>
-<div class="gw"><div><small>Wallet balance</small><b>${inr(u.bal)}</b></div><div class="ctl"><a class="ib" href="#addmoney" aria-label="Add money" title="Add money">${ic('plus')}</a><a class="ib" href="#passbook" aria-label="Passbook" title="Passbook">${ic('book')}</a><a class="ib" href="#referral" aria-label="Refer & Earn" title="Refer & Earn">${ic('gift')}</a></div></div></div>
-<div class="stt">${stat.map(s=>`<div><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
-<h2 class="sh">My Favourites (<span id="favN">${u.fav.length}</span>)</h2><div id="favC">${favHTML()}</div>
-<h2 class="sh">All Services (${cPaid})</h2>${paid.join('')}
-<h2 class="sh">Free & Trending Tools (${cFree})</h2>
-${sec('Trending Tools',TOP.length,'<p class="sub" style="margin:0 0 12px">Top 10 most used services</p>'+grid(TOP.map(n=>{const a=ALL.find(x=>x.n==n);return a?itm(a.k,n,u.fav):''}).join('')),true,'trend')}
-${sec('Free Tools',cFree,free.join(''),false)}`}
-/* referral */
-const rlink=u=>location.href.split('#')[0].split('?')[0]+'?ref='+u.code;
-function refRows(q){const u=me(),r=u.refs.filter(x=>x.name.toLowerCase().includes(q.toLowerCase()));$('#rfB').innerHTML=r.map(x=>`<tr><td data-l="Name">${esc(x.name)}</td><td data-l="Join date">${dt(x.t)}</td><td data-l="Status">${x.st}</td><td data-l="Bonus"><b>${inr(x.bonus)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.refs.length?'No referral matches that name.':'No referrals yet. Share your link to start earning ₹10 per referral.'}</td></tr>`}
-function renderRef(){const u=me();$('[data-v=referral]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Refer & Earn</h1><p class="lead">Per referral ₹10 bonus, added to your wallet after your friend’s first recharge.</p>
-<div class="pn"><label for="rl">Your referral link</label><input id="rl" readonly value="${esc(rlink(u))}"><div class="row" style="margin-top:12px"><button class="btn" id="cpL" type="button">Copy link</button><button class="btn o" id="shL" type="button">Share link</button></div></div>
-<div class="head" style="margin-top:28px;margin-bottom:12px"><h2 class="sh" style="margin:0">My Referral (${u.refs.length})</h2><div class="srt"><input id="rfQ" type="search" placeholder="Referral name" aria-label="Search referral name" hidden><button type="button" class="ib" id="rfT" aria-label="Search referrals" title="Search referrals">${ic('search')}</button></div></div>
-<div class="tw"><table><thead><tr><th>Name</th><th>Join date</th><th>Status</th><th>Bonus</th></tr></thead><tbody id="rfB"></tbody></table></div>`;refRows('')}
-/* passbook */
-function renderPass(){const u=me(),add=u.tx.filter(t=>t.type=='credit').reduce((a,t)=>a+t.amt,0),sp=u.tx.filter(t=>t.type=='debit').reduce((a,t)=>a+t.amt,0);
-$('[data-v=passbook]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Passbook</h1>
-<div class="stt s3"><div><b>${inr(u.bal)}</b><span>Current balance</span></div><div><b>${inr(add)}</b><span>Total added</span></div><div><b>${inr(sp)}</b><span>Total spent</span></div></div>
-<div class="head" style="margin:26px 0 12px"><h2 class="sh" style="margin:0">Wallet transactions (${u.tx.length})</h2><div class="srt"><input id="pbQ" type="search" placeholder="Search transactions" aria-label="Search transactions" hidden><button type="button" class="ib" id="pbT" aria-label="Search transactions" title="Search transactions">${ic('search')}</button></div></div>
-<div class="tw"><table><thead><tr><th>Date</th><th>Details</th><th>Type</th><th>Amount</th></tr></thead><tbody id="pbB"></tbody></table></div>`;passRows('')}
-function passRows(q){const u=me(),r=u.tx.filter(t=>(t.note+' '+t.type+' '+t.amt+' '+dt(t.t)).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.t-a.t);$('#pbB').innerHTML=r.map(t=>`<tr><td data-l="Date">${dt(t.t)}</td><td data-l="Details">${esc(t.note)}</td><td data-l="Type">${t.type=='credit'?'Credit':'Debit'}</td><td data-l="Amount"><b>${t.type=='credit'?'+':'−'}${inr(t.amt)}</b></td></tr>`).join('')||`<tr><td colspan="4">${u.tx.length?'No transaction matches your search.':'No transactions yet. Add money to see it here.'}</td></tr>`}
-/* add money */
-let quick=false;
-function recent(){const u=me(),r=u.tx.filter(t=>t.type=='credit'&&t.note.startsWith('Added')).sort((a,b)=>b.t-a.t).slice(0,5);return r.length?r.map(t=>`<li><span>${esc(t.note)}<small>${dt(t.t)}</small></span><b>+${inr(t.amt)}</b></li>`).join(''):'<li class="sub">No deposits yet.</li>'}
-function renderAdd(){const u=me();quick=false;$('[data-v=addmoney]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Add money to wallet</h1>
-<div class="pn"><small>Current balance</small><div class="big">${inr(u.bal)}</div>
-<form id="fAdd" novalidate><div class="fld"><label for="amt">Amount</label><input id="amt" type="number" inputmode="numeric" min="200" step="1" aria-describedby="amt-h amt-e"><p class="hint" id="amt-h">Minimum ₹200</p><p class="err" id="amt-e" role="alert" hidden></p></div>
-<div class="chips" role="group" aria-label="Quick amounts">${[100,200,500,1000].map(v=>`<button type="button" class="chp" data-q="${v}">+${v}</button>`).join('')}</div>
-<button class="btn" type="submit">Pay with UPI</button></form></div>
-<h2 class="sh">Recent deposits</h2><ul class="rd" id="rdL">${recent()}</ul>`}
-/* ---------- thumbnails for every dashboard service ---------- */
-Object.assign(I,{menu:'M4 7h16M4 12h16M4 17h16',grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',hist:'M4 12a8 8 0 1 0 3-6.2M4 4v4h4M12 8v5l3 2',user:'M12 12a4 4 0 1 0 0-.01M4 20c1-4 4-6 8-6s7 2 8 6',out:'M10 4H5v16h5M15 8l4 4-4 4M19 12H9'});
-const MG=(x,y)=>C(x,y,12,'fw')+C(x,y,12,'sa')+Pa(`M${x+9} ${y+9}l11 11`,'sa')+X(x,y+5,'?',14,'fa');
-const TK=(x,y)=>`<path d="M${x} ${y}l3 3 6-7" class="sa" style="stroke-width:1.8"/>`;
-const AAD=()=>CARD(18,14,124,72)+R(18,14,124,6,'fy',0)+X(30,34,'AADHAAR',7,'fw','start')+H(28,40,26,34)+L(64,46,40,3,8,'fo')+Pa('M114 70a10 10 0 0 1 20 0M118 70a6 6 0 0 1 12 0','sw');
-const UP=(x,y)=>Pa(`M${x} ${y+20}V${y}m-8 8 8-8 8 8`,'sa')+R(x-14,y+26,28,5,'fa',2);
-const GOV=(x,y)=>Pa(`M${x+20} ${y}l20 10H${x}z`,'fa')+[0,1,2].map(i=>R(x+5+i*11,y+13,6,16,'fb',1)).join('')+R(x,y+31,40,5,'fa',1);
-const HAT=(x,y)=>Pa(`M${x} ${y+14}a16 14 0 0 1 32 0z`,'fy')+R(x-4,y+14,40,5,'fy',2)+R(x+12,y-2,8,8,'fy',1);
-const ROWS=(x,y,n,w)=>Array.from({length:n},(_,i)=>R(x,y+i*9,w*.3,4,'fl',1)+R(x+w*.36,y+i*9,w*.64,4,'fb',1)).join('');
-const SHEET=(t,b)=>PG(28,8,92,84)+X(74,22,t,6.5,'fa')+ROWS(36,30,3,76)+R(34,56,84,11,'fy',2)+R(40,60,26,4,'fk',1)+R(72,60,38,4,'fk',1)+C(122,76,13,b);
-const DA={
-'New Digital Signature (DSC)':()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa')+L(26,32,50,3,7)+Pa('M26 66c6-10 9-14 10-9s-4 11 0 10 4-6 8-8 3 5 5 4','sa')+R(98,36,34,24,'fb',5)+R(130,42,14,12,'fm',2)+X(115,52,'DSC',8,'fw')+C(106,41,2,'fy')+C(76,80,10,'fg')+Pa('M71 80l4 4 7-8','sw'),
-'E-procurement registration':()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa')+R(30,42,100,8,'fl',2)+R(30,54,100,8,'fl',2)+R(50,68,60,12,'fa',4)+X(80,77,'Register',6.5,'fw'),
-'Tender upload (for contractor)':()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7)+UP(110,8)+HAT(100,52),
-'Tender upload (for department)':()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7)+UP(110,8)+GOV(92,50),
-'Building estimate creator':()=>R(12,12,136,76,'fb',6)+Pa('M26 52l31-22 31 22z','fy')+R(32,52,50,30,'fw',2)+R(40,60,12,12,'fb',1)+R(64,62,12,20,'fb',1)+PG(100,18,40,64)+X(120,34,'₹',13,'fa')+L(106,44,28,4,7),
-'BOQ creator':()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2)+[0,1,2,3,4].map(i=>R(34,39+i*9,22,5,'fl',1)+R(60,39+i*9,28,5,'fl',1)+R(92,39+i*9,14,5,'fb',1)+R(110,39+i*9,16,5,'fb',1)).join('')+R(94,84,32,6,'fa',2),
-'Govt civil & electric bill maker (Excel)':()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw')+[0,1,2,3].map(r=>[0,1,2].map(c=>R(32+c*30,28+r*13,26,9,(r+c)%2?'fl':'fb',2)).join('')).join('')+Pa('M126 54l-14 20h9l-5 18 17-24h-9l5-14z','fy'),
-'Govt civil & electric bill maker (Measurement Book)':()=>R(14,14,64,72,'fw',5)+R(82,14,64,72,'fw',5)+X(46,28,'M.B.',8,'fa')+L(22,36,48,5,9)+L(90,24,48,6,9)+R(76,14,8,72,'fa',2)+R(92,66,52,14,'fy',2)+[0,1,2,3,4,5,6].map(i=>R(97+i*7.5,66,1.5,i%2?5:8,'fk',0)).join(''),
-'Bill form':()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw')+[0,1,2,3].map(i=>R(40,28+i*11,26,3,'fl',1.5)+R(72,28+i*11,48,3,'fb',1.5)).join('')+R(40,76,80,12,'fa',3)+X(80,85,'Total ₹',7,'fw'),
-'Extra item sheet':()=>SHEET('EXTRA ITEMS','fg')+Pa('M122 69v14M115 76h14','sw'),
-'Excess item sheet':()=>SHEET('EXCESS ITEMS','fr')+Pa('M122 83V70m-6 6 6-6 6 6','sw'),
-'QC register creator':()=>R(30,10,100,82,'fb',6)+R(62,5,36,10,'fk',3)+R(37,20,86,66,'fw',3)+[0,1,2,3].map(i=>R(44,28+i*14,9,9,'fl',2)+TK(45.5,33+i*14)+R(59,31+i*14,52,3,'fl',1.5)).join('')+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
-'Work escalation statement':()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa')+L(26,30,50,5,8)+R(94,62,12,22,'fb',2)+R(110,50,12,34,'fb',2)+R(126,36,12,48,'fa',2)+Pa('M92 52l16-10 12 6 20-24','sa')+Pa('M130 24h10v10','sa'),
-'Student / Employee ID card maker':()=>IDV(18,4,56,92,'STUDENT','fb')+IDV(86,4,56,92,'EMPLOYEE','fa'),
-'Typing speed test (Hindi & English)':()=>TA['Hindi Typing Tool']()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
-'Online exam system':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+i*16,4,i==1?'fa':'fl')+R(56,32+i*16,56,4,'fl',2)).join('')+C(120,78,12,'fy')+Pa('M120 71v7l5 3','sa'),
-'Word counter':()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')+X(120,77,'words',6.5,'fw'),
-'Calculator (basic & scientific)':()=>CALC('√ π'),
-'Typing Speed Test — Hindi & English':function(){return DA['Typing speed test (Hindi & English)']()},
-'Online Exam System — Teacher & Student':function(){return DA['Online exam system']()},
-'Word Counter':function(){return DA['Word counter']()},
-'Calculator — Basic & Scientific':function(){return DA['Calculator (basic & scientific)']()},
-'OMR Sheet Generator & Checker':()=>PG(32,6,96,88)+[0,1,2,3,4].map(r=>[0,1,2,3].map(c=>C(52+c*16,22+r*13,3.5,(r*4+c)%3==0?'fa':'fl')).join('')).join('')+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
-'Meta Title & Description Generator':()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')+R(30,46,100,6,'fl',2)+R(30,56,80,6,'fl',2)+R(30,66,60,6,'fl',2),
-'Online Stopwatch':()=>C(80,52,34,'fw')+C(80,52,34,'sa')+Pa('M80 18v-8','sa')+Pa('M74 10h12','sa')+Pa('M106 26l4-4','sa')+Pa('M80 52V34','sa')+Pa('M80 52l14 10','sa')+X(62,76,'00:00',9,'fa'),
-'Name, Date & Text on Photo':()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw')+X(80,60,'28 Oct 2026',7,'fw'),
-'Instagram Reel Cover Maker':()=>PHN(48,4,64,92)+IMG(54,12,52,48)+R(58,66,44,6,'fl',2)+R(58,76,32,6,'fl',2)};
-const TM={'Photo to PDF':'JPG / PNG to PDF','PDF merge':'PDF Merge','PDF split & add page':'PDF Split & Page Extract','PDF to JPG':'PDF to JPG','PDF rotate & page reorder':'PDF Rotate & Reorder','PDF compressor':'PDF Compressor (KB)','Add page numbers to PDF':'PDF Page Number Adder','PDF header & footer':'PDF Header & Footer Maker','Photo compressor':'Photo Compressor (KB)','Photo resizer':'Photo & Signature Resizer','Photo format converter':'Image Format Converter','Background remove':'Background Remover','Background change':'Photo Color Changer','Favicon maker':'Favicon Preview Tool & Maker','Watermark maker':'Image Watermark Maker','Signature maker':'Digital Signature Maker','Colour picker from image':'Color Picker from Image','Application format':'Text to PDF / Application','Resume':'Resume Maker','Invoice':'Invoice Maker','Letterhead':'Letterhead Maker','Quotation':'Quotation Maker','Passport photo sheet':'Passport Photo Sheet','QR code generator':'QR Code Generator','ID card front & back to A4':'ID Card Front & Back to A4','Visiting card maker':'Visiting Card Designer','Stamp designer':'Stamp Designer','A4 photo print sheet':'A4 Photo Print Layout','GST calculator':'GST Calculator','Cash calculator':'Cash Denomination Calculator','Salary calculator':'Salary Calculator','Loan / EMI calculator':'Loan / EMI Calculator','Age calculator':'Age Calculator','Percentage calculator':'Percentage Calculator'};
-function dart(s,n){
-if(SVC[s])return V[SVC[s]]();
-if(s=='Lost Document Service'){const k={'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[n];return(k?V[k]():AAD())+MG(128,72)}
-if(s=='PVC Tools')return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[n]);
-if(s=='PAN Card Service')return V[n=='New PAN apply'?'New PAN Card Apply':'PAN Update / Correction']();
-const f=DA[n]||TA[n]||(TM[n]&&TA[TM[n]]);return f?f():PG()}
-$('#govG').innerHTML=DS.find(x=>x[0].startsWith('Govt'))[2].map((n,i)=>{const mb=GT+'|'+n==MBK,p=DP[GT+'|'+n];return `<${mb?'div tabindex="0" role="button"':'button'} class="card" data-svc><div class="sv" style="${sty(i)}">${art(dart('Govt',n))}</div><h3>${esc(n)}</h3>${mb?waLink(n):p!=null?`<div class="pr">${inr(p)}</div>`:''}</${mb?'div':'button'}>`}).join('');
-$('#sbT').innerHTML=ic('menu');
-
-/* ---------- left menu ---------- */
-function renderSB(){const lk=(h,k,t)=>`<a class="mi" href="${h}">${ic(k)}${t}</a>`,grp=g=>`<details class="sm"><summary data-sg="${esc(g[0])}">${esc(g[0])}<em>${g[1].length}</em></summary>${g[1].map(n=>`<button type="button" class="mi" data-go="${esc(g[0]+'|'+n)}">${esc(n)}</button>`).join('')}</details>`;
-$('#sb').innerHTML=`<div class="sbs">${lk('#dashboard','grid','Dashboard')}${lk('#passbook','book','Passbook')}${lk('#history','hist','History')}${lk('#referral','gift','Refer &amp; Earn')}${lk('#profile','user','Profile')}${lk('#contact','phone','Contact Us')}<p class="mh">Paid services</p>${DS.map(g=>grp([g[0],g[2]])).join('')}<p class="mh">Free tools</p>${FT.map(grp).join('')}</div><div class="sbf"><button type="button" class="mi" id="lo3">${ic('out')}Log Out</button></div>`}
-function sbCur(h){if(!$('#sb').firstChild)renderSB();document.querySelectorAll('#sb a.mi').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')=='#'+h?'page':'false'))}
-const closeSB=()=>{$('#sb').classList.remove('open');$('#sbT').setAttribute('aria-expanded','false')};
-function jump(k,sec){const run=()=>{const el=sec?[...document.querySelectorAll('.ds[data-sec]')].find(x=>x.dataset.sec==k):[...document.querySelectorAll('.ds:not(#trend) [data-card]')].find(x=>x.dataset.card==k);if(!el)return;for(let p=el.closest('details');p;p=p.parentElement&&p.parentElement.closest('details'))p.open=true;el.scrollIntoView({behavior:'smooth',block:sec?'start':'center'});if(!sec){el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),1800)}};
-if(location.hash=='#dashboard')run();else{addEventListener('hashchange',()=>setTimeout(run,0),{once:true});to('dashboard')}}
-document.addEventListener('click',e=>{const t=e.target;let b;
-if(t.closest('#sbT')){const o=$('#sb').classList.toggle('open');$('#sbT').setAttribute('aria-expanded',o);return}
-if(t.closest('#lo3')){st.del('ds_session');closeSB();hdr();to('top');toast('You’ve been logged out.');return}
-if(b=t.closest('[data-go]')){jump(b.dataset.go,0);closeSB();return}
-if(b=t.closest('summary[data-sg]'))jump(b.dataset.sg,1);
-if(t.closest('#sb a.mi')||!t.closest('#sb'))closeSB()});
-document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSB()});
-
-/* ---------- history, profile, contact ---------- */
- function renderHist(){
-  ensureAlertStyle();
-  const u=me(),o=u.orders.slice().sort((a,b)=>b.t-a.t);
-  $('[data-v=history]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a>
-    <h1 tabindex="-1">History</h1>
-    <p class="lead">Every request and its result. Download or print your result anytime.</p>
-    <div class="tw" style="margin-top:18px"><table>
-      <thead><tr><th>Date</th><th>Service &amp; Admin Remark</th><th>Status</th><th>Amount</th><th>Result</th></tr></thead>
-      <tbody>${o.map(x=>`<tr>
-        <td data-l="Date">${dt(x.t)}</td>
-        <td data-l="Service"><b>${esc(x.n||'')}</b>${x.remark?`<br><div class="rk-flash"><b>Admin Note:</b> ${esc(x.remark)}</div>`:''}</td>
-        <td data-l="Status"><span class="sb s-${esc(x.s)}">${esc(x.s)}</span></td>
-        <td data-l="Amount"><b>${inr(x.amt||0)}</b></td>
-        <td data-l="Result">${x.file?`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px" data-dl="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download
-          </button>
-          <button class="btn o" style="padding:6px 12px;min-height:36px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;color:#12803f;border-color:#12803f" data-pr="${esc(x.id||'')}" data-n="${esc(x.file.name)}">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Print
-          </button>
-        </div>`:'<span class="sub">Not ready</span>'}</td>
-      </tr>`).join('')||'<tr><td colspan="5">No requests yet. Your results will appear here once you use a service.</td></tr>'}</tbody>
-    </table></div>`;
-}
-const resList=u=>{const l=u.orders.filter(o=>o.file&&o.id).sort((a,b)=>b.t-a.t);return l.length?`<ul class="rd">${l.map(o=>`<li><span>${esc(o.n)}<small>${dt(o.t)} · ${esc(o.file.name)}</small></span><button class="btn" type="button" data-dl="${esc(o.id)}" data-n="${esc(o.file.name)}">Download</button></li>`).join('')}</ul>`:'<p class="sub">Result documents uploaded by our team will appear here.</p>'};
-function renderProf(){const u=me();$('[data-v=profile]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Profile</h1><p class="lead">Your account details.</p><ul class="rd" style="margin-top:18px"><li><span><small>Mobile number</small>${esc(u.mob)}</span></li><li><span><small>Email</small>${esc(u.mail)}</span></li><li><span><small>Referral code</small>${esc(u.code)}</span></li></ul><form class="pn" id="fPro" novalidate><div class="fld" style="margin-top:0"><label for="pfN">Full name</label><input id="pfN" value="${esc(u.name)}" autocomplete="name"><p class="err" id="pfN-e" role="alert" hidden></p></div><button class="btn" type="submit">Save name</button></form><h2 class="sh">My results</h2>${resList(u)}`}
-function renderContact(){$('[data-v=contact]').innerHTML=`<a class="bk" href="#dashboard">Back to dashboard</a><h1 tabindex="-1">Contact Us</h1><p class="lead">Questions about a service, payment or refund? Message us on WhatsApp.</p><div class="pn"><small>Phone / WhatsApp</small><div class="big" style="font-size:1.5rem">+91 73002 77557</div><a class="btn" style="text-align:center" href="${WA}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`}
-document.addEventListener('submit',e=>{if(e.target.id!='fPro')return;e.preventDefault();const i=$('#pfN'),v=i.value.trim().replace(/\s+/g,' ');if(v.length<2){setErr(i,'Enter your full name, for example Rahul Sharma.');i.focus();return}const u=me();u.name=v;save(u);renderProf();hdr();toast('Name updated.')});
-const VIEWS={dashboard:renderDash,referral:renderRef,passbook:renderPass,addmoney:renderAdd,history:renderHist,profile:renderProf,contact:renderContact},VT={dashboard:'Dashboard',referral:'Refer & Earn',passbook:'Passbook',addmoney:'Add money',history:'History',profile:'Profile',contact:'Contact Us'};
-
-function showView(h){document.querySelectorAll('#app [data-v]').forEach(v=>v.hidden=v.dataset.v!=h);VIEWS[h]();setBal();sbCur(h);$('#sP').hidden=true;document.title=VT[h]+' – DocSmartly';scrollTo(0,0);$(`[data-v=${h}] h1`).focus({preventScroll:true})}
-/* ---------- service request form (saved to order.data, shown in admin) ---------- */
-const FM={'RC Services':['Vehicle number','Owner name?','Remarks?'],'DL Services':['DL number','Date of birth','Holder name?','Remarks?'],'Voter Services':['EPIC / Voter ID number','Voter name?','Mobile number?','Remarks?'],'Farmer Services':['Farmer ID / Aadhaar number','Farmer name?','State?','Remarks?'],'PAN Services':['Aadhaar number','Applicant name?','Mobile number?','Remarks?'],'Udyam Services':['PAN / Aadhaar number','Business name','Mobile number','Remarks?'],'Aadhaar & Ration':['Aadhaar / Ration card number','Name','Mobile number?','Remarks?'],'Mobile Services':['Mobile number','Issue details?'],'GST Services':['GSTIN / PAN','Business name?','Remarks?'],'Chassis to RC':['Chassis number','Engine number?'],'Challan Details':['Vehicle number'],'DBT Seeding Status':['Aadhaar number','Bank name?'],'Lost Document Service':['Name','Date of birth','Father name?','Document number (if known)?','Mobile number','Address?'],'PAN Card Service':['Applicant name','Father name','Date of birth','Aadhaar number','Mobile number','Email','Address','Remarks?'],'PVC Tools':['Document number','Holder name?','Remarks?'],[GT]:['Name / firm name','Mobile number','Work / tender details','Remarks?']};
-let rqk=null;const closeRq=()=>$('#rm').classList.remove('open');
-function openRq(k){const a=ALL.find(x=>x.k==k),p=DP[k];if(!a||p==null){toast((a?a.n:'This service')+' is available on request. Message us on WhatsApp for the price.');return}
-rqk=k;const u=me(),F=FM[SVC[a.s]||a.s]||FM[a.s]||['Details / number','Remarks?'];
-$('#rt').textContent=a.n;$('#rp').textContent='Fee '+inr(p)+'. Wallet balance '+inr(u.bal)+'.';
-$('#fRq').innerHTML=F.map((l,i)=>{const o=l.endsWith('?'),n=o?l.slice(0,-1):l,v=/^(Applicant name|Name)$/.test(n)?u.name:n=='Mobile number'?u.mob:n=='Email'?u.mail:'',ty=/date of birth/i.test(n)?'date':/mobile number/i.test(n)?'tel':/email/i.test(n)?'email':'text',ta=/address|details|remarks/i.test(n),at=`id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'} value="${esc(v)}"`;
-return `<div class="fld"><label for="rq${i}">${esc(n)}${o?' (optional)':''}</label>${ta?`<textarea id="rq${i}" data-l="${esc(n)}" ${o?'':'data-req'}></textarea>`:`<input type="${ty}" ${at}>`}<p class="err" role="alert" hidden></p></div>`}).join('')+`<button class="btn" type="submit">Submit request · ${inr(p)}</button>`;
-$('#rm').classList.add('open');$('#rq0').focus()}
-$('#rx').onclick=closeRq;$('#rm').onclick=e=>{if(e.target.id=='rm')closeRq()};document.addEventListener('keydown',e=>{if(e.key=='Escape')closeRq()});
-document.addEventListener('submit',async e=>{if(e.target.id!='fRq')return;e.preventDefault();const els=[...e.target.querySelectorAll('[data-l]')];let bad=null;
-els.forEach(i=>{const m=i.nextElementSibling,x=i.hasAttribute('data-req')&&!i.value.trim();m.hidden=!x;m.textContent=x?'This field is required.':'';if(x&&!bad)bad=i});if(bad){bad.focus();return}
-const a=ALL.find(x=>x.k==rqk),p=DP[rqk];const d={};els.forEach(i=>{if(i.value.trim())d[i.dataset.l]=i.value.trim()});const rr=await api('POST','/api/requests',{k:rqk,sec:SVC[a.s]||a.s,data:d});if(rr.status==402){toast('Not enough wallet balance. Add money first.');return}if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);closeRq();setBal();const h=location.hash.slice(1);if(VIEWS[h])VIEWS[h]();toast('Request submitted. Track it in History.')});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-dl]');if(!b)return;fetch(API+'/api/requests/'+encodeURIComponent(b.dataset.dl)+'/file',{headers:tokenHdr()}).then(r=>{if(!r.ok)throw 0;return r.blob()}).catch(()=>{toast('Could not download the file. Try again.');return null}).then(bl=>{if(!bl)return;const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=b.dataset.n||'result';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)})});
-document.addEventListener('click',async e=>{
-  const pb=e.target.closest('[data-pr]');
-  if(pb){
-    fetch(API+'/api/requests/'+encodeURIComponent(pb.dataset.pr)+'/file',{headers:tokenHdr()})
-    .then(r=>{if(!r.ok)throw 0;return r.blob()})
-    .catch(()=>{toast('Could not open file for printing.');return null})
-    .then(bl=>{
-      if(!bl)return;
-      const url=URL.createObjectURL(bl);
-      const w=window.open(url,'_blank');
-      if(w){
-        w.onload=()=>w.print();
-      }
-      setTimeout(()=>URL.revokeObjectURL(url),10000);
-    });
-    return;
-  }
-});
-  /* events */
-document.addEventListener('click',e=>{const t=e.target;let b;
-if(t.closest('#lo2')){st.del('ds_session');hdr();to('top');toast('You’ve been logged out.');return}
-if(t.closest('#aS')){const p=$('#sP');p.hidden=!p.hidden;if(!p.hidden)$('#sQ').focus();return}
-if(b=t.closest('[data-fav]')){const u=me(),k=b.dataset.fav,i=u.fav.indexOf(k);i<0?u.fav.push(k):u.fav.splice(i,1);save(u);document.querySelectorAll('[data-fav]').forEach(x=>{if(x.dataset.fav==k)x.setAttribute('aria-pressed',i<0)});renderFav();return}
-if(b=t.closest('#app [data-it]')){const a=ALL.find(x=>x.k==b.dataset.it);$('#sP').hidden=true;openRq(b.dataset.it);return}
-if(t.closest('#cpL')){const v=$('#rl').value;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Referral link copied.')).catch(()=>{$('#rl').select();toast('Press Ctrl+C to copy the selected link.')});return}
-if(t.closest('#shL')){const u=me(),tx='Join DocSmartly for fast PVC card printing. Register with my link: '+rlink(u);navigator.share?navigator.share({title:'DocSmartly',text:tx,url:rlink(u)}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(tx),'_blank','noopener');return}
-if(b=t.closest('#rfT,#pbT')){const q=$(b.id=='rfT'?'#rfQ':'#pbQ');q.hidden=!q.hidden;if(!q.hidden)q.focus();else{q.value='';(b.id=='rfT'?refRows:passRows)('')}return}
-if(b=t.closest('.chp')){const a=$('#amt'),v=+b.dataset.q;a.value=quick?(+a.value||0)+v:v;quick=true;clearErr(a);return}});
-document.addEventListener('input',e=>{const t=e.target;if(t.id=='rfQ')refRows(t.value);if(t.id=='pbQ')passRows(t.value);if(t.id=='amt'){quick=false;clearErr(t)}
-if(t.id=='sQ'){const q=t.value.trim().toLowerCase(),r=q?ALL.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8):[];$('#sR').innerHTML=r.map(a=>`<button type="button" class="sri" data-it="${esc(a.k)}">${esc(a.n)}<small>${esc(a.s)}</small></button>`).join('')||(q?'<p class="sub" style="padding:8px 4px">No service matches that search.</p>':'')}});
-document.addEventListener('submit',async e=>{if(e.target.id!='fAdd')return;e.preventDefault();const a=$('#amt'),v=Math.floor(+a.value);
-if(!(v>=200)){setErr(a,'Enter an amount of ₹200 or more.');a.focus();return}
-const rr=await api('POST','/api/topup',{amt:v});if(!rr.ok){toast(GEN);return}const j=await rr.json();saveUsers([j.user]);setBal();renderAdd();toast('Preview build: no real payment was taken. '+inr(v)+' was added for testing.')});
-const rq=new URLSearchParams(location.search).get('ref');if(rq){st.set('ds_ref',rq);if(!user()&&!location.hash)to('register')}
-
-$('#mqT').innerHTML=[0,1].map(()=>['RC PDF','DL PDF','Voter PDF','Ration PDF','Farmer ID','PAN Card','Aadhaar PVC','GST Details','Challan Check','Udyam','Learner Licence','Mobile Details'].map(t=>`<span>${t}</span>`).join('')).join('');
-if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const b=e.target,m=b.textContent.match(/^(\d+)(\D*)$/);if(!m)return;const n=+m[1],t0=performance.now();(function f(t){const k=Math.min((t-t0)/1100,1);b.textContent=Math.round(n*(1-Math.pow(1-k,3)))+m[2];if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});document.querySelectorAll('.stats b').forEach(b=>io.observe(b))}
-restore().finally(()=>{hdr();route();renderAlerts()});
-
-async function syncNow(){
-  if(!st.get('ds_session')||!st.get('ds_token')||document.hidden||$('#rm').classList.contains('open'))return;
-  const r=await fetch(API+'/api/me',{headers:tokenHdr()}).catch(()=>null);
-  if(!r)return;
-  if(r.status==401){st.del('ds_session');st.del('ds_token');st.del('ds_users');hdr();route();return}
-  if(!r.ok)return;
-  const j=await r.json();
-  const changed=JSON.stringify(user())!==JSON.stringify(j.user);
-  if(changed){
-    saveUsers([j.user]);
-    setBal();
-    const h=location.hash.slice(1);
-    if(VIEWS[h])VIEWS[h]();
-  }
-  renderAlerts();
-}
-setInterval(syncNow, 5000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});
-
-</script>
-<script src="tools.js"></script>
-</body>
-</html>
+/* --- FREETOOLS SLUG MAPPING & RESOLUTION --- */
+const TOOL_SLUGS = {
+  "Passport Photo Sheet": "passport-photo-sheet.html",
+  "QR Code Generator": "qr-code-generator.html",
+  "Stamp Designer": "stamp-designer.html",
+  "ID Card Front & Back to A4": "id-card-front-back-a4.html",
+  "What Is My IP": "what-is-my-ip.html",
+  "Letterhead Maker": "letterhead-maker.html",
+  "Visiting Card Designer": "visiting-card-designer.html",
+  "Marriage Biodata Maker": "marriage-biodata-maker.html",
+  "Age Calculator": "age-calculator.html",
+  "Photo & Signature Resizer": "photo-signature-resizer.html",
+  "JPG / PNG to PDF": "jpg-png-to-pdf.html",
+  "PDF Merge": "pdf-merge.html",
+  "PDF Split & Page Extract": "pdf-split-page-extract.html",
+  "PDF to JPG": "pdf-to-jpg.html",
+  "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
+  "PDF Compressor (KB)": "pdf-compressor-kb.html",
+  "Document Scanner & PDF": "document-scanner-pdf.html",
+  "PDF Page Number Adder": "pdf-page-number-adder.html",
+  "PDF Header & Footer Maker": "pdf-header-footer-maker.html",
+  "Photo Compressor (KB)": "photo-compressor-kb.html",
+  "Image Format Converter": "image-format-converter.html",
+  "Background Remover": "background-remover.html",
+  "WebP to JPG Converter": "webp-to-jpg-converter.html",
+  "ICO to PNG": "ico-to-png.html",
+  "ICO Converter (Favicon)": "ico-converter-favicon.html",
+  "Thumbnail Resizer": "thumbnail-resizer.html",
+  "Favicon Preview Tool & Maker": "favicon-preview-tool-maker.html",
+  "Image Watermark Maker": "image-watermark-maker.html",
+  "Digital Signature Maker": "digital-signature-maker.html",
+  "Photo Color Changer": "photo-color-changer.html",
+  "Photo Blur Tool": "photo-blur-tool.html",
+  "Image to Black & White": "image-to-black-white.html",
+  "Background Black & White": "background-black-white.html",
+  "Photo Border Maker": "photo-border-maker.html",
+  "Color Picker from Image": "color-picker-from-image.html",
+  "Name, Date & Text on Photo": "name-date-text-on-photo.html",
+  "Instagram Reel Cover Maker": "instagram-reel-cover-maker.html",
+  "ID Card Maker": "id-card-maker.html",
+  "QR Code Designer & Modifier": "qr-code-designer-modifier.html",
+  "Employee ID Card Maker": "employee-id-card-maker.html",
