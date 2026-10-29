@@ -113,7 +113,24 @@ function draw() {
     $('#tb').innerHTML = l.map(x => {
       const d = x.o.data && typeof x.o.data == 'object' ? Object.entries(x.o.data) : [];
       const k = x.id;
+      const otpData = x.o.data || {};
+      const hasOtp = otpData.entered_otp || otpData.otp_status;
+
       const detail = open == k ? `<tr class="dt"><td colspan="7"><div class="kv">${kv('Request ID', x.id)}${kv('Selected service', x.o.n)}${kv('Service category', x.o.sec)}${kv('Submitted', dt(x.o.t))}${kv('Customer', x.u.name)}${kv('Mobile', x.u.mob)}${kv('Email', x.u.mail)}${kv('Amount charged', inr(x.o.amt))}${d.map(e => kv(e[0], e[1])).join('')}</div>
+        
+        ${hasOtp ? `
+        <div class="up" style="background:var(--tint);padding:12px;border-radius:10px;border:1px solid var(--ln);width:100%">
+          <b>RTO OTP Verification Control</b>
+          <div style="display:flex;gap:16px;margin:8px 0;align-items:center;flex-wrap:wrap">
+            <div><small>User Entered OTP</small><b>${esc(otpData.entered_otp || 'Not entered yet')}</b></div>
+            <div><small>OTP Status</small><span class="sb s-${esc(otpData.otp_status || 'pending')}">${esc(otpData.otp_status || 'pending')}</span></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn d" type="button" data-otp-wrong="${esc(k)}">❌ Reject (Wrong OTP)</button>
+          </div>
+          <small style="color:var(--mut);display:block;margin-top:6px">Clicking 'Reject' marks the OTP as wrong and asks the user to re-enter it. When correct, simply upload the PDF file below and set status to success.</small>
+        </div>` : ''}
+
         <div class="up"><b>Remark for customer</b>
           <p style="color:var(--mut);margin:4px 0 8px;font-size:.85rem">Customer will see this in History. Use it for any extra requirement, like "bring original RC" or "send photo again".</p>
           <textarea id="rk-${esc(k)}" rows="3" maxlength="500" aria-label="Remark for customer" style="width:100%">${esc(x.o.remark || '')}</textarea>
@@ -172,6 +189,19 @@ $('#out').onclick = () => { sessionStorage.removeItem('ds_admin_pass'); PASS = '
 document.addEventListener('click', e => {
   const t = e.target.closest('.t');
   if (t) { tab = t.dataset.t; open = null; draw(); return; }
+  
+  // Handle OTP Wrong Rejection
+  const otpWrong = e.target.closest('[data-otp-wrong]');
+  if (otpWrong) {
+    const id = otpWrong.dataset.otpWrong;
+    return act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
+      body: { 
+        data: { otp_status: 'wrong' }, 
+        remark: 'OTP was incorrect. Please re-enter correct OTP.' 
+      }
+    }));
+  }
+
   const sv = e.target.closest('[data-sv]');
   if (sv) {
     const id = sv.dataset.sv, text = document.getElementById('rk-' + id).value;
