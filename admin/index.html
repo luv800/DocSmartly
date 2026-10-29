@@ -17,7 +17,7 @@ header{position:sticky;top:0;z-index:10;background:rgba(245,248,255,.96);backdro
 header .w{display:flex;align-items:center;gap:12px;height:60px}
 .lg{font-weight:800;font-size:1.1rem;margin-right:auto}.lg small{font-weight:600;color:var(--mut);margin-left:6px}
 .btn{border:0;border-radius:9px;padding:8px 14px;min-height:40px;font:700 .84rem 'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;background:var(--ac);color:#fff}
-.btn.o{background:#fff;color:var(--ink);border:1.5px solid var(--ln)}.btn.d{background:#fff;color:var(--er);border:1.5px solid #f3b8b2}
+.btn.o{background:#fff;color:var(--ink);border:1.5px solid var(--ln)}.btn.d{background:#fff;color:var(--er);border:1.5px solid #f3b8b2}.btn.s{background:var(--ok);color:#fff}
 :focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
 input,select{background:#fff;border:1.5px solid var(--ln);border-radius:9px;padding:8px 12px;min-height:40px;font:500 .9rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink)}
 .gate{min-height:80vh;display:grid;place-items:center;padding:20px}
@@ -36,22 +36,18 @@ tr.dt td{background:var(--bg);padding:14px 18px}
 .sb{display:inline-block;border-radius:99px;padding:2px 10px;font-size:.74rem;font-weight:700;text-transform:capitalize}
 .s-pending{background:#fff1cc;color:#6b4200}.s-processing{background:#dbe7ff;color:#1b44ad}.s-success{background:#e0f5ea;color:#0f6b45}.s-failed{background:#fdecea;color:#7a1a12}
 .emp{padding:28px;text-align:center;color:var(--mut)}.note{background:var(--tint);border:1px solid var(--ln);border-radius:10px;padding:10px 14px;font-size:.84rem;color:var(--mut);margin-bottom:14px}
-tr>td{transition:background .25s}tr.r-success>td{background:#a8e6bd}tr.r-failed>td{background:#f5a9a3}tr.r-processing>td{background:#ffe680}tr.r-pending>td{background:#b3d0ff}
-tr.r-success>td:first-child{box-shadow:inset 4px 0 0 #12803f}tr.r-failed>td:first-child{box-shadow:inset 4px 0 0 #b42318}tr.r-processing>td:first-child{box-shadow:inset 4px 0 0 #d9a400}tr.r-pending>td:first-child{box-shadow:inset 4px 0 0 #2457d6}
-.lk{background:none;border:0;color:var(--ac2);font:700 .85rem 'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;padding:8px;min-height:40px}
 .up{margin-top:14px;display:grid;gap:8px;justify-items:start;font-size:.86rem}
 [hidden]{display:none!important}
-@media(max-width:700px){.w{padding-inline:14px}table{min-width:0}thead{display:none}tr,td{display:block}tr{border-bottom:1px solid var(--ln);padding:8px 12px}td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:10px}td::before{content:attr(data-l);color:var(--mut);font-size:.74rem;text-transform:uppercase}tr.dt td{display:block}tr.dt td::before{content:none}.tabs .sp{display:none}}
 </style>
 </head>
 <body>
-<header><div class="w"><span class="lg">DocSmartly<small>Admin</small></span><button class="btn o" id="out" hidden>Log out</button></div></header>
+<header><div class="w"><span class="lg">DocSmartly<small>Admin (Live Sync)</small></span><button class="btn o" id="out" hidden>Log out</button></div></header>
 
-<div class="gate" id="gate"><form id="gf"><h2>Admin login</h2><input id="gp" type="password" autocomplete="current-password" placeholder="Passcode" aria-label="Passcode"><p class="err" id="ge" hidden>Wrong passcode.</p><button class="btn" type="submit">Open admin panel</button><button class="lk" type="button" id="fg">Forgot passcode?</button></form></div>
+<div class="gate" id="gate"><form id="gf"><h2>Admin login</h2><input id="gp" type="password" autocomplete="current-password" placeholder="Passcode" aria-label="Passcode"><p class="err" id="ge" hidden>Wrong passcode.</p><button class="btn" type="submit">Open admin panel</button></form></div>
 
 <main class="w" id="main" hidden style="padding-block:8px 60px">
 <div class="stt" id="stt"></div>
-<div class="note">Live data from the server. Status changes and result files you save here are visible to the customer.</div>
+<div class="note">Live auto-sync active (Updates every 3 seconds). Approve or Reject user OTPs instantly.</div>
 <div class="tabs"><button class="t on" data-t="req">Service requests</button><button class="t" data-t="cus">Customers</button><span class="sp"></span>
 <button class="btn o" id="csv">Export CSV</button></div>
 <div class="bar"><input id="q" type="search" placeholder="Search name, mobile, email, service, request ID" aria-label="Search"><select id="fs" aria-label="Filter by status"><option value="">All statuses</option><option>pending</option><option>processing</option><option>success</option><option>failed</option></select></div>
@@ -60,13 +56,13 @@ tr.r-success>td:first-child{box-shadow:inset 4px 0 0 #12803f}tr.r-failed>td:firs
 
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const REFRESH_MS = 10000;
+const REFRESH_MS = 3000; // Fast live sync every 3 seconds
 const $ = s => document.querySelector(s);
 const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
 const dt = t => t ? new Date(t).toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-';
 const ST = ['pending', 'processing', 'success', 'failed'];
-let DATA = [], PASS = '', tab = 'req', open = null, lastSync = null;
+let DATA = [], PASS = '', tab = 'req', open = null;
 
 async function api(method, path, {body, file} = {}) {
   const h = {'x-admin-passcode': PASS}, o = {method, headers: h};
@@ -76,18 +72,18 @@ async function api(method, path, {body, file} = {}) {
   if (!r.ok) { const e = new Error(String(r.status)); e.status = r.status; throw e; }
   return r.json();
 }
+
 async function load() {
   DATA = (await api('GET', '/api/admin/users')).users;
-  lastSync = new Date();
 }
+
 async function act(fn) {
   try { await fn(); await load(); draw(); }
-  catch (x) { alert('Failed (' + x.message + '). Check the connection and try again.'); }
+  catch (x) { alert('Action failed (' + x.message + ').'); }
 }
 
 const users = () => DATA;
-const reqs = () => DATA.flatMap(u => (u.orders || []).map(o => ({u, o, id: o.id})))
-  .sort((a, b) => b.o.t - a.o.t);
+const reqs = () => DATA.flatMap(u => (u.orders || []).map(o => ({u, o, id: o.id}))).sort((a, b) => b.o.t - a.o.t);
 const kv = (l, v) => `<div><small>${esc(l)}</small>${esc(v === '' || v == null ? '-' : typeof v == 'object' ? JSON.stringify(v) : v)}</div>`;
 
 function stats() {
@@ -101,7 +97,6 @@ function stats() {
 function draw() {
   stats();
   $('#fs').hidden = tab != 'req';
-  $('#q').placeholder = tab == 'req' ? 'Search name, mobile, email, service, request ID' : 'Search name, mobile, email, referral code';
   document.querySelectorAll('.tabs .t').forEach(b => b.classList.toggle('on', b.dataset.t == tab));
   const q = $('#q').value.trim().toLowerCase();
 
@@ -114,92 +109,82 @@ function draw() {
       const d = x.o.data && typeof x.o.data == 'object' ? Object.entries(x.o.data) : [];
       const k = x.id;
       const otpData = x.o.data || {};
-      const hasOtp = otpData.entered_otp || otpData.otp_status;
+      const hasOtpField = x.o.n && x.o.n.includes('RC PDF INSTANT');
 
-      const detail = open == k ? `<tr class="dt"><td colspan="7"><div class="kv">${kv('Request ID', x.id)}${kv('Selected service', x.o.n)}${kv('Service category', x.o.sec)}${kv('Submitted', dt(x.o.t))}${kv('Customer', x.u.name)}${kv('Mobile', x.u.mob)}${kv('Email', x.u.mail)}${kv('Amount charged', inr(x.o.amt))}${d.map(e => kv(e[0], e[1])).join('')}</div>
+      const detail = open == k ? `<tr class="dt"><td colspan="7"><div class="kv">${kv('Request ID', x.id)}${kv('Selected service', x.o.n)}${kv('Submitted', dt(x.o.t))}${kv('Customer', x.u.name)}${kv('Mobile', x.u.mob)}${kv('Email', x.u.mail)}${kv('Amount charged', inr(x.o.amt))}${d.map(e => kv(e[0], e[1])).join('')}</div>
         
-        ${hasOtp ? `
-        <div class="up" style="background:var(--tint);padding:12px;border-radius:10px;border:1px solid var(--ln);width:100%">
+        ${hasOtpField ? `
+        <div class="up" style="background:var(--tint);padding:14px;border-radius:12px;border:1.5px solid var(--ln);width:100%">
           <b>RTO OTP Verification Control</b>
-          <div style="display:flex;gap:16px;margin:8px 0;align-items:center;flex-wrap:wrap">
-            <div><small>User Entered OTP</small><b>${esc(otpData.entered_otp || 'Not entered yet')}</b></div>
-            <div><small>OTP Status</small><span class="sb s-${esc(otpData.otp_status || 'pending')}">${esc(otpData.otp_status || 'pending')}</span></div>
+          <div style="display:flex;gap:20px;margin:10px 0;align-items:center;flex-wrap:wrap">
+            <div><small>User Entered OTP</small><b style="font-size:1.15rem;color:var(--ac)">${esc(otpData.entered_otp || 'Not entered yet')}</b></div>
+            <div><small>Current OTP Status</small><span class="sb s-${esc(otpData.otp_status || 'pending')}">${esc(otpData.otp_status || 'pending')}</span></div>
           </div>
-          <div style="display:flex;gap:8px;margin-top:8px">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+            <button class="btn s" type="button" data-otp-correct="${esc(k)}">✅ Approve (Correct OTP)</button>
             <button class="btn d" type="button" data-otp-wrong="${esc(k)}">❌ Reject (Wrong OTP)</button>
           </div>
-          <small style="color:var(--mut);display:block;margin-top:6px">Clicking 'Reject' marks the OTP as wrong and asks the user to re-enter it. When correct, simply upload the PDF file below and set status to success.</small>
+          <small style="color:var(--mut);display:block;margin-top:6px">Approve makes status processing &amp; enables file upload. Reject notifies user to re-enter OTP.</small>
         </div>` : ''}
 
         <div class="up"><b>Remark for customer</b>
-          <p style="color:var(--mut);margin:4px 0 8px;font-size:.85rem">Customer will see this in History. Use it for any extra requirement, like "bring original RC" or "send photo again".</p>
-          <textarea id="rk-${esc(k)}" rows="3" maxlength="500" aria-label="Remark for customer" style="width:100%">${esc(x.o.remark || '')}</textarea>
+          <textarea id="rk-${esc(k)}" rows="3" maxlength="500" style="width:100%">${esc(x.o.remark || '')}</textarea>
           <div style="margin-top:8px"><button class="btn o" type="button" data-sv="${esc(k)}">Save remark</button></div></div>
         <div class="up"><b>Result document for customer</b>${x.o.file
-          ? `<p>${esc(x.o.file.name)} (${Math.round(x.o.file.size / 1024)} KB), uploaded ${dt(x.o.file.t)}</p><button class="btn d" data-rm="${esc(k)}">Remove file</button>`
+          ? `<p>${esc(x.o.file.name)} (${Math.round(x.o.file.size / 1024)} KB)</p><button class="btn d" data-rm="${esc(k)}">Remove file</button>`
           : '<p style="color:var(--mut)">No file uploaded yet.</p>'}
-        <input type="file" data-up="${esc(k)}" accept=".pdf,.jpg,.jpeg,.png,.zip" aria-label="Upload result document">
-        <small style="color:var(--mut)">PDF, JPG, PNG or ZIP, up to 1.5 MB. Uploading again replaces the file.</small></div>
-        ${d.length ? '' : '<p style="color:var(--mut);margin-top:10px">No form data was saved with this request.</p>'}</td></tr>` : '';
+        <input type="file" data-up="${esc(k)}" accept=".pdf,.jpg,.jpeg,.png,.zip"></div></td></tr>` : '';
+
       return `<tr class="r-${esc(x.o.s)}"><td data-l="Date">${dt(x.o.t)}</td><td data-l="Request ID">${esc(x.id)}</td>
-        <td data-l="Service"><b>${esc(x.o.n || '-')}</b><br><small>${esc(x.o.sec || '')}</small>${x.o.remark ? `<br><small style="color:var(--mut)">Remark: ${esc(x.o.remark)}</small>` : ''}</td>
+        <td data-l="Service"><b>${esc(x.o.n || '-')}</b><br><small>${esc(x.o.sec || '')}</small></td>
         <td data-l="Customer">${esc(x.u.name)}<br><small>${esc(x.u.mob)}</small></td>
         <td data-l="Amount">${inr(x.o.amt)}</td>
-        <td data-l="Status"><select data-st="${esc(k)}" aria-label="Status">${ST.map(s => `<option${s == x.o.s ? ' selected' : ''}>${s}</option>`).join('')}</select></td>
+        <td data-l="Status"><select data-st="${esc(k)}">${ST.map(s => `<option${s == x.o.s ? ' selected' : ''}>${s}</option>`).join('')}</select></td>
         <td><button class="btn o" data-o="${esc(k)}">${open == k ? 'Hide' : 'View'}</button></td></tr>` + detail;
     }).join('') || '<tr><td colspan="7" class="emp">No service requests yet.</td></tr>';
   } else {
+    // Customers tab
     const l = users().filter(u => !q || [u.name, u.mob, u.mail, u.code].join(' ').toLowerCase().includes(q));
-    $('#th').innerHTML = '<tr><th>Name</th><th>Mobile</th><th>Email</th><th>Wallet</th><th>Requests</th><th>Referral code</th><th></th></tr>';
+    $('#th').innerHTML = '<tr><th>Name</th><th>Mobile</th><th>Email</th><th>Wallet</th><th>Requests</th><th></th></tr>';
     $('#tb').innerHTML = l.map(u => {
-      const k = 'c' + u.id, by = users().find(x => x.id == u.refBy);
-      const detail = open == k ? `<tr class="dt"><td colspan="7"><div class="kv">${kv('Customer ID', u.id)}${kv('Full name', u.name)}${kv('Mobile', u.mob)}${kv('Email', u.mail)}${kv('Wallet balance', inr(u.bal))}${kv('Referral code', u.code)}${kv('Referred by', by ? by.name : '-')}${kv('People referred', (u.refs || []).length)}${kv('Total requests', (u.orders || []).length)}</div>
-        <h3 style="font-size:.95rem;margin:14px 0 8px">Wallet transactions</h3><div class="kv">${(u.tx || []).slice().sort((a, b) => b.t - a.t).map(t => kv(dt(t.t) + ' · ' + t.type, (t.type == 'credit' ? '+' : '−') + inr(t.amt) + ' · ' + t.note)).join('') || '<div>No transactions</div>'}</div></td></tr>` : '';
-      return `<tr><td data-l="Name"><b>${esc(u.name)}</b></td><td data-l="Mobile">${esc(u.mob)}</td><td data-l="Email">${esc(u.mail)}</td>
-        <td data-l="Wallet">${inr(u.bal)}</td><td data-l="Requests">${(u.orders || []).length}</td><td data-l="Referral">${esc(u.code || '-')}</td>
-        <td><button class="btn o" data-o="${esc(k)}">${open == k ? 'Hide' : 'View'}</button></td></tr>` + detail;
+      const k = 'c' + u.id;
+      const detail = open == k ? `<tr class="dt"><td colspan="7"><div class="kv">${kv('Customer ID', u.id)}${kv('Full name', u.name)}${kv('Mobile', u.mob)}${kv('Email', u.mail)}${kv('Wallet balance', inr(u.bal))}</div></td></tr>` : '';
+      return `<tr><td><b>${esc(u.name)}</b></td><td>${esc(u.mob)}</td><td>${esc(u.mail)}</td><td>${inr(u.bal)}</td><td>${(u.orders || []).length}</td><td><button class="btn o" data-o="${esc(k)}">${open == k ? 'Hide' : 'View'}</button></td></tr>` + detail;
     }).join('') || '<tr><td colspan="7" class="emp">No customers yet.</td></tr>';
   }
 }
 
-/* ---------- login / session ---------- */
-function show() {
-  const a = !!PASS;
-  $('#gate').hidden = a; $('#main').hidden = !a; $('#out').hidden = !a;
-  if (a) draw();
-}
+// Login & Events
 $('#gf').onsubmit = async e => {
   e.preventDefault();
-  const err = $('#ge');
   PASS = $('#gp').value;
-  try {
-    await load();
-    sessionStorage.setItem('ds_admin_pass', PASS);
-    $('#gp').value = ''; err.hidden = true; show();
-  } catch (x) {
-    PASS = '';
-    err.textContent = x.status == 401 ? 'Wrong passcode.' : 'Server not reachable. Try again.';
-    err.hidden = false;
-  }
+  try { await load(); sessionStorage.setItem('ds_admin_pass', PASS); $('#gate').hidden = true; $('#main').hidden = false; $('#out').hidden = false; draw(); }
+  catch { PASS = ''; $('#ge').hidden = false; }
 };
-$('#fg').onclick = () => alert('The admin passcode is the ADMIN_PASSCODE secret in Cloudflare. Change it with: npx wrangler secret put ADMIN_PASSCODE');
-$('#out').onclick = () => { sessionStorage.removeItem('ds_admin_pass'); PASS = ''; DATA = []; open = null; show(); };
+$('#out').onclick = () => { sessionStorage.removeItem('ds_admin_pass'); PASS = ''; DATA = []; location.reload(); };
 
-/* ---------- events ---------- */
-document.addEventListener('click', e => {
+document.addEventListener('click', async e => {
   const t = e.target.closest('.t');
   if (t) { tab = t.dataset.t; open = null; draw(); return; }
-  
-  // Handle OTP Wrong Rejection
-  const otpWrong = e.target.closest('[data-otp-wrong]');
-  if (otpWrong) {
-    const id = otpWrong.dataset.otpWrong;
-    return act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
-      body: { 
-        data: { otp_status: 'wrong' }, 
-        remark: 'OTP was incorrect. Please re-enter correct OTP.' 
-      }
+
+  // Handle Correct OTP Approve
+  const correctBtn = e.target.closest('[data-otp-correct]');
+  if (correctBtn) {
+    const id = correctBtn.dataset.otpCorrect;
+    await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
+      body: { data: { otp_status: 'approved' }, s: 'processing', remark: 'OTP Verified Successfully! Please wait for PDF upload.' }
     }));
+    return;
+  }
+
+  // Handle Wrong OTP Reject
+  const wrongBtn = e.target.closest('[data-otp-wrong]');
+  if (wrongBtn) {
+    const id = wrongBtn.dataset.otpWrong;
+    await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
+      body: { data: { otp_status: 'wrong' }, remark: 'Incorrect OTP entered. Please re-enter correct OTP.' }
+    }));
+    return;
   }
 
   const sv = e.target.closest('[data-sv]');
@@ -210,64 +195,33 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-o]');
   if (b) { open = open == b.dataset.o ? null : b.dataset.o; draw(); return; }
   const rm = e.target.closest('[data-rm]');
-  if (rm && confirm('Remove this file? The customer will no longer be able to download it.'))
+  if (rm && confirm('Remove this file?'))
     act(() => api('DELETE', `/api/admin/requests/${encodeURIComponent(rm.dataset.rm)}/file`));
 });
+
 document.addEventListener('change', e => {
   const id = e.target.dataset.st, up = e.target.dataset.up;
   if (id) return act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, {body: {s: e.target.value}}));
   if (up) {
     const f = e.target.files[0];
     if (!f) return;
-    if (f.size > 1.5 * 1024 * 1024) { alert('File is too large. Maximum 1.5 MB.'); e.target.value = ''; return; }
     act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(up)}/file`, {file: f}));
   }
 });
+
 $('#q').oninput = draw;
 $('#fs').onchange = draw;
 
-/* ---------- live refresh ----------
-   Reloads data every 10 seconds. Pauses when the tab is hidden, and when the
-   admin is typing (so a remark or search is never wiped mid-edit). */
-const typing = () => {
-  const el = document.activeElement;
-  return !!el && ['TEXTAREA', 'SELECT', 'INPUT'].includes(el.tagName) && el.closest('#main');
-};
+// Live auto-refresh background sync every 3 seconds
+const typing = () => { const el = document.activeElement; return !!el && ['TEXTAREA', 'SELECT', 'INPUT'].includes(el.tagName); };
 setInterval(async () => {
   if (!PASS || document.hidden || typing()) return;
-  try { await load(); draw(); } catch (x) { if (x.status == 401) { PASS = ''; sessionStorage.removeItem('ds_admin_pass'); show(); } }
+  try { await load(); draw(); } catch {}
 }, REFRESH_MS);
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && PASS && !typing()) load().then(draw).catch(() => {});
-});
 
-/* ---------- CSV export ---------- */
-$('#csv').onclick = () => {
-  const c = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
-  let rows, name;
-  if (tab == 'req') {
-    name = 'requests';
-    rows = [['Date','Request ID','Service','Customer','Mobile','Email','Amount','Status','Remark','Form data']]
-      .concat(reqs().map(x => [dt(x.o.t), x.id, x.o.n, x.u.name, x.u.mob, x.u.mail, x.o.amt, x.o.s, x.o.remark || '', JSON.stringify(x.o.data || {})]));
-  } else {
-    name = 'customers';
-    rows = [['Name','Mobile','Email','Wallet','Requests','Referral code']]
-      .concat(users().map(u => [u.name, u.mob, u.mail, u.bal, (u.orders || []).length, u.code]));
-  }
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['\ufeff' + rows.map(r => r.map(c).join(',')).join('\n')], {type: 'text/csv'}));
-  a.download = 'docsmartly-' + name + '.csv';
-  a.click();
-};
-
-/* ---------- restore session on refresh ---------- */
 (async () => {
   const p = sessionStorage.getItem('ds_admin_pass');
-  if (p) {
-    PASS = p;
-    try { await load(); } catch (x) { PASS = ''; sessionStorage.removeItem('ds_admin_pass'); }
-  }
-  show();
+  if (p) { PASS = p; try { await load(); $('#gate').hidden = true; $('#main').hidden = false; $('#out').hidden = false; draw(); } catch { PASS = ''; } }
 })();
 </script>
 </body>
