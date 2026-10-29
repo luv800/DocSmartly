@@ -566,8 +566,8 @@ function getToolUrl(name) {
     "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
     "PDF Compressor (KB)": "pdf-compressor.html",
     "Document Scanner & PDF": "document-scanner.html",
-    "PDF Page Number Adder": "pdf-page-number-adder.html",
-    "PDF Header & Footer Maker": "pdf-header-footer-maker.html",
+    "PDF Page Number Adder": "pdf_page_number_adder.html",
+    "PDF Header & Footer Maker": "pdf_header_footer_maker.html",
     "Photo Compressor (KB)": "photo-compressor.html",
     "Image Format Converter": "image-converter.html",
     "Background Remover": "background-remover.html",
@@ -590,7 +590,7 @@ function getToolUrl(name) {
   const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return `freetools/${fallback}.html`;
 }
-function rt(){
+  function rt(){
   const q=$('#tq').value.toLowerCase();
   $('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
   const L=q?all.filter(t=>t.n.toLowerCase().includes(q)):all.filter(t=>t.c==cat);
