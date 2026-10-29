@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>RC PDF Instant – DocSmartly</title>
-<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="../../css/styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
 if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
-  window.location.replace('/login.html');
+  window.location.replace('../../login.html');
 }
 </script>
 <style>
@@ -60,10 +60,10 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 
 <header class="ap">
   <div class="w">
-    <a href="/dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
+    <a href="../../dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
     <div class="tb">
       <span class="chip" id="walletBal">₹0.00</span>
-      <a class="btn-primary" href="/dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
+      <a class="btn-primary" href="../../dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
     </div>
   </div>
 </header>
@@ -166,7 +166,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
         <h3 style="margin: 0; font-size: 1.1rem;">History</h3>
         <p style="margin: 2px 0 0; font-size: 0.82rem; color: var(--mut);">Is service ki aapki recent requests — click karke kisi bhi order ko resume kar sakte hain</p>
       </div>
-      <a href="/dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
+      <a href="../../dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
     </div>
 
     <div class="tw">
@@ -188,7 +188,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 
 </div>
 
-<script src="/tools.js"></script>
+<script src="../../tools.js"></script>
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
 const CHARGE = 40;
@@ -278,7 +278,6 @@ async function checkAndRestoreStep() {
       document.getElementById('downloadContainer').style.display = 'block';
     }
     else if (req.s === 'success' && !req.file) {
-      // Admin ne approve kar diya hai, file abhi upload hona baki hai
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
       document.getElementById('waitTitle').textContent = '✅ OTP Verified — Request Approved!';
@@ -319,14 +318,14 @@ async function checkAndRestoreStep() {
   }
 }
 
-// Step 1: Submit Form (Fixed Request ID extraction from server response)
+// Step 1: Submit Form
 document.getElementById('fRcForm').onsubmit = async function(e) {
   e.preventDefault();
   const u = user();
   
   if (u.bal < CHARGE) {
     alert('Insufficient balance! Kripya pehle wallet top-up karein.');
-    window.location.href = '/dashboard.html#addmoney';
+    window.location.href = '../../dashboard.html#addmoney';
     return;
   }
 
@@ -367,11 +366,9 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     const j = await res.json();
     if (j.user) saveUser(j.user);
     
-    // Exact server request ID capture (checks all possible server response properties)
     currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id);
     
     if (!currentRequestId) {
-      // Fallback to latest order ID from user object if available
       const latestUser = user();
       const latestOrder = (latestUser.orders || []).sort((a,b) => b.t - a.t)[0];
       if (latestOrder) {
@@ -398,7 +395,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   }
 };
 
-// Step 2: Submit OTP (Sends correct PATCH request to server with proper ID)
+// Step 2: Submit OTP
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
@@ -533,7 +530,6 @@ function startStatusPolling() {
   }, 3000);
 }
 
-// Shows the inline "wrong OTP" message on the OTP screen and re-opens it for re-entry
 function showWrongOtp(remark) {
   document.getElementById('step3Waiting').style.display = 'none';
   document.getElementById('step2Otp').style.display = 'block';
