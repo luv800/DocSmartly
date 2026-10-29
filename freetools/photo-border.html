@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Border Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        input[type="range"]::-webkit-slider-thumb { background: #059669; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-md">🖼️</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Photo Border Maker</h1>
+                    <p class="text-xs text-slate-500">Photo par solid, dashed, dotted border — rounded corners, inner / outer border, presets.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- Upload Box State -->
+        <div id="upload-section" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-10 text-center bg-white shadow-sm transition cursor-pointer relative">
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div class="flex flex-col items-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 text-2xl shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800">JPG / PNG / WEBP photo select karein</h3>
+                <p class="text-xs text-slate-500 mt-1">ya yahan drag & drop karein — original file change nahi hoti</p>
+            </div>
+        </div>
+
+        <!-- Editor Workspace (Hidden Initially) -->
+        <div id="editor-section" class="hidden space-y-6">
+            
+            <!-- Top Change Photo Bar -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm">
+                <label class="cursor-pointer text-xs text-emerald-600 font-semibold hover:underline flex items-center space-x-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>JPG / PNG / WEBP photo select karein</span>
+                    <input type="file" id="change-file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+                <span class="text-xs text-slate-400">ya yahan drag & drop karein - original file change nahi hoti</span>
+            </div>
+
+            <!-- Workspace Grid (Controls + Preview) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Border Settings Panel -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    
+                    <!-- Presets -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-2">Presets</label>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="applyPreset('classic')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-600 text-white shadow-sm transition">Classic white</button>
+                            <button onclick="applyPreset('polaroid')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Polaroid</button>
+                            <button onclick="applyPreset('gold')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Gold frame</button>
+                            <button onclick="applyPreset('dashed')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Dashed cut line</button>
+                            <button onclick="applyPreset('rounded')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Rounded modern</button>
+                            <button onclick="applyPreset('double')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Double black</button>
+                            <button onclick="applyPreset('dotted')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Dotted fun</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Border style</label>
+                            <select id="border-style" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none">
+                                <option value="solid">Solid</option>
+                                <option value="dashed">Dashed</option>
+                                <option value="dotted">Dotted</option>
+                                <option value="double">Double</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Border color</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="color" id="border-color" value="#0f172a" class="w-8 h-8 rounded border cursor-pointer">
+                                <input type="text" id="border-color-hex" value="#0F172A" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-mono uppercase text-center">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Border Thickness -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span id="border-thick-label">Border thickness: 12px</span>
+                        </div>
+                        <input type="range" id="border-thickness" min="1" max="80" value="12" class="w-full accent-emerald-600">
+                    </div>
+
+                    <!-- Padding -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span id="padding-label">Padding (photo aur border ke beech): 20px</span>
+                        </div>
+                        <input type="range" id="border-padding" min="0" max="150" value="20" class="w-full accent-emerald-600">
+                    </div>
+
+                    <!-- Padding / Background Color -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">Padding / background color</label>
+                        <div class="flex items-center space-x-2">
+                            <input type="color" id="bg-color" value="#ffffff" class="w-8 h-8 rounded border cursor-pointer">
+                            <input type="text" id="bg-color-hex" value="#FFFFFF" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-mono uppercase text-center">
+                        </div>
+                    </div>
+
+                    <!-- Rounded Corners -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span id="radius-label">Rounded corners: 0px</span>
+                        </div>
+                        <input type="range" id="border-radius" min="0" max="100" value="0" class="w-full accent-emerald-600">
+                    </div>
+
+                    <!-- Inner Border Toggle -->
+                    <div class="flex items-center space-x-2 pt-1">
+                        <input type="checkbox" id="inner-border" class="rounded text-emerald-600 focus:ring-emerald-500">
+                        <label for="inner-border" class="text-xs font-medium text-slate-700 cursor-pointer">Inner border (Patli line photo ke andar)</label>
+                    </div>
+
+                    <!-- Extra bottom space (Polaroid) -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span id="polaroid-label">Extra bottom space (polaroid): 0px</span>
+                        </div>
+                        <input type="range" id="extra-bottom" min="0" max="250" value="0" class="w-full accent-emerald-600">
+                    </div>
+
+                    <div class="pt-2">
+                        <button id="reset-btn" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">Reset All Settings</button>
+                    </div>
+
+                </div>
+
+                <!-- Right: Live Preview Panel -->
+                <div class="lg:col-span-7 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-between relative min-h-[500px]">
+                    <div class="w-full flex items-center justify-between mb-2 px-2">
+                        <span class="bg-slate-900/70 text-white text-[10px] px-2.5 py-1 rounded-md backdrop-blur font-medium">Live Preview</span>
+                        <span class="text-xs text-slate-500 font-medium">Client-side instant render</span>
+                    </div>
+                    
+                    <div class="relative w-full overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-center max-h-[540px] flex-grow">
+                        <canvas id="preview-canvas" class="max-w-full h-auto object-contain shadow"></canvas>
+                    </div>
+
+                    <!-- Bottom Download Action Bar -->
+                    <div class="w-full mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs text-slate-600 font-medium">Quality:</label>
+                            <select id="output-quality" class="bg-slate-50 border border-slate-300 rounded-lg px-2 py-1 text-xs outline-none font-medium">
+                                <option value="0.95" selected>High</option>
+                                <option value="0.85">Medium</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="download-jpg-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download JPG</span>
+                            </button>
+                            <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download PNG</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentImg = null;
+        let originalFileName = "photo";
+
+        const fileInput = document.getElementById('file-input');
+        const changeFileInput = document.getElementById('change-file-input');
+        const uploadSection = document.getElementById('upload-section');
+        const editorSection = document.getElementById('editor-section');
+        const previewCanvas = document.getElementById('preview-canvas');
+
+        const borderStyle = document.getElementById('border-style');
+        const borderColor = document.getElementById('border-color');
+        const borderColorHex = document.getElementById('border-color-hex');
+        const borderThickness = document.getElementById('border-thickness');
+        const borderThickLabel = document.getElementById('border-thick-label');
+        const borderPadding = document.getElementById('border-padding');
+        const paddingLabel = document.getElementById('padding-label');
+        const bgColor = document.getElementById('bg-color');
+        const bgColorHex = document.getElementById('bg-color-hex');
+        const borderRadius = document.getElementById('border-radius');
+        const radiusLabel = document.getElementById('radius-label');
+        const innerBorder = document.getElementById('inner-border');
+        const extraBottom = document.getElementById('extra-bottom');
+        const polaroidLabel = document.getElementById('polaroid-label');
+
+        const resetBtn = document.getElementById('reset-btn');
+        const downloadJpgBtn = document.getElementById('download-jpg-btn');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const outputQuality = document.getElementById('output-quality');
+
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        changeFileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || 'photo';
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImg = img;
+                    uploadSection.classList.add('hidden');
+                    editorSection.classList.remove('hidden');
+                    updateCanvas();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Color sync
+        borderColor.oninput = (e) => { borderColorHex.value = e.target.value.toUpperCase(); updateCanvas(); };
+        borderColorHex.oninput = (e) => { if (e.target.value.startsWith('#') && e.target.value.length === 7) { borderColor.value = e.target.value; updateCanvas(); } };
+
+        bgColor.oninput = (e) => { bgColorHex.value = e.target.value.toUpperCase(); updateCanvas(); };
+        bgColorHex.oninput = (e) => { if (e.target.value.startsWith('#') && e.target.value.length === 7) { bgColor.value = e.target.value; updateCanvas(); } };
+
+        // Sliders update
+        borderThickness.oninput = () => { borderThickLabel.innerText = `Border thickness: ${borderThickness.value}px`; updateCanvas(); };
+        borderPadding.oninput = () => { paddingLabel.innerText = `Padding (photo aur border ke beech): ${borderPadding.value}px`; updateCanvas(); };
+        borderRadius.oninput = () => { radiusLabel.innerText = `Rounded corners: ${borderRadius.value}px`; updateCanvas(); };
+        extraBottom.oninput = () => { polaroidLabel.innerText = `Extra bottom space (polaroid): ${extraBottom.value}px`; updateCanvas(); };
+
+        [borderStyle, innerBorder].forEach(el => el.onchange = updateCanvas);
+
+        resetBtn.onclick = () => {
+            borderStyle.value = 'solid';
+            borderColor.value = '#0f172a';
+            borderColorHex.value = '#0F172A';
+            borderThickness.value = 12;
+            borderThickLabel.innerText = 'Border thickness: 12px';
+            borderPadding.value = 20;
+            paddingLabel.innerText = 'Padding (photo aur border ke beech): 20px';
+            bgColor.value = '#ffffff';
+            bgColorHex.value = '#FFFFFF';
+            borderRadius.value = 0;
+            radiusLabel.innerText = 'Rounded corners: 0px';
+            innerBorder.checked = false;
+            extraBottom.value = 0;
+            polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            updateCanvas();
+        };
+
+        window.applyPreset = function(preset) {
+            if (preset === 'classic') {
+                borderStyle.value = 'solid';
+                borderColor.value = '#ffffff'; borderColorHex.value = '#FFFFFF';
+                borderThickness.value = 25; borderThickLabel.innerText = 'Border thickness: 25px';
+                borderPadding.value = 15; paddingLabel.innerText = 'Padding (photo aur border ke beech): 15px';
+                bgColor.value = '#ffffff'; bgColorHex.value = '#FFFFFF';
+                borderRadius.value = 0; radiusLabel.innerText = 'Rounded corners: 0px';
+                innerBorder.checked = false; extraBottom.value = 0; polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            } else if (preset === 'polaroid') {
+                borderStyle.value = 'solid';
+                borderColor.value = '#ffffff'; borderColorHex.value = '#FFFFFF';
+                borderThickness.value = 20; borderThickLabel.innerText = 'Border thickness: 20px';
+                borderPadding.value = 15; paddingLabel.innerText = 'Padding (photo aur border ke beech): 15px';
+                bgColor.value = '#ffffff'; bgColorHex.value = '#FFFFFF';
+                borderRadius.value = 4; radiusLabel.innerText = 'Rounded corners: 4px';
+                innerBorder.checked = false; extraBottom.value = 90; polaroidLabel.innerText = 'Extra bottom space (polaroid): 90px';
+            } else if (preset === 'gold') {
+                borderStyle.value = 'solid';
+                borderColor.value = '#d97706'; borderColorHex.value = '#D97706';
+                borderThickness.value = 14; borderThickLabel.innerText = 'Border thickness: 14px';
+                borderPadding.value = 10; paddingLabel.innerText = 'Padding (photo aur border ke beech): 10px';
+                bgColor.value = '#fef3c7'; bgColorHex.value = '#FEF3C7';
+                borderRadius.value = 8; radiusLabel.innerText = 'Rounded corners: 8px';
+                innerBorder.checked = true; extraBottom.value = 0; polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            } else if (preset === 'dashed') {
+                borderStyle.value = 'dashed';
+                borderColor.value = '#475569'; borderColorHex.value = '#475569';
+                borderThickness.value = 8; borderThickLabel.innerText = 'Border thickness: 8px';
+                borderPadding.value = 20; paddingLabel.innerText = 'Padding (photo aur border ke beech): 20px';
+                bgColor.value = '#ffffff'; bgColorHex.value = '#FFFFFF';
+                borderRadius.value = 0; radiusLabel.innerText = 'Rounded corners: 0px';
+                innerBorder.checked = false; extraBottom.value = 0; polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            } else if (preset === 'rounded') {
+                borderStyle.value = 'solid';
+                borderColor.value = '#2563eb'; borderColorHex.value = '#2563eb';
+                borderThickness.value = 10; borderThickLabel.innerText = 'Border thickness: 10px';
+                borderPadding.value = 10; paddingLabel.innerText = 'Padding (photo aur border ke beech): 10px';
+                bgColor.value = '#eff6ff'; bgColorHex.value = '#EFF6FF';
+                borderRadius.value = 24; radiusLabel.innerText = 'Rounded corners: 24px';
+                innerBorder.checked = false; extraBottom.value = 0; polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            } else if (preset === 'double') {
+                borderStyle.value = 'double';
+                borderColor.value = '#0f172a'; borderColorHex.value = '#0F172A';
+                borderThickness.value = 16; borderThickLabel.innerText = 'Border thickness: 16px';
+                borderPadding.value = 15; paddingLabel.innerText = 'Padding (photo aur border ke beech): 15px';
+                bgColor.value = '#ffffff'; bgColorHex.value = '#FFFFFF';
+                borderRadius.value = 0; radiusLabel.innerText = 'Rounded corners: 0px';
+                innerBorder.checked = false; extraBottom.value = 0; polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            } else if (preset === 'dotted') {
+                borderStyle.value = 'dotted';
+                borderColor.value = '#db2777'; borderColorHex.value = '#DB2777';
+                borderThickness.value = 12; borderThickLabel.innerText = 'Border thickness: 12px';
+                borderPadding.value = 20; paddingLabel.innerText = 'Padding (photo aur border ke beech): 20px';
+                bgColor.value = '#fdf2f8'; bgColorHex.value = '#FDF2F8';
+                borderRadius.value = 12; radiusLabel.innerText = 'Rounded corners: 12px';
+                innerBorder.checked = false; extraBottom.value = 0; polaroidLabel.innerText = 'Extra bottom space (polaroid): 0px';
+            }
+            updateCanvas();
+        };
+
+        function updateCanvas() {
+            if (!currentImg) return;
+            const ctx = previewCanvas.getContext('2d');
+
+            const imgW = currentImg.naturalWidth;
+            const imgH = currentImg.naturalHeight;
+
+            const pad = parseInt(borderPadding.value);
+            const thick = parseInt(borderThickness.value);
+            const extraB = parseInt(extraBottom.value);
+
+            const totalW = imgW + (pad + thick) * 2;
+            const totalH = imgH + (pad + thick) * 2 + extraB;
+
+            previewCanvas.width = totalW;
+            previewCanvas.height = totalH;
+
+            // 1. Draw Background / Padding Fill
+            ctx.fillStyle = bgColor.value;
+            ctx.fillRect(0, 0, totalW, totalH);
+
+            // 2. Draw Photo with optional rounded corners
+            const photoX = pad + thick;
+            const photoY = pad + thick;
+            const radius = parseInt(borderRadius.value);
+
+            ctx.save();
+            if (radius > 0) {
+                ctx.beginPath();
+                ctx.roundRect(photoX, photoY, imgW, imgH, radius);
+                ctx.clip();
+            }
+            ctx.drawImage(currentImg, photoX, photoY, imgW, imgH);
+            ctx.restore();
+
+            // 3. Draw Inner Border if enabled
+            if (innerBorder.checked) {
+                ctx.strokeStyle = borderColor.value;
+                ctx.lineWidth = Math.max(2, Math.round(thick / 4));
+                ctx.strokeRect(photoX + 2, photoY + 2, imgW - 4, imgH - 4);
+            }
+
+            // 4. Draw Outer Border
+            const style = borderStyle.value;
+            ctx.strokeStyle = borderColor.value;
+            ctx.lineWidth = thick;
+
+            if (style === 'dashed') {
+                ctx.setLineDash([thick * 2, thick]);
+            } else if (style === 'dotted') {
+                ctx.setLineDash([thick, thick]);
+            } else {
+                ctx.setLineDash([]);
+            }
+
+            const borderRectX = thick / 2;
+            const borderRectY = thick / 2;
+            const borderRectW = totalW - thick;
+            const borderRectH = totalH - thick;
+
+            if (radius > 0 && style === 'solid') {
+                ctx.beginPath();
+                ctx.roundRect(borderRectX, borderRectY, borderRectW, borderRectH, Math.max(0, radius + thick / 2));
+                ctx.stroke();
+            } else {
+                if (style === 'double') {
+                    ctx.strokeRect(borderRectX, borderRectY, borderRectW, borderRectH);
+                    ctx.lineWidth = Math.max(2, thick / 3);
+                    ctx.strokeRect(borderRectX + thick * 0.7, borderRectY + thick * 0.7, borderRectW - thick * 1.4, borderRectH - thick * 1.4);
+                } else {
+                    ctx.strokeRect(borderRectX, borderRectY, borderRectW, borderRectH);
+                }
+            }
+        }
+
+        function downloadImage(format) {
+            if (!currentImg) return;
+            updateCanvas();
+            const quality = parseFloat(outputQuality.value);
+            const mime = format === 'png' ? 'image/png' : 'image/jpeg';
+            const ext = format === 'png' ? 'png' : 'jpg';
+            const dataUrl = previewCanvas.toDataURL(mime, quality);
+
+            const link = document.createElement('a');
+            link.download = `${originalFileName}-bordered.${ext}`;
+            link.href = dataUrl;
+            link.click();
+        }
+
+        downloadJpgBtn.onclick = () => downloadImage('jpg');
+        downloadPngBtn.onclick = () => downloadImage('png');
+    </script>
+</body>
+</html>

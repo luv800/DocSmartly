@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white font-bold text-xl shadow-md">📄</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Resume Maker</h1>
+                    <p class="text-xs text-slate-500">Professional resume templates — photo, education, skills, experience. Live preview, print, PDF.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-blue-50 border-b border-blue-100 py-2 px-4 text-center">
+        <p class="text-xs text-blue-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Controls Form (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Templates & Style Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-2">Template</label>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="setTemplate('modern')" id="tmpl-modern" class="tmpl-btn px-4 py-2 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-semibold text-xs transition">Modern (sidebar)</button>
+                        <button onclick="setTemplate('classic')" id="tmpl-classic" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Classic</button>
+                        <button onclick="setTemplate('minimal')" id="tmpl-minimal" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Minimal</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Theme color</label>
+                        <input type="color" id="theme-color" value="#1e3a8a" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Font size</label>
+                        <select id="font-size" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="normal">Normal</option>
+                            <option value="compact">Compact</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">👤 Personal details</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Full name *</label>
+                        <input type="text" id="p-name" value="Love Kumar Lalawat" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Job title / Post</label>
+                        <input type="text" id="p-title" value="Full Stack Web Developer" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Mobile</label>
+                        <input type="text" id="p-mobile" value="+91 93586 42399" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
+                        <input type="text" id="p-email" value="love@docsmartly.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Address</label>
+                        <input type="text" id="p-address" value="Bhuwana, Udaipur, Rajasthan - 313001" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date of birth</label>
+                        <input type="text" id="p-dob" value="01-01-1996" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">LinkedIn / Website</label>
+                        <input type="text" id="p-web" value="github.com/lovelalawat" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Photo (optional)</label>
+                        <input type="file" id="photo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 cursor-pointer">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Profile summary</label>
+                    <textarea id="p-summary" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">Passionate software developer with expertise in building scalable web applications and digital utilities using HTML5, Tailwind CSS, and JavaScript.</textarea>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center justify-between">
+                    <span>🎓 Education</span>
+                    <button onclick="addEducation()" class="text-xs font-semibold text-blue-600 hover:underline">+ Add education</button>
+                </h3>
+                <div id="education-container" class="space-y-3">
+                    <div class="edu-item grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <div class="md:col-span-4"><input type="text" placeholder="Degree / Class" value="B.Tech (CSE)" class="edu-deg w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="md:col-span-4"><input type="text" placeholder="College / Board" value="Rajasthan Technical University" class="edu-col w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="md:col-span-2"><input type="text" placeholder="Year" value="2018" class="edu-yr w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="md:col-span-2 flex items-center space-x-2"><input type="text" placeholder="Marks/CGPA" value="8.4 CGPA" class="edu-mk w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"><button onclick="this.closest('.edu-item').remove(); renderResume();" class="text-rose-500 font-bold px-1">✕</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Experience Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center justify-between">
+                    <span>💼 Work experience</span>
+                    <button onclick="addExperience()" class="text-xs font-semibold text-blue-600 hover:underline">+ Add experience</button>
+                </h3>
+                <div id="experience-container" class="space-y-3">
+                    <div class="exp-item bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                            <div class="md:col-span-4"><input type="text" placeholder="Post / Role" value="Lead Full Stack Developer" class="exp-role w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                            <div class="md:col-span-4"><input type="text" placeholder="Company / Shop" value="DocSmartly Tech" class="exp-comp w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                            <div class="md:col-span-3"><input type="text" placeholder="Period" value="2022 - Present" class="exp-per w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                            <div class="md:col-span-1 flex justify-end"><button onclick="this.closest('.exp-item').remove(); renderResume();" class="text-rose-500 font-bold px-1">✕</button></div>
+                        </div>
+                        <textarea placeholder="Kaam ki details / responsibilities..." rows="2" class="exp-det w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none">Developed responsive web applications, managed cloud deployments, and engineered automated document generation workflows.</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills & More Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">⭐ Skills & more</h3>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Skills (comma se alag)</label>
+                    <input type="text" id="s-skills" value="HTML5, Tailwind CSS, JavaScript, React, Node.js, Git, Python" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Languages</label>
+                        <input type="text" id="s-langs" value="English, Hindi" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Hobbies</label>
+                        <input type="text" id="s-hobbies" value="Coding, Reading Tech Blogs, Football" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Place</label>
+                        <input type="text" id="s-place" value="Udaipur" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date</label>
+                        <input type="text" id="s-date" value="29-10-2026" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Live Preview & Export (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Live Preview Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                <div class="w-full flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-700">Live preview (A4 Resume)</span>
+                    <span class="text-xs text-slate-400 font-mono">A4 Portrait</span>
+                </div>
+
+                <!-- Canvas Preview Container -->
+                <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex items-center justify-center overflow-x-auto min-h-[620px]">
+                    <canvas id="resume-canvas" class="shadow-lg rounded bg-white max-w-[340px] h-auto"></canvas>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+                    <button id="download-pdf-btn" class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📥 PDF</span>
+                    </button>
+                    <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖼️ PNG</span>
+                    </button>
+                    <button id="print-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="reset-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                        <span>🔄 Reset</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentTemplate = 'modern';
+        let photoImg = null;
+
+        const resumeCanvas = document.getElementById('resume-canvas');
+        const photoInput = document.getElementById('photo-input');
+        const themeColor = document.getElementById('theme-color');
+        const fontSize = document.getElementById('font-size');
+
+        const pName = document.getElementById('p-name');
+        const pTitle = document.getElementById('p-title');
+        const pMobile = document.getElementById('p-mobile');
+        const pEmail = document.getElementById('p-email');
+        const pAddress = document.getElementById('p-address');
+        const pDob = document.getElementById('p-dob');
+        const pWeb = document.getElementById('p-web');
+        const pSummary = document.getElementById('p-summary');
+
+        const sSkills = document.getElementById('s-skills');
+        const sLangs = document.getElementById('s-langs');
+        const sHobbies = document.getElementById('s-hobbies');
+        const sPlace = document.getElementById('s-place');
+        const sDate = document.getElementById('s-date');
+
+        window.setTemplate = function(tmpl) {
+            currentTemplate = tmpl;
+            document.querySelectorAll('.tmpl-btn').forEach(b => {
+                b.className = "tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            });
+            document.getElementById(`tmpl-${tmpl}`).className = "tmpl-btn px-4 py-2 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-semibold text-xs transition";
+            renderResume();
+        };
+
+        window.addEducation = function() {
+            const container = document.getElementById('education-container');
+            const div = document.createElement('div');
+            div.className = "edu-item grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-50 p-3 rounded-xl border border-slate-200";
+            div.innerHTML = `
+                <div class="md:col-span-4"><input type="text" placeholder="Degree / Class" class="edu-deg w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="md:col-span-4"><input type="text" placeholder="College / Board" class="edu-col w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="md:col-span-2"><input type="text" placeholder="Year" class="edu-yr w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="md:col-span-2 flex items-center space-x-2"><input type="text" placeholder="Marks/CGPA" class="edu-mk w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"><button onclick="this.closest('.edu-item').remove(); renderResume();" class="text-rose-500 font-bold px-1">✕</button></div>
+            `;
+            container.appendChild(div);
+            div.querySelectorAll('input').forEach(i => i.addEventListener('input', renderResume));
+        };
+
+        window.addExperience = function() {
+            const container = document.getElementById('experience-container');
+            const div = document.createElement('div');
+            div.className = "exp-item bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2";
+            div.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                    <div class="md:col-span-4"><input type="text" placeholder="Post / Role" class="exp-role w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                    <div class="md:col-span-4"><input type="text" placeholder="Company / Shop" class="exp-comp w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                    <div class="md:col-span-3"><input type="text" placeholder="Period" class="exp-per w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                    <div class="md:col-span-1 flex justify-end"><button onclick="this.closest('.exp-item').remove(); renderResume();" class="text-rose-500 font-bold px-1">✕</button></div>
+                </div>
+                <textarea placeholder="Kaam ki details / responsibilities..." rows="2" class="exp-det w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></textarea>
+            `;
+            container.appendChild(div);
+            div.querySelectorAll('input, textarea').forEach(i => i.addEventListener('input', renderResume));
+        };
+
+        photoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { photoImg = img; renderResume(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        [themeColor, fontSize, pName, pTitle, pMobile, pEmail, pAddress, pDob, pWeb, pSummary, sSkills, sLangs, sHobbies, sPlace, sDate].forEach(el => {
+            el.addEventListener('input', renderResume);
+            el.addEventListener('change', renderResume);
+        });
+
+        document.querySelectorAll('.edu-item input, .exp-item input, .exp-item textarea').forEach(el => {
+            el.addEventListener('input', renderResume);
+        });
+
+        function renderResume() {
+            // A4 at 300 DPI: 2480 x 3508 pixels
+            const w = 2480;
+            const h = 3508;
+            resumeCanvas.width = w;
+            resumeCanvas.height = h;
+            const ctx = resumeCanvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+
+            const tColor = themeColor.value;
+            const font = 'Poppins';
+
+            if (currentTemplate === 'modern') {
+                // Left Sidebar
+                const sideW = 800;
+                ctx.fillStyle = tColor;
+                ctx.fillRect(0, 0, sideW, h);
+
+                let sideY = 180;
+                if (photoImg) {
+                    const pSz = 340;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(sideW / 2, sideY + pSz / 2, pSz / 2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+                    ctx.drawImage(photoImg, sideW / 2 - pSz / 2, sideY, pSz, pSz);
+                    ctx.restore();
+
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 8;
+                    ctx.beginPath();
+                    ctx.arc(sideW / 2, sideY + pSz / 2, pSz / 2, 0, Math.PI * 2);
+                    ctx.stroke();
+                    sideY += pSz + 80;
+                } else {
+                    sideY += 60;
+                }
+
+                // Sidebar Contact
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold 48px '${font}', sans-serif`;
+                ctx.fillText('Contact', 100, sideY);
+                sideY += 60;
+
+                ctx.font = `34px '${font}', sans-serif`;
+                const contacts = [pMobile.value, pEmail.value, pAddress.value, pWeb.value].filter(Boolean);
+                contacts.forEach(c => {
+                    ctx.fillText(c, 100, sideY, sideW - 140);
+                    sideY += 50;
+                });
+
+                sideY += 60;
+                // Sidebar Skills
+                ctx.font = `bold 48px '${font}', sans-serif`;
+                ctx.fillText('Skills', 100, sideY);
+                sideY += 60;
+
+                ctx.font = `34px '${font}', sans-serif`;
+                sSkills.value.split(',').forEach(sk => {
+                    ctx.fillText('• ' + sk.trim(), 100, sideY, sideW - 140);
+                    sideY += 45;
+                });
+
+                // Right Main Area
+                let mainX = sideW + 120;
+                let mainY = 220;
+
+                ctx.fillStyle = '#0f172a';
+                ctx.font = `bold 84px '${font}', sans-serif`;
+                ctx.fillText(pName.value || 'Your Name', mainX, mainY);
+                mainY += 80;
+
+                ctx.fillStyle = tColor;
+                ctx.font = `600 44px '${font}', sans-serif`;
+                ctx.fillText(pTitle.value || 'Job Title', mainX, mainY);
+                mainY += 100;
+
+                // Summary
+                if (pSummary.value) {
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `36px '${font}', sans-serif`;
+                    wrapText(ctx, pSummary.value, mainX, mainY, w - mainX - 120, 52);
+                    mainY += 140;
+                }
+
+                // Experience
+                ctx.fillStyle = tColor;
+                ctx.font = `bold 52px '${font}', sans-serif`;
+                ctx.fillText('Work Experience', mainX, mainY);
+                mainY += 60;
+
+                document.querySelectorAll('.exp-item').forEach(item => {
+                    const role = item.querySelector('.exp-role').value;
+                    const comp = item.querySelector('.exp-comp').value;
+                    const per = item.querySelector('.exp-per').value;
+                    const det = item.querySelector('.exp-det').value;
+
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold 40px '${font}', sans-serif`;
+                    ctx.fillText(role + (comp ? ' — ' + comp : ''), mainX, mainY);
+                    
+                    ctx.textAlign = 'right';
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = `34px '${font}', sans-serif`;
+                    ctx.fillText(per, w - 120, mainY);
+                    ctx.textAlign = 'left';
+                    mainY += 50;
+
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `34px '${font}', sans-serif`;
+                    wrapText(ctx, det, mainX, mainY, w - mainX - 120, 48);
+                    mainY += 90;
+                });
+
+                mainY += 30;
+                // Education
+                ctx.fillStyle = tColor;
+                ctx.font = `bold 52px '${font}', sans-serif`;
+                ctx.fillText('Education', mainX, mainY);
+                mainY += 60;
+
+                document.querySelectorAll('.edu-item').forEach(item => {
+                    const deg = item.querySelector('.edu-deg').value;
+                    const col = item.querySelector('.edu-col').value;
+                    const yr = item.querySelector('.edu-yr').value;
+                    const mk = item.querySelector('.edu-mk').value;
+
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold 40px '${font}', sans-serif`;
+                    ctx.fillText(deg + (col ? ' — ' + col : ''), mainX, mainY);
+
+                    ctx.textAlign = 'right';
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = `34px '${font}', sans-serif`;
+                    ctx.fillText(yr + (mk ? ' (' + mk + ')' : ''), w - 120, mainY);
+                    ctx.textAlign = 'left';
+                    mainY += 65;
+                });
+
+            } else {
+                // Classic / Minimal
+                let mainY = 200;
+                let margin = 180;
+
+                ctx.fillStyle = '#0f172a';
+                ctx.font = `bold 84px '${font}', sans-serif`;
+                ctx.fillText(pName.value, margin, mainY);
+                mainY += 75;
+
+                ctx.fillStyle = tColor;
+                ctx.font = `600 44px '${font}', sans-serif`;
+                ctx.fillText(pTitle.value, margin, mainY);
+                mainY += 60;
+
+                ctx.fillStyle = '#64748b';
+                ctx.font = `32px '${font}', sans-serif`;
+                ctx.fillText([pMobile.value, pEmail.value, pAddress.value].filter(Boolean).join(' | '), margin, mainY);
+                mainY += 80;
+
+                ctx.strokeStyle = tColor;
+                ctx.lineWidth = 4;
+                ctx.beginPath(); ctx.moveTo(margin, mainY); ctx.lineTo(w - margin, mainY); ctx.stroke();
+                mainY += 60;
+
+                // Summary
+                if (pSummary.value) {
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `36px '${font}', sans-serif`;
+                    wrapText(ctx, pSummary.value, margin, mainY, w - (margin * 2), 52);
+                    mainY += 120;
+                }
+
+                // Experience
+                ctx.fillStyle = tColor;
+                ctx.font = `bold 52px '${font}', sans-serif`;
+                ctx.fillText('WORK EXPERIENCE', margin, mainY);
+                mainY += 60;
+
+                document.querySelectorAll('.exp-item').forEach(item => {
+                    const role = item.querySelector('.exp-role').value;
+                    const comp = item.querySelector('.exp-comp').value;
+                    const per = item.querySelector('.exp-per').value;
+                    const det = item.querySelector('.exp-det').value;
+
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold 40px '${font}', sans-serif`;
+                    ctx.fillText(role + (comp ? ' at ' + comp : ''), margin, mainY);
+
+                    ctx.textAlign = 'right';
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = `34px '${font}', sans-serif`;
+                    ctx.fillText(per, w - margin, mainY);
+                    ctx.textAlign = 'left';
+                    mainY += 50;
+
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `34px '${font}', sans-serif`;
+                    wrapText(ctx, det, margin, mainY, w - (margin * 2), 48);
+                    mainY += 90;
+                });
+            }
+        }
+
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            for(let n = 0; n < words.length; n++) {
+                let testLine = line + words[n] + ' ';
+                let metrics = context.measureText(testLine);
+                let testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, y);
+        }
+
+        document.getElementById('reset-btn').onclick = () => {
+            pName.value = "Love Kumar Lalawat";
+            renderResume();
+        };
+
+        document.getElementById('download-png-btn').onclick = () => {
+            const link = document.createElement('a');
+            link.download = `${(pName.value || 'resume').replace(/\s+/g, '_')}.png`;
+            link.href = resumeCanvas.toDataURL('image/png');
+            link.click();
+        };
+
+        document.getElementById('download-pdf-btn').onclick = () => {
+            window.print();
+        };
+
+        document.getElementById('print-btn').onclick = () => {
+            window.print();
+        };
+
+        // Initial render
+        renderResume();
+    </script>
+</body>
+</html>

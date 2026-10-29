@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Instagram Reel Cover Maker – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Main Container */
+.main-shell {
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Top Banner Header */
+.maker-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.maker-title-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.maker-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  color: #fff;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.maker-icon svg { width: 22px; height: 22px; }
+.maker-title-left h1 { font-size: 1.15rem; font-weight: 700; color: #0f172a; }
+.maker-title-left p { font-size: 0.8rem; color: var(--mut); margin-top: 1px; }
+
+/* Aspect Ratio Tabs Bar */
+.aspect-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.aspect-tab {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.aspect-tab:hover { background: #f8fafc; border-color: #cbd5e1; }
+.aspect-tab.active {
+  background: #e11d48;
+  border-color: #e11d48;
+  color: #fff;
+}
+
+/* Templates Carousel */
+.templates-carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+.template-card {
+  width: 80px;
+  height: 96px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 6px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.15s, border-color 0.15s;
+  background-size: cover;
+  background-position: center;
+}
+.template-card:hover { transform: translateY(-2px); border-color: #e11d48; }
+
+/* Workspace Grid (Canvas + Right Sidebar) */
+.maker-workspace {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.canvas-panel {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stage-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tool-btn-group { display: flex; gap: 6px; }
+.tool-btn {
+  background: #fff; border: 1px solid var(--border); border-radius: 7px;
+  width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer; color: #334155; transition: background 0.15s;
+}
+.tool-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.tool-btn svg { width: 16px; height: 16px; }
+
+.safe-area-toggle {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer; color: #334155;
+}
+.safe-area-toggle input { width: 15px; height: 15px; accent-color: #e11d48; cursor: pointer; }
+
+/* Canvas Stage */
+.canvas-stage-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 540px;
+  background: repeating-conic-gradient(#cbd5e1 0% 25%, #f1f5f9 0% 50%);
+  background-size: 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#previewCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  cursor: crosshair;
+}
+
+/* Right Sidebar Controls */
+.sidebar-panel {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sidebar-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 4px;
+}
+
+.bg-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.bg-tab {
+  flex: 1; background: #f1f5f9; border: 1.5px solid var(--border);
+  padding: 6px; border-radius: 7px; font-size: 0.78rem; font-weight: 700; color: #334155; cursor: pointer; text-align: center;
+}
+.bg-tab.active { background: #334155; border-color: #334155; color: #fff; }
+
+.form-row { display: flex; gap: 8px; align-items: center; }
+.form-input, .form-select {
+  width: 100%; height: 38px; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 4px 10px; font-family: inherit; font-size: 0.85rem; color: var(--ink); background: #fff; outline: none;
+}
+.form-input:focus, .form-select:focus { border-color: #e11d48; }
+
+.form-range { width: 100%; height: 6px; accent-color: #e11d48; cursor: pointer; }
+
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.sticker-item {
+  background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; height: 32px;
+  display: grid; place-items: center; font-size: 1.1rem; cursor: pointer; transition: transform 0.1s;
+}
+.sticker-item:hover { transform: scale(1.1); background: #f1f5f9; }
+
+.btn-download-cover {
+  background: #059669; color: #fff; border: none; border-radius: 10px;
+  padding: 12px 20px; font-size: 0.9rem; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; transition: background 0.2s; width: 100%;
+}
+.btn-download-cover:hover { background: #047857; }
+
+/* Two Column Info Section */
+.info-columns {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; margin-bottom: 24px;
+}
+.info-card {
+  background: var(--sf); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.info-card h3 { font-size: 1.08rem; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
+.info-steps-list { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem; color: #334155; }
+.info-steps-list li span.num { font-weight: 700; margin-right: 6px; }
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem; color: #334155; }
+.feature-list li { display: flex; align-items: center; gap: 10px; }
+.feature-list svg { width: 18px; height: 18px; color: #059669; flex-shrink: 0; }
+
+/* FAQ Section */
+.faq-section {
+  background: var(--sf); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.faq-section h3 { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
+.faq-item { border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%; background: none; border: none; padding: 16px 0; text-align: left; font-family: inherit;
+  font-size: 0.95rem; font-weight: 600; color: #1e293b; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+}
+.faq-question svg { width: 18px; height: 18px; transition: transform 0.2s ease; color: var(--mut); flex-shrink: 0; }
+.faq-item.active .faq-question svg { transform: rotate(90deg); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out, padding 0.25s ease; font-size: 0.9rem; color: var(--mut); line-height: 1.6;
+}
+.faq-item.active .faq-answer { max-height: 200px; padding-bottom: 16px; }
+
+/* Related Tools Grid */
+.related-section {
+  background: var(--sf); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.related-section h3 { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
+.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.related-card {
+  border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: #ffffff; text-decoration: none; color: var(--ink);
+  display: flex; align-items: center; gap: 12px; transition: all 0.2s;
+}
+.related-card:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+.related-icon {
+  width: 36px; height: 36px; background: #f1f5f9; border-radius: 8px; display: grid; place-items: center; color: #16337a; flex-shrink: 0;
+}
+.related-icon svg { width: 20px; height: 20px; }
+.related-card span { font-size: 0.88rem; font-weight: 600; color: #1e293b; line-height: 1.25; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .maker-workspace { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .info-columns { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+</header>
+
+<main class="main-shell">
+  
+  <!-- Notice Alert -->
+  <div class="alert-box alert-green">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    </svg>
+    <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+  </div>
+
+  <!-- Maker Title Header matching screenshot -->
+  <div class="maker-title-row">
+    <div class="maker-title-left">
+      <div class="maker-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </div>
+      <div>
+        <h1>Instagram Reel Cover Maker</h1>
+        <p>1080 × 1920 reel cover — templates, photo, gradient, text, sticker, safe-area guide. PNG / JPG.</p>
+      </div>
+    </div>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+
+  <!-- Aspect Ratio Mode Tabs matching screenshot -->
+  <div class="aspect-tabs-bar">
+    <button type="button" class="aspect-tab active" data-aspect="reel">Reel 9:16 (1080×1920)</button>
+    <button type="button" class="aspect-tab" data-aspect="portrait">Portrait 4:5 (1080×1350)</button>
+    <button type="button" class="aspect-tab" data-aspect="square">Square 1:1 (1080×1080)</button>
+  </div>
+
+  <!-- Templates Carousel matching screenshot -->
+  <div class="templates-carousel" id="templatesCarousel">
+    <!-- Populated dynamically -->
+  </div>
+
+  <!-- Workspace Grid -->
+  <div class="maker-workspace">
+    
+    <!-- Left Canvas Panel -->
+    <div class="canvas-panel">
+      <div class="stage-toolbar">
+        <div class="tool-btn-group">
+          <button type="button" class="tool-btn" id="btnUndo" title="Undo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 14L4 9l5-5"></path><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg></button>
+          <button type="button" class="tool-btn" id="btnRedo" title="Redo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 14l5-5-5-5"></path><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg></button>
+          <button type="button" class="tool-btn" id="btnBringFront" title="Bring to Front"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line></svg></button>
+          <button type="button" class="tool-btn" id="btnDelete" title="Delete Selected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+        </div>
+
+        <label class="safe-area-toggle">
+          <input type="checkbox" id="checkSafeArea" checked>
+          <span>Safe-area guide</span>
+        </label>
+
+        <button type="button" class="tool-btn" id="btnReset" title="Reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg> <span>Reset</span></button>
+      </div>
+
+      <div class="canvas-stage-wrap" id="canvasStageWrap">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Right Sidebar Controls matching screenshot -->
+    <div class="sidebar-panel">
+      
+      <!-- Background Tab -->
+      <div>
+        <div class="sidebar-section-title">Background</div>
+        <div class="bg-tabs">
+          <button type="button" class="bg-tab active" data-bgtab="color">Color</button>
+          <button type="button" class="bg-tab" data-bgtab="gradient">Gradient</button>
+          <button type="button" class="bg-tab" data-bgtab="photo">Photo</button>
+        </div>
+
+        <div id="bgOptionsColor" style="margin-top:8px;">
+          <div class="form-row">
+            <input type="color" id="bgColorPicker" value="#e11d48" style="width:40px;height:38px;border:none;background:none;cursor:pointer;border-radius:6px;">
+            <input type="text" class="form-input" id="bgColorHex" value="#E11D48">
+          </div>
+        </div>
+
+        <div id="bgOptionsGradient" style="margin-top:8px;" hidden>
+          <div class="form-row" style="margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:6px;flex:1;">
+              <span style="font-size:0.78rem;font-weight:600;color:var(--mut);">Color 1</span>
+              <input type="color" id="gradColor1" value="#9333ea" style="width:32px;height:32px;border:none;cursor:pointer;border-radius:4px;">
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex:1;">
+              <span style="font-size:0.78rem;font-weight:600;color:var(--mut);">Color 2</span>
+              <input type="color" id="gradColor2" value="#e11d48" style="width:32px;height:32px;border:none;cursor:pointer;border-radius:4px;">
+            </div>
+          </div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--mut);margin-bottom:2px;">Gradient angle: <span id="gradAngleVal">135°</span></div>
+          <input type="range" class="form-range" id="gradAngleRange" min="0" max="360" value="135">
+        </div>
+
+        <div id="bgOptionsPhoto" style="margin-top:8px;" hidden>
+          <input type="file" id="bgPhotoInput" accept="image/jpeg,image/png,image/webp" class="form-input" style="padding:6px;cursor:pointer;">
+        </div>
+      </div>
+
+      <!-- Add Elements Tab -->
+      <div>
+        <div class="sidebar-section-title">Add</div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <button type="button" class="aspect-tab" id="btnAddText" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#f8fafc;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+            <span>Text</span>
+          </button>
+          <label class="aspect-tab" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#f8fafc;cursor:pointer;margin:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <span>Logo / sticker image</span>
+            <input type="file" id="addImageInput" accept="image/jpeg,image/png,image/webp" style="display:none;">
+          </label>
+        </div>
+
+        <!-- Emoji Stickers Grid matching screenshot -->
+        <div class="sticker-grid" id="stickerGrid">
+          <div class="sticker-item" data-emoji="🔥">🔥</div>
+          <div class="sticker-item" data-emoji="⭐">⭐</div>
+          <div class="sticker-item" data-emoji="❤️">❤️</div>
+          <div class="sticker-item" data-emoji="🤩">🤩</div>
+          <div class="sticker-item" data-emoji="💪">💪</div>
+          <div class="sticker-item" data-emoji="✅">✅</div>
+          <div class="sticker-item" data-emoji="💯">💯</div>
+          <div class="sticker-item" data-emoji="👍">👍</div>
+          <div class="sticker-item" data-emoji="🚀">🚀</div>
+          <div class="sticker-item" data-emoji="💡">💡</div>
+          <div class="sticker-item" data-emoji="🎵">🎵</div>
+          <div class="sticker-item" data-emoji="✨">✨</div>
+          <div class="sticker-item" data-emoji="🌸">🌸</div>
+          <div class="sticker-item" data-emoji="👑">👑</div>
+          <div class="sticker-item" data-emoji="😎">😎</div>
+        </div>
+      </div>
+
+      <!-- Selected Element Inspector -->
+      <div id="elementInspector" hidden>
+        <div class="sidebar-section-title">Selected item settings</div>
+        <div class="form-row" style="margin-bottom:8px;" id="inspectorTextRow">
+          <input type="text" class="form-input" id="inspectorTextVal">
+        </div>
+        <div class="form-row" style="margin-bottom:8px;">
+          <input type="color" id="inspectorColor" style="width:36px;height:36px;border:none;cursor:pointer;border-radius:6px;">
+          <select class="form-select" id="inspectorFont">
+            <option value="Plus Jakarta Sans">Jakarta Sans</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Arial">Arial</option>
+            <option value="Georgia">Georgia</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div style="flex:1;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--mut);">Size</div>
+            <input type="range" class="form-range" id="inspectorSize" min="16" max="120" value="48">
+          </div>
+        </div>
+      </div>
+
+      <!-- Download Box -->
+      <div>
+        <div class="sidebar-section-title">Download</div>
+        <div class="form-row" style="margin-bottom:10px;">
+          <select class="form-select" id="downloadFormat">
+            <option value="png" selected>PNG</option>
+            <option value="jpg">JPG</option>
+          </select>
+        </div>
+        <div style="font-size:0.78rem;font-weight:600;color:var(--mut);margin-bottom:2px;">JPG quality: <span id="qualityVal">92%</span></div>
+        <input type="range" class="form-range" id="downloadQuality" min="10" max="100" value="92" style="margin-bottom:12px;">
+
+        <button type="button" class="btn-download-cover" id="btnDownloadCover">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download cover</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Two Column Info Section -->
+  <div class="info-columns">
+    <div class="info-card">
+      <h3>How to use Instagram Reel Cover Maker</h3>
+      <ol class="info-steps-list">
+        <li><span class="num">1.</span> Choose aspect ratio (Reel 9:16, Portrait 4:5, or Square 1:1)</li>
+        <li><span class="num">2.</span> Select a template or customize your background color, gradient or photo</li>
+        <li><span class="num">3.</span> Add bold text, stickers, or logos</li>
+        <li><span class="num">4.</span> Use the safe-area guide to ensure text looks great in profile grids and feeds</li>
+      </ol>
+    </div>
+
+    <div class="info-card">
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Safe-area profile grid &amp; caption guides</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Instant pre-made templates</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Interactive text &amp; emoji sticker layers</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>100% secure client-side browser processing</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h3>FAQ – Instagram Reel Cover Maker</h3>
+    
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Why do I need a safe-area guide?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Instagram crops vertical reels into square 1:1 thumbnails on your profile grid and places your caption and buttons at the bottom. The safe-area guide ensures your main title is always fully visible.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is Instagram Reel Cover Maker free?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, 100% free with no registration or watermarks required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Are my files uploaded to a server?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        No! All design rendering happens securely right inside your browser.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Free Tools Grid -->
+  <div class="related-section">
+    <h3>Related free tools</h3>
+    <div class="related-grid">
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <span>Thumbnail Resizer</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+        </div>
+        <span>Image Watermark Maker</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2M15 12h2"></path><path d="M7 16h10"></path></svg>
+        </div>
+        <span>Passport Photo Sheet</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span>JPG to PDF Converter</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/**
+ * DocSmartly Instagram Reel Cover Maker Engine
+ */
+
+let canvasWidth = 1080;
+let canvasHeight = 1920;
+let bgType = 'gradient'; // 'color', 'gradient', 'photo'
+let bgColor = '#e11d48';
+let gradColor1 = '#9333ea';
+let gradColor2 = '#e11d48';
+let gradAngle = 135;
+let bgImageObj = null;
+
+let elements = [
+  { id: 'el1', type: 'text', text: '5 TIPS', x: 540, y: 640, size: 90, color: '#ffffff', font: 'Montserrat', bold: true },
+  { id: 'el2', type: 'text', text: 'to grow on Instagram', x: 540, y: 760, size: 40, color: '#ffffff', font: 'Plus Jakarta Sans', bold: true }
+];
+let selectedIndex = 0;
+
+const templates = [
+  { name: 'Bold Pink', g1: '#9333ea', g2: '#e11d48', texts: [{t:'5 TIPS', s:90, y:640}, {t:'to grow on Instagram', s:40, y:760}] },
+  { name: 'Dark Minimal', g1: '#0f172a', g2: '#334155', texts: [{t:'MY MORNING ROUTINE', s:65, y:680}, {t:'watch till end', s:36, y:760}] },
+  { name: 'Sunset', g1: '#ea580c', g2: '#dc2626', texts: [{t:'Weekend Vibe', s:70, y:700}] },
+  { name: 'Ocean', g1: '#0284c7', g2: '#1e3a8a', texts: [{t:'TRAVEL DIARIES', s:60, y:700}] },
+  { name: 'Business', g1: '#15803d', g2: '#166534', texts: [{t:'BUSINESS TIPS', s:65, y:700}] },
+  { name: 'Neon', g1: '#4c1d95', g2: '#831843', texts: [{t:'GAMING', s:80, y:700}] }
+];
+
+const previewCanvas = document.getElementById('previewCanvas');
+const templatesCarousel = document.getElementById('templatesCarousel');
+const checkSafeArea = document.getElementById('checkSafeArea');
+const elementInspector = document.getElementById('elementInspector');
+const inspectorTextRow = document.getElementById('inspectorTextRow');
+const inspectorTextVal = document.getElementById('inspectorTextVal');
+const inspectorColor = document.getElementById('inspectorColor');
+const inspectorFont = document.getElementById('inspectorFont');
+const inspectorSize = document.getElementById('inspectorSize');
+const qualityVal = document.getElementById('qualityVal');
+const downloadQuality = document.getElementById('downloadQuality');
+
+downloadQuality.addEventListener('input', () => { qualityVal.textContent = downloadQuality.value + '%'; });
+
+// Render Templates Carousel
+function renderTemplates() {
+  templatesCarousel.innerHTML = '';
+  templates.forEach((tpl, idx) => {
+    const card = document.createElement('div');
+    card.className = 'template-card';
+    card.style.background = `linear-gradient(135deg, ${tpl.g1}, ${tpl.g2})`;
+    card.innerHTML = `<span>${tpl.name}</span>`;
+    card.addEventListener('click', () => {
+      gradColor1 = tpl.g1;
+      gradColor2 = tpl.g2;
+      bgType = 'gradient';
+      document.querySelectorAll('.bg-tab').forEach((t, i) => t.classList.toggle('active', i === 1));
+      document.getElementById('bgOptionsColor').hidden = true;
+      document.getElementById('bgOptionsGradient').hidden = false;
+      document.getElementById('bgOptionsPhoto').hidden = true;
+
+      elements = tpl.texts.map((item, i) => ({
+        id: 'tpl_' + i,
+        type: 'text',
+        text: item.t,
+        x: canvasWidth / 2,
+        y: item.y * (canvasHeight / 1920),
+        size: item.s * (canvasWidth / 1080),
+        color: '#ffffff',
+        font: 'Montserrat',
+        bold: true
+      }));
+      selectedIndex = 0;
+      redraw();
+      updateInspector();
+    });
+    templatesCarousel.appendChild(card);
+  });
+}
+renderTemplates();
+
+// Aspect Ratio Tabs
+document.querySelectorAll('.aspect-tab[data-aspect]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.aspect-tab[data-aspect]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const asp = tab.dataset.aspect;
+    if (asp === 'reel') { canvasWidth = 1080; canvasHeight = 1920; }
+    else if (asp === 'portrait') { canvasWidth = 1080; canvasHeight = 1350; }
+    else if (asp === 'square') { canvasWidth = 1080; canvasHeight = 1080; }
+    redraw();
+  });
+});
+
+// Background Tabs
+document.querySelectorAll('.bg-tab').forEach((tab, idx) => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.bg-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    bgType = idx === 0 ? 'color' : idx === 1 ? 'gradient' : 'photo';
+    document.getElementById('bgOptionsColor').hidden = (bgType !== 'color');
+    document.getElementById('bgOptionsGradient').hidden = (bgType !== 'gradient');
+    document.getElementById('bgOptionsPhoto').hidden = (bgType !== 'photo');
+    redraw();
+  });
+});
+
+document.getElementById('bgColorPicker').addEventListener('input', (e) => {
+  bgColor = e.target.value;
+  document.getElementById('bgColorHex').value = bgColor.toUpperCase();
+  redraw();
+});
+document.getElementById('gradColor1').addEventListener('input', (e) => { gradColor1 = e.target.value; redraw(); });
+document.getElementById('gradColor2').addEventListener('input', (e) => { gradColor2 = e.target.value; redraw(); });
+document.getElementById('gradAngleRange').addEventListener('input', (e) => {
+  gradAngle = parseInt(e.target.value, 10);
+  document.getElementById('gradAngleVal').textContent = gradAngle + '°';
+  redraw();
+});
+
+document.getElementById('bgPhotoInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => { bgImageObj = img; redraw(); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('btnAddText').addEventListener('click', () => {
+  elements.push({
+    id: 'txt_' + Math.random().toString(36).substr(2, 6),
+    type: 'text',
+    text: 'New Heading',
+    x: canvasWidth / 2,
+    y: canvasHeight / 2,
+    size: 54,
+    color: '#ffffff',
+    font: 'Plus Jakarta Sans',
+    bold: true
+  });
+  selectedIndex = elements.length - 1;
+  redraw();
+  updateInspector();
+});
+
+document.querySelectorAll('.sticker-item').forEach(item => {
+  item.addEventListener('click', () => {
+    elements.push({
+      id: 'stk_' + Math.random().toString(36).substr(2, 6),
+      type: 'emoji',
+      text: item.dataset.emoji,
+      x: canvasWidth / 2,
+      y: canvasHeight / 2,
+      size: 90
+    });
+    selectedIndex = elements.length - 1;
+    redraw();
+    updateInspector();
+  });
+});
+
+document.getElementById('addImageInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      elements.push({
+        id: 'img_' + Math.random().toString(36).substr(2, 6),
+        type: 'image',
+        imgObj: img,
+        x: canvasWidth / 2,
+        y: canvasHeight / 2,
+        size: 250
+      });
+      selectedIndex = elements.length - 1;
+      redraw();
+      updateInspector();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+function redraw() {
+  previewCanvas.width = canvasWidth;
+  previewCanvas.height = canvasHeight;
+  const ctx = previewCanvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  // 1. Draw Background
+  if (bgType === 'color') {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  } else if (bgType === 'gradient') {
+    const rad = (gradAngle * Math.PI) / 180;
+    const x2 = canvasWidth / 2 + Math.cos(rad) * canvasWidth;
+    const y2 = canvasHeight / 2 + Math.sin(rad) * canvasHeight;
+    const grad = ctx.createLinearGradient(canvasWidth / 2, canvasHeight / 2, x2, y2);
+    grad.addColorStop(0, gradColor1);
+    grad.addColorStop(1, gradColor2);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  } else if (bgType === 'photo' && bgImageObj) {
+    ctx.drawImage(bgImageObj, 0, 0, canvasWidth, canvasHeight);
+  } else {
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  }
+
+  // 2. Draw Elements
+  elements.forEach((el, idx) => {
+    ctx.save();
+    if (el.type === 'text') {
+      ctx.font = `${el.bold ? 'bold' : ''} ${el.size}px '${el.font}', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = Math.max(3, el.size / 12);
+      ctx.strokeText(el.text, el.x, el.y);
+      ctx.fillStyle = el.color;
+      ctx.fillText(el.text, el.x, el.y);
+    } else if (el.type === 'emoji') {
+      ctx.font = `${el.size}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(el.text, el.x, el.y);
+    } else if (el.type === 'image' && el.imgObj) {
+      const aspect = el.imgObj.naturalWidth / el.imgObj.naturalHeight;
+      const w = el.size;
+      const h = el.size / aspect;
+      ctx.drawImage(el.imgObj, el.x - w/2, el.y - h/2, w, h);
+    }
+
+    // Selection border if selected
+    if (idx === selectedIndex) {
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([6, 6]);
+      let boxW = 200, boxH = 60;
+      if (el.type === 'text' || el.type === 'emoji') {
+        boxW = Math.max(100, el.text.length * (el.size * 0.5));
+        boxH = el.size * 1.3;
+      } else if (el.type === 'image') {
+        boxW = el.size;
+        boxH = el.size;
+      }
+      ctx.strokeRect(el.x - boxW/2 - 10, el.y - boxH/2 - 10, boxW + 20, boxH + 20);
+    }
+    ctx.restore();
+  });
+
+  // 3. Safe-area Guide Overlay matching screenshot
+  if (checkSafeArea.checked && canvasHeight === 1920) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 8]);
+
+    // Profile grid (3:4) top area boundary approx y = 480 to 1440
+    ctx.strokeRect(0, 480, canvasWidth, 960);
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.font = '20px sans-serif';
+    ctx.fillText('Profile grid (3:4)', 40, 510);
+    ctx.fillText('1:1', 40, 560);
+    ctx.fillText('Caption / buttons area', 40, 1820);
+
+    // Caption bottom area boundary y = 1700
+    ctx.beginPath();
+    ctx.moveTo(0, 1700);
+    ctx.lineTo(canvasWidth, 1700);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+}
+
+// Interaction handling for dragging elements
+let isDraggingElement = false;
+previewCanvas.addEventListener('mousedown', (e) => {
+  const rect = previewCanvas.getBoundingClientRect();
+  const scaleX = canvasWidth / rect.width;
+  const scaleY = canvasHeight / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+
+  for (let i = elements.length - 1; i >= 0; i--) {
+    const el = elements[i];
+    if (Math.hypot(el.x - x, el.y - y) < 150) {
+      selectedIndex = i;
+      isDraggingElement = true;
+      redraw();
+      updateInspector();
+      return;
+    }
+  }
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isDraggingElement) return;
+  const rect = previewCanvas.getBoundingClientRect();
+  const scaleX = canvasWidth / rect.width;
+  const scaleY = canvasHeight / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+
+  if (elements[selectedIndex]) {
+    elements[selectedIndex].x = x;
+    elements[selectedIndex].y = y;
+    redraw();
+  }
+});
+
+window.addEventListener('mouseup', () => { isDraggingElement = false; });
+
+function updateInspector() {
+  if (selectedIndex < 0 || selectedIndex >= elements.length) {
+    elementInspector.hidden = true;
+    return;
+  }
+  const el = elements[selectedIndex];
+  elementInspector.hidden = false;
+  if (el.type === 'text') {
+    inspectorTextRow.hidden = false;
+    inspectorTextVal.value = el.text;
+    inspectorColor.value = el.color;
+    inspectorFont.value = el.font;
+    inspectorSize.value = el.size;
+  } else {
+    inspectorTextRow.hidden = true;
+  }
+}
+
+inspectorTextVal.addEventListener('input', () => {
+  if (elements[selectedIndex] && elements[selectedIndex].type === 'text') {
+    elements[selectedIndex].text = inspectorTextVal.value;
+    redraw();
+  }
+});
+inspectorColor.addEventListener('input', () => {
+  if (elements[selectedIndex] && elements[selectedIndex].type === 'text') {
+    elements[selectedIndex].color = inspectorColor.value;
+    redraw();
+  }
+});
+inspectorFont.addEventListener('change', () => {
+  if (elements[selectedIndex] && elements[selectedIndex].type === 'text') {
+    elements[selectedIndex].font = inspectorFont.value;
+    redraw();
+  }
+});
+inspectorSize.addEventListener('input', () => {
+  if (elements[selectedIndex]) {
+    elements[selectedIndex].size = parseInt(inspectorSize.value, 10);
+    redraw();
+  }
+});
+
+document.getElementById('btnDelete').addEventListener('click', () => {
+  if (elements.length > 0) {
+    elements.splice(selectedIndex, 1);
+    selectedIndex = Math.max(0, elements.length - 1);
+    redraw();
+    updateInspector();
+  }
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  elements = [];
+  selectedIndex = 0;
+  redraw();
+  updateInspector();
+});
+
+checkSafeArea.addEventListener('change', redraw);
+
+document.getElementById('btnDownloadCover').addEventListener('click', () => {
+  checkSafeArea.checked = false;
+  redraw();
+
+  const fmt = document.getElementById('downloadFormat').value;
+  const quality = parseInt(downloadQuality.value, 10) / 100;
+  const mime = fmt === 'jpg' ? 'image/jpeg' : 'image/png';
+  const ext = fmt === 'jpg' ? 'jpg' : 'png';
+
+  const link = document.createElement('a');
+  link.download = `Instagram_Reel_Cover_${canvasWidth}x${canvasHeight}.${ext}`;
+  link.href = previewCanvas.toDataURL(mime, quality);
+  link.click();
+
+  checkSafeArea.checked = true;
+  redraw();
+});
+
+// FAQ Accordion Toggle
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+
+// Initial draw
+redraw();
+</script>
+</body>
+</html>

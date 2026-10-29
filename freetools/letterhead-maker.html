@@ -1,55 +1,473 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Letterhead Maker – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letterhead Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Letterhead Maker</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white font-bold text-xl shadow-md">📜</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Letterhead Maker</h1>
+                    <p class="text-xs text-slate-500">Business letterhead — presets, logo, address, colors, header / footer, A4 PDF / PNG.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-rose-50 border-b border-rose-100 py-2 px-4 text-center">
+        <p class="text-xs text-rose-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Letterhead Maker'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Professional Presets Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">⚡ Readymade Presets (Ek click me load karein)</label>
+                <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                    <button onclick="applyPreset('construction')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">🏗️ Construction & Materials</button>
+                    <button onclick="applyPreset('tech')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">💻 IT & Tech Startup</button>
+                    <button onclick="applyPreset('legal')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">⚖️ Legal & Law Firm</button>
+                    <button onclick="applyPreset('medical')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">🏥 Medical & Healthcare</button>
+                    <button onclick="applyPreset('corporate')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">🏢 Corporate Enterprise</button>
+                </div>
+            </div>
+
+            <!-- Header Style Selector -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Header style</label>
+                <div class="flex items-center space-x-2">
+                    <button onclick="setHeaderStyle('logo-left')" id="style-logo-left" class="style-btn px-4 py-2 rounded-xl border border-rose-600 bg-rose-50 text-rose-700 font-semibold text-xs transition">Logo left</button>
+                    <button onclick="setHeaderStyle('centered')" id="style-centered" class="style-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Centered</button>
+                    <button onclick="setHeaderStyle('color-band')" id="style-color-band" class="style-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Color band</button>
+                </div>
+            </div>
+
+            <!-- Business Information Form -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Business / Organisation name *</label>
+                        <input type="text" id="bus-name" value="Pooja Construction & Building Materials" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tagline</label>
+                        <input type="text" id="bus-tagline" value="Authorized Supplier of Blue Metal Aggregates & M-Sand" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Address</label>
+                    <input type="text" id="bus-address" value="Nawaghar Colony, Meera Nagar, Bhuwana, Udaipur, Rajasthan - 313001" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Phone</label>
+                        <input type="text" id="bus-phone" value="+91 93586 42399" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
+                        <input type="text" id="bus-email" value="poojaconstruction@gmail.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Website</label>
+                        <input type="text" id="bus-website" value="www.poojaconstruction.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">GSTIN / Reg. no. (optional)</label>
+                        <input type="text" id="bus-gst" value="GSTIN: 08AACFP1234F1Z5" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Logo</label>
+                        <input type="file" id="bus-logo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-700 cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Primary color</label>
+                        <input type="color" id="primary-color" value="#9f1239" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Secondary color</label>
+                        <input type="color" id="secondary-color" value="#d97706" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Footer text</label>
+                    <input type="text" id="bus-footer" value="Regd. Office: Bhuwana, Udaipur | CIN: U26900RJ2026PTC123456" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+            </div>
+
+            <!-- Letter Content Editor -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Letter content (optional)</label>
+                <textarea id="letter-content" rows="6" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs outline-none leading-relaxed" placeholder="Yahan letter body likhein...">To,
+The Managing Director,
+Arohana Infratech, Udaipur.
+
+Subject: Quotation for 20mm Blue Metal Aggregates and M-Sand supply.
+
+Dear Sir/Madam,
+With reference to your ongoing residential project in Chitrakoot Nagar, we are pleased to submit our best wholesale pricing for high-grade blue stone aggregates and washed manufactured sand (M-sand).
+
+Kindly review the attached terms and confirm your purchase order at your earliest convenience.</textarea>
+            </div>
+
+        </div>
+
+        <!-- Right Preview Column (5 Cols) -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+            <div class="w-full flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-700">Live preview — A4 Letterhead</span>
+                <span class="text-xs text-slate-400 font-mono">300 DPI</span>
+            </div>
+
+            <!-- Canvas Preview Container -->
+            <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex items-center justify-center overflow-auto min-h-[560px]">
+                <canvas id="preview-canvas" class="shadow-md rounded bg-white max-w-full h-auto object-contain"></canvas>
+            </div>
+
+            <!-- Export Actions -->
+            <div class="w-full grid grid-cols-4 gap-2 mt-4">
+                <button id="download-pdf-btn" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                    <span>📥 PDF</span>
+                </button>
+                <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                    <span>🖼️ PNG</span>
+                </button>
+                <button id="print-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                    <span>🖨️ Print</span>
+                </button>
+                <button id="reset-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                    <span>🔄 Reset</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let headerStyle = 'logo-left';
+        let logoImg = null;
+
+        const previewCanvas = document.getElementById('preview-canvas');
+        const busName = document.getElementById('bus-name');
+        const busTagline = document.getElementById('bus-tagline');
+        const busAddress = document.getElementById('bus-address');
+        const busPhone = document.getElementById('bus-phone');
+        const busEmail = document.getElementById('bus-email');
+        const busWebsite = document.getElementById('bus-website');
+        const busGst = document.getElementById('bus-gst');
+        const busLogoInput = document.getElementById('bus-logo-input');
+        const primaryColor = document.getElementById('primary-color');
+        const secondaryColor = document.getElementById('secondary-color');
+        const busFooter = document.getElementById('bus-footer');
+        const letterContent = document.getElementById('letter-content');
+
+        const downloadPdfBtn = document.getElementById('download-pdf-btn');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const printBtn = document.getElementById('print-btn');
+        const resetBtn = document.getElementById('reset-btn');
+
+        const presets = {
+            construction: {
+                name: "Pooja Construction & Building Materials",
+                tagline: "Authorized Supplier of Blue Metal Aggregates & M-Sand",
+                address: "Nawaghar Colony, Meera Nagar, Bhuwana, Udaipur - 313001",
+                phone: "+91 93586 42399",
+                email: "poojaconstruction@gmail.com",
+                website: "www.poojaconstruction.com",
+                gst: "GSTIN: 08AACFP1234F1Z5",
+                pCol: "#9f1239",
+                sCol: "#d97706",
+                footer: "Regd. Office: Bhuwana, Udaipur | CIN: U26900RJ2026PTC123456"
+            },
+            tech: {
+                name: "DocSmartly Technologies Pvt. Ltd.",
+                tagline: "Cloud Applications & Digital Document Workflows",
+                address: "Infocity, Electronic Zone, Udaipur, Rajasthan - 313001",
+                phone: "+91 93586 42399",
+                email: "support@docsmartly.com",
+                website: "www.docsmartly.pages.dev",
+                gst: "GSTIN: 08AABCD1234E1Z9",
+                pCol: "#1d4ed8",
+                sCol: "#38bdf8",
+                footer: "Secure Cloud Infrastructure | ISO 27001 Certified"
+            },
+            legal: {
+                name: "Lalawat & Associates (Advocates & Legal Consultants)",
+                tagline: "Civil, Criminal & Corporate Law Practice",
+                address: "District Court Premises, Udaipur, Rajasthan - 313001",
+                phone: "+91 98290 12345",
+                email: "lalawatlegal@gmail.com",
+                website: "www.lalawatlaw.com",
+                gst: "BAR REG: R/1234/2018",
+                pCol: "#0f172a",
+                sCol: "#b45309",
+                footer: "Chambers at Udaipur & Jaipur High Court"
+            },
+            medical: {
+                name: "Aarogya Multi-Speciality Clinic & Pharmacy",
+                tagline: "Comprehensive Healthcare & Diagnostic Services",
+                address: "University Road, Bhuwana, Udaipur, Rajasthan - 313001",
+                phone: "+91 94140 98765",
+                email: "aarogyaclinic@gmail.com",
+                website: "www.aarogyaclinic.com",
+                gst: "DRUG LIC: RJ-UD-2026-88",
+                pCol: "#047857",
+                sCol: "#06b6d4",
+                footer: "Emergency Helpline: 24/7 Available"
+            },
+            corporate: {
+                name: "Mangalam Equipments Pvt. Ltd.",
+                tagline: "Authorized Dealers for SANY, AJAX & KION Heavy Machinery",
+                address: "Nawaghar Colony, Meera Nagar, Bhuwana, Udaipur - 313001",
+                phone: "+91 93586 42399",
+                email: "sales@mangalamequipments.com",
+                website: "www.mangalamequipments.com",
+                gst: "GSTIN: 08AACFM5678G1Z1",
+                pCol: "#1e3a8a",
+                sCol: "#ea580c",
+                footer: "Headquarters: Udaipur, Rajasthan | Branches across Rajasthan"
+            }
+        };
+
+        window.applyPreset = function(key) {
+            const p = presets[key];
+            if (!p) return;
+            busName.value = p.name;
+            busTagline.value = p.tagline;
+            busAddress.value = p.address;
+            busPhone.value = p.phone;
+            busEmail.value = p.email;
+            busWebsite.value = p.website;
+            busGst.value = p.gst;
+            primaryColor.value = p.pCol;
+            secondaryColor.value = p.sCol;
+            busFooter.value = p.footer;
+            renderCanvas();
+        };
+
+        window.setHeaderStyle = function(style) {
+            headerStyle = style;
+            document.querySelectorAll('.style-btn').forEach(b => {
+                b.className = "style-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            });
+            document.getElementById(`style-${style}`).className = "style-btn px-4 py-2 rounded-xl border border-rose-600 bg-rose-50 text-rose-700 font-semibold text-xs transition";
+            renderCanvas();
+        };
+
+        busLogoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { logoImg = img; renderCanvas(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        [busName, busTagline, busAddress, busPhone, busEmail, busWebsite, busGst, primaryColor, secondaryColor, busFooter, letterContent].forEach(el => {
+            el.addEventListener('input', renderCanvas);
+            el.addEventListener('change', renderCanvas);
+        });
+
+        function renderCanvas() {
+            const w = 2480;
+            const h = 3508;
+            previewCanvas.width = w;
+            previewCanvas.height = h;
+            const ctx = previewCanvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+
+            const pCol = primaryColor.value;
+            const sCol = secondaryColor.value;
+            const margin = 180;
+
+            if (headerStyle === 'logo-left') {
+                let headerY = margin;
+                if (logoImg) {
+                    ctx.drawImage(logoImg, margin, headerY, 180, 180);
+                }
+
+                ctx.textAlign = 'left';
+                ctx.fillStyle = pCol;
+                ctx.font = `bold 72px 'Poppins', sans-serif`;
+                ctx.fillText(busName.value || 'Business Name', logoImg ? margin + 210 : margin, headerY + 60);
+
+                if (busTagline.value) {
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = `36px 'Poppins', sans-serif`;
+                    ctx.fillText(busTagline.value, logoImg ? margin + 210 : margin, headerY + 115);
+                }
+
+                ctx.textAlign = 'right';
+                ctx.fillStyle = '#334155';
+                ctx.font = `32px 'Poppins', sans-serif`;
+                let rightY = headerY + 30;
+                if (busPhone.value) { ctx.fillText(`Ph: ${busPhone.value}`, w - margin, rightY); rightY += 40; }
+                if (busEmail.value) { ctx.fillText(busEmail.value, w - margin, rightY); rightY += 40; }
+                if (busWebsite.value) { ctx.fillText(busWebsite.value, w - margin, rightY); }
+
+                ctx.strokeStyle = pCol;
+                ctx.lineWidth = 8;
+                ctx.beginPath(); ctx.moveTo(margin, headerY + 220); ctx.lineTo(w - margin, headerY + 220); ctx.stroke();
+
+                ctx.strokeStyle = sCol;
+                ctx.lineWidth = 4;
+                ctx.beginPath(); ctx.moveTo(margin, headerY + 232); ctx.lineTo(w - margin, headerY + 232); ctx.stroke();
+
+            } else if (headerStyle === 'centered') {
+                let headerY = margin;
+                if (logoImg) {
+                    ctx.drawImage(logoImg, (w - 160)/2, headerY, 160, 160);
+                    headerY += 180;
+                }
+
+                ctx.textAlign = 'center';
+                ctx.fillStyle = pCol;
+                ctx.font = `bold 80px 'Poppins', sans-serif`;
+                ctx.fillText(busName.value || 'Business Name', w/2, headerY + 60);
+
+                if (busTagline.value) {
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = `36px 'Poppins', sans-serif`;
+                    ctx.fillText(busTagline.value, w/2, headerY + 115);
+                }
+
+                if (busAddress.value) {
+                    ctx.fillStyle = '#475569';
+                    ctx.font = `32px 'Poppins', sans-serif`;
+                    ctx.fillText(busAddress.value, w/2, headerY + 165);
+                }
+
+                let contactStr = [busPhone.value, busEmail.value, busWebsite.value].filter(Boolean).join(' | ');
+                if (contactStr) {
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `32px 'Poppins', sans-serif`;
+                    ctx.fillText(contactStr, w/2, headerY + 210);
+                }
+
+                ctx.strokeStyle = pCol;
+                ctx.lineWidth = 6;
+                ctx.beginPath(); ctx.moveTo(margin, headerY + 260); ctx.lineTo(w - margin, headerY + 260); ctx.stroke();
+
+            } else {
+                ctx.fillStyle = pCol;
+                ctx.fillRect(0, 0, w, 320);
+
+                ctx.fillStyle = sCol;
+                ctx.fillRect(0, 320, w, 16);
+
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold 76px 'Poppins', sans-serif`;
+                ctx.fillText(busName.value || 'Business Name', margin, 130);
+
+                if (busTagline.value) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+                    ctx.font = `36px 'Poppins', sans-serif`;
+                    ctx.fillText(busTagline.value, margin, 195);
+                }
+
+                ctx.textAlign = 'right';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `32px 'Poppins', sans-serif`;
+                let rightY = 90;
+                if (busPhone.value) { ctx.fillText(`Ph: ${busPhone.value}`, w - margin, rightY); rightY += 40; }
+                if (busEmail.value) { ctx.fillText(busEmail.value, w - margin, rightY); rightY += 40; }
+                if (busGst.value) { ctx.fillText(busGst.value, w - margin, rightY); }
+            }
+
+            const content = letterContent.value;
+            if (content) {
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#1e293b';
+                ctx.font = `42px 'Poppins', sans-serif`;
+                const startBodyY = headerStyle === 'color-band' ? 460 : 540;
+                const lines = content.split('\n');
+                let curY = startBodyY;
+                lines.forEach(line => {
+                    ctx.fillText(line, margin, curY, w - (margin * 2));
+                    curY += 65;
+                });
+            }
+
+            const footerText = busFooter.value;
+            if (footerText) {
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(margin, h - 180); ctx.lineTo(w - margin, h - 180); ctx.stroke();
+
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#64748b';
+                ctx.font = `32px 'Poppins', sans-serif`;
+                ctx.fillText(footerText, w/2, h - 120);
+            }
+        }
+
+        resetBtn.onclick = () => {
+            applyPreset('construction');
+        };
+
+        downloadPngBtn.onclick = () => {
+            const link = document.createElement('a');
+            link.download = 'letterhead.png';
+            link.href = previewCanvas.toDataURL('image/png');
+            link.click();
+        };
+
+        downloadPdfBtn.onclick = () => {
+            window.print();
+        };
+
+        printBtn.onclick = () => {
+            window.print();
+        };
+
+        // Initial render
+        renderCanvas();
+    </script>
 </body>
 </html>

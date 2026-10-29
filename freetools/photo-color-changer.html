@@ -1,55 +1,400 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Photo Color Changer – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Color Changer - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        input[type="range"]::-webkit-slider-thumb { background: #9333ea; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Photo Color Changer</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md">🎨</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Photo Color Changer</h1>
+                    <p class="text-xs text-slate-500">Brightness, contrast, saturation, hue, warm / cool, grayscale, sepia aur filters.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-purple-50 border-b border-purple-100 py-2 px-4 text-center">
+        <p class="text-xs text-purple-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Photo Color Changer'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- Upload Box State -->
+        <div id="upload-section" class="border-2 border-dashed border-slate-300 hover:border-purple-500 rounded-2xl p-10 text-center bg-white shadow-sm transition cursor-pointer relative">
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div class="flex flex-col items-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mb-3 text-2xl shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800">JPG / PNG / WEBP photo select karein</h3>
+                <p class="text-xs text-slate-500 mt-1">ya yahan drag & drop karein — original file change nahi hoti</p>
+            </div>
+        </div>
+
+        <!-- Editor Workspace (Hidden Initially) -->
+        <div id="editor-section" class="hidden space-y-6">
+            
+            <!-- Preset Filters Bar -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center space-x-2 overflow-x-auto shadow-sm">
+                <span class="text-xs font-semibold text-slate-500 shrink-0 px-2">Preset Filters:</span>
+                <button onclick="applyPreset('original')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shrink-0 transition shadow-sm">Original</button>
+                <button onclick="applyPreset('vivid')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Vivid</button>
+                <button onclick="applyPreset('warm')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Warm</button>
+                <button onclick="applyPreset('cool')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Cool</button>
+                <button onclick="applyPreset('bw')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">B&W</button>
+                <button onclick="applyPreset('sepia')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Sepia</button>
+                <button onclick="applyPreset('vintage')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Vintage</button>
+                <button onclick="applyPreset('fade')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Fade</button>
+                <button onclick="applyPreset('dramatic')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Dramatic</button>
+                <button onclick="applyPreset('bright')" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition">Bright & clear</button>
+            </div>
+
+            <!-- Workspace Grid (Controls + Preview) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Sliders & Adjustments Panel -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b pb-2 flex justify-between items-center">
+                        <span>Color & Tone Adjustments</span>
+                        <button id="reset-sliders-btn" class="text-xs text-purple-600 hover:underline font-medium">Reset All</button>
+                    </h2>
+
+                    <!-- Brightness -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Brightness</span>
+                            <span id="brightness-val" class="font-semibold">0</span>
+                        </div>
+                        <input type="range" id="brightness" min="-100" max="100" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- Contrast -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Contrast</span>
+                            <span id="contrast-val" class="font-semibold">0</span>
+                        </div>
+                        <input type="range" id="contrast" min="-100" max="100" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- Saturation -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Saturation</span>
+                            <span id="saturation-val" class="font-semibold">0</span>
+                        </div>
+                        <input type="range" id="saturation" min="-100" max="100" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- Hue -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Hue Rotation</span>
+                            <span id="hue-val" class="font-semibold">0°</span>
+                        </div>
+                        <input type="range" id="hue" min="-180" max="180" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- Warm / Cool -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Warm / Cool (Temperature)</span>
+                            <span id="warmth-val" class="font-semibold">0</span>
+                        </div>
+                        <input type="range" id="warmth" min="-100" max="100" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- Grayscale -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Grayscale</span>
+                            <span id="grayscale-val" class="font-semibold">0%</span>
+                        </div>
+                        <input type="range" id="grayscale" min="0" max="100" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- Sepia -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-600 mb-1">
+                            <span>Sepia</span>
+                            <span id="sepia-val" class="font-semibold">0%</span>
+                        </div>
+                        <input type="range" id="sepia" min="0" max="100" value="0" class="w-full accent-purple-600">
+                    </div>
+
+                    <!-- File Change -->
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                        <label class="cursor-pointer text-xs text-purple-600 font-semibold hover:underline flex items-center space-x-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span>Doosri photo select karein</span>
+                            <input type="file" id="change-file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+                        </label>
+                        <span id="file-info-text" class="text-xs text-slate-400"></span>
+                    </div>
+
+                </div>
+
+                <!-- Right: Live Preview Panel -->
+                <div class="lg:col-span-7 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-between relative min-h-[500px]">
+                    <div class="w-full flex items-center justify-between mb-2 px-2">
+                        <span class="bg-slate-900/70 text-white text-[10px] px-2.5 py-1 rounded-md backdrop-blur font-medium">Live Preview</span>
+                        <span class="text-xs text-slate-500 font-medium">Original vs Adjusted</span>
+                    </div>
+                    
+                    <div class="relative w-full overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-center max-h-[540px] flex-grow">
+                        <canvas id="preview-canvas" class="max-w-full h-auto object-contain shadow"></canvas>
+                    </div>
+
+                    <!-- Bottom Download Action Bar -->
+                    <div class="w-full mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs text-slate-600 font-medium">Quality:</label>
+                            <select id="output-quality" class="bg-slate-50 border border-slate-300 rounded-lg px-2 py-1 text-xs outline-none font-medium">
+                                <option value="0.95">High (95%)</option>
+                                <option value="0.90" selected>Good (90%)</option>
+                                <option value="0.75">Medium (75%)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="download-jpg-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download JPG</span>
+                            </button>
+                            <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download PNG</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentImg = null;
+        let originalFileName = "photo";
+
+        const fileInput = document.getElementById('file-input');
+        const changeFileInput = document.getElementById('change-file-input');
+        const uploadSection = document.getElementById('upload-section');
+        const editorSection = document.getElementById('editor-section');
+        const previewCanvas = document.getElementById('preview-canvas');
+        const fileInfoText = document.getElementById('file-info-text');
+
+        // Sliders
+        const brightnessInput = document.getElementById('brightness');
+        const contrastInput = document.getElementById('contrast');
+        const saturationInput = document.getElementById('saturation');
+        const hueInput = document.getElementById('hue');
+        const warmthInput = document.getElementById('warmth');
+        const grayscaleInput = document.getElementById('grayscale');
+        const sepiaInput = document.getElementById('sepia');
+
+        const brightnessVal = document.getElementById('brightness-val');
+        const contrastVal = document.getElementById('contrast-val');
+        const saturationVal = document.getElementById('saturation-val');
+        const hueVal = document.getElementById('hue-val');
+        const warmthVal = document.getElementById('warmth-val');
+        const grayscaleVal = document.getElementById('grayscale-val');
+        const sepiaVal = document.getElementById('sepia-val');
+
+        const resetSlidersBtn = document.getElementById('reset-sliders-btn');
+        const downloadJpgBtn = document.getElementById('download-jpg-btn');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const outputQuality = document.getElementById('output-quality');
+
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        changeFileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || 'photo';
+            fileInfoText.innerText = `${(file.size / 1024).toFixed(1)} KB`;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImg = img;
+                    uploadSection.classList.add('hidden');
+                    editorSection.classList.remove('hidden');
+                    resetSliders();
+                    updateCanvas();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetSliders() {
+            brightnessInput.value = 0;
+            contrastInput.value = 0;
+            saturationInput.value = 0;
+            hueInput.value = 0;
+            warmthInput.value = 0;
+            grayscaleInput.value = 0;
+            sepiaInput.value = 0;
+            updateSliderLabels();
+        }
+
+        function updateSliderLabels() {
+            brightnessVal.innerText = brightnessInput.value;
+            contrastVal.innerText = contrastInput.value;
+            saturationVal.innerText = saturationInput.value;
+            hueVal.innerText = hueInput.value + '°';
+            warmthVal.innerText = warmthInput.value;
+            grayscaleVal.innerText = grayscaleInput.value + '%';
+            sepiaVal.innerText = sepiaInput.value + '%';
+        }
+
+        // Slider event listeners
+        [brightnessInput, contrastInput, saturationInput, hueInput, warmthInput, grayscaleInput, sepiaInput].forEach(slider => {
+            slider.addEventListener('input', () => {
+                updateSliderLabels();
+                updateCanvas();
+            });
+        });
+
+        resetSlidersBtn.onclick = () => {
+            resetSliders();
+            updateCanvas();
+        };
+
+        function applyPreset(preset) {
+            // Highlight active preset button
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.className = "preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0 transition";
+            });
+            event.target.className = "preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shrink-0 transition shadow-sm";
+
+            resetSliders();
+            if (preset === 'vivid') {
+                contrastInput.value = 25;
+                saturationInput.value = 35;
+            } else if (preset === 'warm') {
+                warmthInput.value = 30;
+                brightnessInput.value = 5;
+            } else if (preset === 'cool') {
+                warmthInput.value = -35;
+                contrastInput.value = 10;
+            } else if (preset === 'bw') {
+                grayscaleInput.value = 100;
+                contrastInput.value = 20;
+            } else if (preset === 'sepia') {
+                sepiaInput.value = 100;
+                contrastInput.value = 15;
+            } else if (preset === 'vintage') {
+                sepiaInput.value = 40;
+                contrastInput.value = -10;
+                brightnessInput.value = 10;
+            } else if (preset === 'fade') {
+                contrastInput.value = -25;
+                brightnessInput.value = 15;
+                saturationInput.value = -20;
+            } else if (preset === 'dramatic') {
+                contrastInput.value = 50;
+                saturationInput.value = -15;
+                brightnessInput.value = -10;
+            } else if (preset === 'bright') {
+                brightnessInput.value = 25;
+                contrastInput.value = 10;
+            }
+            updateSliderLabels();
+            updateCanvas();
+        }
+
+        function updateCanvas() {
+            if (!currentImg) return;
+            previewCanvas.width = currentImg.naturalWidth;
+            previewCanvas.height = currentImg.naturalHeight;
+            const ctx = previewCanvas.getContext('2d');
+
+            ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+
+            // Build CSS filter string
+            // brightness: -100 to 100 -> 0% to 200% (approx)
+            const b = parseInt(brightnessInput.value);
+            const brightnessValCSS = 100 + b;
+
+            const c = parseInt(contrastInput.value);
+            const contrastValCSS = 100 + c;
+
+            const s = parseInt(saturationInput.value);
+            const saturateValCSS = 100 + s;
+
+            const h = hueInput.value;
+            const hueValCSS = h + 'deg';
+
+            const g = grayscaleInput.value + '%';
+            const sep = sepiaInput.value + '%';
+
+            let filterStr = `brightness(${brightnessValCSS}%) contrast(${contrastValCSS}%) saturate(${saturateValCSS}%) hue-rotate(${hueValCSS}) grayscale(${g}) sepia(${sep})`;
+
+            ctx.filter = filterStr;
+            ctx.drawImage(currentImg, 0, 0);
+
+            // Apply Warmth / Coolness color overlay if warmth != 0
+            const warmth = parseInt(warmthInput.value);
+            if (warmth !== 0) {
+                ctx.fillStyle = warmth > 0 ? `rgba(255, 140, 0, ${Math.abs(warmth) * 0.0012})` : `rgba(0, 150, 255, ${Math.abs(warmth) * 0.0012})`;
+                ctx.globalCompositeOperation = 'overlay';
+                ctx.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            ctx.filter = 'none';
+        }
+
+        function downloadImage(format) {
+            if (!currentImg) return;
+            updateCanvas();
+            const quality = parseFloat(outputQuality.value);
+            const mime = format === 'png' ? 'image/png' : 'image/jpeg';
+            const ext = format === 'png' ? 'png' : 'jpg';
+            const dataUrl = previewCanvas.toDataURL(mime, quality);
+
+            const link = document.createElement('a');
+            link.download = `${originalFileName}-adjusted.${ext}`;
+            link.href = dataUrl;
+            link.click();
+        }
+
+        downloadJpgBtn.onclick = () => downloadImage('jpg');
+        downloadPngBtn.onclick = () => downloadImage('png');
+    </script>
 </body>
 </html>

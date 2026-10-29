@@ -1,55 +1,396 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Digital Signature Maker – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Signature Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .transparent-bg {
+            background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+                              linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+                              linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+            background-size: 16px 16px;
+            background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+        }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Digital Signature Maker</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">✍️</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Digital Signature Maker</h1>
+                    <p class="text-xs text-slate-500">Mouse / touch / pen se signature banayein — transparent PNG, JPG, crop aur exact size.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-indigo-50 border-b border-indigo-100 py-2 px-4 text-center">
+        <p class="text-xs text-indigo-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Digital Signature Maker'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Pen Color & Thickness -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-2">Pen color</label>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="setPenColor('#000000', this)" class="color-btn w-7 h-7 rounded-full bg-black ring-2 ring-offset-2 ring-indigo-600 transition"></button>
+                        <button onclick="setPenColor('#1d4ed8', this)" class="color-btn w-7 h-7 rounded-full bg-blue-600 transition"></button>
+                        <button onclick="setPenColor('#1e1b4b', this)" class="color-btn w-7 h-7 rounded-full bg-indigo-950 transition"></button>
+                        <button onclick="setPenColor('#dc2626', this)" class="color-btn w-7 h-7 rounded-full bg-red-600 transition"></button>
+                        <button onclick="setPenColor('#16a34a', this)" class="color-btn w-7 h-7 rounded-full bg-green-600 transition"></button>
+                        <input type="color" id="custom-color" value="#000000" class="w-7 h-7 rounded-full border cursor-pointer p-0 bg-transparent">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                        <span id="thickness-label">Pen thickness: 3px</span>
+                    </div>
+                    <input type="range" id="thickness-range" min="1" max="15" value="3" class="w-full accent-indigo-600">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tool</label>
+                        <div class="flex rounded-lg border border-slate-300 p-1 bg-slate-50">
+                            <button id="tool-pen" onclick="setTool('pen')" class="flex-1 py-1.5 text-xs font-semibold rounded-md bg-indigo-600 text-white transition">✏️ Pen</button>
+                            <button id="tool-eraser" onclick="setTool('eraser')" class="flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-700 transition">🧹 Eraser</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Pad background</label>
+                        <select id="pad-bg-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="transparent">Transparent (grid)</option>
+                            <option value="white">Solid White</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2 pt-2">
+                    <button onclick="undo()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">↩️ Undo</button>
+                    <button onclick="redo()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">🔄 Redo</button>
+                    <button onclick="clearCanvas()" class="flex-1 bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold py-2 rounded-xl text-xs transition">🗑️ Clear</button>
+                </div>
+            </div>
+
+            <!-- Crop & Size Options -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">📐 Crop, padding & size</h3>
+                
+                <label class="flex items-center space-x-2 text-xs font-medium text-slate-700 cursor-pointer">
+                    <input type="checkbox" id="auto-crop-check" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                    <span>Khali jagah auto-crop karein</span>
+                </label>
+
+                <div>
+                    <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                        <span id="padding-label">Padding: 12px</span>
+                    </div>
+                    <input type="range" id="padding-range" min="0" max="40" value="12" class="w-full accent-indigo-600">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Canvas Column (7 Cols) -->
+        <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-700">Signature Pad</span>
+                    <span class="text-[11px] text-slate-400">Mouse / Touch se sign karein</span>
+                </div>
+
+                <!-- Drawing Canvas Container -->
+                <div id="canvas-container" class="w-full h-80 rounded-2xl border-2 border-dashed border-slate-300 transparent-bg relative overflow-hidden flex items-center justify-center cursor-crosshair">
+                    <canvas id="signature-canvas" class="w-full h-full touch-none"></canvas>
+                    <div id="watermark-text" class="absolute bottom-4 left-4 text-xs text-slate-400 pointer-events-none select-none">Yahan sign karein ✍️</div>
+                </div>
+            </div>
+
+            <!-- Export Buttons -->
+            <div class="flex items-center space-x-3 pt-2">
+                <button onclick="downloadPNG()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                    <span>📥 PNG (transparent)</span>
+                </button>
+                <button onclick="downloadJPG()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                    <span>🖼️ JPG</span>
+                </button>
+                <button onclick="clearCanvas()" class="p-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs transition" title="Reset">🔄</button>
+            </div>
+
+            <p class="text-[10px] text-slate-400 text-center">⚠️ Ye handwritten signature ki image banata hai — ye legally certified Digital Signature Certificate (DSC) nahi hai.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const canvas = document.getElementById('signature-canvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('canvas-container');
+        const watermarkText = document.getElementById('watermark-text');
+
+        let isDrawing = false;
+        let penColor = '#000000';
+        let penThickness = 3;
+        let currentTool = 'pen';
+        let undoStack = [];
+        let redoStack = [];
+
+        function resizeCanvas() {
+            const rect = container.getBoundingClientRect();
+            canvas.width = rect.width * 2; // high DPI retina
+            canvas.height = rect.height * 2;
+            ctx.scale(2, 2);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            redrawCanvas();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            saveState();
+        });
+
+        function setPenColor(color, btn) {
+            penColor = color;
+            document.getElementById('custom-color').value = color;
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('ring-2', 'ring-offset-2', 'ring-indigo-600'));
+            if (btn) btn.classList.add('ring-2', 'ring-offset-2', 'ring-indigo-600');
+        }
+
+        document.getElementById('custom-color').oninput = (e) => {
+            penColor = e.target.value;
+        };
+
+        const thicknessRange = document.getElementById('thickness-range');
+        thicknessRange.oninput = (e) => {
+            penThickness = parseInt(e.target.value);
+            document.getElementById('thickness-label').innerText = `Pen thickness: ${penThickness}px`;
+        };
+
+        const paddingRange = document.getElementById('padding-range');
+        paddingRange.oninput = (e) => {
+            document.getElementById('padding-label').innerText = `Padding: ${e.target.value}px`;
+        };
+
+        window.setTool = function(tool) {
+            currentTool = tool;
+            if (tool === 'pen') {
+                document.getElementById('tool-pen').className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-indigo-600 text-white transition";
+                document.getElementById('tool-eraser').className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-700 transition";
+            } else {
+                document.getElementById('tool-eraser').className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-rose-600 text-white transition";
+                document.getElementById('tool-pen').className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-700 transition";
+            }
+        };
+
+        const padBgSelect = document.getElementById('pad-bg-select');
+        padBgSelect.onchange = (e) => {
+            if (e.target.value === 'white') {
+                container.classList.remove('transparent-bg');
+                container.style.backgroundColor = '#ffffff';
+            } else {
+                container.classList.add('transparent-bg');
+                container.style.backgroundColor = 'transparent';
+            }
+        };
+
+        // Drawing events
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        canvas.onmousedown = startDraw;
+        canvas.onmousemove = draw;
+        window.onmouseup = stopDraw;
+
+        canvas.ontouchstart = (e) => { e.preventDefault(); startDraw(e); };
+        canvas.ontouchmove = (e) => { e.preventDefault(); draw(e); };
+        canvas.ontouchend = (e) => { e.preventDefault(); stopDraw(e); };
+
+        function startDraw(e) {
+            isDrawing = true;
+            watermarkText.style.display = 'none';
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            if (currentTool === 'eraser') {
+                ctx.strokeStyle = padBgSelect.value === 'white' ? '#ffffff' : 'rgba(0,0,0,0)';
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.lineWidth = penThickness * 3;
+            } else {
+                ctx.strokeStyle = penColor;
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.lineWidth = penThickness;
+            }
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDraw() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            saveState();
+        }
+
+        function saveState() {
+            undoStack.push(canvas.toDataURL());
+            if (undoStack.length > 20) undoStack.shift();
+            redoStack = [];
+        }
+
+        window.undo = function() {
+            if (undoStack.length <= 1) return;
+            redoStack.push(undoStack.pop());
+            let imgData = undoStack[undoStack.length - 1];
+            let img = new Image();
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width / 2, canvas.height / 2);
+            };
+            img.src = imgData;
+        };
+
+        window.redo = function() {
+            if (redoStack.length === 0) return;
+            let imgData = redoStack.pop();
+            undoStack.push(imgData);
+            let img = new Image();
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width / 2, canvas.height / 2);
+            };
+            img.src = imgData;
+        };
+
+        window.clearCanvas = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            watermarkText.style.display = 'block';
+            saveState();
+        };
+
+        function redrawCanvas() {
+            if (undoStack.length > 0) {
+                let img = new Image();
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0, canvas.width / 2, canvas.height / 2);
+                };
+                img.src = undoStack[undoStack.length - 1];
+            }
+        }
+
+        function getProcessedCanvas() {
+            const autoCrop = document.getElementById('auto-crop-check').checked;
+            const padding = parseInt(paddingRange.value) || 0;
+
+            if (!autoCrop) return canvas;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const data = imgData.data;
+
+            let minX = w, minY = h, maxX = 0, maxY = 0;
+            let found = false;
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const alpha = data[(y * w + x) * 4 + 3];
+                    if (alpha > 0) {
+                        if (x < minX) minX = x;
+                        if (x > maxX) maxX = x;
+                        if (y < minY) minY = y;
+                        if (y > maxY) maxY = y;
+                        found = true;
+                    }
+                }
+            }
+
+            if (!found) return canvas;
+
+            minX = Math.max(0, minX - padding * 2);
+            minY = Math.max(0, minY - padding * 2);
+            maxX = Math.min(w, maxX + padding * 2);
+            maxY = Math.min(h, maxY + padding * 2);
+
+            const cropW = maxX - minX;
+            const cropH = maxY - minY;
+
+            const croppedCanvas = document.createElement('canvas');
+            croppedCanvas.width = cropW;
+            croppedCanvas.height = cropH;
+            const cCtx = croppedCanvas.getContext('2d');
+            cCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+            return croppedCanvas;
+        }
+
+        window.downloadPNG = function() {
+            const processed = getProcessedCanvas();
+            const link = document.createElement('a');
+            link.download = 'digital_signature.png';
+            link.href = processed.toDataURL('image/png');
+            link.click();
+        };
+
+        window.downloadJPG = function() {
+            const processed = getProcessedCanvas();
+            const jpgCanvas = document.createElement('canvas');
+            jpgCanvas.width = processed.width;
+            jpgCanvas.height = processed.height;
+            const jCtx = jpgCanvas.getContext('2d');
+            jCtx.fillStyle = '#ffffff';
+            jCtx.fillRect(0, 0, jpgCanvas.width, jpgCanvas.height);
+            jCtx.drawImage(processed, 0, 0);
+
+            const link = document.createElement('a');
+            link.download = 'digital_signature.jpg';
+            link.href = jpgCanvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+        };
+    </script>
 </body>
 </html>

@@ -1,55 +1,537 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Visiting Card Designer – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visiting Card Designer - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Visiting Card Designer</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white font-bold text-xl shadow-md">💳</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Visiting Card Designer</h1>
+                    <p class="text-xs text-slate-500">Business card — readymade presets, templates, logo, QR, front & back, print-ready PDF / PNG.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-rose-50 border-b border-rose-100 py-2 px-4 text-center">
+        <p class="text-xs text-rose-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Visiting Card Designer'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Readymade Presets Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">⚡ Readymade Presets (Ek click me load karein)</label>
+                <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                    <button onclick="applyPreset('construction')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">🏗️ Construction & Materials</button>
+                    <button onclick="applyPreset('tech')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">💻 IT & Tech Startup</button>
+                    <button onclick="applyPreset('legal')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">⚖️ Legal & Law Firm</button>
+                    <button onclick="applyPreset('medical')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">🏥 Medical & Healthcare</button>
+                    <button onclick="applyPreset('corporate')" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-500 border border-slate-300 rounded-lg text-xs font-semibold transition">🏢 Corporate Heavy Machinery</button>
+                </div>
+            </div>
+
+            <!-- Template Selector Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Template</label>
+                <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                    <button onclick="setTemplate('classic')" id="tmpl-classic" class="tmpl-btn px-4 py-2 rounded-xl border border-rose-600 bg-rose-50 text-rose-700 font-semibold text-xs transition">Classic</button>
+                    <button onclick="setTemplate('modern')" id="tmpl-modern" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Modern split</button>
+                    <button onclick="setTemplate('minimal')" id="tmpl-minimal" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Minimal</button>
+                    <button onclick="setTemplate('bold')" id="tmpl-bold" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Bold band</button>
+                    <button onclick="setTemplate('dark')" id="tmpl-dark" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Black & gold</button>
+                    <button onclick="setTemplate('gradient')" id="tmpl-gradient" class="tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Gradient</button>
+                </div>
+            </div>
+
+            <!-- Card Properties Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Card size</label>
+                        <select id="card-size" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="standard">3.5 × 2 inch (88.9 × 50.8 mm)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Font</label>
+                        <select id="font-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="Poppins">Poppins</option>
+                            <option value="Roboto">Roboto</option>
+                            <option value="Montserrat">Montserrat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Border</label>
+                        <select id="border-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="none">None</option>
+                            <option value="thin">Thin border</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Primary color</label>
+                        <input type="color" id="primary-color" value="#9f1239" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Secondary color</label>
+                        <input type="color" id="secondary-color" value="#0f172a" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Background</label>
+                        <input type="color" id="card-bg" value="#ffffff" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business & Personal Details Form -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center space-x-2">
+                    <span>📋 Details</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Business name *</label>
+                        <input type="text" id="bus-name" value="Pooja Construction" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tagline</label>
+                        <input type="text" id="bus-tagline" value="Building Materials & Aggregates" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Person name *</label>
+                        <input type="text" id="person-name" value="Love Kumar Lalawat" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Designation</label>
+                        <input type="text" id="person-desig" value="Proprietor" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Phone</label>
+                        <input type="text" id="person-phone" value="+91 93586 42399" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
+                        <input type="text" id="person-email" value="poojaconstruction@gmail.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Website</label>
+                        <input type="text" id="person-website" value="www.poojaconstruction.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Logo</label>
+                        <input type="file" id="logo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-700 cursor-pointer">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Address</label>
+                    <input type="text" id="person-address" value="Nawaghar Colony, Bhuwana, Udaipur, Rajasthan - 313001" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Back side: services / text</label>
+                    <textarea id="back-services" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">20mm, 10mm, 40mm Blue Stone Aggregates · M-Sand · WMM · Flyash Bricks</textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">QR code on back</label>
+                    <select id="qr-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                        <option value="yes">Contact card (scan karke number save)</option>
+                        <option value="no">No QR code</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Preview & Export Column (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Live Preview Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                <div class="w-full flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-700">Live preview (Front & Back)</span>
+                    <span class="text-xs text-slate-400 font-mono">88.9 × 50.8 mm</span>
+                </div>
+
+                <!-- Canvas Preview Container -->
+                <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex flex-col items-center gap-4 overflow-x-auto">
+                    <div class="flex flex-col items-center">
+                        <span class="text-[10px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">FRONT</span>
+                        <canvas id="front-canvas" class="shadow-md rounded-lg max-w-[260px] h-auto bg-white"></canvas>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-[10px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">BACK</span>
+                        <canvas id="back-canvas" class="shadow-md rounded-lg max-w-[260px] h-auto bg-white"></canvas>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+                    <button id="download-card-pdf" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📥 PDF (card)</span>
+                    </button>
+                    <button id="download-card-png" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖼️ PNG</span>
+                    </button>
+                    <button id="print-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="reset-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                        <span>🔄 Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- A4 Sheet Queue Box -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">📄 A4 sheet (10 cards)</h3>
+                        <p class="text-[11px] text-slate-500">Ek A4 page par 10 visiting cards ka sheet banayein.</p>
+                    </div>
+                    <span class="bg-rose-100 text-rose-700 font-bold text-xs px-2.5 py-1 rounded-full">10 cards</span>
+                </div>
+
+                <div class="flex items-center space-x-3 pt-2">
+                    <button id="download-a4-pdf" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                        <span>🖨️ A4 sheet PDF (10 cards)</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentTemplate = 'classic';
+        let logoImg = null;
+        let activeSide = 'front'; // 'front' or 'back'
+        let selectedTextElement = null; // currently dragged element
+
+        const frontCanvas = document.getElementById('front-canvas');
+        const backCanvas = document.getElementById('back-canvas');
+
+        const busName = document.getElementById('bus-name');
+        const busTagline = document.getElementById('bus-tagline');
+        const personName = document.getElementById('person-name');
+        const personDesig = document.getElementById('person-desig');
+        const personPhone = document.getElementById('person-phone');
+        const personEmail = document.getElementById('person-email');
+        const personWebsite = document.getElementById('person-website');
+        const personAddress = document.getElementById('person-address');
+        const backServices = document.getElementById('back-services');
+        const qrSelect = document.getElementById('qr-select');
+        const logoInput = document.getElementById('logo-input');
+
+        const primaryColor = document.getElementById('primary-color');
+        const secondaryColor = document.getElementById('secondary-color');
+        const cardBg = document.getElementById('card-bg');
+        const fontSelect = document.getElementById('font-select');
+        const borderSelect = document.getElementById('border-select');
+
+        // Interactive element positions (stored relative to canvas w, h)
+        let elementPositions = {
+            front: {
+                busName: { x: 70, y: 60, width: 300, height: 70 },
+                tagline: { x: 70, y: 135, width: 350, height: 35 },
+                personName: { x: 70, y: 240, width: 300, height: 55 },
+                personDesig: { x: 70, y: 300, width: 250, height: 35 },
+                contacts: { x: 70, y: 370, width: 400, height: 160 }
+            },
+            back: {
+                busName: { x: 525, y: 120, width: 400, height: 50 },
+                services: { x: 525, y: 240, width: 600, height: 100 }
+            }
+        };
+
+        window.setTemplate = function(tmpl) {
+            currentTemplate = tmpl;
+            document.querySelectorAll('.tmpl-btn').forEach(b => {
+                b.className = "tmpl-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            });
+            document.getElementById(`tmpl-${tmpl}`).className = "tmpl-btn px-4 py-2 rounded-xl border border-rose-600 bg-rose-50 text-rose-700 font-semibold text-xs transition";
+            renderCards();
+        };
+
+        logoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { logoImg = img; renderCards(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        [busName, busTagline, personName, personDesig, personPhone, personEmail, personWebsite, personAddress, backServices, qrSelect, primaryColor, secondaryColor, cardBg, fontSelect, borderSelect].forEach(el => {
+            el.addEventListener('input', renderCards);
+            el.addEventListener('change', renderCards);
+        });
+
+        function renderCards() {
+            const w = 1050;
+            const h = 600;
+
+            frontCanvas.width = w; frontCanvas.height = h;
+            backCanvas.width = w; backCanvas.height = h;
+
+            drawCardSide(frontCanvas.getContext('2d'), true, w, h);
+            drawCardSide(backCanvas.getContext('2d'), false, w, h);
+        }
+
+        function drawCardSide(ctx, isFront, w, h) {
+            const pCol = primaryColor.value;
+            const sCol = secondaryColor.value;
+            const bg = cardBg.value;
+            const font = fontSelect.value;
+            const sideKey = isFront ? 'front' : 'back';
+            const pos = elementPositions[sideKey];
+
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, w, h);
+
+            if (borderSelect.value === 'thin') {
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(20, 20, w - 40, h - 40);
+            }
+
+            if (currentTemplate === 'classic') {
+                if (isFront) {
+                    ctx.fillStyle = pCol;
+                    ctx.fillRect(0, 0, 36, h);
+
+                    let startX = pos.busName.x;
+                    let startY = pos.busName.y;
+
+                    if (logoImg) {
+                        ctx.drawImage(logoImg, startX, startY, 100, 100);
+                        startX += 120;
+                    }
+
+                    // Business Name
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = pCol;
+                    ctx.font = `bold 64px '${font}', sans-serif`;
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(busName.value || 'Business Name', startX, startY);
+
+                    // Tagline
+                    if (busTagline.value) {
+                        ctx.fillStyle = '#64748b';
+                        ctx.font = `28px '${font}', sans-serif`;
+                        ctx.fillText(busTagline.value, startX, pos.tagline.y);
+                    }
+
+                    // Person Name
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold 52px '${font}', sans-serif`;
+                    ctx.fillText(personName.value || 'Person Name', pos.personName.x, pos.personName.y);
+
+                    // Designation
+                    ctx.fillStyle = pCol;
+                    ctx.font = `600 32px '${font}', sans-serif`;
+                    ctx.fillText(personDesig.value || 'Designation', pos.personDesig.x, pos.personDesig.y);
+
+                    // Contacts
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `28px '${font}', sans-serif`;
+                    let cy = pos.contacts.y;
+                    [personPhone.value, personEmail.value, personWebsite.value, personAddress.value].filter(Boolean).forEach(txt => {
+                        ctx.fillText(txt, pos.contacts.x, cy);
+                        cy += 40;
+                    });
+                } else {
+                    // Back
+                    ctx.fillStyle = pCol;
+                    ctx.fillRect(0, h - 36, w, 36);
+
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold 48px '${font}', sans-serif`;
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(busName.value, pos.busName.x + pos.busName.width/2, pos.busName.y);
+
+                    ctx.fillStyle = '#475569';
+                    ctx.font = `32px '${font}', sans-serif`;
+                    ctx.fillText(backServices.value || '', pos.services.x, pos.services.y, w - 150);
+                }
+            } else {
+                // Modern / Minimal fallback rendering
+                if (isFront) {
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = pCol;
+                    ctx.font = `bold 64px '${font}', sans-serif`;
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(busName.value, w / 2, h / 2 - 40);
+
+                    ctx.fillStyle = '#475569';
+                    ctx.font = `32px '${font}', sans-serif`;
+                    ctx.fillText(`${personName.value} | ${personDesig.value}`, w / 2, h / 2 + 30);
+                } else {
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold 48px '${font}', sans-serif`;
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(backServices.value, w / 2, h / 2, w - 150);
+                }
+            }
+
+            // Draw selection outline if element is active
+            if (selectedTextElement && selectedTextElement.side === (isFront ? 'front' : 'back')) {
+                const el = pos[selectedTextElement.key];
+                if (el) {
+                    ctx.strokeStyle = '#2563eb';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([6, 6]);
+                    ctx.strokeRect(el.x - 10, el.y - 10, el.width + 20, el.height + 20);
+                    ctx.setLineDash([]);
+                }
+            }
+        }
+
+        // Mouse and Touch Dragging Setup for Canvases
+        function setupCanvasDrag(canvas, isFront) {
+            let isDragging = false;
+            let startX = 0, startY = 0;
+            let activeKey = null;
+
+            function getEventPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+
+            canvas.onmousedown = (e) => {
+                const pos = getEventPos(e);
+                const sideKey = isFront ? 'front' : 'back';
+                const posMap = elementPositions[sideKey];
+
+                activeKey = null;
+                for (let key in posMap) {
+                    const el = posMap[key];
+                    if (pos.x >= el.x && pos.x <= el.x + el.width && pos.y >= el.y && pos.y <= el.y + el.height) {
+                        activeKey = key;
+                        break;
+                    }
+                }
+
+                if (activeKey) {
+                    isDragging = true;
+                    startX = pos.x - posMap[activeKey].x;
+                    startY = pos.y - posMap[activeKey].y;
+                    selectedTextElement = { side: sideKey, key: activeKey };
+                    renderCards();
+                }
+            };
+
+            canvas.onmousemove = (e) => {
+                if (!isDragging || !activeKey) return;
+                const pos = getEventPos(e);
+                const sideKey = isFront ? 'front' : 'back';
+                elementPositions[sideKey][activeKey].x = pos.x - startX;
+                elementPositions[sideKey][activeKey].y = pos.y - startY;
+                renderCards();
+            };
+
+            window.onmouseup = () => { isDragging = false; };
+
+            canvas.ontouchstart = (e) => {
+                canvas.onmousedown(e.touches[0]);
+                e.preventDefault();
+            };
+            canvas.ontouchmove = (e) => {
+                canvas.onmousemove(e.touches[0]);
+                e.preventDefault();
+            };
+            canvas.ontouchend = () => { isDragging = false; };
+        }
+
+        setupCanvasDrag(frontCanvas, true);
+        setupCanvasDrag(backCanvas, false);
+
+        resetBtn.onclick = () => {
+            busName.value = "Pooja Construction";
+            personName.value = "Love Kumar Lalawat";
+            selectedTextElement = null;
+            renderCards();
+        };
+
+        document.getElementById('download-card-png').onclick = () => {
+            const link = document.createElement('a');
+            link.download = 'visiting_card_front_back.png';
+            const c = document.createElement('canvas');
+            c.width = frontCanvas.width * 2 + 20; c.height = frontCanvas.height;
+            const cx = c.getContext('2d');
+            cx.fillStyle = '#ffffff'; cx.fillRect(0,0,c.width,c.height);
+            cx.drawImage(frontCanvas, 0, 0);
+            cx.drawImage(backCanvas, frontCanvas.width + 20, 0);
+            link.href = c.toDataURL('image/png');
+            link.click();
+        };
+
+        document.getElementById('print-btn').onclick = () => {
+            window.print();
+        };
+
+        // Initial render
+        renderCards();
+    </script>
 </body>
 </html>

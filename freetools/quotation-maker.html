@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-teal-700 flex items-center justify-center text-white font-bold text-xl shadow-md">📑</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Quotation Maker</h1>
+                    <p class="text-xs text-slate-500">Quotation / estimate — items, discount, tax, currency, validity, terms. PDF.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-teal-50 border-b border-teal-100 py-2 px-4 text-center">
+        <p class="text-xs text-teal-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Controls Form (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Aapka Business Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">🏢 Aapka business</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Business name *</label>
+                        <input type="text" id="b-name" value="Pooja Construction & Building Materials" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">GSTIN</label>
+                        <input type="text" id="b-gst" value="08AACFP1234F1Z5" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Address</label>
+                    <input type="text" id="b-address" value="Nawaghar Colony, Meera Nagar, Bhuwana, Udaipur - 313001" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Phone</label>
+                        <input type="text" id="b-phone" value="+91 93586 42399" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
+                        <input type="text" id="b-email" value="poojaconstruction@gmail.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Logo</label>
+                        <input type="file" id="logo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">👤 Customer</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Customer name *</label>
+                        <input type="text" id="c-name" value="Arohana Infratech" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Company</label>
+                        <input type="text" id="c-company" value="Arohana Infratech Pvt. Ltd." class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Address</label>
+                        <input type="text" id="c-address" value="Chitrakoot Nagar, Bhuwana, Udaipur" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Phone / Email</label>
+                        <input type="text" id="c-phone" value="+91 98290 12345" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quotation Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2"># Quotation</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Quotation no. *</label>
+                        <input type="text" id="q-no" value="QT-2026-0001" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date</label>
+                        <input type="text" id="q-date" value="29-10-2026" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Valid until</label>
+                        <input type="text" id="q-valid" value="15-11-2026" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Currency</label>
+                        <select id="q-currency" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="₹">₹ INR</option>
+                            <option value="$">$ USD</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Subject</label>
+                        <input type="text" id="q-subject" value="Quotation for 20mm Blue Stone Aggregates supply" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Theme color</label>
+                        <input type="color" id="theme-color" value="#0f766e" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products / Services Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b pb-2">
+                    <h3 class="text-sm font-bold text-slate-800">🛍️ Products / services</h3>
+                    <button onclick="addItem()" class="text-xs font-semibold text-teal-700 hover:underline">+ Add item</button>
+                </div>
+
+                <div id="items-container" class="space-y-3">
+                    <div class="item-row grid grid-cols-12 gap-2 items-center bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <div class="col-span-5"><input type="text" placeholder="Description" value="20mm Blue Stone Aggregates (Per Truck)" class="item-desc w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="col-span-2"><input type="number" placeholder="Qty" value="5" class="item-qty w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="col-span-2"><input type="number" placeholder="Rate" value="18500" class="item-rate w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="col-span-1"><input type="number" placeholder="Disc %" value="0" class="item-disc w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="col-span-1"><input type="number" placeholder="Tax %" value="5" class="item-tax w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                        <div class="col-span-1 flex justify-end"><button onclick="this.closest('.item-row').remove(); calculateQuotation();" class="text-rose-500 font-bold px-1">✕</button></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Extra discount (amount)</label>
+                        <input type="number" id="q-extra-disc" value="1000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Shipping / other</label>
+                        <input type="number" id="q-shipping" value="2500" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">📋 Terms</h3>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Payment terms</label>
+                    <input type="text" id="t-payment" value="50% advance, balance on delivery" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Notes</label>
+                    <textarea id="t-notes" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">Materials will be supplied directly from our Bhuwana crushing plant.</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Terms & conditions</label>
+                    <textarea id="t-terms" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">1. Prices are valid till the date mentioned above.
+2. Taxes as applicable.
+3. Delivery as per mutually agreed schedule.</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Signatory name</label>
+                    <input type="text" id="t-sign" value="Love Kumar Lalawat (Proprietor)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Live Preview & Export (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Live Preview Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                <div class="w-full flex items-center justify-between mb-3">
+                    <span id="preview-top-label" class="text-xs font-bold text-slate-700">Live preview 1 item · Total ₹96,000 · 1 page</span>
+                    <span class="text-xs text-slate-400 font-mono">A4 Portrait</span>
+                </div>
+
+                <!-- Canvas Preview Container -->
+                <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex items-center justify-center overflow-x-auto min-h-[620px]">
+                    <canvas id="quotation-canvas" class="shadow-lg rounded bg-white max-w-[340px] h-auto"></canvas>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+                    <button id="download-pdf-btn" class="bg-teal-700 hover:bg-teal-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📥 PDF</span>
+                    </button>
+                    <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖼️ PNG</span>
+                    </button>
+                    <button id="print-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="reset-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                        <span>🔄 Reset</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let logoImg = null;
+
+        const quotationCanvas = document.getElementById('quotation-canvas');
+        const logoInput = document.getElementById('logo-input');
+        const themeColor = document.getElementById('theme-color');
+
+        const bName = document.getElementById('b-name');
+        const bGst = document.getElementById('b-gst');
+        const bAddress = document.getElementById('b-address');
+        const bPhone = document.getElementById('b-phone');
+        const bEmail = document.getElementById('b-email');
+
+        const cName = document.getElementById('c-name');
+        const cCompany = document.getElementById('c-company');
+        const cAddress = document.getElementById('c-address');
+        const cPhone = document.getElementById('c-phone');
+
+        const qNo = document.getElementById('q-no');
+        const qDate = document.getElementById('q-date');
+        const qValid = document.getElementById('q-valid');
+        const qCurrency = document.getElementById('q-currency');
+        const qSubject = document.getElementById('q-subject');
+        const qExtraDisc = document.getElementById('q-extra-disc');
+        const qShipping = document.getElementById('q-shipping');
+
+        const tPayment = document.getElementById('t-payment');
+        const tNotes = document.getElementById('t-notes');
+        const tTerms = document.getElementById('t-terms');
+        const tSign = document.getElementById('t-sign');
+        const previewTopLabel = document.getElementById('preview-top-label');
+
+        logoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { logoImg = img; calculateQuotation(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.addItem = function() {
+            const container = document.getElementById('items-container');
+            const div = document.createElement('div');
+            div.className = "item-row grid grid-cols-12 gap-2 items-center bg-slate-50 p-3 rounded-xl border border-slate-200";
+            div.innerHTML = `
+                <div class="col-span-5"><input type="text" placeholder="Description" class="item-desc w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="col-span-2"><input type="number" placeholder="Qty" value="1" class="item-qty w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="col-span-2"><input type="number" placeholder="Rate" value="0" class="item-rate w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="col-span-1"><input type="number" placeholder="Disc %" value="0" class="item-disc w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="col-span-1"><input type="number" placeholder="Tax %" value="0" class="item-tax w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs outline-none"></div>
+                <div class="col-span-1 flex justify-end"><button onclick="this.closest('.item-row').remove(); calculateQuotation();" class="text-rose-500 font-bold px-1">✕</button></div>
+            `;
+            container.appendChild(div);
+            div.querySelectorAll('input').forEach(i => i.addEventListener('input', calculateQuotation));
+        };
+
+        [bName, bGst, bAddress, bPhone, bEmail, cName, cCompany, cAddress, cPhone, qNo, qDate, qValid, qCurrency, qSubject, qExtraDisc, qShipping, tPayment, tNotes, tTerms, tSign, themeColor].forEach(el => {
+            el.addEventListener('input', calculateQuotation);
+            el.addEventListener('change', calculateQuotation);
+        });
+
+        document.querySelectorAll('.item-row input').forEach(el => {
+            el.addEventListener('input', calculateQuotation);
+        });
+
+        function calculateQuotation() {
+            let subtotal = 0;
+            let totalTax = 0;
+            let itemCount = 0;
+
+            const items = [];
+            document.querySelectorAll('.item-row').forEach(row => {
+                const desc = row.querySelector('.item-desc').value;
+                const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+                const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+                const discPct = parseFloat(row.querySelector('.item-disc').value) || 0;
+                const taxPct = parseFloat(row.querySelector('.item-tax').value) || 0;
+
+                let baseAmount = qty * rate;
+                let discAmt = (baseAmount * discPct) / 100;
+                let taxable = baseAmount - discAmt;
+                let taxAmt = (taxable * taxPct) / 100;
+                let totalAmt = taxable + taxAmt;
+
+                subtotal += totalAmt;
+                itemCount++;
+
+                items.push({ desc, qty, rate, discPct, taxPct, totalAmt });
+            });
+
+            const extraDisc = parseFloat(qExtraDisc.value) || 0;
+            const shipping = parseFloat(qShipping.value) || 0;
+
+            let grandTotal = subtotal - extraDisc + shipping;
+
+            const cur = qCurrency.value;
+            previewTopLabel.innerText = `Live preview ${itemCount} items · Total ${cur}${grandTotal.toLocaleString('en-IN')} · 1 page`;
+
+            renderCanvas(items, subtotal, extraDisc, shipping, grandTotal);
+        }
+
+        function renderCanvas(items, subtotal, extraDisc, shipping, grandTotal) {
+            // A4 at 300 DPI: 2480 x 3508 pixels
+            const w = 2480;
+            const h = 3508;
+            quotationCanvas.width = w;
+            quotationCanvas.height = h;
+            const ctx = quotationCanvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+
+            const tCol = themeColor.value;
+            const cur = qCurrency.value;
+            const font = 'Poppins';
+            const margin = 180;
+
+            // Header Top Bar
+            let headerY = margin;
+            if (logoImg) {
+                ctx.drawImage(logoImg, margin, headerY, 160, 160);
+            }
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = tCol;
+            ctx.font = `bold 64px '${font}', sans-serif`;
+            ctx.fillText(bName.value || 'Business Name', logoImg ? margin + 190 : margin, headerY + 50);
+
+            if (bAddress.value) {
+                ctx.fillStyle = '#475569';
+                ctx.font = `32px '${font}', sans-serif`;
+                ctx.fillText(bAddress.value, logoImg ? margin + 190 : margin, headerY + 105);
+            }
+            if (bGst.value) {
+                ctx.fillStyle = '#334155';
+                ctx.font = `bold 32px '${font}', sans-serif`;
+                ctx.fillText(`GSTIN: ${bGst.value}`, logoImg ? margin + 190 : margin, headerY + 150);
+            }
+
+            // Quotation Title Right
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#0f172a';
+            ctx.font = `bold 72px '${font}', sans-serif`;
+            ctx.fillText('QUOTATION', w - margin, headerY + 60);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = `34px '${font}', sans-serif`;
+            ctx.fillText(`Quote No: ${qNo.value || 'QT-001'}`, w - margin, headerY + 120);
+            ctx.fillText(`Date: ${qDate.value || ''}`, w - margin, headerY + 170);
+            ctx.fillText(`Valid until: ${qValid.value || ''}`, w - margin, headerY + 220);
+
+            headerY += 280;
+            ctx.strokeStyle = tCol;
+            ctx.lineWidth = 6;
+            ctx.beginPath(); ctx.moveTo(margin, headerY); ctx.lineTo(w - margin, headerY); ctx.stroke();
+            headerY += 60;
+
+            // Quotation For & Quoted Amount Boxes
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(margin, headerY, 1200, 220);
+            ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 2;
+            ctx.strokeRect(margin, headerY, 1200, 220);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = `bold 28px '${font}', sans-serif`;
+            ctx.fillText('QUOTATION FOR', margin + 40, headerY + 45);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = `bold 42px '${font}', sans-serif`;
+            ctx.fillText(cName.value || 'Customer Name', margin + 40, headerY + 100);
+
+            ctx.fillStyle = '#334155';
+            ctx.font = `32px '${font}', sans-serif`;
+            ctx.fillText([cCompany.value, cAddress.value].filter(Boolean).join(' | '), margin + 40, headerY + 155);
+
+            // Quoted Amount Box
+            const amtX = w - margin - 800;
+            ctx.fillStyle = '#f0fdf4';
+            ctx.fillRect(amtX, headerY, 800, 220);
+            ctx.strokeStyle = '#bbf7d0';
+            ctx.strokeRect(amtX, headerY, 800, 220);
+
+            ctx.fillStyle = '#166534';
+            ctx.font = `bold 28px '${font}', sans-serif`;
+            ctx.fillText('QUOTED AMOUNT', amtX + 40, headerY + 45);
+
+            ctx.fillStyle = '#15803d';
+            ctx.font = `bold 64px '${font}', sans-serif`;
+            ctx.fillText(`${cur}${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`, amtX + 40, headerY + 135);
+
+            headerY += 280;
+
+            // Subject
+            if (qSubject.value) {
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#334155';
+                ctx.font = `bold 36px '${font}', sans-serif`;
+                ctx.fillText(`Subject: ${qSubject.value}`, margin, headerY);
+                headerY += 60;
+            }
+
+            // Items Table Header
+            ctx.fillStyle = tCol;
+            ctx.fillRect(margin, headerY, w - (margin * 2), 75);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold 32px '${font}', sans-serif`;
+            ctx.textAlign = 'left';
+            ctx.fillText('# Description', margin + 30, headerY + 48);
+            ctx.fillText('Qty', margin + 1200, headerY + 48);
+            ctx.fillText('Rate', margin + 1480, headerY + 48);
+            ctx.fillText('Disc', margin + 1750, headerY + 48);
+            ctx.textAlign = 'right';
+            ctx.fillText('Amount', w - margin - 30, headerY + 48);
+            headerY += 75;
+
+            // Table Rows
+            ctx.font = `32px '${font}', sans-serif`;
+            items.forEach((item, idx) => {
+                ctx.fillStyle = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+                ctx.fillRect(margin, headerY, w - (margin * 2), 70);
+
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#1e293b';
+                ctx.fillText(`${idx + 1}. ${item.desc}`, margin + 30, headerY + 45);
+                ctx.fillText(item.qty, margin + 1200, headerY + 45);
+                ctx.fillText(`${cur}${item.rate.toLocaleString('en-IN')}`, margin + 1480, headerY + 45);
+                ctx.fillText(`${item.discPct}%`, margin + 1750, headerY + 45);
+
+                ctx.textAlign = 'right';
+                ctx.fillText(`${cur}${item.totalAmt.toLocaleString('en-IN')}`, w - margin - 30, headerY + 45);
+                headerY += 70;
+            });
+
+            headerY += 40;
+
+            // Totals Right
+            const totX = w - margin - 850;
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#475569';
+            ctx.font = `32px '${font}', sans-serif`;
+
+            ctx.fillText('Subtotal', totX, headerY);
+            ctx.textAlign = 'right';
+            ctx.fillText(`${cur}${subtotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`, w - margin, headerY);
+            headerY += 50;
+
+            if (extraDisc > 0) {
+                ctx.textAlign = 'left';
+                ctx.fillText('Extra Discount', totX, headerY);
+                ctx.textAlign = 'right';
+                ctx.fillText(`- ${cur}${extraDisc.toLocaleString('en-IN', {minimumFractionDigits: 2})}`, w - margin, headerY);
+                headerY += 50;
+            }
+
+            if (shipping > 0) {
+                ctx.textAlign = 'left';
+                ctx.fillText('Shipping / Other', totX, headerY);
+                ctx.textAlign = 'right';
+                ctx.fillText(`+ ${cur}${shipping.toLocaleString('en-IN', {minimumFractionDigits: 2})}`, w - margin, headerY);
+                headerY += 50;
+            }
+
+            // Final Total Line
+            ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(totX, headerY); ctx.lineTo(w - margin, headerY); ctx.stroke();
+            headerY += 50;
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#0f172a';
+            ctx.font = `bold 42px '${font}', sans-serif`;
+            ctx.fillText('Total', totX, headerY);
+
+            ctx.textAlign = 'right';
+            ctx.fillStyle = tCol;
+            ctx.font = `bold 48px '${font}', sans-serif`;
+            ctx.fillText(`${cur}${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`, w - margin, headerY);
+            headerY += 100;
+
+            // Terms & Conditions
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#0f172a';
+            ctx.font = `bold 34px '${font}', sans-serif`;
+            ctx.fillText('Payment Terms & Conditions', margin, headerY);
+            headerY += 45;
+
+            ctx.fillStyle = '#475569';
+            ctx.font = `30px '${font}', sans-serif`;
+            if (tPayment.value) { ctx.fillText(`• Payment: ${tPayment.value}`, margin, headerY); headerY += 40; }
+            
+            const termsLines = tTerms.value.split('\n');
+            termsLines.forEach(line => {
+                ctx.fillText(line, margin, headerY, w - (margin * 2));
+                headerY += 40;
+            });
+
+            headerY += 40;
+
+            // Signatory
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#0f172a';
+            ctx.font = `bold 34px '${font}', sans-serif`;
+            ctx.fillText(`For ${bName.value}`, w - margin, headerY);
+            headerY += 100;
+            ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(w - margin - 400, headerY); ctx.lineTo(w - margin, headerY); ctx.stroke();
+            headerY += 40;
+            ctx.font = `30px '${font}', sans-serif`;
+            ctx.fillStyle = '#64748b';
+            ctx.fillText(tSign.value || 'Authorised Signatory', w - margin, headerY);
+        }
+
+        document.getElementById('reset-btn').onclick = () => {
+            bName.value = "Pooja Construction & Building Materials";
+            qNo.value = "QT-2026-0001";
+            calculateQuotation();
+        };
+
+        document.getElementById('download-png-btn').onclick = () => {
+            const link = document.createElement('a');
+            link.download = `${(qNo.value || 'quotation').replace(/\s+/g, '_')}.png`;
+            link.href = quotationCanvas.toDataURL('image/png');
+            link.click();
+        };
+
+        document.getElementById('download-pdf-btn').onclick = () => {
+            window.print();
+        };
+
+        document.getElementById('print-btn').onclick = () => {
+            window.print();
+        };
+
+        // Initial render
+        calculateQuotation();
+    </script>
+</body>
+</html>

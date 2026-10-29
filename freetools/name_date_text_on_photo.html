@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Name, Date & Text on Photo – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Main Container */
+.main-shell {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #16337a 0%, #0d2157 100%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(22, 51, 122, 0.18);
+}
+.hero-banner h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.hero-banner p {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+/* Card Shell */
+.app-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* Tool Header */
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.tool-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tool-badge-icon {
+  width: 36px;
+  height: 36px;
+  background: #ffedd5;
+  color: #ea580c;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.tool-title-wrap h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.tool-title-wrap p {
+  font-size: 0.82rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Upload Dropzone */
+.upload-dropzone {
+  border: 1.8px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 44px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--ac);
+  background: #f7fdf9;
+}
+.upload-cloud-icon {
+  width: 36px;
+  height: 36px;
+  background: #ea580c;
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(234, 88, 12, 0.25);
+}
+.upload-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.upload-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 600;
+}
+#fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Workspace Layout matching screenshot 2 */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: flex-start;
+}
+.editor-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sidebar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+.tool-btn {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #334155;
+  transition: background 0.15s;
+}
+.tool-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.tool-btn svg { width: 16px; height: 16px; }
+
+.canvas-stage {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: repeating-conic-gradient(#cbd5e1 0% 25%, #f1f5f9 0% 50%);
+  background-size: 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#previewCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: default;
+}
+
+.config-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.config-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+.form-input, .form-select {
+  width: 100%;
+  height: 40px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: #ffffff;
+  outline: none;
+}
+.form-input:focus, .form-select:focus { border-color: var(--ac); }
+
+.type-pills-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.type-pill {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+.type-pill.active {
+  background: var(--ac);
+  border-color: var(--ac);
+  color: #fff;
+}
+
+.btn-download-main {
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+.btn-download-main:hover { background: var(--ac-hover); }
+
+/* Two Column Info Section */
+.info-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.info-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.info-steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.info-steps-list li span.num { font-weight: 700; margin-right: 6px; }
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.feature-list li { display: flex; align-items: center; gap: 10px; }
+.feature-list svg { width: 18px; height: 18px; color: #059669; flex-shrink: 0; }
+
+/* FAQ Section */
+.faq-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.faq-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.faq-item { border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.faq-question svg { width: 18px; height: 18px; transition: transform 0.2s ease; color: var(--mut); flex-shrink: 0; }
+.faq-item.active .faq-question svg { transform: rotate(90deg); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, padding 0.25s ease;
+  font-size: 0.9rem;
+  color: var(--mut);
+  line-height: 1.6;
+}
+.faq-item.active .faq-answer { max-height: 200px; padding-bottom: 16px; }
+
+/* Related Tools Grid */
+.related-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.related-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.related-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #ffffff;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.related-card:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+.related-icon {
+  width: 36px;
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #16337a;
+  flex-shrink: 0;
+}
+.related-icon svg { width: 20px; height: 20px; }
+.related-card span { font-size: 0.88rem; font-weight: 600; color: #1e293b; line-height: 1.25; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .workspace-grid { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .info-columns { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+</header>
+
+<main class="main-shell">
+  
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <h1>Name, Date & Text on Photo</h1>
+    <p>Add candidate name, date of photo, and custom text over any photo or document with font styling, outline, shadow, and rotation.</p>
+  </div>
+
+  <!-- Card Shell -->
+  <div class="app-card">
+    
+    <div class="tool-header">
+      <div class="tool-title-wrap">
+        <div class="tool-badge-icon">A</div>
+        <div>
+          <h2>Name, Date & Text on Photo</h2>
+          <p>Photo par naam, date aur text likhein — font, color, outline, shadow, rotate, drag. PNG / JPG.</p>
+        </div>
+      </div>
+      <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>All Tools</span>
+      </a>
+    </div>
+
+    <!-- Security Alert -->
+    <div class="alert-box alert-green">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+    </div>
+
+    <!-- Upload Dropzone -->
+    <div class="upload-dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+      <div class="upload-cloud-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+      <div class="upload-title">Photo chunein ya yahan drop karein</div>
+      <div class="upload-subtitle">JPG, PNG, WebP</div>
+    </div>
+
+    <!-- Workspace Section (Hidden by default) -->
+    <div class="workspace-section" id="workspaceSection" hidden>
+      
+      <div class="workspace-grid">
+        
+        <!-- Left Editor Column -->
+        <div class="editor-column">
+          
+          <!-- Canvas Toolbar matching screenshot 2 -->
+          <div class="canvas-toolbar">
+            <button type="button" class="tool-btn" id="btnUndo" title="Undo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 14L4 9l5-5"></path><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg></button>
+            <button type="button" class="tool-btn" id="btnRedo" title="Redo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 14l5-5-5-5"></path><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg></button>
+            <button type="button" class="tool-btn" id="btnCenterH" title="Center Horizontally"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M7 7h10M5 12h14M7 17h10"></path></svg></button>
+            <button type="button" class="tool-btn" id="btnBringFront" title="Bring to Front"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line></svg></button>
+            <button type="button" class="tool-btn" id="btnDelete" title="Delete Element"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+            <button type="button" class="tool-btn" id="btnReset" title="Reset All"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg></button>
+          </div>
+
+          <!-- Canvas Stage -->
+          <div class="canvas-stage" id="canvasStage">
+            <canvas id="previewCanvas"></canvas>
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--mut);">
+            Text / sticker ko drag karke rakhein. Kone ka gol handle = size, upar ka handle = rotate. Arrow keys se 1 px move.
+          </div>
+
+        </div>
+
+        <!-- Right Sidebar Column matching screenshot 2 -->
+        <div class="sidebar-column">
+          
+          <div class="config-group">
+            <label>Add text</label>
+            <div class="type-pills-row">
+              <button type="button" class="type-pill active" data-type="naam">👤 Naam</button>
+              <button type="button" class="type-pill" data-type="date">📅 Date</button>
+              <button type="button" class="type-pill" data-type="custom">💬 Custom text</button>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <label for="nameInput">Naam</label>
+            <input type="text" class="form-input" id="nameInput" value="Rahul Kumar">
+          </div>
+
+          <div class="config-group">
+            <label for="dateInput">Date</label>
+            <input type="date" class="form-input" id="dateInput" value="2026-10-29">
+          </div>
+
+          <div class="config-group">
+            <label for="dateFormatSelect">Date format</label>
+            <select class="form-select" id="dateFormatSelect">
+              <option value="DD-MM-YYYY" selected>24-10-2026</option>
+              <option value="MM/DD/YYYY">10/24/2026</option>
+              <option value="YYYY-MM-DD">2026-10-24</option>
+            </select>
+          </div>
+
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button type="button" class="type-pill active" id="modeNaam">👤 Naam</button>
+            <button type="button" class="type-pill" id="modeDate">📅 Date</button>
+            <button type="button" class="type-pill" id="modeCustom">💬 Custom text</button>
+          </div>
+
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button type="button" class="type-pill" id="modeStrip">🟫 Naam + Date strip</button>
+          </div>
+
+          <div class="config-group">
+            <label for="downloadSizeSelect">Size</label>
+            <select class="form-select" id="downloadSizeSelect">
+              <option value="original" selected>Original size</option>
+              <option value="passport">Passport photo</option>
+            </select>
+          </div>
+
+          <div class="config-group">
+            <label for="downloadFormatSelect">Format</label>
+            <select class="form-select" id="downloadFormatSelect">
+              <option value="jpg" selected>JPG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WEBP</option>
+            </select>
+          </div>
+
+          <div class="config-group">
+            <label for="qualityRange">JPG quality: <span id="qualityVal">92%</span></label>
+            <input type="range" class="form-range" id="qualityRange" min="10" max="100" value="92" style="accent-color:var(--ac);cursor:pointer;">
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--mut);" id="outputMetaText">Output: 1037 × 1280 px (original)</div>
+
+          <button type="button" class="btn-download-main" id="btnDownloadPhoto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download photo</span>
+          </button>
+
+          <button type="button" class="btn-chip" id="btnChangePhoto" style="text-align:center;justify-content:center;">Dusri photo</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Two Column Info Section -->
+  <div class="info-columns">
+    <div class="info-card">
+      <h3>How to use Name, Date & Text on Photo</h3>
+      <ol class="info-steps-list">
+        <li><span class="num">1.</span> Upload your photo or document</li>
+        <li><span class="num">2.</span> Enter name, date or custom text</li>
+        <li><span class="num">3.</span> Drag text position or adjust styling</li>
+        <li><span class="num">4.</span> Download final photo</li>
+      </ol>
+    </div>
+
+    <div class="info-card">
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Name and date overlay for exams</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Drag, scale and rotate elements freely</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>High quality JPG, PNG, WEBP export</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>100% secure client-side browser processing</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h3>FAQ – Name, Date & Text on Photo</h3>
+    
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Can I add name and date for exam application forms?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes! Many government exam portals require candidate name and photo date printed on the passport photo. This tool lets you format and position it perfectly.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is this tool free?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, 100% free with no limits or watermarks required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Are my files uploaded to a server?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        No! All processing happens securely right inside your browser.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Free Tools Grid -->
+  <div class="related-section">
+    <h3>Related free tools</h3>
+    <div class="related-grid">
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2M15 12h2"></path><path d="M7 16h10"></path></svg>
+        </div>
+        <span>Passport Photo Sheet</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span>JPG to PDF Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </div>
+        <span>Photo Compressor (KB)</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+        </div>
+        <span>Image Watermark Maker</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/**
+ * DocSmartly Name, Date & Text on Photo Engine
+ */
+
+let currentImg = null;
+let originalFileName = "photo";
+let textElements = [
+  { id: 't1', text: 'Rahul Kumar', x: 100, y: 100, size: 28, color: '#ffffff', font: 'Arial', isStrip: false }
+];
+let selectedIndex = 0;
+
+const fileInput = document.getElementById('fileInput');
+const uploadSection = document.getElementById('upload-section');
+const workspaceSection = document.getElementById('workspaceSection');
+const previewCanvas = document.getElementById('previewCanvas');
+const canvasStage = document.getElementById('canvasStage');
+const nameInput = document.getElementById('nameInput');
+const dateInput = document.getElementById('dateInput');
+const outputMetaText = document.getElementById('outputMetaText');
+const qualityRange = document.getElementById('qualityRange');
+const qualityVal = document.getElementById('qualityVal');
+const downloadFormatSelect = document.getElementById('downloadFormatSelect');
+const btnDownloadPhoto = document.getElementById('btnDownloadPhoto');
+const btnChangePhoto = document.getElementById('btnChangePhoto');
+
+qualityRange.addEventListener('input', () => { qualityVal.textContent = qualityRange.value + '%'; });
+
+fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || 'photo';
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      currentImg = img;
+      uploadSection.hidden = true;
+      workspaceSection.hidden = false;
+      outputMetaText.textContent = `Output: ${img.naturalWidth} × ${img.naturalHeight} px (original)`;
+      
+      // Default text position near bottom center
+      textElements[0].x = img.naturalWidth / 2;
+      textElements[0].y = img.naturalHeight - 60;
+
+      redrawCanvas();
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+nameInput.addEventListener('input', () => {
+  if (textElements[selectedIndex]) {
+    textElements[selectedIndex].text = nameInput.value;
+    redrawCanvas();
+  }
+});
+
+btnChangePhoto.addEventListener('click', () => {
+  workspaceSection.hidden = true;
+  uploadSection.hidden = false;
+  currentImg = null;
+});
+
+function redrawCanvas() {
+  if (!currentImg) return;
+  previewCanvas.width = currentImg.naturalWidth;
+  previewCanvas.height = currentImg.naturalHeight;
+  const ctx = previewCanvas.getContext('2d');
+
+  ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  ctx.drawImage(currentImg, 0, 0);
+
+  // Draw texts
+  textElements.forEach((el, idx) => {
+    ctx.save();
+    ctx.font = `bold ${el.size}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    if (el.isStrip) {
+      const metrics = ctx.measureText(el.text);
+      const padW = 20, padH = 12;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      ctx.fillRect(el.x - metrics.width/2 - padW, el.y - el.size/2 - padH, metrics.width + padW*2, el.size + padH*2);
+    }
+
+    // Outline
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = Math.max(3, el.size / 8);
+    ctx.strokeText(el.text, el.x, el.y);
+
+    // Fill
+    ctx.fillStyle = el.color;
+    ctx.fillText(el.text, el.x, el.y);
+    ctx.restore();
+  });
+}
+
+// Drag & Drop on canvas
+let isDraggingText = false;
+
+previewCanvas.addEventListener('mousedown', (e) => {
+  if (!currentImg) return;
+  const rect = previewCanvas.getBoundingClientRect();
+  const scaleX = previewCanvas.width / rect.width;
+  const scaleY = previewCanvas.height / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+
+  // Check click near text element
+  for (let i = 0; i < textElements.length; i++) {
+    const el = textElements[i];
+    if (Math.hypot(el.x - x, el.y - y) < 150) {
+      selectedIndex = i;
+      isDraggingText = true;
+      break;
+    }
+  }
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isDraggingText || !currentImg) return;
+  const rect = previewCanvas.getBoundingClientRect();
+  const scaleX = previewCanvas.width / rect.width;
+  const scaleY = previewCanvas.height / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+
+  textElements[selectedIndex].x = x;
+  textElements[selectedIndex].y = y;
+  redrawCanvas();
+});
+
+window.addEventListener('mouseup', () => { isDraggingText = false; });
+
+btnDownloadPhoto.addEventListener('click', () => {
+  if (!currentImg) return;
+  redrawCanvas();
+  const format = downloadFormatSelect.value;
+  const quality = parseInt(qualityRange.value, 10) / 100;
+  const mime = format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg';
+  const ext = format === 'png' ? 'png' : format === 'webp' ? 'webp' : 'jpg';
+
+  const link = document.createElement('a');
+  link.download = `${originalFileName}_named.${ext}`;
+  link.href = previewCanvas.toDataURL(mime, quality);
+  link.click();
+});
+
+// FAQ Accordion Toggle
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

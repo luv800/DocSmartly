@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee ID Card Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md">🪪</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Employee ID Card Maker</h1>
+                    <p class="text-xs text-slate-500">Company employee ID card — photo, logo, QR, front & back, A4 print sheet.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-blue-50 border-b border-blue-100 py-2 px-4 text-center">
+        <p class="text-xs text-blue-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Controls Form (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Design & Style Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Template</label>
+                        <select id="template-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="classic">Classic header</option>
+                            <option value="modern">Modern curved</option>
+                            <option value="minimal">Minimal clean</option>
+                            <option value="bold">Bold brand</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Layout</label>
+                        <select id="layout-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="portrait">Portrait</option>
+                            <option value="landscape">Landscape</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Card size</label>
+                        <select id="card-size-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="cr80">Standard CR80 (85.6 × 54 mm)</option>
+                            <option value="vertical-id">Vertical ID (54 × 85.6 mm)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Primary color</label>
+                        <input type="color" id="primary-color" value="#1d4ed8" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Accent color</label>
+                        <input type="color" id="accent-color" value="#38bdf8" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Card background</label>
+                        <input type="color" id="card-bg-color" value="#ffffff" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Font</label>
+                        <select id="font-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="Poppins">Poppins</option>
+                            <option value="Roboto">Roboto</option>
+                            <option value="Montserrat">Montserrat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Border</label>
+                        <select id="border-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="none">None</option>
+                            <option value="thin">Thin border</option>
+                            <option value="shadow">Card shadow</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Background pattern</label>
+                        <select id="pattern-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="none">None</option>
+                            <option value="dots">Dots grid</option>
+                            <option value="waves">Subtle waves</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center space-x-2">
+                    <span>🏢 Company Details</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Company name *</label>
+                        <input type="text" id="comp-name" value="DocSmartly Technologies" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Logo image</label>
+                        <input type="file" id="comp-logo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 cursor-pointer">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tagline</label>
+                        <input type="text" id="comp-tagline" value="Digital Solutions & Verification" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Website</label>
+                        <input type="text" id="comp-website" value="www.docsmartly.pages.dev" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Company address & phone (back side)</label>
+                    <textarea id="comp-address" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">123 Tech Park, Infocity, Udaipur, Rajasthan - 313001 | Ph: +91 93586 42399</textarea>
+                </div>
+            </div>
+
+            <!-- Employee Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center space-x-2">
+                    <span>👤 Employee Details</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Name *</label>
+                        <input type="text" id="emp-name" value="Love Kumar Lalawat" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Employee ID *</label>
+                        <input type="text" id="emp-id" value="DS-2026-001" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Designation</label>
+                        <input type="text" id="emp-desig" value="Lead Software Engineer" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Department</label>
+                        <input type="text" id="emp-dept" value="Engineering & Web" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Phone</label>
+                        <input type="text" id="emp-phone" value="+91 93586 42399" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
+                        <input type="text" id="emp-email" value="love@docsmartly.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Blood group</label>
+                        <input type="text" id="emp-blood" value="B+" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Joining date</label>
+                        <input type="text" id="emp-joining" value="01-05-2024" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Valid till</label>
+                        <input type="text" id="emp-valid" value="31-12-2028" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Home address (back side)</label>
+                    <textarea id="emp-address" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">Bhuwana, Udaipur, Rajasthan - 313001</textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Emergency contact</label>
+                        <input type="text" id="emp-emergency" value="+91 91234 56789" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">QR code on back</label>
+                        <select id="qr-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="yes">Yes (Employee details QR)</option>
+                            <option value="no">No QR code</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Employee photo *</label>
+                        <input type="file" id="emp-photo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Authority signature image</label>
+                        <input type="file" id="emp-sig-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 cursor-pointer">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Back side instructions</label>
+                    <textarea id="back-instructions" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">This card is the property of the company and must be returned on leaving. If found, please return to the address above.</textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Live Preview & Export (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Live Preview Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                <div class="w-full flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-700">Live preview (Front & Back)</span>
+                    <span id="preview-dim-label" class="text-xs text-slate-400 font-mono">85.6 × 54 mm (CR80)</span>
+                </div>
+
+                <!-- Canvas Preview Container -->
+                <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex flex-wrap items-center justify-center gap-4 overflow-x-auto">
+                    <div class="flex flex-col items-center">
+                        <span class="text-[10px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">FRONT</span>
+                        <canvas id="front-canvas" class="shadow-md rounded-lg max-w-[210px] h-auto bg-white"></canvas>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-[10px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">BACK</span>
+                        <canvas id="back-canvas" class="shadow-md rounded-lg max-w-[210px] h-auto bg-white"></canvas>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+                    <button id="download-card-pdf" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📥 Card PDF</span>
+                    </button>
+                    <button id="download-card-png" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖼️ PNG (F+B)</span>
+                    </button>
+                    <button id="print-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="reset-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                        <span>🔄 Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- A4 Sheet Queue Box -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">📄 A4 sheet (multiple cards)</h3>
+                        <p class="text-[11px] text-slate-500">Queue me card jodein — ek sath A4 page par print karein.</p>
+                    </div>
+                    <span id="queue-count-badge" class="bg-blue-100 text-blue-700 font-bold text-xs px-2.5 py-1 rounded-full">0 cards</span>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button id="add-to-sheet-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                        <span>➕ Add to sheet</span>
+                    </button>
+                    <div class="flex items-center space-x-1 shrink-0">
+                        <label class="text-xs text-slate-600 font-medium">Copies:</label>
+                        <input type="number" id="copies-input" value="1" min="1" max="10" class="w-14 bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-semibold text-center outline-none">
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 pt-2">
+                    <button id="download-a4-pdf" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                        <span>🖨️ A4 sheet PDF</span>
+                    </button>
+                    <button id="clear-sheet-btn" class="p-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs transition" title="Clear Sheet">🗑️</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let logoImg = null;
+        let empPhotoImg = null;
+        let empSigImg = null;
+        let sheetQueue = [];
+
+        // Elements
+        const templateSelect = document.getElementById('template-select');
+        const layoutSelect = document.getElementById('layout-select');
+        const cardSizeSelect = document.getElementById('card-size-select');
+        const primaryColor = document.getElementById('primary-color');
+        const accentColor = document.getElementById('accent-color');
+        const cardBgColor = document.getElementById('card-bg-color');
+        const fontSelect = document.getElementById('font-select');
+        const borderSelect = document.getElementById('border-select');
+        const patternSelect = document.getElementById('pattern-select');
+
+        const compName = document.getElementById('comp-name');
+        const compLogoInput = document.getElementById('comp-logo-input');
+        const compTagline = document.getElementById('comp-tagline');
+        const compWebsite = document.getElementById('comp-website');
+        const compAddress = document.getElementById('comp-address');
+
+        const empName = document.getElementById('emp-name');
+        const empId = document.getElementById('emp-id');
+        const empDesig = document.getElementById('emp-desig');
+        const empDept = document.getElementById('emp-dept');
+        const empPhone = document.getElementById('emp-phone');
+        const empEmail = document.getElementById('emp-email');
+        const empBlood = document.getElementById('emp-blood');
+        const empJoining = document.getElementById('emp-joining');
+        const empValid = document.getElementById('emp-valid');
+        const empAddress = document.getElementById('emp-address');
+        const empEmergency = document.getElementById('emp-emergency');
+        const qrSelect = document.getElementById('qr-select');
+        const empPhotoInput = document.getElementById('emp-photo-input');
+        const empSigInput = document.getElementById('emp-sig-input');
+        const backInstructions = document.getElementById('back-instructions');
+
+        const frontCanvas = document.getElementById('front-canvas');
+        const backCanvas = document.getElementById('back-canvas');
+        const previewDimLabel = document.getElementById('preview-dim-label');
+
+        const downloadCardPdf = document.getElementById('download-card-pdf');
+        const downloadCardPng = document.getElementById('download-card-png');
+        const printBtn = document.getElementById('print-btn');
+        const resetBtn = document.getElementById('reset-btn');
+
+        const addToSheetBtn = document.getElementById('add-to-sheet-btn');
+        const copiesInput = document.getElementById('copies-input');
+        const queueCountBadge = document.getElementById('queue-count-badge');
+        const downloadA4Pdf = document.getElementById('download-a4-pdf');
+        const clearSheetBtn = document.getElementById('clear-sheet-btn');
+
+        // Image loaders
+        compLogoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { logoImg = img; renderAll(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        empPhotoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { empPhotoImg = img; renderAll(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        empSigInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { empSigImg = img; renderAll(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        // Event Listeners
+        [templateSelect, layoutSelect, cardSizeSelect, primaryColor, accentColor, cardBgColor, fontSelect, borderSelect, patternSelect,
+         compName, compTagline, compWebsite, compAddress, empName, empId, empDesig, empDept, empPhone, empEmail, empBlood, empJoining,
+         empValid, empAddress, empEmergency, qrSelect, backInstructions].forEach(el => {
+            el.addEventListener('input', renderAll);
+            el.addEventListener('change', renderAll);
+        });
+
+        function getDimensions() {
+            const isLandscape = layoutSelect.value === 'landscape';
+            // CR80 standard: 1012 x 638 pixels at 300 DPI (85.6 x 54 mm)
+            if (isLandscape) {
+                return { w: 1012, h: 638 };
+            } else {
+                return { w: 638, h: 1012 };
+            }
+        }
+
+        function renderAll() {
+            const { w, h } = getDimensions();
+            previewDimLabel.innerText = `${w} × ${h} px (${layoutSelect.value})`;
+
+            frontCanvas.width = w; frontCanvas.height = h;
+            backCanvas.width = w; backCanvas.height = h;
+
+            drawCard(frontCanvas.getContext('2d'), true, w, h);
+            drawCard(backCanvas.getContext('2d'), false, w, h);
+        }
+
+        function drawCard(ctx, isFront, w, h) {
+            const pCol = primaryColor.value;
+            const aCol = accentColor.value;
+            const bgCol = cardBgColor.value;
+            const font = fontSelect.value;
+            const tmpl = templateSelect.value;
+            const isLandscape = layoutSelect.value === 'landscape';
+
+            // Background fill
+            ctx.fillStyle = bgCol;
+            ctx.fillRect(0, 0, w, h);
+
+            // Background pattern
+            const pattern = patternSelect.value;
+            if (pattern === 'dots') {
+                ctx.fillStyle = 'rgba(0,0,0,0.04)';
+                for (let x = 20; x < w; x += 40) {
+                    for (let y = 20; y < h; y += 40) {
+                        ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill();
+                    }
+                }
+            } else if (pattern === 'waves') {
+                ctx.strokeStyle = 'rgba(0,0,0,0.03)'; ctx.lineWidth = 4;
+                for (let y = 0; y < h; y += 60) {
+                    ctx.beginPath(); ctx.moveTo(0, y); ctx.quadraticCurveTo(w/2, y+40, w, y); ctx.stroke();
+                }
+            }
+
+            if (isFront) {
+                // --- FRONT SIDE ---
+                if (tmpl === 'classic') {
+                    // Header Banner
+                    const bannerH = isLandscape ? h * 0.32 : h * 0.24;
+                    ctx.fillStyle = pCol;
+                    ctx.fillRect(0, 0, w, bannerH);
+                    ctx.fillStyle = aCol;
+                    ctx.fillRect(0, bannerH, w, 6);
+
+                    // Company Name
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = `bold ${Math.round(w * 0.055)}px '${font}', sans-serif`;
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(compName.value || 'Company Name', w / 2, bannerH / 2 - 10);
+
+                    if (compTagline.value) {
+                        ctx.font = `${Math.round(w * 0.032)}px '${font}', sans-serif`;
+                        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+                        ctx.fillText(compTagline.value, w / 2, bannerH / 2 + 22);
+                    }
+
+                    // Photo Box
+                    const photoW = isLandscape ? w * 0.22 : w * 0.38;
+                    const photoH = photoW * 1.25;
+                    const photoX = isLandscape ? w * 0.08 : (w - photoW) / 2;
+                    const photoY = bannerH + (isLandscape ? (h - bannerH - photoH)/2 : 35);
+
+                    ctx.fillStyle = '#f1f5f9';
+                    ctx.fillRect(photoX, photoY, photoW, photoH);
+                    ctx.strokeStyle = pCol; ctx.lineWidth = 4;
+                    ctx.strokeRect(photoX, photoY, photoW, photoH);
+
+                    if (empPhotoImg) {
+                        ctx.drawImage(empPhotoImg, photoX, photoY, photoW, photoH);
+                    } else {
+                        ctx.fillStyle = '#64748b';
+                        ctx.font = `bold ${Math.round(photoW * 0.15)}px '${font}', sans-serif`;
+                        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                        ctx.fillText('PHOTO', photoX + photoW/2, photoY + photoH/2);
+                    }
+
+                    // Details
+                    const textX = isLandscape ? photoX + photoW + 45 : w / 2;
+                    const textStartY = isLandscape ? photoY + 15 : photoY + photoH + 45;
+
+                    ctx.textAlign = isLandscape ? 'left' : 'center';
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `bold ${Math.round(w * 0.065)}px '${font}', sans-serif`;
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(empName.value || 'Employee Name', textX, textStartY);
+
+                    ctx.fillStyle = pCol;
+                    ctx.font = `600 ${Math.round(w * 0.042)}px '${font}', sans-serif`;
+                    ctx.fillText(empDesig.value || 'Designation', textX, textStartY + 50);
+
+                    ctx.fillStyle = '#475569';
+                    ctx.font = `${Math.round(w * 0.038)}px '${font}', sans-serif`;
+                    let lineY = textStartY + 95;
+                    [
+                        `ID: ${empId.value || 'DS-001'}`,
+                        `Dept: ${empDept.value || 'Engineering'}`,
+                        `Blood Group: ${empBlood.value || 'B+'}`,
+                        `Phone: ${empPhone.value || ''}`
+                    ].forEach(txt => {
+                        ctx.fillText(txt, textX, lineY);
+                        lineY += 34;
+                    });
+
+                } else {
+                    // Modern curved / Minimal
+                    const bannerH = h * 0.22;
+                    ctx.fillStyle = pCol;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0); ctx.lineTo(0, bannerH - 40);
+                    ctx.quadraticCurveTo(w/2, bannerH + 20, w, bannerH - 40);
+                    ctx.lineTo(w, 0); ctx.closePath(); ctx.fill();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = `bold ${Math.round(w * 0.055)}px '${font}', sans-serif`;
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(compName.value || 'Company Name', w / 2, bannerH / 2 - 15);
+
+                    // Photo
+                    const photoW = w * 0.35; const photoH = photoW * 1.25;
+                    const photoX = (w - photoW) / 2; const photoY = bannerH + 20;
+                    ctx.fillStyle = '#f1f5f9'; ctx.fillRect(photoX, photoY, photoW, photoH);
+                    ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 3; ctx.strokeRect(photoX, photoY, photoW, photoH);
+                    if (empPhotoImg) ctx.drawImage(empPhotoImg, photoX, photoY, photoW, photoH);
+
+                    // Name & Details
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = '#1e293b';
+                    ctx.font = `bold ${Math.round(w * 0.06)}px '${font}', sans-serif`;
+                    ctx.fillText(empName.value || 'Employee Name', w / 2, photoY + photoH + 40);
+
+                    ctx.fillStyle = pCol;
+                    ctx.font = `600 ${Math.round(w * 0.04)}px '${font}', sans-serif`;
+                    ctx.fillText(empDesig.value || 'Designation', w / 2, photoY + photoH + 80);
+
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = `${Math.round(w * 0.035)}px '${font}', sans-serif`;
+                    ctx.fillText(`ID: ${empId.value || ''} | Dept: ${empDept.value || ''}`, w / 2, photoY + photoH + 120);
+                }
+
+            } else {
+                // --- BACK SIDE ---
+                const bannerH = isLandscape ? h * 0.28 : h * 0.20;
+                ctx.fillStyle = pCol;
+                ctx.fillRect(0, 0, w, bannerH);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold ${Math.round(w * 0.048)}px '${font}', sans-serif`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText('COMPANY INFORMATION', w / 2, bannerH / 2);
+
+                // Back Details list
+                ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+                let startX = w * 0.08; let startY = bannerH + 40;
+                ctx.fillStyle = '#334155';
+                ctx.font = `${Math.round(w * 0.038)}px '${font}', sans-serif`;
+
+                const details = [
+                    `Address: ${compAddress.value || ''}`,
+                    `Email: ${empEmail.value || ''}`,
+                    `Emergency: ${empEmergency.value || ''}`,
+                    `Joining Date: ${empJoining.value || ''}`,
+                    `Valid Till: ${empValid.value || ''}`
+                ];
+
+                details.forEach(item => {
+                    ctx.fillText(item, startX, startY, w * 0.85);
+                    startY += 45;
+                });
+
+                // Instructions
+                startY += 10;
+                ctx.fillStyle = '#64748b';
+                ctx.font = `italic ${Math.round(w * 0.032)}px '${font}', sans-serif`;
+                ctx.fillText(backInstructions.value || '', startX, startY, w * 0.85);
+
+                // Signature / QR
+                const sigY = h - 140;
+                if (empSigImg) {
+                    ctx.drawImage(empSigImg, w - 240, sigY - 30, 160, 60);
+                }
+                ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.moveTo(w - 260, sigY + 35); ctx.lineTo(w - 60, sigY + 35); ctx.stroke();
+
+                ctx.fillStyle = '#475569'; ctx.font = `${Math.round(w * 0.03)}px '${font}', sans-serif`;
+                ctx.textAlign = 'right';
+                ctx.fillText('Authorised Signatory', w - 60, sigY + 45);
+            }
+        }
+
+        resetBtn.onclick = () => {
+            compName.value = "DocSmartly Technologies";
+            empName.value = "Love Kumar Lalawat";
+            empId.value = "DS-2026-001";
+            renderAll();
+        };
+
+        // Add to Sheet Queue
+        addToSheetBtn.onclick = () => {
+            const copies = parseInt(copiesInput.value) || 1;
+            const { w, h } = getDimensions();
+            const fCanvas = document.createElement('canvas'); fCanvas.width = w; fCanvas.height = h;
+            const bCanvas = document.createElement('canvas'); bCanvas.width = w; bCanvas.height = h;
+
+            drawCard(fCanvas.getContext('2d'), true, w, h);
+            drawCard(bCanvas.getContext('2d'), false, w, h);
+
+            for (let i = 0; i < copies; i++) {
+                sheetQueue.push({
+                    front: fCanvas.toDataURL('image/png'),
+                    back: bCanvas.toDataURL('image/png'),
+                    name: empName.value || 'Employee'
+                });
+            }
+            queueCountBadge.innerText = `${sheetQueue.length} cards`;
+        };
+
+        clearSheetBtn.onclick = () => {
+            sheetQueue = [];
+            queueCountBadge.innerText = `0 cards`;
+        };
+
+        downloadCardPng.onclick = () => {
+            const link = document.createElement('a');
+            link.download = `${(empName.value || 'employee').replace(/\s+/g, '_')}_front_back.png`;
+            // combine front & back side by side temporarily
+            const c = document.createElement('canvas');
+            c.width = frontCanvas.width * 2 + 20; c.height = frontCanvas.height;
+            const cx = c.getContext('2d');
+            cx.fillStyle = '#ffffff'; cx.fillRect(0,0,c.width,c.height);
+            cx.drawImage(frontCanvas, 0, 0);
+            cx.drawImage(backCanvas, frontCanvas.width + 20, 0);
+            link.href = c.toDataURL('image/png');
+            link.click();
+        };
+
+        printBtn.onclick = () => {
+            window.print();
+        };
+    </script>
+</body>
+</html>

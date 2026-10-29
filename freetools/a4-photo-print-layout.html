@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A4 Photo Print Layout - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-md">🖼️</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">A4 Photo Print Layout</h1>
+                    <p class="text-xs text-slate-500">Ek A4 page par 2, 4, 6, 8, 12 ya custom photos — margin, spacing, cut lines, PDF aur print.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- Upload Box State -->
+        <div id="upload-section" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-10 text-center bg-white shadow-sm transition cursor-pointer relative">
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" multiple class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div class="flex flex-col items-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 text-2xl shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800">Photos select karein (multiple)</h3>
+                <p class="text-xs text-slate-500 mt-1">ya yahan drag & drop karein · original file change nahi hoti</p>
+            </div>
+        </div>
+
+        <!-- Editor Workspace (Hidden Initially) -->
+        <div id="editor-section" class="hidden space-y-6">
+            
+            <!-- Top Add Photos Bar -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm">
+                <div class="flex items-center space-x-3 overflow-x-auto py-1" id="thumbnail-strip">
+                    <!-- Populated dynamically -->
+                </div>
+                <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition shrink-0 flex items-center space-x-1">
+                    <span>+ Add Photos</span>
+                    <input type="file" id="add-more-input" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
+                </label>
+            </div>
+
+            <!-- Workspace Grid (Controls + Preview) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Layout Controls (6 Cols) -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    <h2 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center space-x-2">
+                        <span>⚙️ Layout Settings</span>
+                    </h2>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Paper</label>
+                            <select id="paper-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                                <option value="a4">A4 (210 × 297 mm)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Orientation</label>
+                            <select id="orientation-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                                <option value="portrait">Portrait</option>
+                                <option value="landscape">Landscape</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-2">Photos per page</label>
+                        <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                            <button onclick="setPhotosPerPage(2)" class="grid-btn px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold bg-slate-50 hover:bg-emerald-50 hover:border-emerald-500 transition">2</button>
+                            <button onclick="setPhotosPerPage(4)" class="grid-btn px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold bg-slate-50 hover:bg-emerald-50 hover:border-emerald-500 transition">4</button>
+                            <button onclick="setPhotosPerPage(6)" class="grid-btn px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold bg-slate-50 hover:bg-emerald-50 hover:border-emerald-500 transition">6</button>
+                            <button onclick="setPhotosPerPage(8)" class="grid-btn px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold bg-slate-50 hover:bg-emerald-50 hover:border-emerald-500 transition">8</button>
+                            <button onclick="setPhotosPerPage(12)" class="grid-btn px-3 py-1.5 rounded-lg border border-emerald-500 text-emerald-700 bg-emerald-50 text-xs font-semibold transition">12</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Margin (mm)</label>
+                            <input type="number" id="margin-input" value="10" min="0" max="30" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Spacing (mm)</label>
+                            <input type="number" id="spacing-input" value="4" min="0" max="20" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Photo fit</label>
+                            <select id="fit-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                                <option value="fill">Fill (crop extra, center)</option>
+                                <option value="contain">Contain (fit inside)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Alignment</label>
+                            <select id="alignment-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                                <option value="center">Center on page</option>
+                                <option value="top">Top aligned</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 pt-2 border-t">
+                        <label class="flex items-center space-x-2 text-xs font-medium text-slate-700 cursor-pointer">
+                            <input type="checkbox" id="repeat-check" checked class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span>Page poora bharein (photos repeat karein)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-xs font-medium text-slate-700 cursor-pointer">
+                            <input type="checkbox" id="cutlines-check" checked class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span>Cut lines (border ke kinare cut marks)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-xs font-medium text-slate-700 cursor-pointer">
+                            <input type="checkbox" id="border-check" class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span>Photo border</span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <!-- Right: Live Print Preview (6 Cols) -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                    <div class="w-full flex items-center justify-between mb-3">
+                        <span id="preview-page-label" class="text-xs font-bold text-slate-700">Print preview — Page 1 / 1</span>
+                        <div class="flex items-center space-x-2">
+                            <button id="prev-page-btn" class="p-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs">◀</button>
+                            <button id="next-page-btn" class="p-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs">▶</button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Preview Container -->
+                    <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex items-center justify-center overflow-hidden min-h-[480px]">
+                        <canvas id="preview-canvas" class="shadow-md rounded bg-white max-w-full h-auto max-h-[520px] object-contain"></canvas>
+                    </div>
+
+                    <!-- Export Actions -->
+                    <div class="w-full grid grid-cols-3 gap-3 mt-4">
+                        <button id="download-pdf-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                            <span>📥 Download PDF</span>
+                        </button>
+                        <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                            <span>🖼️ This page PNG</span>
+                        </button>
+                        <button id="print-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                            <span>🖨️ Print</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let uploadedImages = [];
+        let photosPerPage = 12;
+        let currentPage = 0;
+
+        const fileInput = document.getElementById('file-input');
+        const addMoreInput = document.getElementById('add-more-input');
+        const uploadSection = document.getElementById('upload-section');
+        const editorSection = document.getElementById('editor-section');
+        const thumbnailStrip = document.getElementById('thumbnail-strip');
+        const previewCanvas = document.getElementById('preview-canvas');
+        const previewPageLabel = document.getElementById('preview-page-label');
+
+        const orientationSelect = document.getElementById('orientation-select');
+        const marginInput = document.getElementById('margin-input');
+        const spacingInput = document.getElementById('spacing-input');
+        const fitSelect = document.getElementById('fit-select');
+        const alignmentSelect = document.getElementById('alignment-select');
+        const repeatCheck = document.getElementById('repeat-check');
+        const cutlinesCheck = document.getElementById('cutlines-check');
+        const borderCheck = document.getElementById('border-check');
+
+        const prevPageBtn = document.getElementById('prev-page-btn');
+        const nextPageBtn = document.getElementById('next-page-btn');
+        const downloadPdfBtn = document.getElementById('download-pdf-btn');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const printBtn = document.getElementById('print-btn');
+
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        addMoreInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        window.addEventListener('paste', (e) => {
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            let files = [];
+            for (let item of items) {
+                if (item.type.indexOf('image') === 0) {
+                    files.push(item.getAsFile());
+                }
+            }
+            if (files.length > 0) handleFiles(files);
+        });
+
+        function handleFiles(fileList) {
+            if (!fileList || fileList.length === 0) return;
+            Array.from(fileList).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedImages.push({ img: img, name: file.name, copies: 1 });
+                        uploadSection.classList.add('hidden');
+                        editorSection.classList.remove('hidden');
+                        updateThumbnails();
+                        renderPreview();
+                    };
+                    img.src = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateThumbnails() {
+            thumbnailStrip.innerHTML = '';
+            uploadedImages.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center space-x-2 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-lg shrink-0";
+                div.innerHTML = `
+                    <img src="${item.img.src}" class="w-8 h-8 object-cover rounded shadow-sm">
+                    <span class="text-xs font-medium text-slate-700 truncate max-w-[100px]">${item.name}</span>
+                    <button onclick="removeImage(${idx})" class="text-rose-500 hover:text-rose-700 text-xs font-bold px-1">✕</button>
+                `;
+                thumbnailStrip.appendChild(div);
+            });
+        }
+
+        window.removeImage = function(idx) {
+            uploadedImages.splice(idx, 1);
+            if (uploadedImages.length === 0) {
+                uploadSection.classList.remove('hidden');
+                editorSection.classList.add('hidden');
+            } else {
+                updateThumbnails();
+                renderPreview();
+            }
+        };
+
+        window.setPhotosPerPage = function(n) {
+            photosPerPage = n;
+            currentPage = 0;
+            document.querySelectorAll('.grid-btn').forEach(btn => {
+                btn.className = "grid-btn px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold bg-slate-50 hover:bg-emerald-50 hover:border-emerald-500 transition";
+                if (parseInt(btn.innerText) === n) {
+                    btn.className = "grid-btn px-3 py-1.5 rounded-lg border border-emerald-500 text-emerald-700 bg-emerald-50 text-xs font-semibold transition";
+                }
+            });
+            renderPreview();
+        };
+
+        [orientationSelect, marginInput, spacingInput, fitSelect, alignmentSelect, repeatCheck, cutlinesCheck, borderCheck].forEach(el => {
+            el.addEventListener('input', renderPreview);
+            el.addEventListener('change', renderPreview);
+        });
+
+        function getActiveList() {
+            let list = [];
+            uploadedImages.forEach(item => {
+                for (let i = 0; i < item.copies; i++) {
+                    list.push(item.img);
+                }
+            });
+            if (repeatCheck.checked && list.length > 0 && list.length < photosPerPage) {
+                while (list.length < photosPerPage) {
+                    list = list.concat(list);
+                }
+            }
+            return list;
+        }
+
+        function renderPreview() {
+            if (uploadedImages.length === 0) return;
+
+            const isLandscape = orientationSelect.value === 'landscape';
+            // A4 dimensions at 300 DPI: 2480 x 3508 (Portrait) or 3508 x 2480 (Landscape)
+            const a4W = isLandscape ? 3508 : 2480;
+            const a4H = isLandscape ? 2480 : 3508;
+
+            previewCanvas.width = a4W;
+            previewCanvas.height = a4H;
+            const ctx = previewCanvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, a4W, a4H);
+
+            // Determine Grid rows & cols based on photosPerPage
+            let cols = 2, rows = Math.ceil(photosPerPage / 2);
+            if (photosPerPage === 2) { cols = 1; rows = 2; }
+            else if (photosPerPage === 4) { cols = 2; rows = 2; }
+            else if (photosPerPage === 6) { cols = 2; rows = 3; }
+            else if (photosPerPage === 8) { cols = 2; rows = 4; }
+            else if (photosPerPage === 12) { cols = 3; rows = 4; }
+
+            const marginMm = parseFloat(marginInput.value) || 10;
+            const spacingMm = parseFloat(spacingInput.value) || 4;
+            // 1 mm approx 11.81 pixels at 300 DPI
+            const mmToPx = 300 / 25.4;
+            const marginPx = marginMm * mmToPx;
+            const spacingPx = spacingMm * mmToPx;
+
+            const availW = a4W - (marginPx * 2) - (spacingPx * (cols - 1));
+            const availH = a4H - (marginPx * 2) - (spacingPx * (rows - 1));
+
+            const cellW = availW / cols;
+            const cellH = availH / rows;
+
+            const allImgs = getActiveList();
+            const totalPages = Math.max(1, Math.ceil(allImgs.length / photosPerPage));
+            if (currentPage >= totalPages) currentPage = totalPages - 1;
+
+            previewPageLabel.innerText = `Print preview — Page ${currentPage + 1} / ${totalPages}`;
+
+            const startIdx = currentPage * photosPerPage;
+            const pageImgs = allImgs.slice(startIdx, startIdx + photosPerPage);
+
+            pageImgs.forEach((img, idx) => {
+                const c = idx % cols;
+                const r = Math.floor(idx / cols);
+
+                const x = marginPx + c * (cellW + spacingPx);
+                const y = marginPx + r * (cellH + spacingPx);
+
+                // Draw Photo
+                if (fitSelect.value === 'fill') {
+                    // cover
+                    const imgRatio = img.naturalWidth / img.naturalHeight;
+                    const cellRatio = cellW / cellH;
+                    let sw, sh, sx, sy;
+                    if (imgRatio > cellRatio) {
+                        sh = img.naturalHeight;
+                        sw = sh * cellRatio;
+                        sx = (img.naturalWidth - sw) / 2;
+                        sy = 0;
+                    } else {
+                        sw = img.naturalWidth;
+                        sh = sw / cellRatio;
+                        sx = 0;
+                        sy = (img.naturalHeight - sh) / 2;
+                    }
+                    ctx.drawImage(img, sx, sy, sw, sh, x, y, cellW, cellH);
+                } else {
+                    // contain
+                    const imgRatio = img.naturalWidth / img.naturalHeight;
+                    const cellRatio = cellW / cellH;
+                    let dw = cellW, dh = cellH, dx = x, dy = y;
+                    if (imgRatio > cellRatio) {
+                        dh = cellW / imgRatio;
+                        dy = y + (cellH - dh) / 2;
+                    } else {
+                        dw = cellH * imgRatio;
+                        dx = x + (cellW - dw) / 2;
+                    }
+                    ctx.drawImage(img, dx, dy, dw, dh);
+                }
+
+                // Border
+                if (borderCheck.checked) {
+                    ctx.strokeStyle = '#cbd5e1';
+                    ctx.lineWidth = 4;
+                    ctx.strokeRect(x, y, cellW, cellH);
+                }
+
+                // Cut lines
+                if (cutlinesCheck.checked) {
+                    ctx.strokeStyle = '#94a3b8';
+                    ctx.lineWidth = 2;
+                    const len = 30;
+                    // top-left
+                    ctx.beginPath(); ctx.moveTo(x - len, y); ctx.lineTo(x, y); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(x, y - len); ctx.lineTo(x, y); ctx.stroke();
+                    // top-right
+                    ctx.beginPath(); ctx.moveTo(x + cellW, y - len); ctx.lineTo(x + cellW, y); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(x + cellW + len, y); ctx.lineTo(x + cellW, y); ctx.stroke();
+                    // bottom-left
+                    ctx.beginPath(); ctx.moveTo(x - len, y + cellH); ctx.lineTo(x, y + cellH); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(x, y + cellH + len); ctx.lineTo(x, y + cellH); ctx.stroke();
+                    // bottom-right
+                    ctx.beginPath(); ctx.moveTo(x + cellW, y + cellH + len); ctx.lineTo(x + cellW, y + cellH); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(x + cellW + len, y + cellH); ctx.lineTo(x + cellW, y + cellH); ctx.stroke();
+                }
+            });
+        }
+
+        prevPageBtn.onclick = () => {
+            if (currentPage > 0) { currentPage--; renderPreview(); }
+        };
+
+        nextPageBtn.onclick = () => {
+            const allImgs = getActiveList();
+            const totalPages = Math.ceil(allImgs.length / photosPerPage);
+            if (currentPage < totalPages - 1) { currentPage++; renderPreview(); }
+        };
+
+        downloadPngBtn.onclick = () => {
+            const link = document.createElement('a');
+            link.download = `A4_photo_layout_page_${currentPage + 1}.png`;
+            link.href = previewCanvas.toDataURL('image/png');
+            link.click();
+        };
+
+        printBtn.onclick = () => {
+            window.print();
+        };
+    </script>
+</body>
+</html>

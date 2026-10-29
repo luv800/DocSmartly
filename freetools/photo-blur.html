@@ -1,55 +1,455 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Photo Blur Tool – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Blur Tool - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        input[type="range"]::-webkit-slider-thumb { background: #0284c7; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Photo Blur Tool</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-600 flex items-center justify-center text-white font-bold text-xl shadow-md">💧</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Photo Blur Tool</h1>
+                    <p class="text-xs text-slate-500">Poori photo ya brush se chuni jagah blur karein — undo, redo, JPG / PNG.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-sky-50 border-b border-sky-100 py-2 px-4 text-center">
+        <p class="text-xs text-sky-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Photo Blur Tool'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- Upload Box State -->
+        <div id="upload-section" class="border-2 border-dashed border-slate-300 hover:border-sky-500 rounded-2xl p-10 text-center bg-white shadow-sm transition cursor-pointer relative">
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div class="flex flex-col items-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center mb-3 text-2xl shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800">JPG / PNG / WEBP photo select karein</h3>
+                <p class="text-xs text-slate-500 mt-1">ya yahan drag & drop karein — original file change nahi hoti</p>
+            </div>
+        </div>
+
+        <!-- Editor Workspace (Hidden Initially) -->
+        <div id="editor-section" class="hidden space-y-6">
+            
+            <!-- Top Change Photo Bar -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm">
+                <label class="cursor-pointer text-xs text-sky-600 font-semibold hover:underline flex items-center space-x-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>JPG / PNG / WEBP photo select karein</span>
+                    <input type="file" id="change-file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+                <span class="text-xs text-slate-400">ya yahan drag & drop karein - original file change nahi hoti</span>
+            </div>
+
+            <!-- Workspace Grid (Controls + Preview) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Blur Controls Panel -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    
+                    <!-- Whole Photo Blur Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-700 font-medium mb-1">
+                            <span id="global-blur-label">Poori photo ka blur: 0px</span>
+                        </div>
+                        <input type="range" id="global-blur" min="0" max="40" value="0" class="w-full accent-sky-600">
+                    </div>
+
+                    <hr class="border-slate-100">
+
+                    <!-- Brush Tool Controls -->
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-slate-800 uppercase tracking-wider">Brush</label>
+                        <div class="flex items-center space-x-2">
+                            <button id="mode-blur" onclick="setBrushMode('blur')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white shadow-sm transition">💧 Blur brush</button>
+                            <button id="mode-erase" onclick="setBrushMode('erase')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">↩ Un-blur (erase)</button>
+                            <button id="mode-off" onclick="setBrushMode('off')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">✋ Brush off</button>
+                        </div>
+
+                        <!-- Brush Size -->
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                <span>Brush size</span>
+                                <span id="brush-size-val" class="font-semibold">40px</span>
+                            </div>
+                            <input type="range" id="brush-size" min="10" max="150" value="40" class="w-full accent-sky-600">
+                        </div>
+
+                        <!-- Brush Blur Intensity -->
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                <span>Brush blur intensity</span>
+                                <span id="brush-intensity-val" class="font-semibold">16px</span>
+                            </div>
+                            <input type="range" id="brush-intensity" min="2" max="50" value="16" class="w-full accent-sky-600">
+                        </div>
+
+                        <!-- Undo / Redo / Clear -->
+                        <div class="flex items-center space-x-2 pt-2">
+                            <button id="undo-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                                <span>↩ Undo</span>
+                            </button>
+                            <button id="redo-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                                <span>Redo ↪</span>
+                            </button>
+                            <button id="clear-brush-btn" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                                <span>🗑 Brush clear</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="text-[11px] text-slate-400 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                        Photo par brush chalaiye — wo hissa blur ho jayega (chehra, number plate, address chhupane ke liye).
+                    </p>
+
+                </div>
+
+                <!-- Right: Live Preview Panel -->
+                <div class="lg:col-span-7 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-between relative min-h-[500px]">
+                    <div class="w-full flex items-center justify-between mb-2 px-2">
+                        <span class="bg-slate-900/70 text-white text-[10px] px-2.5 py-1 rounded-md backdrop-blur font-medium">Interactive Canvas</span>
+                        <span class="text-xs text-slate-500 font-medium">Before / After compare</span>
+                    </div>
+                    
+                    <div class="relative w-full overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-center max-h-[520px] flex-grow cursor-crosshair">
+                        <canvas id="preview-canvas" class="max-w-full h-auto object-contain shadow"></canvas>
+                    </div>
+
+                    <!-- Bottom Download Action Bar -->
+                    <div class="w-full mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs text-slate-600 font-medium">Quality:</label>
+                            <select id="output-quality" class="bg-slate-50 border border-slate-300 rounded-lg px-2 py-1 text-xs outline-none font-medium">
+                                <option value="0.95" selected>High</option>
+                                <option value="0.85">Medium</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="download-jpg-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download JPG</span>
+                            </button>
+                            <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download PNG</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentImg = null;
+        let originalFileName = "photo";
+        let brushMode = 'blur'; // 'blur', 'erase', 'off'
+
+        const fileInput = document.getElementById('file-input');
+        const changeFileInput = document.getElementById('change-file-input');
+        const uploadSection = document.getElementById('upload-section');
+        const editorSection = document.getElementById('editor-section');
+        const previewCanvas = document.getElementById('preview-canvas');
+
+        const globalBlurInput = document.getElementById('global-blur');
+        const globalBlurLabel = document.getElementById('global-blur-label');
+        const brushSizeInput = document.getElementById('brush-size');
+        const brushSizeVal = document.getElementById('brush-size-val');
+        const brushIntensityInput = document.getElementById('brush-intensity');
+        const brushIntensityVal = document.getElementById('brush-intensity-val');
+
+        const modeBlurBtn = document.getElementById('mode-blur');
+        const modeEraseBtn = document.getElementById('mode-erase');
+        const modeOffBtn = document.getElementById('mode-off');
+
+        const undoBtn = document.getElementById('undo-btn');
+        const redoBtn = document.getElementById('redo-btn');
+        const clearBrushBtn = document.getElementById('clear-brush-btn');
+
+        const downloadJpgBtn = document.getElementById('download-jpg-btn');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const outputQuality = document.getElementById('output-quality');
+
+        // Canvases for layers
+        let baseCanvas = document.createElement('canvas');
+        let blurCanvas = document.createElement('canvas');
+        let maskCanvas = document.createElement('canvas'); // stores brush strokes
+
+        let historyStack = [];
+        let redoStack = [];
+
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        changeFileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || 'photo';
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImg = img;
+                    uploadSection.classList.add('hidden');
+                    editorSection.classList.remove('hidden');
+
+                    initCanvases();
+                    saveState();
+                    redraw();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function initCanvases() {
+            const w = currentImg.naturalWidth;
+            const h = currentImg.naturalHeight;
+
+            previewCanvas.width = w;
+            previewCanvas.height = h;
+
+            baseCanvas.width = w;
+            baseCanvas.height = h;
+            baseCanvas.getContext('2d').drawImage(currentImg, 0, 0);
+
+            blurCanvas.width = w;
+            blurCanvas.height = h;
+            updateBlurLayer();
+
+            maskCanvas.width = w;
+            maskCanvas.height = h;
+            maskCanvas.getContext('2d').clearRect(0, 0, w, h);
+
+            historyStack = [];
+            redoStack = [];
+        }
+
+        function updateBlurLayer() {
+            const ctx = blurCanvas.getContext('2d');
+            const blurVal = parseInt(globalBlurInput.value);
+            ctx.clearRect(0, 0, blurCanvas.width, blurCanvas.height);
+            if (blurVal > 0) {
+                ctx.filter = `blur(${blurVal}px)`;
+            }
+            ctx.drawImage(currentImg, 0, 0);
+            ctx.filter = 'none';
+        }
+
+        globalBlurInput.addEventListener('input', () => {
+            globalBlurLabel.innerText = `Poori photo ka blur: ${globalBlurInput.value}px`;
+            updateBlurLayer();
+            redraw();
+        });
+
+        brushSizeInput.addEventListener('input', () => { brushSizeVal.innerText = brushSizeInput.value + 'px'; });
+        brushIntensityInput.addEventListener('input', () => { brushIntensityVal.innerText = brushIntensityInput.value + 'px'; });
+
+        window.setBrushMode = function(mode) {
+            brushMode = mode;
+            modeBlurBtn.className = mode === 'blur' ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white shadow-sm transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition";
+            modeEraseBtn.className = mode === 'erase' ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white shadow-sm transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition";
+            modeOffBtn.className = mode === 'off' ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white shadow-sm transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition";
+        };
+
+        // Drawing events on previewCanvas
+        let isDrawing = false;
+
+        function getMousePos(evt) {
+            const rect = previewCanvas.getBoundingClientRect();
+            const scaleX = previewCanvas.width / rect.width;
+            const scaleY = previewCanvas.height / rect.height;
+            return {
+                x: (evt.clientX - rect.left) * scaleX,
+                y: (evt.clientY - rect.top) * scaleY
+            };
+        }
+
+        previewCanvas.addEventListener('mousedown', (e) => {
+            if (brushMode === 'off' || !currentImg) return;
+            isDrawing = true;
+            const pos = getMousePos(e);
+            drawBrush(pos.x, pos.y);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDrawing || brushMode === 'off' || !currentImg) return;
+            const pos = getMousePos(e);
+            drawBrush(pos.x, pos.y);
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDrawing) {
+                isDrawing = false;
+                saveState();
+            }
+        });
+
+        // Touch support
+        previewCanvas.addEventListener('touchstart', (e) => {
+            if (brushMode === 'off' || !currentImg) return;
+            isDrawing = true;
+            const touch = e.touches[0];
+            const pos = getMousePos(touch);
+            drawBrush(pos.x, pos.y);
+            e.preventDefault();
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDrawing || brushMode === 'off' || !currentImg) return;
+            const touch = e.touches[0];
+            const pos = getMousePos(touch);
+            drawBrush(pos.x, pos.y);
+            e.preventDefault();
+        }, { passive: false });
+
+        window.addEventListener('touchend', () => {
+            if (isDrawing) {
+                isDrawing = false;
+                saveState();
+            }
+        });
+
+        function drawBrush(x, y) {
+            const ctx = maskCanvas.getContext('2d');
+            const size = parseInt(brushSizeInput.value);
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+            ctx.closePath();
+
+            if (brushMode === 'blur') {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            } else if (brushMode === 'erase') {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            }
+            ctx.fill();
+            ctx.restore();
+            redraw();
+        }
+
+        function redraw() {
+            if (!currentImg) return;
+            const ctx = previewCanvas.getContext('2d');
+            const w = previewCanvas.width;
+            const h = previewCanvas.height;
+
+            ctx.clearRect(0, 0, w, h);
+            // 1. Draw original base image
+            ctx.drawImage(baseCanvas, 0, 0);
+
+            // 2. If global blur is active, draw global blur
+            const globalBlurVal = parseInt(globalBlurInput.value);
+            if (globalBlurVal > 0) {
+                ctx.drawImage(blurCanvas, 0, 0);
+            }
+
+            // 3. Draw brush blurred regions using mask
+            if (maskCanvas) {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = w;
+                tempCanvas.height = h;
+                const tCtx = tempCanvas.getContext('2d');
+
+                const brushBlurVal = parseInt(brushIntensityInput.value);
+                tCtx.filter = `blur(${brushBlurVal}px)`;
+                tCtx.drawImage(currentImg, 0, 0);
+                tCtx.filter = 'none';
+
+                // Apply mask
+                tCtx.globalCompositeOperation = 'destination-in';
+                tCtx.drawImage(maskCanvas, 0, 0);
+
+                ctx.drawImage(tempCanvas, 0, 0);
+            }
+        }
+
+        function saveState() {
+            const data = maskCanvas.getContext('2d').getImageData(0, 0, maskCanvas.width, maskCanvas.height);
+            historyStack.push(data);
+            if (historyStack.length > 20) historyStack.shift();
+            redoStack = [];
+        }
+
+        undoBtn.onclick = () => {
+            if (historyStack.length <= 1) return;
+            const current = historyStack.pop();
+            redoStack.push(current);
+            const prev = historyStack[historyStack.length - 1];
+            maskCanvas.getContext('2d').putImageData(prev, 0, 0);
+            redraw();
+        };
+
+        redoBtn.onclick = () => {
+            if (redoStack.length === 0) return;
+            const next = redoStack.pop();
+            historyStack.push(next);
+            maskCanvas.getContext('2d').putImageData(next, 0, 0);
+            redraw();
+        };
+
+        clearBrushBtn.onclick = () => {
+            maskCanvas.getContext('2d').clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+            saveState();
+            redraw();
+        };
+
+        function downloadImage(format) {
+            if (!currentImg) return;
+            redraw();
+            const quality = parseFloat(outputQuality.value);
+            const mime = format === 'png' ? 'image/png' : 'image/jpeg';
+            const ext = format === 'png' ? 'png' : 'jpg';
+            const dataUrl = previewCanvas.toDataURL(mime, quality);
+
+            const link = document.createElement('a');
+            link.download = `${originalFileName}-blurred.${ext}`;
+            link.href = dataUrl;
+            link.click();
+        }
+
+        downloadJpgBtn.onclick = () => downloadImage('jpg');
+        downloadPngBtn.onclick = () => downloadImage('png');
+    </script>
 </body>
 </html>

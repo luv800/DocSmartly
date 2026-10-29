@@ -1,55 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Age Calculator – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Age Calculator</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white font-bold text-xl shadow-md">🎂</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Age Calculator</h1>
+                    <p class="text-xs text-slate-500">Janm tithi se umar — saal, mahine, din, agla birthday, total din.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-rose-50 border-b border-rose-100 py-2 px-4 text-center">
+        <p class="text-xs text-rose-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Age Calculator'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- Controls Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Date of birth *</label>
+                    <input type="date" id="dob-input" value="1996-01-01" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Age kis date tak (default aaj)</label>
+                    <input type="date" id="target-input" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold outline-none">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3 pt-2">
+                <button onclick="calculateAge()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 px-6 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                    <span>Calculate</span>
+                </button>
+                <button onclick="clearForm()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl text-xs transition">Clear</button>
+            </div>
+        </div>
+
+        <!-- Result Display Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+            <div>
+                <div id="res-main-title" class="text-sm font-bold text-rose-700">Umar: 30 saal, 9 mahine, 28 din</div>
+                <div id="res-sub-title" class="text-xs text-slate-400">Janm 01-01-1996 (Monday) — 29-10-2026 tak</div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-years" class="text-xl font-bold text-slate-900 block">30</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Years</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-months" class="text-xl font-bold text-slate-900 block">369</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total months</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-weeks" class="text-xl font-bold text-slate-900 block">1,608w 3d</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total weeks</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-days" class="text-xl font-bold text-slate-900 block">11,259</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total days lived</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-hours" class="text-xl font-bold text-slate-900 block">2,70,216</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total hours (approx)</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-next-days" class="text-xl font-bold text-slate-900 block">64 din</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Next birthday me</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-next-day" class="text-xl font-bold text-slate-900 block">01-01-2027</span>
+                    <span id="card-next-day-name" class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Next birthday - Friday</span>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center space-y-1">
+                    <span id="card-next-md" class="text-xl font-bold text-slate-900 block">2m 3d</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Next birthday (mahine / din)</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const dobInput = document.getElementById('dob-input');
+        const targetInput = document.getElementById('target-input');
+
+        // Set default target to today
+        const todayStr = new Date().toISOString().split('T')[0];
+        targetInput.value = todayStr;
+
+        [dobInput, targetInput].forEach(el => {
+            el.addEventListener('input', calculateAge);
+            el.addEventListener('change', calculateAge);
+        });
+
+        function calculateAge() {
+            const dobVal = dobInput.value;
+            const targetVal = targetInput.value;
+            if (!dobVal || !targetVal) return;
+
+            const dob = new Date(dobVal);
+            const target = new Date(targetVal);
+
+            if (dob > target) return;
+
+            const daysDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dobDayName = daysDays[dob.getDay()];
+
+            // Years, Months, Days calculation
+            let years = target.getFullYear() - dob.getFullYear();
+            let months = target.getMonth() - dob.getMonth();
+            let days = target.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const diffTime = Math.abs(target - dob);
+            const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const totalMonths = (years * 12) + months;
+            const totalWeeks = Math.floor(totalDays / 7);
+            const remDays = totalDays % 7;
+            const totalHours = totalDays * 24;
+
+            // Next Birthday
+            let nextBday = new Date(target.getFullYear(), dob.getMonth(), dob.getDate());
+            if (target > nextBday) {
+                nextBday.setFullYear(target.getFullYear() + 1);
+            }
+            const nextBdayDiff = Math.ceil((nextBday - target) / (1000 * 60 * 60 * 24));
+            const nextBdayDayName = daysDays[nextBday.getDay()];
+
+            // Next birthday months/days rem
+            let nbYears = nextBday.getFullYear() - target.getFullYear();
+            let nbMonths = nextBday.getMonth() - target.getMonth();
+            let nbDays = nextBday.getDate() - target.getDate();
+            if (nbDays < 0) {
+                nbMonths--;
+                const prevM = new Date(nextBday.getFullYear(), nextBday.getMonth(), 0);
+                nbDays += prevM.getDate();
+            }
+            if (nbMonths < 0) {
+                nbMonths += 12;
+            }
+
+            // Update UI
+            document.getElementById('res-main-title').innerText = `Umar: ${years} saal, ${months} mahine, ${days} din`;
+            document.getElementById('res-sub-title').innerText = `Janm ${formatDate(dob)} (${dobDayName}) — ${formatDate(target)} tak`;
+
+            document.getElementById('card-years').innerText = years;
+            document.getElementById('card-months').innerText = totalMonths;
+            document.getElementById('card-weeks').innerText = `${totalWeeks}w ${remDays}d`;
+            document.getElementById('card-days').innerText = totalDays.toLocaleString('en-IN');
+            document.getElementById('card-hours').innerText = totalHours.toLocaleString('en-IN');
+            document.getElementById('card-next-days').innerText = `${nextBdayDiff} din`;
+            document.getElementById('card-next-day').innerText = formatDate(nextBday);
+            document.getElementById('card-next-day-name').innerText = `Next birthday - ${nextBdayDayName}`;
+            document.getElementById('card-next-md').innerText = `${nbMonths}m ${nbDays}d`;
+        }
+
+        function formatDate(d) {
+            const dd = String(d.getDate()).padStart(2, '0');
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const yyyy = d.getFullYear();
+            return `${dd}-${mm}-${yyyy}`;
+        }
+
+        window.clearForm = function() {
+            dobInput.value = '';
+            targetInput.value = todayStr;
+            calculateAge();
+        };
+
+        // Initial calculate
+        calculateAge();
+    </script>
 </body>
 </html>

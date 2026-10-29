@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Title & Description Generator - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-white font-bold text-xl shadow-md">🔍</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Meta Title & Description Generator</h1>
+                    <p class="text-xs text-slate-500">SEO title aur meta description — character counter, Google desktop / mobile preview, Open Graph.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (6 Cols) -->
+        <div class="lg:col-span-6 space-y-5">
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Page title</label>
+                    <input type="text" id="in-title" value="jaise Passport Size Photo Maker Online Free" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Website name</label>
+                        <input type="text" id="in-site" value="ChargePrint" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Separator</label>
+                        <select id="in-sep" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="|">| (Pipe)</option>
+                            <option value="-">- (Hyphen)</option>
+                            <option value="–">– (En dash)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Target keyword</label>
+                        <input type="text" id="in-keyword" value="passport photo maker" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Page URL (preview ke liye)</label>
+                        <input type="text" id="in-url" value="https://example.com/passport-photo" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-mono">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Meta description</label>
+                    <textarea id="in-desc" rows="3" placeholder="Page ke baare me 1-2 line..." class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none"></textarea>
+                </div>
+
+                <div class="flex items-center space-x-2 flex-wrap gap-y-2 pt-1">
+                    <button onclick="autoGenerateTitle()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition">⚡ Title generate</button>
+                    <button onclick="autoGenerateDesc()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition">⚡ Description generate</button>
+                    <button onclick="regenerateText()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-3 rounded-xl text-xs transition">🔄 Regenerate</button>
+                    <button onclick="resetForm()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-3 rounded-xl text-xs transition">🔄 Reset</button>
+                </div>
+            </div>
+
+            <!-- Open Graph Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b pb-2">
+                    <h3 class="text-sm font-bold text-slate-800">Open Graph (Facebook / WhatsApp)</h3>
+                    <label class="flex items-center space-x-1.5 cursor-pointer text-xs">
+                        <input type="checkbox" id="chk-og-same" checked class="rounded text-emerald-700">
+                        <span class="font-medium text-slate-700">Meta jaisa hi</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">og:title</label>
+                    <input type="text" id="og-title-input" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">og:description</label>
+                    <textarea id="og-desc-input" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Preview & HTML Tags Column (6 Cols) -->
+        <div class="lg:col-span-6 space-y-5">
+
+            <!-- SEO Counters Top -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="counter-title" class="text-xs font-bold text-slate-900 font-mono">0 chars · 0 / 580 px</span>
+                    <span class="text-[11px] font-semibold text-slate-400 block">SEO title</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="counter-desc" class="text-xs font-bold text-slate-900 font-mono">0 chars · 0 / 920 px</span>
+                    <span class="text-[11px] font-semibold text-slate-400 block">Meta description</span>
+                </div>
+            </div>
+
+            <!-- SERP Preview Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 border-b pb-2">
+                    <button onclick="setPreviewMode('desktop')" id="btn-desktop" class="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-700 text-white transition">Desktop</button>
+                    <button onclick="setPreviewMode('mobile')" id="btn-mobile" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 transition">Mobile</button>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1 font-sans">
+                    <div class="flex items-center space-x-1.5 text-xs text-slate-600">
+                        <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center font-bold text-[10px]">W</div>
+                        <div>
+                            <span id="prev-domain" class="text-slate-800">example.com</span>
+                            <div id="prev-url" class="text-[10px] text-slate-400 truncate max-w-xs">https://example.com/passport-photo</div>
+                        </div>
+                    </div>
+                    <div id="prev-title" class="text-blue-700 font-medium text-base hover:underline cursor-pointer">
+                        Page title yahan dikhega
+                    </div>
+                    <div id="prev-desc" class="text-xs text-slate-600 leading-relaxed">
+                        Meta description yahan dikhega. Achha description click-through badhata hai.
+                    </div>
+                </div>
+
+                <!-- Open Graph Preview -->
+                <div class="bg-slate-100 p-3 rounded-xl border border-slate-200 flex items-center space-x-3">
+                    <div class="w-16 h-16 bg-slate-300 rounded-lg flex items-center justify-center text-slate-500 font-bold text-xs">IMG</div>
+                    <div class="space-y-0.5 overflow-hidden">
+                        <div id="og-prev-domain" class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">WWW.EXAMPLE.COM</div>
+                        <div id="og-prev-title" class="text-xs font-bold text-slate-900 truncate">og:title</div>
+                        <div id="og-prev-desc" class="text-[11px] text-slate-500 truncate">og:description</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2 pt-1">
+                    <button onclick="copyText('in-title')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition">📋 Copy title</button>
+                    <button onclick="copyText('in-desc')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition">📋 Copy description</button>
+                    <button onclick="copyMetaTags()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow transition">⟨/⟩ Copy meta tags</button>
+                </div>
+            </div>
+
+            <!-- Generated HTML Code Box -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-slate-300 font-mono text-[11px] overflow-x-auto space-y-1">
+                <div id="html-code-box">
+                    &lt;title&gt;...&lt;/title&gt;<br>
+                    &lt;meta name="description" content="..."&gt;<br>
+                    &lt;meta property="og:title" content="..."&gt;<br>
+                    &lt;meta property="og:description" content="..."&gt;<br>
+                    &lt;meta property="og:type" content="website"&gt;<br>
+                    &lt;meta name="twitter:card" content="summary_large_image"&gt;
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const inTitle = document.getElementById('in-title');
+        const inSite = document.getElementById('in-site');
+        const inSep = document.getElementById('in-sep');
+        const inKeyword = document.getElementById('in-keyword');
+        const inUrl = document.getElementById('in-url');
+        const inDesc = document.getElementById('in-desc');
+        const chkOgSame = document.getElementById('chk-og-same');
+        const ogTitleInput = document.getElementById('og-title-input');
+        const ogDescInput = document.getElementById('og-desc-input');
+
+        [inTitle, inSite, inSep, inKeyword, inUrl, inDesc, chkOgSame, ogTitleInput, ogDescInput].forEach(el => {
+            el.addEventListener('input', updateSEO);
+            el.addEventListener('change', updateSEO);
+        });
+
+        function getFullTitle() {
+            const t = inTitle.value.trim();
+            const s = inSite.value.trim();
+            const sep = inSep.value;
+            if (s) {
+                return `${t} ${sep} ${s}`;
+            }
+            return t;
+        }
+
+        function updateSEO() {
+            const fullTitle = getFullTitle();
+            const desc = inDesc.value.trim();
+            const url = inUrl.value.trim();
+
+            // Counters
+            const titleChars = fullTitle.length;
+            const titlePx = titleChars * 10; // rough estimation
+            document.getElementById('counter-title').innerText = `${titleChars} chars · ${titlePx} / 580 px`;
+
+            const descChars = desc.length;
+            const descPx = descChars * 7;
+            document.getElementById('counter-desc').innerText = `${descChars} chars · ${descPx} / 920 px`;
+
+            // SERP Preview
+            document.getElementById('prev-title').innerText = fullTitle || 'Page title yahan dikhega';
+            document.getElementById('prev-desc').innerText = desc || 'Meta description yahan dikhega. Achha description click-through badhata hai.';
+            document.getElementById('prev-url').innerText = url || 'https://example.com';
+            try {
+                const domain = new URL(url || 'https://example.com').hostname;
+                document.getElementById('prev-domain').innerText = domain;
+                document.getElementById('og-prev-domain').innerText = domain.toUpperCase();
+            } catch(e) {}
+
+            // Open Graph
+            if (chkOgSame.checked) {
+                ogTitleInput.value = fullTitle;
+                ogDescInput.value = desc;
+                ogTitleInput.disabled = true;
+                ogDescInput.disabled = true;
+            } else {
+                ogTitleInput.disabled = false;
+                ogDescInput.disabled = false;
+            }
+
+            document.getElementById('og-prev-title').innerText = ogTitleInput.value || 'og:title';
+            document.getElementById('og-prev-desc').innerText = ogDescInput.value || 'og:description';
+
+            // HTML Code Box
+            document.getElementById('html-code-box').innerHTML = `
+                &lt;title&gt;${fullTitle}&lt;/title&gt;<br>
+                &lt;meta name="description" content="${desc}"&gt;<br>
+                &lt;meta property="og:title" content="${ogTitleInput.value}"&gt;<br>
+                &lt;meta property="og:description" content="${ogDescInput.value}"&gt;<br>
+                &lt;meta property="og:type" content="website"&gt;<br>
+                &lt;meta name="twitter:card" content="summary_large_image"&gt;
+            `;
+        }
+
+        window.setPreviewMode = function(mode) {
+            if (mode === 'desktop') {
+                document.getElementById('btn-desktop').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-700 text-white transition";
+                document.getElementById('btn-mobile').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 transition";
+            } else {
+                document.getElementById('btn-mobile').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-700 text-white transition";
+                document.getElementById('btn-desktop').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 transition";
+            }
+        };
+
+        window.autoGenerateTitle = function() {
+            const kw = inKeyword.value.trim() || 'Online Tool';
+            inTitle.value = `${kw} — Free & Fast Online Utility`;
+            updateSEO();
+        };
+
+        window.autoGenerateDesc = function() {
+            const kw = inKeyword.value.trim() || 'tool';
+            inDesc.value = `Use our free ${kw} online tool to get instant results. Secure, fast, and 100% browser-processed with no server upload required. Try it now!`;
+            updateSEO();
+        };
+
+        window.regenerateText = function() {
+            autoGenerateTitle();
+            autoGenerateDesc();
+        };
+
+        window.resetForm = function() {
+            inTitle.value = "jaise Passport Size Photo Maker Online Free";
+            inSite.value = "ChargePrint";
+            inKeyword.value = "passport photo maker";
+            inUrl.value = "https://example.com/passport-photo";
+            inDesc.value = "";
+            updateSEO();
+        };
+
+        window.copyText = function(id) {
+            const el = document.getElementById(id);
+            navigator.clipboard.writeText(el.value);
+            alert('Copied to clipboard!');
+        };
+
+        window.copyMetaTags = function() {
+            const html = document.getElementById('html-code-box').innerText;
+            navigator.clipboard.writeText(html);
+            alert('Meta tags HTML copied to clipboard!');
+        };
+
+        // Initial update
+        updateSEO();
+    </script>
+</body>
+</html>

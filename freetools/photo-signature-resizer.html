@@ -1,55 +1,347 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Photo & Signature Resizer – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo & Signature Resizer - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Photo & Signature Resizer</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md">📐</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Photo & Signature Resizer</h1>
+                    <p class="text-xs text-slate-500">Width × height (px) set karein — form ke liye photo / signature.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-purple-50 border-b border-purple-100 py-2 px-4 text-center">
+        <p class="text-xs text-purple-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Photo & Signature Resizer'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- Upload Box State -->
+        <div id="upload-section" class="border-2 border-dashed border-slate-300 hover:border-purple-500 rounded-2xl p-10 text-center bg-white shadow-sm transition cursor-pointer relative">
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div class="flex flex-col items-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mb-3 text-2xl shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800">Photo ya signature select karein</h3>
+                <p class="text-xs text-slate-500 mt-1">JPG / PNG / WEBP</p>
+            </div>
+        </div>
+
+        <!-- Editor Workspace (Hidden Initially) -->
+        <div id="editor-section" class="hidden space-y-6">
+            
+            <!-- Top Change Photo Bar -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm">
+                <label class="cursor-pointer text-xs text-purple-600 font-semibold hover:underline flex items-center space-x-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Photo ya signature select karein</span>
+                    <input type="file" id="change-file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+                <span id="original-info-label" class="text-xs text-slate-400 font-mono">Original: 847 × 1280 px - 134.5 KB</span>
+            </div>
+
+            <!-- Presets Bar -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                <span class="text-xs font-bold text-slate-700">Presets (edit kar sakte hain)</span>
+                <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                    <button onclick="applyPreset(200, 230)" class="px-3 py-1.5 bg-slate-100 hover:bg-purple-50 hover:border-purple-500 border border-slate-300 rounded-lg text-xs font-medium transition">Photo 200×230</button>
+                    <button onclick="applyPreset(140, 60)" class="px-3 py-1.5 bg-slate-100 hover:bg-purple-50 hover:border-purple-500 border border-slate-300 rounded-lg text-xs font-medium transition">Signature 140×60</button>
+                    <button onclick="applyPreset(413, 531)" class="px-3 py-1.5 bg-slate-100 hover:bg-purple-50 hover:border-purple-500 border border-slate-300 rounded-lg text-xs font-medium transition">Passport 35×45mm (300dpi)</button>
+                    <button onclick="applyPreset(350, 350)" class="px-3 py-1.5 bg-slate-100 hover:bg-purple-50 hover:border-purple-500 border border-slate-300 rounded-lg text-xs font-medium transition">Square 350×350</button>
+                    <button onclick="applyPreset(600, 600)" class="px-3 py-1.5 bg-slate-100 hover:bg-purple-50 hover:border-purple-500 border border-slate-300 rounded-lg text-xs font-medium transition">Square 600×600</button>
+                </div>
+            </div>
+
+            <!-- Controls Form -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                    <div class="md:col-span-4">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Width (px)</label>
+                        <input type="number" id="width-input" value="200" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-mono">
+                    </div>
+                    <div class="md:col-span-4">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Height (px)</label>
+                        <input type="number" id="height-input" value="230" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-mono">
+                    </div>
+                    <div class="md:col-span-2 flex items-center h-10">
+                        <label class="flex items-center space-x-2 text-xs font-medium text-slate-700 cursor-pointer">
+                            <input type="checkbox" id="aspect-lock" class="rounded text-purple-600 focus:ring-purple-500">
+                            <span>Aspect ratio lock</span>
+                        </label>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Fit (ratio alag ho to)</label>
+                        <select id="fit-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="crop">Crop (center)</option>
+                            <option value="stretch">Stretch</option>
+                            <option value="pad">Pad (white background)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2">
+                    <div class="md:col-span-3">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Format</label>
+                        <select id="format-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="image/jpeg">JPG</option>
+                            <option value="image/png">PNG</option>
+                            <option value="image/webp">WEBP</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-5 space-y-1">
+                        <div class="flex justify-between text-xs font-semibold text-slate-600">
+                            <span>Quality</span>
+                            <span id="quality-val">90%</span>
+                        </div>
+                        <input type="range" id="quality-range" min="10" max="100" value="90" class="w-full accent-purple-600">
+                    </div>
+                    <div class="md:col-span-4">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Max file size (optional, KB)</label>
+                        <input type="number" id="max-size-input" placeholder="e.g. 20" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="pt-3">
+                    <button id="resize-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 px-6 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                        <span>⚡ Resize</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Output Result Section -->
+            <div id="result-section" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <span id="result-status-label" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full inline-block">Resized: 200 × 230 px - 8.5 KB</span>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Before Card -->
+                    <div class="border border-slate-200 rounded-xl p-4 flex flex-col items-center bg-slate-50">
+                        <span class="text-xs font-semibold text-slate-400 mb-3">Before</span>
+                        <div class="h-48 flex items-center justify-center">
+                            <img id="before-img" class="max-h-full max-w-full object-contain rounded shadow-sm">
+                        </div>
+                        <span id="before-info-label" class="text-xs text-slate-500 font-mono mt-3">847 × 1280 - 134.5 KB</span>
+                    </div>
+
+                    <!-- After Card -->
+                    <div class="border border-slate-200 rounded-xl p-4 flex flex-col items-center bg-slate-50">
+                        <span class="text-xs font-semibold text-slate-400 mb-3">After</span>
+                        <div class="h-48 flex items-center justify-center">
+                            <img id="after-img" class="max-h-full max-w-full object-contain rounded shadow-sm">
+                        </div>
+                        <span id="after-info-label" class="text-xs text-slate-700 font-semibold font-mono mt-3">200 × 230 - 8.5 KB</span>
+                    </div>
+                </div>
+
+                <div>
+                    <button id="download-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-5 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                        <span>📥 Download JPG</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentImg = null;
+        let originalFileName = "photo.jpg";
+        let originalFileSize = 0;
+        let originalWidth = 0;
+        let originalHeight = 0;
+
+        const fileInput = document.getElementById('file-input');
+        const changeFileInput = document.getElementById('change-file-input');
+        const uploadSection = document.getElementById('upload-section');
+        const editorSection = document.getElementById('editor-section');
+        const originalInfoLabel = document.getElementById('original-info-label');
+
+        const widthInput = document.getElementById('width-input');
+        const heightInput = document.getElementById('height-input');
+        const aspectLock = document.getElementById('aspect-lock');
+        const fitSelect = document.getElementById('fit-select');
+        const formatSelect = document.getElementById('format-select');
+        const qualityRange = document.getElementById('quality-range');
+        const qualityVal = document.getElementById('quality-val');
+        const maxSizeInput = document.getElementById('max-size-input');
+        const resizeBtn = document.getElementById('resize-btn');
+
+        const resultStatusLabel = document.getElementById('result-status-label');
+        const beforeImg = document.getElementById('before-img');
+        const afterImg = document.getElementById('after-img');
+        const beforeInfoLabel = document.getElementById('before-info-label');
+        const afterInfoLabel = document.getElementById('after-info-label');
+        const downloadBtn = document.getElementById('download-btn');
+
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        changeFileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        qualityRange.oninput = (e) => {
+            qualityVal.innerText = `${e.target.value}%`;
+        };
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            originalFileName = file.name;
+            originalFileSize = file.size;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImg = img;
+                    originalWidth = img.naturalWidth;
+                    originalHeight = img.naturalHeight;
+
+                    const kbSize = (originalFileSize / 1024).toFixed(1);
+                    originalInfoLabel.innerText = `Original: ${originalWidth} × ${originalHeight} px - ${kbSize} KB`;
+                    beforeImg.src = evt.target.result;
+                    beforeInfoLabel.innerText = `${originalWidth} × ${originalHeight} - ${kbSize} KB`;
+
+                    uploadSection.classList.add('hidden');
+                    editorSection.classList.remove('hidden');
+                    performResize();
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        window.applyPreset = function(w, h) {
+            widthInput.value = w;
+            heightInput.value = h;
+            performResize();
+        };
+
+        widthInput.oninput = () => {
+            if (aspectLock.checked && originalWidth && originalHeight) {
+                const ratio = originalHeight / originalWidth;
+                heightInput.value = Math.round(widthInput.value * ratio);
+            }
+        };
+
+        heightInput.oninput = () => {
+            if (aspectLock.checked && originalWidth && originalHeight) {
+                const ratio = originalWidth / originalHeight;
+                widthInput.value = Math.round(heightInput.value * ratio);
+            }
+        };
+
+        resizeBtn.onclick = performResize;
+
+        function performResize() {
+            if (!currentImg) return;
+            const targetW = parseInt(widthInput.value) || 200;
+            const targetH = parseInt(heightInput.value) || 230;
+            const format = formatSelect.value;
+            let quality = parseInt(qualityRange.value) / 100;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = targetW;
+            canvas.height = targetH;
+            const ctx = canvas.getContext('2d');
+
+            // Background for pad
+            if (format === 'image/jpeg' || fitSelect.value === 'pad') {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, targetW, targetH);
+            }
+
+            const fit = fitSelect.value;
+            if (fit === 'stretch') {
+                ctx.drawImage(currentImg, 0, 0, targetW, targetH);
+            } else if (fit === 'pad') {
+                const imgRatio = currentImg.naturalWidth / currentImg.naturalHeight;
+                const targetRatio = targetW / targetH;
+                let dw = targetW, dh = targetH, dx = 0, dy = 0;
+                if (imgRatio > targetRatio) {
+                    dh = targetW / imgRatio;
+                    dy = (targetH - dh) / 2;
+                } else {
+                    dw = targetH * imgRatio;
+                    dx = (targetW - dw) / 2;
+                }
+                ctx.drawImage(currentImg, dx, dy, dw, dh);
+            } else {
+                // crop center
+                const imgRatio = currentImg.naturalWidth / currentImg.naturalHeight;
+                const targetRatio = targetW / targetH;
+                let sw, sh, sx, sy;
+                if (imgRatio > targetRatio) {
+                    sh = currentImg.naturalHeight;
+                    sw = sh * targetRatio;
+                    sx = (currentImg.naturalWidth - sw) / 2;
+                    sy = 0;
+                } else {
+                    sw = currentImg.naturalWidth;
+                    sh = sw / targetRatio;
+                    sx = 0;
+                    sy = (currentImg.naturalHeight - sh) / 2;
+                }
+                ctx.drawImage(currentImg, sx, sy, sw, sh, 0, 0, targetW, targetH);
+            }
+
+            let dataUrl = canvas.toDataURL(format, quality);
+
+            // Check max size constraint if specified
+            const maxKb = parseFloat(maxSizeInput.value);
+            if (maxKb && format === 'image/jpeg') {
+                while (quality > 0.05 && Math.round(dataUrl.length * 0.75 / 1024) > maxKb) {
+                    quality -= 0.05;
+                    dataUrl = canvas.toDataURL(format, quality);
+                }
+            }
+
+            afterImg.src = dataUrl;
+            const approxBytes = Math.round(dataUrl.length * 0.75);
+            const kbStr = (approxBytes / 1024).toFixed(1) + " KB";
+
+            resultStatusLabel.innerText = `Resized: ${targetW} × ${targetH} px - ${kbStr}`;
+            afterInfoLabel.innerText = `${targetW} × ${targetH} - ${kbStr}`;
+
+            const ext = format.split('/')[1].toUpperCase();
+            downloadBtn.innerText = `📥 Download ${ext}`;
+            downloadBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.download = `resized_${targetW}x${targetH}.${ext.toLowerCase()}`;
+                link.href = dataUrl;
+                link.click();
+            };
+        }
+    </script>
 </body>
 </html>

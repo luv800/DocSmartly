@@ -1,55 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Percentage Calculator – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Percentage Calculator</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">%</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Percentage Calculator</h1>
+                    <p class="text-xs text-slate-500">Percentage, badhat / ghatat, marks percentage aur reverse percentage.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-indigo-50 border-b border-indigo-100 py-2 px-4 text-center">
+        <p class="text-xs text-indigo-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Percentage Calculator'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Card 1: X ka Y% kitna? -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-800">X ka Y% kitna?</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="number" id="c1-x" value="10" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    <span class="text-xs font-medium text-slate-500">% of</span>
+                    <input type="number" id="c1-y" value="100" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <span id="c1-res" class="text-xs font-bold text-emerald-900 font-mono">10% of 100 = 10</span>
+                    <button onclick="copyText('c1-res')" class="text-emerald-700 hover:text-emerald-900 text-xs">📋</button>
+                </div>
+            </div>
+
+            <!-- Card 2: X, Y ka kitna % hai? -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-800">X, Y ka kitna % hai?</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="number" id="c2-x" placeholder="X" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    <span class="text-xs font-medium text-slate-500">is what % of</span>
+                    <input type="number" id="c2-y" placeholder="Y" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <span id="c2-res" class="text-xs font-bold text-emerald-900 font-mono">—</span>
+                    <button onclick="copyText('c2-res')" class="text-emerald-700 hover:text-emerald-900 text-xs">📋</button>
+                </div>
+            </div>
+
+            <!-- Card 3: Percentage badhat / ghatat -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-800">Percentage badhat / ghatat</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="number" id="c3-old" placeholder="Purani value" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    <span class="text-xs font-medium text-slate-500">→</span>
+                    <input type="number" id="c3-new" placeholder="Nayi value" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <span id="c3-res" class="text-xs font-bold text-emerald-900 font-mono">—</span>
+                    <button onclick="copyText('c3-res')" class="text-emerald-700 hover:text-emerald-900 text-xs">📋</button>
+                </div>
+            </div>
+
+            <!-- Card 4: Marks percentage -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-800">Marks percentage</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="number" id="c4-got" placeholder="Prapt ank" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    <span class="text-xs font-medium text-slate-500">out of</span>
+                    <input type="number" id="c4-total" placeholder="Total ank" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <span id="c4-res" class="text-xs font-bold text-emerald-900 font-mono">—</span>
+                    <button onclick="copyText('c4-res')" class="text-emerald-700 hover:text-emerald-900 text-xs">📋</button>
+                </div>
+            </div>
+
+            <!-- Card 5: Reverse percentage (original value) -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-800">Reverse percentage (original value)</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="number" id="c5-val" placeholder="Final value" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    <input type="number" id="c5-pct" placeholder="% (+ badhat)" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <span id="c5-res" class="text-xs font-bold text-emerald-900 font-mono">—</span>
+                    <button onclick="copyText('c5-res')" class="text-emerald-700 hover:text-emerald-900 text-xs">📋</button>
+                </div>
+            </div>
+
+            <!-- Card 6: Value me % jodein / ghatayein -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-800">Value me % jodein / ghatayein</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="number" id="c6-val" placeholder="Value" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    <input type="number" id="c6-pct" placeholder="% (jaise 18 ya -5)" class="w-1/2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <span id="c6-res" class="text-xs font-bold text-emerald-900 font-mono">—</span>
+                    <button onclick="copyText('c6-res')" class="text-emerald-700 hover:text-emerald-900 text-xs">📋</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Clear All Button -->
+        <div>
+            <button onclick="clearAll()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-5 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                <span>🗑️ Clear all</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const c1X = document.getElementById('c1-x');
+        const c1Y = document.getElementById('c1-y');
+        const c1Res = document.getElementById('c1-res');
+
+        const c2X = document.getElementById('c2-x');
+        const c2Y = document.getElementById('c2-y');
+        const c2Res = document.getElementById('c2-res');
+
+        const c3Old = document.getElementById('c3-old');
+        const c3New = document.getElementById('c3-new');
+        const c3Res = document.getElementById('c3-res');
+
+        const c4Got = document.getElementById('c4-got');
+        const c4Total = document.getElementById('c4-total');
+        const c4Res = document.getElementById('c4-res');
+
+        const c5Val = document.getElementById('c5-val');
+        const c5Pct = document.getElementById('c5-pct');
+        const c5Res = document.getElementById('c5-res');
+
+        const c6Val = document.getElementById('c6-val');
+        const c6Pct = document.getElementById('c6-pct');
+        const c6Res = document.getElementById('c6-res');
+
+        function calculate() {
+            // Card 1
+            const x1 = parseFloat(c1X.value) || 0;
+            const y1 = parseFloat(c1Y.value) || 0;
+            const ans1 = (x1 * y1) / 100;
+            c1Res.innerText = `${x1}% of ${y1} = ${ans1}`;
+
+            // Card 2
+            const x2 = parseFloat(c2X.value);
+            const y2 = parseFloat(c2Y.value);
+            if (!isNaN(x2) && !isNaN(y2) && y2 !== 0) {
+                const ans2 = (x2 / y2) * 100;
+                c2Res.innerText = `${x2} is ${ans2.toFixed(2)}% of ${y2}`;
+            } else {
+                c2Res.innerText = '—';
+            }
+
+            // Card 3
+            const oldVal = parseFloat(c3Old.value);
+            const newVal = parseFloat(c3New.value);
+            if (!isNaN(oldVal) && !isNaN(newVal) && oldVal !== 0) {
+                const diff = newVal - oldVal;
+                const pct = (diff / oldVal) * 100;
+                const type = pct >= 0 ? 'Badhat (Increase)' : 'Ghatat (Decrease)';
+                c3Res.innerText = `${Math.abs(pct).toFixed(2)}% ${type}`;
+            } else {
+                c3Res.innerText = '—';
+            }
+
+            // Card 4
+            const got = parseFloat(c4Got.value);
+            const total = parseFloat(c4Total.value);
+            if (!isNaN(got) && !isNaN(total) && total !== 0) {
+                const pct = (got / total) * 100;
+                c4Res.innerText = `${pct.toFixed(2)}%`;
+            } else {
+                c4Res.innerText = '—';
+            }
+
+            // Card 5
+            const fVal = parseFloat(c5Val.value);
+            const pVal = parseFloat(c5Pct.value);
+            if (!isNaN(fVal) && !isNaN(pVal) && (100 + pVal) !== 0) {
+                const orig = fVal / (1 + pVal / 100);
+                c5Res.innerText = `Original = ${orig.toFixed(2)}`;
+            } else {
+                c5Res.innerText = '—';
+            }
+
+            // Card 6
+            const baseVal = parseFloat(c6Val.value);
+            const addPct = parseFloat(c6Pct.value);
+            if (!isNaN(baseVal) && !isNaN(addPct)) {
+                const finalVal = baseVal + (baseVal * addPct) / 100;
+                c6Res.innerText = `Result = ${finalVal.toFixed(2)}`;
+            } else {
+                c6Res.innerText = '—';
+            }
+        }
+
+        [c1X, c1Y, c2X, c2Y, c3Old, c3New, c4Got, c4Total, c5Val, c5Pct, c6Val, c6Pct].forEach(el => {
+            el.addEventListener('input', calculate);
+        });
+
+        window.copyText = function(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            alert('Result copied to clipboard!');
+        };
+
+        window.clearAll = function() {
+            [c1X, c1Y, c2X, c2Y, c3Old, c3New, c4Got, c4Total, c5Val, c5Pct, c6Val, c6Pct].forEach(el => el.value = '');
+            c1X.value = 10; c1Y.value = 100;
+            calculate();
+        };
+
+        // Initial calculate
+        calculate();
+    </script>
 </body>
 </html>

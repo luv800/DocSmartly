@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ICO Converter (Favicon) – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Main Container */
+.main-shell {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #16337a 0%, #0d2157 100%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(22, 51, 122, 0.18);
+}
+.hero-banner h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.hero-banner p {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+/* Card Shell */
+.app-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* Tool Header inside card matching screenshots */
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.tool-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tool-badge-icon {
+  width: 36px;
+  height: 36px;
+  background: #fef3c7;
+  color: #d97706;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.tool-title-wrap h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.tool-title-wrap p {
+  font-size: 0.82rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Upload Dropzone matching exact screenshot 1 */
+.upload-dropzone {
+  border: 1.8px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 44px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--ac);
+  background: #f7fdf9;
+}
+.upload-cloud-icon {
+  width: 36px;
+  height: 36px;
+  background: #d97706;
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.25);
+}
+.upload-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.upload-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 600;
+}
+#fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Compact Re-upload bar matching screenshot 2 */
+.reupload-bar {
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  background: #fff;
+  margin-bottom: 20px;
+  position: relative;
+  transition: all 0.2s;
+}
+.reupload-bar:hover { background: #f8fafc; border-color: var(--ac); }
+#reFileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Workspace Section matching screenshot 2 */
+.workspace-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.config-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+.config-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.config-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+.form-select, .form-input {
+  width: 100%;
+  height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: #ffffff;
+  outline: none;
+}
+.form-select:focus, .form-input:focus { border-color: var(--ac); }
+
+/* Size Selection Chips matching screenshot 2 */
+.size-chips-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.size-chips-wrap label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+.size-chips-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.size-chip {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.size-chip:hover { border-color: #cbd5e1; background: #f8fafc; }
+.size-chip.active {
+  background: #92400e;
+  border-color: #92400e;
+  color: #fff;
+}
+
+/* Previews Grid matching screenshot 2 */
+.sizes-preview-grid {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+.size-preview-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.size-preview-thumb {
+  width: 64px;
+  height: 64px;
+  background: repeating-conic-gradient(#cbd5e1 0% 25%, #f1f5f9 0% 50%);
+  background-size: 10px 10px;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.size-preview-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.size-preview-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+}
+
+.btn-download-ico {
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 22px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  width: fit-content;
+  transition: background 0.2s;
+}
+.btn-download-ico:hover { background: var(--ac-hover); }
+
+/* Two Column Info Section */
+.info-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.info-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.info-steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.info-steps-list li span.num { font-weight: 700; margin-right: 6px; }
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.feature-list li { display: flex; align-items: center; gap: 10px; }
+.feature-list svg { width: 18px; height: 18px; color: #059669; flex-shrink: 0; }
+
+/* FAQ Section */
+.faq-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.faq-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.faq-item { border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.faq-question svg { width: 18px; height: 18px; transition: transform 0.2s ease; color: var(--mut); flex-shrink: 0; }
+.faq-item.active .faq-question svg { transform: rotate(90deg); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, padding 0.25s ease;
+  font-size: 0.9rem;
+  color: var(--mut);
+  line-height: 1.6;
+}
+.faq-item.active .faq-answer { max-height: 200px; padding-bottom: 16px; }
+
+/* Related Tools Grid */
+.related-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.related-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.related-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #ffffff;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.related-card:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+.related-icon {
+  width: 36px;
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #16337a;
+  flex-shrink: 0;
+}
+.related-icon svg { width: 20px; height: 20px; }
+.related-card span { font-size: 0.88rem; font-weight: 600; color: #1e293b; line-height: 1.25; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .config-row { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .info-columns { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+</header>
+
+<main class="main-shell">
+  
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <h1>ICO Converter (Favicon)</h1>
+    <p>Convert PNG, JPG, or WebP images into multi-resolution .ico favicon files for your website instantly.</p>
+  </div>
+
+  <!-- Card Shell -->
+  <div class="app-card">
+    
+    <div class="tool-header">
+      <div class="tool-title-wrap">
+        <div class="tool-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <h2>ICO Converter (Favicon)</h2>
+          <p>PNG / JPG / WEBP se .ico favicon banayein — 16 se 256 px sizes.</p>
+        </div>
+      </div>
+      <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>All Tools</span>
+      </a>
+    </div>
+
+    <!-- Security Alert -->
+    <div class="alert-box alert-green">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+    </div>
+
+    <!-- Upload Dropzone matching screenshot 1 -->
+    <div class="upload-dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+      <div class="upload-cloud-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+      <div class="upload-title">PNG / JPG / WEBP image select karein</div>
+      <div class="upload-subtitle">Square (1:1) image best rehti hai · max 20 MB</div>
+    </div>
+
+    <!-- Workspace Section matching screenshot 2 (Hidden by default) -->
+    <div class="workspace-section" id="workspaceSection" hidden>
+      
+      <!-- Re-upload bar matching screenshot 2 -->
+      <div class="reupload-bar" id="reUploadZone">
+        <input type="file" id="reFileInput" accept="image/jpeg,image/png,image/webp">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:0.88rem;color:#b45309;">
+          <span style="background:#d97706;color:#fff;border-radius:50%;width:18px;height:18px;display:grid;place-items:center;font-size:0.7rem;">↑</span>
+          <span>PNG / JPG / WEBP image select karein</span>
+        </div>
+        <span style="font-size:0.76rem;color:#64748b;">Square (1:1) image best rehti hai · max 20 MB</span>
+      </div>
+
+      <!-- Icon Sizes Chips -->
+      <div class="size-chips-wrap">
+        <label>Icon sizes (ICO file ke andar)</label>
+        <div class="size-chips-row" id="sizeChipsRow">
+          <button type="button" class="size-chip active" data-size="16">16×16</button>
+          <button type="button" class="size-chip active" data-size="24">24×24</button>
+          <button type="button" class="size-chip active" data-size="32">32×32</button>
+          <button type="button" class="size-chip active" data-size="48">48×48</button>
+          <button type="button" class="size-chip" data-size="64">64×64</button>
+          <button type="button" class="size-chip" data-size="128">128×128</button>
+          <button type="button" class="size-chip" data-size="256">256×256</button>
+        </div>
+      </div>
+
+      <!-- Config Row matching screenshot 2 -->
+      <div class="config-row">
+        <div class="config-group">
+          <label for="nonSquareSelect">Non-square image</label>
+          <select class="form-select" id="nonSquareSelect">
+            <option value="fit" selected>Fit (transparent padding)</option>
+            <option value="crop">Center crop (square)</option>
+            <option value="stretch">Stretch to square</option>
+          </select>
+        </div>
+
+        <div class="config-group">
+          <label for="bgSelect">Background</label>
+          <select class="form-select" id="bgSelect">
+            <option value="transparent" selected>Transparent</option>
+            <option value="white">White</option>
+            <option value="custom">Custom color</option>
+          </select>
+        </div>
+
+        <div class="config-group" id="customColorGroup" hidden>
+          <label for="customColorInput">Color</label>
+          <input type="color" class="form-input" id="customColorInput" value="#ffffff" style="padding:2px;cursor:pointer;">
+        </div>
+      </div>
+
+      <!-- Sizes Previews Grid matching screenshot 2 -->
+      <div class="sizes-preview-grid" id="sizesPreviewGrid"></div>
+
+      <button type="button" class="btn-download-ico" id="btnDownloadIco">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span>Download .ICO</span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Two Column Info Section -->
+  <div class="info-columns">
+    <div class="info-card">
+      <h3>How to use ICO Converter (Favicon)</h3>
+      <ol class="info-steps-list">
+        <li><span class="num">1.</span> Upload your logo or image (PNG, JPG, WEBP)</li>
+        <li><span class="num">2.</span> Choose embedded icon sizes (16×16, 32×32, etc.)</li>
+        <li><span class="num">3.</span> Adjust background and non-square options</li>
+        <li><span class="num">4.</span> Download your multi-resolution .ico favicon file</li>
+      </ol>
+    </div>
+
+    <div class="info-card">
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Multi-resolution .ico packaging</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Transparent background support</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Live thumbnail previews across all sizes</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>100% secure client-side browser processing</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h3>FAQ – ICO Converter (Favicon)</h3>
+    
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>What is a favicon .ico file?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        An ICO file is a standard image format used by web browsers to display website icons in browser tabs, bookmarks, and URL bars.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is ICO Converter free?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, 100% free with no limits or watermarks required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Are my files uploaded to a server?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        No! All conversion happens securely right inside your browser.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Free Tools Grid -->
+  <div class="related-section">
+    <h3>Related free tools</h3>
+    <div class="related-grid">
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span>ICO to PNG Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <span>Image Format Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2M15 12h2"></path><path d="M7 16h10"></path></svg>
+        </div>
+        <span>Passport Photo Sheet</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </div>
+        <span>PDF Compressor (KB)</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/**
+ * DocSmartly ICO Converter Engine
+ */
+
+let originalImage = null;
+let originalFileName = 'favicon.ico';
+let activeSizes = [16, 24, 32, 48]; // default active
+
+const fileInput = document.getElementById('fileInput');
+const reFileInput = document.getElementById('reFileInput');
+const dropZone = document.getElementById('dropZone');
+const workspaceSection = document.getElementById('workspaceSection');
+const sizeChipsRow = document.getElementById('sizeChipsRow');
+const nonSquareSelect = document.getElementById('nonSquareSelect');
+const bgSelect = document.getElementById('bgSelect');
+const customColorGroup = document.getElementById('customColorGroup');
+const customColorInput = document.getElementById('customColorInput');
+const sizesPreviewGrid = document.getElementById('sizesPreviewGrid');
+const btnDownloadIco = document.getElementById('btnDownloadIco');
+
+sizeChipsRow.querySelectorAll('.size-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    chip.classList.toggle('active');
+    const sz = parseInt(chip.dataset.size, 10);
+    if (chip.classList.contains('active')) {
+      if (!activeSizes.includes(sz)) activeSizes.push(sz);
+    } else {
+      activeSizes = activeSizes.filter(s => s !== sz);
+    }
+    activeSizes.sort((a,b) => a - b);
+    updatePreviews();
+  });
+});
+
+bgSelect.addEventListener('change', () => {
+  customColorGroup.hidden = (bgSelect.value !== 'custom');
+  updatePreviews();
+});
+nonSquareSelect.addEventListener('change', updatePreviews);
+customColorInput.addEventListener('input', updatePreviews);
+
+function handleImageFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || 'favicon';
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      originalImage = img;
+      dropZone.hidden = true;
+      workspaceSection.hidden = false;
+      updatePreviews();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleImageFile(e.target.files[0]);
+  fileInput.value = '';
+});
+reFileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleImageFile(e.target.files[0]);
+  reFileInput.value = '';
+});
+
+['dragenter', 'dragover'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+});
+['dragleave', 'drop'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+  });
+});
+dropZone.addEventListener('drop', (e) => {
+  if (e.dataTransfer.files.length) {
+    handleImageFile(e.dataTransfer.files[0]);
+  }
+});
+
+function getResizedCanvas(size) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  const bg = bgSelect.value;
+  if (bg === 'white') {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+  } else if (bg === 'custom') {
+    ctx.fillStyle = customColorInput.value;
+    ctx.fillRect(0, 0, size, size);
+  }
+
+  const mode = nonSquareSelect.value;
+  const origW = originalImage.naturalWidth;
+  const origH = originalImage.naturalHeight;
+
+  if (mode === 'stretch') {
+    ctx.drawImage(originalImage, 0, 0, size, size);
+  } else if (mode === 'crop') {
+    const minDim = Math.min(origW, origH);
+    const sx = (origW - minDim) / 2;
+    const sy = (origH - minDim) / 2;
+    ctx.drawImage(originalImage, sx, sy, minDim, minDim, 0, 0, size, size);
+  } else {
+    // Fit with transparent padding
+    const ratio = origW / origH;
+    let dw = size, dh = size;
+    let dx = 0, dy = 0;
+    if (origW > origH) {
+      dh = size / ratio;
+      dy = (size - dh) / 2;
+    } else {
+      dw = size * ratio;
+      dx = (size - dw) / 2;
+    }
+    ctx.drawImage(originalImage, dx, dy, dw, dh);
+  }
+
+  return canvas;
+}
+
+function updatePreviews() {
+  if (!originalImage) return;
+  sizesPreviewGrid.innerHTML = '';
+
+  activeSizes.forEach(size => {
+    const canvas = getResizedCanvas(size);
+    const dataUrl = canvas.toDataURL('image/png');
+
+    const card = document.createElement('div');
+    card.className = 'size-preview-card';
+    card.innerHTML = `
+      <div class="size-preview-thumb">
+        <img src="${dataUrl}" alt="${size}x${size}">
+      </div>
+      <div class="size-preview-label">${size}×${size}</div>
+    `;
+    sizesPreviewGrid.appendChild(card);
+  });
+}
+
+btnDownloadIco.addEventListener('click', async () => {
+  if (!originalImage || activeSizes.length === 0) return;
+
+  // Build true .ico binary structure
+  // ICONDIR header (6 bytes)
+  // ICONDIRENTRY (16 bytes per image)
+  // Image data blobs (PNG format inside ICO is fully supported by modern browsers & OS)
+
+  const pngBuffers = [];
+  for (let size of activeSizes) {
+    const canvas = getResizedCanvas(size);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    const buffer = await blob.arrayBuffer();
+    pngBuffers.push({ size, buffer });
+  }
+
+  const numImages = pngBuffers.length;
+  const headerSize = 6;
+  const directoryEntrySize = 16;
+  let offset = headerSize + (directoryEntrySize * numImages);
+
+  const totalSize = offset + pngBuffers.reduce((acc, item) => acc + item.buffer.byteLength, 0);
+  const outBuffer = new ArrayBuffer(totalSize);
+  const dataView = new DataView(outBuffer);
+  const uint8View = new Uint8Array(outBuffer);
+
+  // ICONDIR
+  dataView.setUint16(0, 0, true); // Reserved
+  dataView.setUint16(2, 1, true); // Type (1 = ICO)
+  dataView.setUint16(4, numImages, true); // Number of images
+
+  let currentOffset = offset;
+  pngBuffers.forEach((item, index) => {
+    const entryOffset = headerSize + (index * directoryEntrySize);
+    const sizeVal = item.size >= 256 ? 0 : item.size;
+
+    dataView.setUint8(entryOffset, sizeVal); // Width
+    dataView.setUint8(entryOffset + 1, sizeVal); // Height
+    dataView.setUint8(entryOffset + 2, 0); // Color count
+    dataView.setUint8(entryOffset + 3, 0); // Reserved
+    dataView.setUint16(entryOffset + 4, 1, true); // Color planes
+    dataView.setUint16(entryOffset + 6, 32, true); // Bits per pixel
+    dataView.setUint32(entryOffset + 8, item.buffer.byteLength, true); // Image size in bytes
+    dataView.setUint32(entryOffset + 12, currentOffset, true); // Image offset
+
+    // Copy PNG bytes into output buffer
+    uint8View.set(new Uint8Array(item.buffer), currentOffset);
+    currentOffset += item.buffer.byteLength;
+  });
+
+  const icoBlob = new Blob([outBuffer], { type: 'image/x-icon' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(icoBlob);
+  link.download = `${originalFileName}_favicon.ico`;
+  link.click();
+});
+
+// FAQ Accordion Toggle
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

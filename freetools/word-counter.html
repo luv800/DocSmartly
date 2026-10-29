@@ -1,55 +1,271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Word Counter – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Word Counter</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-700 flex items-center justify-center text-white font-bold text-xl shadow-md">AB</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Word Counter</h1>
+                    <p class="text-xs text-slate-500">Words, characters, sentences, paragraphs, reading time aur keyword density — Hindi & English.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-indigo-50 border-b border-indigo-100 py-2 px-4 text-center">
+        <p class="text-xs text-indigo-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Word Counter'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Textarea Column (7 Cols) -->
+        <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col">
+            <textarea id="text-input" rows="14" placeholder="Yahan apna text likhein ya paste karein..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 text-sm outline-none leading-relaxed flex-grow">this is the </textarea>
+
+            <div class="flex items-center space-x-3 pt-2 border-t">
+                <button onclick="copyText()" class="bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1">
+                    <span>📋 Copy text</span>
+                </button>
+                <button onclick="downloadTXT()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-xl text-xs transition">📄 TXT download</button>
+                <button onclick="clearText()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-xl text-xs transition">✕ Clear</button>
+            </div>
+        </div>
+
+        <!-- Right Stats Column (5 Cols) -->
+        <div class="lg:col-span-5 space-y-4">
+
+            <!-- Top Big Stats -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-indigo-700 text-white p-5 rounded-2xl shadow-sm space-y-1">
+                    <span id="stat-words" class="text-3xl font-bold block">3</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-indigo-200">Words</span>
+                </div>
+                <div class="bg-indigo-700 text-white p-5 rounded-2xl shadow-sm space-y-1">
+                    <span id="stat-chars" class="text-3xl font-bold block">12</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-indigo-200">Characters</span>
+                </div>
+            </div>
+
+            <!-- Secondary Stats Grid -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-chars-nospace" class="text-lg font-bold text-slate-900 block">9</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Characters (bina space)</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-sentences" class="text-lg font-bold text-slate-900 block">1</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Sentences</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-paragraphs" class="text-lg font-bold text-slate-900 block">1</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Paragraphs</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-lines" class="text-lg font-bold text-slate-900 block">1</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Lines</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-read-time" class="text-lg font-bold text-slate-900 block">1 sec</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Reading time</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-speak-time" class="text-lg font-bold text-slate-900 block">1 sec</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Speaking time</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-unique" class="text-lg font-bold text-slate-900 block">3</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Unique words</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span id="stat-avg-len" class="text-lg font-bold text-slate-900 block">3</span>
+                    <span class="text-[11px] font-semibold text-slate-400">Avg. word length</span>
+                </div>
+            </div>
+
+            <!-- Longest Word -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Sabse lamba word</span>
+                <span id="stat-longest" class="text-sm font-bold text-slate-900 block">this</span>
+            </div>
+
+            <!-- Keyword Density Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-800">Keyword density</span>
+                    <select id="keyword-limit" class="bg-slate-50 border border-slate-300 rounded-lg px-2 py-1 text-xs font-medium outline-none">
+                        <option value="1">1 word</option>
+                        <option value="2">2 words</option>
+                    </select>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="chk-common" checked class="rounded text-indigo-700">
+                    <label for="chk-common" class="text-xs text-slate-700 font-medium">Common words (the, is, aur, hai...) chhod dein</label>
+                </div>
+
+                <div class="overflow-x-auto pt-2">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b text-slate-400 font-semibold">
+                                <th class="pb-2">Keyword</th>
+                                <th class="pb-2 text-right">Count</th>
+                                <th class="pb-2 text-right">Density</th>
+                            </tr>
+                        </thead>
+                        <tbody id="density-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                            <tr><td colspan="3" class="py-2 text-slate-400 text-center">Text likhne par keywords yahan dikhenge.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const textInput = document.getElementById('text-input');
+        const chkCommon = document.getElementById('chk-common');
+        const keywordLimit = document.getElementById('keyword-limit');
+
+        const stopWords = new Set(['the', 'is', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'aur', 'hai', 'hain', 'ki', 'ka', 'ke', 'ko', 'se', 'me', 'par']);
+
+        [textInput, chkCommon, keywordLimit].forEach(el => {
+            el.addEventListener('input', calculateStats);
+            el.addEventListener('change', calculateStats);
+        });
+
+        function calculateStats() {
+            const val = textInput.value;
+            const chars = val.length;
+            const charsNoSpace = val.replace(/\s/g, '').length;
+
+            const wordsArr = val.trim() === '' ? [] : val.trim().toLowerCase().match(/[\w\u0900-\u097F]+/g) || [];
+            const wordsCount = wordsArr.length;
+
+            const sentencesArr = val.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            const paragraphsArr = val.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+            const linesArr = val.split(/\r*\n/).filter(l => l.trim().length > 0);
+
+            const readSec = Math.ceil(wordsCount / 225 * 60);
+            const speakSec = Math.ceil(wordsCount / 130 * 60);
+
+            const uniqueWords = new Set(wordsArr);
+            const totalLen = wordsArr.reduce((acc, w) => acc + w.length, 0);
+            const avgLen = wordsCount > 0 ? (totalLen / wordsCount).toFixed(1) : 0;
+
+            let longest = '—';
+            if (wordsCount > 0) {
+                longest = wordsArr.reduce((a, b) => a.length >= b.length ? a : b);
+            }
+
+            // Update UI
+            document.getElementById('stat-words').innerText = wordsCount;
+            document.getElementById('stat-chars').innerText = chars;
+            document.getElementById('stat-chars-nospace').innerText = charsNoSpace;
+            document.getElementById('stat-sentences').innerText = sentencesArr.length;
+            document.getElementById('stat-paragraphs').innerText = paragraphsArr.length;
+            document.getElementById('stat-lines').innerText = Math.max(1, linesArr.length);
+            document.getElementById('stat-read-time').innerText = readSec < 60 ? `${readSec} sec` : `${Math.ceil(readSec/60)} min`;
+            document.getElementById('stat-speak-time').innerText = speakSec < 60 ? `${speakSec} sec` : `${Math.ceil(speakSec/60)} min`;
+            document.getElementById('stat-unique').innerText = uniqueWords.size;
+            document.getElementById('stat-avg-len').innerText = avgLen;
+            document.getElementById('stat-longest').innerText = longest;
+
+            // Keyword Density
+            const tbody = document.getElementById('density-tbody');
+            tbody.innerHTML = '';
+
+            if (wordsCount === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="py-2 text-slate-400 text-center">Text likhne par keywords yahan dikhenge.</td></tr>`;
+                return;
+            }
+
+            const counts = {};
+            wordsArr.forEach(w => {
+                if (chkCommon.checked && stopWords.has(w)) return;
+                counts[w] = (counts[w] || 0) + 1;
+            });
+
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+            if (sorted.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="py-2 text-slate-400 text-center">No keywords found.</td></tr>`;
+                return;
+            }
+
+            sorted.forEach(([word, count]) => {
+                const density = ((count / wordsCount) * 100).toFixed(1) + '%';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-2 font-semibold">${word}</td>
+                    <td class="py-2 text-right font-mono">${count}</td>
+                    <td class="py-2 text-right font-mono">${density}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.copyText = function() {
+            textInput.select();
+            navigator.clipboard.writeText(textInput.value);
+            alert('Text copied to clipboard!');
+        };
+
+        window.downloadTXT = function() {
+            const blob = new Blob([textInput.value], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'word_counter.txt';
+            link.click();
+        };
+
+        window.clearText = function() {
+            textInput.value = '';
+            calculateStats();
+        };
+
+        // Initial calculate
+        calculateStats();
+    </script>
 </body>
 </html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator — Basic & Scientific - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-bold text-xl shadow-md">🧮</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Calculator — Basic & Scientific</h1>
+                    <p class="text-xs text-slate-500">Basic aur scientific calculator — %, brackets, sin cos tan, log, power, factorial, history.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-slate-100 border-b border-slate-200 py-2 px-4 text-center">
+        <p class="text-xs text-slate-700 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Calculator Pad (5 Cols) -->
+        <div class="lg:col-span-5 bg-slate-900 p-5 rounded-2xl shadow-xl space-y-4 text-white">
+            <!-- Mode Top Bar -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <button onclick="setMode('basic')" id="btn-basic" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 transition">Basic</button>
+                    <button onclick="setMode('scientific')" id="btn-sci" class="px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition">Scientific</button>
+                </div>
+                <button onclick="toggleAngleMode()" id="angle-mode-btn" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-amber-400">DEG</button>
+            </div>
+
+            <!-- Screen -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-right space-y-1">
+                <div id="screen-expr" class="text-xs text-slate-400 font-mono min-h-[20px]">5+8=</div>
+                <div id="screen-val" class="text-3xl font-bold font-mono tracking-wider">13</div>
+            </div>
+
+            <!-- Keypad -->
+            <div id="keypad-grid" class="grid grid-cols-4 gap-2">
+                <!-- Row 1: Sci Functions -->
+                <button onclick="appendFunc('sin')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">sin</button>
+                <button onclick="appendFunc('cos')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">cos</button>
+                <button onclick="appendFunc('tan')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">tan</button>
+                <button onclick="appendFunc('log')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">log</button>
+
+                <!-- Row 2 -->
+                <button onclick="appendFunc('asin')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">sin⁻¹</button>
+                <button onclick="appendFunc('acos')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">cos⁻¹</button>
+                <button onclick="appendFunc('atan')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">tan⁻¹</button>
+                <button onclick="appendFunc('ln')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">ln</button>
+
+                <!-- Row 3 -->
+                <button onclick="appendStr('^2')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">x²</button>
+                <button onclick="appendStr('^3')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">x³</button>
+                <button onclick="appendStr('^')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">xʸ</button>
+                <button onclick="appendFunc('sqrt')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">√</button>
+
+                <!-- Row 4 -->
+                <button onclick="appendStr('10^')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">10ˣ</button>
+                <button onclick="appendStr('exp(')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">eˣ</button>
+                <button onclick="appendStr('!ف')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">n!</button>
+                <button onclick="appendStr('1/(')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">1/x</button>
+
+                <!-- Row 5 -->
+                <button onclick="appendStr('π')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">π</button>
+                <button onclick="appendStr('e')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">e</button>
+                <button onclick="appendStr('abs(')" class="sci-key bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">|x|</button>
+                <button onclick="appendStr('%')" class="bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">%</button>
+
+                <!-- Row 6: Standard Keypad -->
+                <button onclick="clearScreen()" class="bg-rose-900/60 hover:bg-rose-900 text-rose-200 py-2.5 rounded-xl text-xs font-bold transition">C</button>
+                <button onclick="backspace()" class="bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-bold transition">⌫</button>
+                <button onclick="appendStr('(')" class="bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">(</button>
+                <button onclick="appendStr(')')" class="bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl text-xs font-semibold transition">)</button>
+
+                <button onclick="appendStr('7')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">7</button>
+                <button onclick="appendStr('8')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">8</button>
+                <button onclick="appendStr('9')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">9</button>
+                <button onclick="appendStr('/')" class="bg-amber-600 hover:bg-amber-500 py-3 rounded-xl text-sm font-bold transition">÷</button>
+
+                <button onclick="appendStr('4')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">4</button>
+                <button onclick="appendStr('5')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">5</button>
+                <button onclick="appendStr('6')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">6</button>
+                <button onclick="appendStr('*')" class="bg-amber-600 hover:bg-amber-500 py-3 rounded-xl text-sm font-bold transition">×</button>
+
+                <button onclick="appendStr('1')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">1</button>
+                <button onclick="appendStr('2')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">2</button>
+                <button onclick="appendStr('3')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">3</button>
+                <button onclick="appendStr('-')" class="bg-amber-600 hover:bg-amber-500 py-3 rounded-xl text-sm font-bold transition">-</button>
+
+                <button onclick="appendStr('+/-')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">±</button>
+                <button onclick="appendStr('0')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">0</button>
+                <button onclick="appendStr('.')" class="bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-sm font-bold transition">.</button>
+                <button onclick="appendStr('+')" class="bg-amber-600 hover:bg-amber-500 py-3 rounded-xl text-sm font-bold transition">+</button>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="calculateResult()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl text-sm font-bold shadow-lg transition">=</button>
+            </div>
+
+            <div class="pt-1">
+                <button onclick="copyResult()" class="w-full bg-slate-800 hover:bg-slate-700 py-2 rounded-xl text-xs font-semibold text-slate-300 transition flex items-center justify-center space-x-1">
+                    <span>📋 Copy result</span>
+                </button>
+            </div>
+
+            <div class="text-[10px] text-slate-500 font-mono pt-1">
+                Keyboard: 0-9 + - * / ^ ( ) % - Enter = Backspace - Esc = C
+            </div>
+        </div>
+
+        <!-- Right History Panel (7 Cols) -->
+        <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-sm font-bold text-slate-800">History</h3>
+                <button onclick="clearHistory()" class="text-xs font-semibold text-slate-500 hover:text-slate-800">Clear history</button>
+            </div>
+
+            <div id="history-container" class="flex-grow space-y-3 overflow-y-auto max-h-[500px]">
+                <div class="flex items-center justify-between text-sm font-mono border-b pb-2 text-slate-700">
+                    <span>5+8 =</span>
+                    <span class="font-bold text-slate-900">13</span>
+                </div>
+                <div class="flex items-center justify-between text-sm font-mono border-b pb-2 text-slate-700">
+                    <span>2+2 =</span>
+                    <span class="font-bold text-slate-900">4</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentExpr = "5+8";
+        let currentVal = "13";
+        let isSciMode = true;
+        let angleMode = 'DEG'; // DEG or RAD
+        let historyList = [
+            { expr: "5+8", val: "13" },
+            { expr: "2+2", val: "4" }
+        ];
+
+        const screenExpr = document.getElementById('screen-expr');
+        const screenVal = document.getElementById('screen-val');
+        const historyContainer = document.getElementById('history-container');
+
+        window.setMode = function(mode) {
+            isSciMode = (mode === 'scientific');
+            const sciKeys = document.querySelectorAll('.sci-key');
+            if (isSciMode) {
+                document.getElementById('btn-sci').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition";
+                document.getElementById('btn-basic').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 transition";
+                sciKeys.forEach(k => k.style.display = 'block');
+            } else {
+                document.getElementById('btn-basic').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition";
+                document.getElementById('btn-sci').className = "px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 transition";
+                sciKeys.forEach(k => k.style.display = 'none');
+            }
+        };
+
+        window.toggleAngleMode = function() {
+            angleMode = angleMode === 'DEG' ? 'RAD' : 'DEG';
+            document.getElementById('angle-mode-btn').innerText = angleMode;
+        };
+
+        window.appendStr = function(str) {
+            currentExpr += str;
+            updateScreen();
+        };
+
+        window.appendFunc = function(fn) {
+            currentExpr += `${fn}(`;
+            updateScreen();
+        };
+
+        window.clearScreen = function() {
+            currentExpr = "";
+            currentVal = "0";
+            updateScreen();
+        };
+
+        window.backspace = function() {
+            currentExpr = currentExpr.slice(0, -1);
+            updateScreen();
+        };
+
+        function updateScreen() {
+            screenExpr.innerText = currentExpr;
+            screenVal.innerText = currentVal;
+        }
+
+        window.calculateResult = function() {
+            try {
+                let exp = currentExpr
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/')
+                    .replace(/π/g, 'Math.PI')
+                    .replace(/e/g, 'Math.E')
+                    .replace(/\^2/g, '**2')
+                    .replace(/\^3/g, '**3')
+                    .replace(/\^/g, '**')
+                    .replace(/sqrt\(/g, 'Math.sqrt(')
+                    .replace(/log\(/g, 'Math.log10(')
+                    .replace(/ln\(/g, 'Math.log(')
+                    .replace(/exp\(/g, 'Math.exp(')
+                    .replace(/abs\(/g, 'Math.abs(');
+
+                // Handle trig functions with angle mode
+                if (angleMode === 'DEG') {
+                    exp = exp
+                        .replace(/sin\(/g, 'Math.sin((Math.PI/180)*')
+                        .replace(/cos\(/g, 'Math.cos((Math.PI/180)*')
+                        .replace(/tan\(/g, 'Math.tan((Math.PI/180)*')
+                        .replace(/asin\(/g, '(180/Math.PI)*Math.asin(')
+                        .replace(/acos\(/g, '(180/Math.PI)*Math.acos(')
+                        .replace(/atan\(/g, '(180/Math.PI)*Math.atan(');
+                } else {
+                    exp = exp
+                        .replace(/sin\(/g, 'Math.sin(')
+                        .replace(/cos\(/g, 'Math.cos(')
+                        .replace(/tan\(/g, 'Math.tan(')
+                        .replace(/asin\(/g, 'Math.asin(')
+                        .replace(/acos\(/g, 'Math.acos(')
+                        .replace(/atan\(/g, 'Math.atan(');
+                }
+
+                let res = eval(exp);
+                currentVal = Number.isFinite(res) ? parseFloat(res.toFixed(8)).toString() : "Error";
+
+                historyList.unshift({ expr: currentExpr, val: currentVal });
+                renderHistory();
+
+                currentExpr = currentVal;
+                updateScreen();
+            } catch (e) {
+                currentVal = "Error";
+                updateScreen();
+            }
+        };
+
+        function renderHistory() {
+            historyContainer.innerHTML = '';
+            historyList.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between text-sm font-mono border-b pb-2 text-slate-700";
+                div.innerHTML = `<span>${item.expr} =</span><span class="font-bold text-slate-900">${item.val}</span>`;
+                historyContainer.appendChild(div);
+            });
+        }
+
+        window.clearHistory = function() {
+            historyList = [];
+            renderHistory();
+        };
+
+        window.copyResult = function() {
+            navigator.clipboard.writeText(currentVal);
+            alert('Result copied to clipboard!');
+        };
+    </script>
+</body>
+</html>

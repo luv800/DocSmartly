@@ -1,55 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>GST Calculator – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Calculator - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>GST Calculator</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-md">📊</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">GST Calculator</h1>
+                    <p class="text-xs text-slate-500">GST 0% se 28% tak — CGST + SGST / IGST, inclusive / exclusive, poora breakdown.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['GST Calculator'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (6 Cols) -->
+        <div class="lg:col-span-6 space-y-5">
+
+            <!-- GST Mode -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">GST mode</label>
+                <div class="flex items-center space-x-3">
+                    <button onclick="setMode('inclusive')" id="mode-inclusive" class="mode-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">↓ GST Inclusive</button>
+                    <button onclick="setMode('exclusive')" id="mode-exclusive" class="mode-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-600 text-white font-semibold text-xs transition">+ GST Exclusive</button>
+                </div>
+            </div>
+
+            <!-- Amount Input -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label id="amount-label" class="block text-xs font-semibold text-slate-600">Amount GST ke bina (₹) — base / taxable value</label>
+                <input type="number" id="amount-input" value="1000000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-semibold outline-none">
+            </div>
+
+            <!-- GST Rate -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">GST rate</label>
+                <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                    <button onclick="setRate(0)" class="rate-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">0%</button>
+                    <button onclick="setRate(5)" class="rate-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">5%</button>
+                    <button onclick="setRate(12)" class="rate-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">12%</button>
+                    <button onclick="setRate(18)" id="rate-18" class="rate-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-600 text-white font-semibold text-xs transition">18%</button>
+                    <button onclick="setRate(28)" class="rate-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">28%</button>
+                    <div class="flex items-center space-x-1">
+                        <input type="number" id="custom-rate" placeholder="Custom" class="w-20 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none text-center">
+                        <span class="text-xs font-semibold text-slate-600">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supply Type -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Supply type</label>
+                <div class="flex items-center space-x-3">
+                    <button onclick="setSupply('same')" id="supply-same" class="supply-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-50 text-emerald-800 font-semibold text-xs transition">Same state — CGST + SGST</button>
+                    <button onclick="setSupply('other')" id="supply-other" class="supply-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Other state — IGST</button>
+                </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Quantity (optional)</label>
+                <input type="number" id="qty-input" value="1" min="1" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs outline-none font-semibold">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="copyResult()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 px-6 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                    <span>📋 Copy result</span>
+                </button>
+                <button onclick="resetCalculator()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-6 rounded-xl text-xs transition">🔄 Reset</button>
+            </div>
+
+        </div>
+
+        <!-- Right Results Column (6 Cols) -->
+        <div class="lg:col-span-6 space-y-5">
+
+            <!-- Top Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span class="text-[11px] font-semibold text-slate-400">Entered amount (GST ke bina)</span>
+                    <div id="res-entered" class="text-xl font-bold text-slate-900">₹10,00,000.00</div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span class="text-[11px] font-semibold text-slate-400">Taxable / base value</span>
+                    <div id="res-taxable" class="text-xl font-bold text-slate-900">₹10,00,000.00</div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200 shadow-sm space-y-1">
+                <span id="res-gst-label" class="text-[11px] font-semibold text-amber-800">Total GST @ 18%</span>
+                <div id="res-gst-amount" class="text-2xl font-bold text-amber-900">₹1,80,000.00</div>
+            </div>
+
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200 shadow-sm space-y-1">
+                <span class="text-[11px] font-semibold text-emerald-800">Final payable amount</span>
+                <div id="res-final" class="text-3xl font-bold text-emerald-900">₹11,80,000.00</div>
+            </div>
+
+            <!-- Detailed Calculation Breakdown -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">Calculation breakdown</h3>
+
+                <div id="breakdown-container" class="space-y-3">
+                    <div class="flex items-center justify-between text-xs font-medium text-slate-700">
+                        <span>CGST @ 9%</span>
+                        <span id="res-cgst" class="font-bold font-mono">₹90,000.00</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-medium text-slate-700 border-b pb-3">
+                        <span>SGST @ 9%</span>
+                        <span id="res-sgst" class="font-bold font-mono">₹90,000.00</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs font-bold text-slate-900 pt-1">
+                    <span>Total tax</span>
+                    <span id="res-total-tax" class="font-mono text-emerald-700">₹1,80,000.00</span>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1 font-mono text-[11px] text-slate-600">
+                    <div id="formula-line">GST = ₹10,00,000.00 × 18 ÷ 100 = ₹1,80,000.00</div>
+                    <div id="final-formula-line">Final = ₹10,00,000.00 + ₹1,80,000.00 = ₹11,80,000.00</div>
+                </div>
+
+                <div id="amount-in-words" class="text-xs font-semibold text-slate-700 pt-2 border-t">
+                    Rupees Eleven Lakh Eighty Thousand Only
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let gstMode = 'exclusive'; // inclusive or exclusive
+        let gstRate = 18;
+        let supplyType = 'same'; // same or other
+
+        const amountInput = document.getElementById('amount-input');
+        const amountLabel = document.getElementById('amount-label');
+        const qtyInput = document.getElementById('qty-input');
+        const customRate = document.getElementById('custom-rate');
+
+        window.setMode = function(mode) {
+            gstMode = mode;
+            if (mode === 'inclusive') {
+                document.getElementById('mode-inclusive').className = "mode-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-600 text-white font-semibold text-xs transition";
+                document.getElementById('mode-exclusive').className = "mode-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+                amountLabel.innerText = "Amount GST ke sath (₹) — gross amount";
+            } else {
+                document.getElementById('mode-exclusive').className = "mode-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-600 text-white font-semibold text-xs transition";
+                document.getElementById('mode-inclusive').className = "mode-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+                amountLabel.innerText = "Amount GST ke bina (₹) — base / taxable value";
+            }
+            calculateGST();
+        };
+
+        window.setRate = function(rate) {
+            gstRate = rate;
+            document.querySelectorAll('.rate-btn').forEach(b => {
+                b.className = "rate-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            });
+            if (event && event.target) {
+                event.target.className = "rate-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-600 text-white font-semibold text-xs transition";
+            }
+            customRate.value = '';
+            calculateGST();
+        };
+
+        customRate.oninput = (e) => {
+            const val = parseFloat(e.target.value);
+            if (!isNaN(val)) {
+                gstRate = val;
+                document.querySelectorAll('.rate-btn').forEach(b => {
+                    b.className = "rate-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+                });
+                calculateGST();
+            }
+        };
+
+        window.setSupply = function(type) {
+            supplyType = type;
+            if (type === 'same') {
+                document.getElementById('supply-same').className = "supply-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-50 text-emerald-800 font-semibold text-xs transition";
+                document.getElementById('supply-other').className = "supply-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            } else {
+                document.getElementById('supply-other').className = "supply-btn px-4 py-2 rounded-xl border border-emerald-600 bg-emerald-50 text-emerald-800 font-semibold text-xs transition";
+                document.getElementById('supply-same').className = "supply-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            }
+            calculateGST();
+        };
+
+        [amountInput, qtyInput].forEach(el => {
+            el.addEventListener('input', calculateGST);
+        });
+
+        function calculateGST() {
+            const entered = parseFloat(amountInput.value) || 0;
+            const qty = parseInt(qtyInput.value) || 1;
+            const totalEntered = entered * qty;
+
+            let taxable = 0;
+            let totalGst = 0;
+            let finalPayable = 0;
+
+            if (gstMode === 'exclusive') {
+                taxable = totalEntered;
+                totalGst = (taxable * gstRate) / 100;
+                finalPayable = taxable + totalGst;
+            } else {
+                finalPayable = totalEntered;
+                taxable = (finalPayable * 100) / (100 + gstRate);
+                totalGst = finalPayable - taxable;
+            }
+
+            document.getElementById('res-entered').innerText = `₹${totalEntered.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            document.getElementById('res-taxable').innerText = `₹${taxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            document.getElementById('res-gst-label').innerText = `Total GST @ ${gstRate}%`;
+            document.getElementById('res-gst-amount').innerText = `₹${totalGst.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            document.getElementById('res-final').innerText = `₹${finalPayable.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+            const breakdownContainer = document.getElementById('breakdown-container');
+            if (supplyType === 'same') {
+                const halfGst = totalGst / 2;
+                const halfRate = gstRate / 2;
+                breakdownContainer.innerHTML = `
+                    <div class="flex items-center justify-between text-xs font-medium text-slate-700">
+                        <span>CGST @ ${halfRate}%</span>
+                        <span class="font-bold font-mono">₹${halfGst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-medium text-slate-700 border-b pb-3">
+                        <span>SGST @ ${halfRate}%</span>
+                        <span class="font-bold font-mono">₹${halfGst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</span>
+                    </div>
+                `;
+            } else {
+                breakdownContainer.innerHTML = `
+                    <div class="flex items-center justify-between text-xs font-medium text-slate-700 border-b pb-3">
+                        <span>IGST @ ${gstRate}%</span>
+                        <span class="font-bold font-mono">₹${totalGst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</span>
+                    </div>
+                `;
+            }
+
+            document.getElementById('res-total-tax').innerText = `₹${totalGst.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            document.getElementById('formula-line').innerText = `GST = ₹${taxable.toLocaleString('en-IN')} × ${gstRate} ÷ 100 = ₹${totalGst.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            document.getElementById('final-formula-line').innerText = `Final = ₹${taxable.toLocaleString('en-IN')} + ₹${totalGst.toLocaleString('en-IN', {minimumFractionDigits: 2})} = ₹${finalPayable.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+            document.getElementById('amount-in-words').innerText = `Rupees ${numberToWords(Math.round(finalPayable))} Only`;
+        }
+
+        window.copyResult = function() {
+            const text = `Base Amount: ${document.getElementById('res-taxable').innerText}\nGST: ${document.getElementById('res-gst-amount').innerText}\nFinal Payable: ${document.getElementById('res-final').innerText}`;
+            navigator.clipboard.writeText(text);
+            alert('Result copied to clipboard!');
+        };
+
+        window.resetCalculator = function() {
+            amountInput.value = 1000000;
+            qtyInput.value = 1;
+            setMode('exclusive');
+            setRate(18);
+            setSupply('same');
+        };
+
+        function numberToWords(num) {
+            if (num === 0) return 'Zero';
+            // Basic converter for display
+            return num.toLocaleString('en-IN') + " Rupees";
+        }
+
+        // Initial render
+        calculateGST();
+    </script>
 </body>
 </html>

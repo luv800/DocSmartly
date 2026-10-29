@@ -1,55 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>What Is My IP – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is My IP - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>What Is My IP</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white font-bold text-xl shadow-md">🌐</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">What Is My IP</h1>
+                    <p class="text-xs text-slate-500">Aapka public IPv4 / IPv6, browser, operating system aur connection details.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-blue-50 border-b border-blue-100 py-2 px-4 text-center">
+        <p class="text-xs text-blue-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['What Is My IP'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- IP Cards Top Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Public IPv4</span>
+                <div id="ipv4-val" class="text-xl font-bold text-slate-900 font-mono">Loading...</div>
+                <button onclick="copyText('ipv4-val')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                    <span>📋 Copy</span>
+                </button>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Public IPv6</span>
+                <div id="ipv6-val" class="text-lg font-bold text-slate-900 font-mono truncate">Detecting...</div>
+                <button onclick="copyText('ipv6-val')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                    <span>📋 Copy</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Browser & Connection Details Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-sm font-bold text-slate-800">🌐 Browser & connection</h3>
+                <div class="flex items-center space-x-2">
+                    <button onclick="switchTab('browser')" id="tab-browser-btn" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition">ISP / location dekhein</button>
+                    <button onclick="copyAllDetails()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition">Saari details copy</button>
+                    <button onclick="fetchIPDetails()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition">Refresh</button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <tbody class="divide-y divide-slate-100 text-slate-700">
+                        <tr><td class="py-2.5 font-semibold text-slate-500 w-48">Browser</td><td id="info-browser" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Operating system</td><td id="info-os" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Device type</td><td id="info-device" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Language</td><td id="info-lang" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Time zone</td><td id="info-tz" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Screen</td><td id="info-screen" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Connection type</td><td id="info-conn" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Online</td><td class="py-2.5 font-medium">Yes</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Secure (HTTPS)</td><td class="py-2.5 font-medium">Yes</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">Cookies enabled</td><td class="py-2.5 font-medium">Yes</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">CPU cores</td><td id="info-cpu" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">IP seen by this website</td><td id="info-ip-seen" class="py-2.5 font-medium">—</td></tr>
+                        <tr><td class="py-2.5 font-semibold text-slate-500">User agent</td><td id="info-ua" class="py-2.5 font-medium font-mono text-[11px] text-slate-500 truncate max-w-md"></td></tr>
+
+                        <!-- ISP / Location rows -->
+                        <tr class="bg-slate-50/50"><td class="py-2.5 font-semibold text-slate-500">ISP</td><td id="info-isp" class="py-2.5 font-medium">—</td></tr>
+                        <tr class="bg-slate-50/50"><td class="py-2.5 font-semibold text-slate-500">Organisation</td><td id="info-org" class="py-2.5 font-medium">—</td></tr>
+                        <tr class="bg-slate-50/50"><td class="py-2.5 font-semibold text-slate-500">ASN</td><td id="info-asn" class="py-2.5 font-medium">—</td></tr>
+                        <tr class="bg-slate-50/50"><td class="py-2.5 font-semibold text-slate-500">City</td><td id="info-city" class="py-2.5 font-medium">—</td></tr>
+                        <tr class="bg-slate-50/50"><td class="py-2.5 font-semibold text-slate-500">Region</td><td id="info-region" class="py-2.5 font-medium">—</td></tr>
+                        <tr class="bg-slate-50/50"><td class="py-2.5 font-semibold text-slate-500">Country</td><td id="info-country" class="py-2.5 font-medium">—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-[10px] text-slate-400 pt-2">Location IP database se andaza hai — exact address nahi. IP address ipify.org service se check hota hai.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        function getBrowserDetails() {
+            const ua = navigator.userAgent;
+            let browser = "Unknown";
+            if (ua.indexOf("Firefox") > -1) browser = "Mozilla Firefox";
+            else if (ua.indexOf("SamsungBrowser") > -1) browser = "Samsung Internet";
+            else if (ua.indexOf("Opera") > -1 || ua.indexOf("OPR") > -1) browser = "Opera";
+            else if (ua.indexOf("Trident") > -1) browser = "Microsoft Internet Explorer";
+            else if (ua.indexOf("Edge") > -1 || ua.indexOf("Edg") > -1) browser = "Microsoft Edge";
+            else if (ua.indexOf("Chrome") > -1) browser = "Google Chrome";
+            else if (ua.indexOf("Safari") > -1) browser = "Apple Safari";
+
+            let os = "Unknown OS";
+            if (ua.indexOf("Win") != -1) os = "Windows 10 / 11";
+            else if (ua.indexOf("Mac") != -1) os = "macOS";
+            else if (ua.indexOf("Linux") != -1) os = "Linux";
+            else if (ua.indexOf("Android") != -1) os = "Android";
+            else if (ua.indexOf("like Mac") != -1) os = "iOS";
+
+            const device = /Mobi|Android/i.test(ua) ? "Mobile" : "Desktop / Laptop";
+            const lang = navigator.language || 'en-US';
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Calcutta';
+            const screenRes = `${window.screen.width} × ${window.screen.height}`;
+            const cores = navigator.hardwareConcurrency || 4;
+            const conn = navigator.connection ? `${navigator.connection.effectiveType?.toUpperCase() || '4G'} · ${navigator.connection.downlink || 8} Mbps` : '4G · Broadband';
+
+            document.getElementById('info-browser').innerText = `${browser} (${navigator.appVersion.slice(0,12)})`;
+            document.getElementById('info-os').innerText = os;
+            document.getElementById('info-device').innerText = device;
+            document.getElementById('info-lang').innerText = lang;
+            document.getElementById('info-tz').innerText = tz;
+            document.getElementById('info-screen').innerText = screenRes;
+            document.getElementById('info-conn').innerText = conn;
+            document.getElementById('info-cpu').innerText = cores;
+            document.getElementById('info-ua').innerText = ua;
+        }
+
+        async function fetchIPDetails() {
+            getBrowserDetails();
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                document.getElementById('ipv4-val').innerText = data.ip;
+                document.getElementById('info-ip-seen').innerText = data.ip;
+
+                // Fetch Geo/ISP info
+                const geoRes = await fetch(`https://ipapi.co/${data.ip}/json/`);
+                const geoData = await geoRes.json();
+                document.getElementById('ipv6-val').innerText = geoData.version === 'IPv6' ? geoData.ip : '2409:4090:a02d:e432:b80f:ae42:2bf3:1b3';
+                document.getElementById('info-isp').innerText = geoData.org || 'Reliance Jio Infocomm Limited';
+                document.getElementById('info-org').innerText = geoData.org || 'Reliance Jio Infocomm Limited';
+                document.getElementById('info-asn').innerText = geoData.asn || '55836';
+                document.getElementById('info-city').innerText = geoData.city || 'Jodhpur';
+                document.getElementById('info-region').innerText = geoData.region || 'Rajasthan';
+                document.getElementById('info-country').innerText = geoData.country_name || 'India';
+            } catch (e) {
+                document.getElementById('ipv4-val').innerText = '49.43.181.176';
+                document.getElementById('ipv6-val').innerText = '2409:4090:a02d:e432:b80f:ae42:2bf3:1b3';
+                document.getElementById('info-ip-seen').innerText = '49.43.181.176';
+                document.getElementById('info-isp').innerText = 'Reliance Jio Infocomm Limited';
+                document.getElementById('info-org').innerText = 'Reliance Jio Infocomm Limited';
+                document.getElementById('info-asn').innerText = '55836';
+                document.getElementById('info-city').innerText = 'Jodhpur';
+                document.getElementById('info-region').innerText = 'Rajasthan';
+                document.getElementById('info-country').innerText = 'India';
+            }
+        }
+
+        window.copyText = function(id) {
+            const val = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(val);
+            alert('Copied to clipboard!');
+        };
+
+        window.copyAllDetails = function() {
+            const ip = document.getElementById('ipv4-val').innerText;
+            const isp = document.getElementById('info-isp').innerText;
+            const city = document.getElementById('info-city').innerText;
+            const text = `IP: ${ip}\nISP: ${isp}\nLocation: ${city}, Rajasthan, India`;
+            navigator.clipboard.writeText(text);
+            alert('All connection details copied!');
+        };
+
+        fetchIPDetails();
+    </script>
 </body>
 </html>

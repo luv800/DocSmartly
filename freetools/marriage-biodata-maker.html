@@ -1,55 +1,470 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Marriage Biodata Maker – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marriage Biodata Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Marriage Biodata Maker</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white font-bold text-xl shadow-md">💌</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Marriage Biodata Maker</h1>
+                    <p class="text-xs text-slate-500">12 alag-alag design — Hindi / English / Bilingual shaadi biodata, photo, kundli details. A4 PDF, JPG, PNG, Print.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-rose-50 border-b border-rose-100 py-2 px-4 text-center">
+        <p class="text-xs text-rose-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Marriage Biodata Maker'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Controls Form (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Templates Grid (12 Designs) -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Template (12 alag design — badalne par aapki details safe rehti hain)</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="setTemplate('traditional')" id="tpl-traditional" class="tpl-btn p-3 rounded-xl border-2 border-rose-600 bg-rose-50 text-rose-900 font-semibold text-xs text-center transition">Traditional Indian</button>
+                    <button onclick="setTemplate('modern')" id="tpl-modern" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">Modern Minimal</button>
+                    <button onclick="setTemplate('premium')" id="tpl-premium" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">Premium Elegant</button>
+                    <button onclick="setTemplate('classic')" id="tpl-classic" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">Classic Family</button>
+                    <button onclick="setTemplate('photo')" id="tpl-photo" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">Photo-Focused</button>
+                    <button onclick="setTemplate('simple')" id="tpl-simple" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">Simple One-Page</button>
+                    <button onclick="setTemplate('hindi')" id="tpl-hindi" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">Hindi Traditional</button>
+                    <button onclick="setTemplate('english')" id="tpl-english" class="tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition">English Professional</button>
+                </div>
+            </div>
+
+            <!-- Language & Color Bar -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Bhasha / Language</label>
+                        <select id="lang-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी (Hindi)</option>
+                            <option value="bilingual">Bilingual (English + हिंदी)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Font</label>
+                        <select id="font-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="Poppins">Poppins</option>
+                            <option value="Rozha One">Rozha One (Traditional)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Main color</label>
+                        <input type="color" id="primary-color" value="#881337" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Accent color</label>
+                        <input type="color" id="accent-color" value="#d97706" class="w-full h-9 rounded-lg border cursor-pointer p-1 bg-slate-50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2 flex items-center justify-between">
+                    <span>📷 Photo</span>
+                </h2>
+                <div class="flex items-center space-x-4">
+                    <input type="file" id="photo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-700 cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Personal Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2">👤 Personal details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Full name *</label>
+                        <input type="text" id="p-name" value="Rahul Sharma" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date of birth</label>
+                        <input type="text" id="p-dob" value="15-08-1996" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Birth time</label>
+                        <input type="text" id="p-tob" value="10:30 AM" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Birth place</label>
+                        <input type="text" id="p-pob" value="Jaipur, Rajasthan" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Height</label>
+                        <input type="text" id="p-height" value="5'10&quot;" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Marital status</label>
+                        <input type="text" id="p-marital" value="Never Married" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Religion</label>
+                        <input type="text" id="p-religion" value="Hindu" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Caste / Gotra</label>
+                        <input type="text" id="p-caste" value="Brahmin (Kashyap)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education & Career Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2">🎓 Education & career</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Education</label>
+                        <input type="text" id="e-edu" value="B.Tech (Computer Science), M.Tech" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Occupation</label>
+                        <input type="text" id="e-occ" value="Senior Software Engineer" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Company / Workplace</label>
+                        <input type="text" id="e-work" value="Multinational Tech Firm, Bangalore" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Annual Income</label>
+                        <input type="text" id="e-income" value="25 LPA" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2">👨‍👩‍👦 Family details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Father's name & occupation</label>
+                        <input type="text" id="f-father" value="Mr. R. K. Sharma (Retd. Government Officer)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Mother's name & occupation</label>
+                        <input type="text" id="f-mother" value="Mrs. S. Sharma (Homemaker)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Siblings (Brothers / Sisters)</label>
+                        <input type="text" id="f-siblings" value="1 Younger Sister (Married)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Native place</label>
+                        <input type="text" id="f-native" value="Jaipur, Rajasthan" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Details Section -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 border-b pb-2">📞 Contact details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Contact person</label>
+                        <input type="text" id="c-person" value="Mr. R. K. Sharma (Father)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Phone / WhatsApp</label>
+                        <input type="text" id="c-phone" value="+91 93586 42399" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Residential address</label>
+                    <textarea id="c-address" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">Plot 45, Nirman Nagar, Kings Road, Jaipur, Rajasthan - 302019</textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Live Preview & Export (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Live Preview Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                <div class="w-full flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-700">Live preview (A4 Biodata)</span>
+                    <span class="text-xs text-slate-400 font-mono">A4 Portrait</span>
+                </div>
+
+                <!-- Canvas Preview Container -->
+                <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 w-full flex items-center justify-center overflow-x-auto min-h-[580px]">
+                    <canvas id="biodata-canvas" class="shadow-lg rounded bg-white max-w-[340px] h-auto"></canvas>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+                    <button id="download-pdf-btn" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📥 PDF</span>
+                    </button>
+                    <button id="download-png-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖼️ PNG</span>
+                    </button>
+                    <button id="print-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="reset-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                        <span>🔄 Reset</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentTemplate = 'traditional';
+        let photoImg = null;
+
+        const biodataCanvas = document.getElementById('biodata-canvas');
+        const photoInput = document.getElementById('photo-input');
+
+        const primaryColor = document.getElementById('primary-color');
+        const accentColor = document.getElementById('accent-color');
+        const fontSelect = document.getElementById('font-select');
+        const langSelect = document.getElementById('lang-select');
+
+        // Inputs
+        const pName = document.getElementById('p-name');
+        const pDob = document.getElementById('p-dob');
+        const pTob = document.getElementById('p-tob');
+        const pPob = document.getElementById('p-pob');
+        const pHeight = document.getElementById('p-height');
+        const pMarital = document.getElementById('p-marital');
+        const pReligion = document.getElementById('p-religion');
+        const pCaste = document.getElementById('p-caste');
+
+        const eEdu = document.getElementById('e-edu');
+        const eOcc = document.getElementById('e-occ');
+        const eWork = document.getElementById('e-work');
+        const eIncome = document.getElementById('e-income');
+
+        const fFather = document.getElementById('f-father');
+        const fMother = document.getElementById('f-mother');
+        const fSiblings = document.getElementById('f-siblings');
+        const fNative = document.getElementById('f-native');
+
+        const cPerson = document.getElementById('c-person');
+        const cPhone = document.getElementById('c-phone');
+        const cAddress = document.getElementById('c-address');
+
+        window.setTemplate = function(tmpl) {
+            currentTemplate = tmpl;
+            document.querySelectorAll('.tpl-btn').forEach(b => {
+                b.className = "tpl-btn p-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs text-center transition";
+            });
+            document.getElementById(`tpl-${tmpl}`).className = "tpl-btn p-3 rounded-xl border-2 border-rose-600 bg-rose-50 text-rose-900 font-semibold text-xs text-center transition";
+            renderCanvas();
+        };
+
+        photoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { photoImg = img; renderCanvas(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        [primaryColor, accentColor, fontSelect, langSelect, pName, pDob, pTob, pPob, pHeight, pMarital, pReligion, pCaste, eEdu, eOcc, eWork, eIncome, fFather, fMother, fSiblings, fNative, cPerson, cPhone, cAddress].forEach(el => {
+            el.addEventListener('input', renderCanvas);
+            el.addEventListener('change', renderCanvas);
+        });
+
+        function renderCanvas() {
+            // A4 dimensions at 300 DPI: 2480 x 3508 pixels
+            const w = 2480;
+            const h = 3508;
+            biodataCanvas.width = w;
+            biodataCanvas.height = h;
+            const ctx = biodataCanvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+
+            const pCol = primaryColor.value;
+            const aCol = accentColor.value;
+            const font = fontSelect.value;
+            const margin = 180;
+
+            // Border decoration
+            ctx.strokeStyle = pCol;
+            ctx.lineWidth = 12;
+            ctx.strokeRect(margin, margin, w - (margin * 2), h - (margin * 2));
+
+            ctx.strokeStyle = aCol;
+            ctx.lineWidth = 4;
+            ctx.strokeRect(margin + 16, margin + 16, w - (margin * 2) - 32, h - (margin * 2) - 32);
+
+            // Header Om / Mantra
+            ctx.textAlign = 'center';
+            ctx.fillStyle = pCol;
+            ctx.font = `bold 48px '${font}', sans-serif`;
+            ctx.fillText('॥ श्री गणेशाय नमः ॥', w / 2, margin + 90);
+
+            // Title
+            ctx.font = `bold 84px '${font}', sans-serif`;
+            ctx.fillText('MARRIAGE BIODATA', w / 2, margin + 190);
+
+            // Divider
+            ctx.strokeStyle = aCol;
+            ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.moveTo(w / 2 - 300, margin + 230); ctx.lineTo(w / 2 + 300, margin + 230); ctx.stroke();
+
+            let curY = margin + 300;
+
+            // Photo if uploaded
+            if (photoImg) {
+                const photoW = 380; const photoH = 480;
+                const photoX = w / 2 - photoW / 2;
+                ctx.fillStyle = '#f1f5f9';
+                ctx.fillRect(photoX, curY, photoW, photoH);
+                ctx.strokeStyle = pCol; ctx.lineWidth = 6;
+                ctx.strokeRect(photoX, curY, photoW, photoH);
+                ctx.drawImage(photoImg, photoX, photoY, photoW, photoH);
+                curY += photoH + 60;
+            }
+
+            // Name
+            ctx.fillStyle = pCol;
+            ctx.font = `bold 96px '${font}', sans-serif`;
+            ctx.fillText(pName.value || 'Full Name', w / 2, curY);
+            curY += 100;
+
+            // Sections Helper
+            function drawSection(title, fields) {
+                // Section Header
+                ctx.fillStyle = pCol;
+                ctx.fillRect(margin + 60, curY, w - (margin * 2) - 120, 64);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold 42px '${font}', sans-serif`;
+                ctx.textAlign = 'left';
+                ctx.fillText(title, margin + 90, curY + 44);
+                curY += 90;
+
+                ctx.font = `38px '${font}', sans-serif`;
+                fields.forEach(f => {
+                    if (!f.val) return;
+                    ctx.fillStyle = '#334155';
+                    ctx.font = `bold 38px '${font}', sans-serif`;
+                    ctx.fillText(f.lbl, margin + 100, curY);
+
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = `38px '${font}', sans-serif`;
+                    ctx.fillText(': ' + f.val, margin + 650, curY);
+                    curY += 60;
+                });
+                curY += 20;
+            }
+
+            // Personal Details
+            drawSection('Personal Details', [
+                { lbl: 'Date of Birth', val: pDob.value },
+                { lbl: 'Birth Time', val: pTob.value },
+                { lbl: 'Birth Place', val: pPob.value },
+                { lbl: 'Height', val: pHeight.value },
+                { lbl: 'Marital Status', val: pMarital.value },
+                { lbl: 'Religion & Caste', val: `${pReligion.value} - ${pCaste.value}` }
+            ]);
+
+            // Education & Career
+            drawSection('Education & Career', [
+                { lbl: 'Education', val: eEdu.value },
+                { lbl: 'Occupation', val: eOcc.value },
+                { lbl: 'Workplace', val: eWork.value },
+                { lbl: 'Annual Income', val: eIncome.value }
+            ]);
+
+            // Family Details
+            drawSection('Family Details', [
+                { lbl: "Father's Name", val: fFather.value },
+                { lbl: "Mother's Name", val: fMother.value },
+                { lbl: 'Siblings', val: fSiblings.value },
+                { lbl: 'Native Place', val: fNative.value }
+            ]);
+
+            // Contact Details
+            drawSection('Contact Details', [
+                { lbl: 'Contact Person', val: cPerson.value },
+                { lbl: 'Phone / WhatsApp', val: cPhone.value },
+                { lbl: 'Address', val: cAddress.value }
+            ]);
+        }
+
+        document.getElementById('reset-btn').onclick = () => {
+            pName.value = "Rahul Sharma";
+            renderCanvas();
+        };
+
+        document.getElementById('download-png-btn').onclick = () => {
+            const link = document.createElement('a');
+            link.download = `${(pName.value || 'biodata').replace(/\s+/g, '_')}_biodata.png`;
+            link.href = biodataCanvas.toDataURL('image/png');
+            link.click();
+        };
+
+        document.getElementById('download-pdf-btn').onclick = () => {
+            window.print();
+        };
+
+        document.getElementById('print-btn').onclick = () => {
+            window.print();
+        };
+
+        // Initial render
+        renderCanvas();
+    </script>
 </body>
 </html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Watermark Maker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- JSZip for multi-image zip downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .slider-thumb::-webkit-slider-thumb { background: #059669; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-md">💧</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Image Watermark Maker</h1>
+                    <p class="text-xs text-slate-500">Photo par text ya logo watermark — opacity, rotation, repeat, multiple images.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- Upload Box State -->
+        <div id="upload-section" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-10 text-center bg-white shadow-sm transition cursor-pointer relative">
+            <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div class="flex flex-col items-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 text-2xl shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800">Photos select karein</h3>
+                <p class="text-xs text-slate-500 mt-1">JPG / PNG / WEBP - multiple allowed - max 30 MB each</p>
+            </div>
+        </div>
+
+        <!-- Editor Workspace (Hidden Initially) -->
+        <div id="editor-section" class="hidden space-y-6">
+            
+            <!-- Top Thumbnails & Add More Bar -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm overflow-x-auto">
+                <div id="thumbnails-container" class="flex items-center space-x-3">
+                    <!-- Dynamic Thumbnails inserted here -->
+                </div>
+                <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg transition flex items-center space-x-1 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Aur photos jodein</span>
+                    <input type="file" id="add-more-input" multiple accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+            </div>
+
+            <!-- Workspace Grid (Preview + Controls) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Interactive Live Preview -->
+                <div class="lg:col-span-7 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center relative min-h-[480px]">
+                    <div class="absolute top-3 left-3 z-10 flex space-x-2">
+                        <span class="bg-slate-900/70 text-white text-[10px] px-2.5 py-1 rounded-md backdrop-blur font-medium">Interactive Preview</span>
+                    </div>
+                    
+                    <!-- Canvas container with before/after comparison simulation -->
+                    <div class="relative w-full overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-center max-h-[600px]">
+                        <canvas id="preview-canvas" class="max-w-full h-auto object-contain shadow"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-3 text-center">💡 Tip: Aap watermark ki settings right panel se badal sakte hain.</p>
+                </div>
+
+                <!-- Right: Customization Controls Panel -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b pb-2 flex items-center justify-between">
+                        <span>Watermark Settings</span>
+                        <span id="active-file-name" class="text-xs font-normal text-slate-500 truncate max-w-[180px]"></span>
+                    </h2>
+
+                    <!-- Watermark Type Selector -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Watermark Type</label>
+                            <select id="wm-type" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="text">Text Watermark</option>
+                                <option value="image">Logo / Image</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Layout</label>
+                            <select id="wm-layout" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="single">Single Position</option>
+                                <option value="tile">Tile Repeat (Grid)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Text Watermark Options -->
+                    <div id="text-options-group" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Watermark Text</label>
+                            <input type="text" id="wm-text" value="© DocSmartly" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Font Family</label>
+                                <select id="wm-font" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <option value="Poppins">Poppins</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Courier New">Courier New</option>
+                                    <option value="Georgia">Georgia</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Text Color</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="color" id="wm-color" value="#ffffff" class="w-8 h-8 rounded border cursor-pointer">
+                                    <input type="text" id="wm-color-hex" value="#FFFFFF" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-mono uppercase text-center">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 pt-1">
+                            <label class="flex items-center space-x-2 text-xs text-slate-700 cursor-pointer">
+                                <input type="checkbox" id="wm-bold" checked class="rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Bold</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-slate-700 cursor-pointer">
+                                <input type="checkbox" id="wm-outline" checked class="rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Outline / Shadow</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Image Logo Watermark Options (Hidden by default) -->
+                    <div id="image-options-group" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Upload Logo Image (PNG)</label>
+                            <input type="file" id="logo-file-input" accept="image/png,image/jpeg" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Sliders & Position Controls -->
+                    <div class="space-y-3 pt-2 border-t border-slate-100">
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                <span id="size-label-text">Watermark Size</span>
+                                <span id="wm-size-val" class="font-semibold">24px</span>
+                            </div>
+                            <input type="range" id="wm-size" min="10" max="150" value="32" class="w-full accent-emerald-600">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                <span>Opacity (Transparancy)</span>
+                                <span id="wm-opacity-val" class="font-semibold">50%</span>
+                            </div>
+                            <input type="range" id="wm-opacity" min="5" max="100" value="50" class="w-full accent-emerald-600">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                <span>Rotation Angle</span>
+                                <span id="wm-rotation-val" class="font-semibold">-30°</span>
+                            </div>
+                            <input type="range" id="wm-rotation" min="-180" max="180" value="-30" class="w-full accent-emerald-600">
+                        </div>
+
+                        <div id="single-pos-group">
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Position on Image</label>
+                            <select id="wm-position" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="center">Center</option>
+                                <option value="bottom-right" selected>Bottom Right</option>
+                                <option value="bottom-left">Bottom Left</option>
+                                <option value="top-right">Top Right</option>
+                                <option value="top-left">Top Left</option>
+                            </select>
+                        </div>
+
+                        <div id="tile-pos-group" class="hidden space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                    <span>Tile Gap (Spacing)</span>
+                                    <span id="wm-gap-val" class="font-semibold">120px</span>
+                                </div>
+                                <input type="range" id="wm-gap" min="50" max="400" value="120" class="w-full accent-emerald-600">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output Format & Quality -->
+                    <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Output Format</label>
+                            <select id="output-format" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none">
+                                <option value="image/jpeg">JPG</option>
+                                <option value="image/png">PNG</option>
+                                <option value="image/webp">WEBP</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                <span>Quality</span>
+                                <span id="quality-val" class="font-semibold">92%</span>
+                            </div>
+                            <input type="range" id="output-quality" min="50" max="100" value="92" class="w-full accent-emerald-600">
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="pt-4 flex items-center space-x-3">
+                        <button id="download-current-btn" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow-md transition flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span>Download This Image</span>
+                        </button>
+                        <button id="download-all-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow-md transition flex items-center space-x-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                            <span id="download-all-text">Download All (ZIP)</span>
+                        </button>
+                    </div>
+
+                    <!-- Reset / Clear All -->
+                    <div class="text-center pt-2">
+                        <button id="clear-all-btn" class="text-xs text-rose-600 hover:text-rose-700 font-medium underline">Sabhi images delete karein</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let uploadedFiles = []; // Array of { file, name, size, type, imgObj }
+        let currentIndex = 0;
+        let logoImgObj = null;
+
+        const fileInput = document.getElementById('file-input');
+        const addMoreInput = document.getElementById('add-more-input');
+        const uploadSection = document.getElementById('upload-section');
+        const editorSection = document.getElementById('editor-section');
+        const thumbnailsContainer = document.getElementById('thumbnails-container');
+        const previewCanvas = document.getElementById('preview-canvas');
+        const activeFileNameSpan = document.getElementById('active-file-name');
+
+        // Control Elements
+        const wmType = document.getElementById('wm-type');
+        const wmLayout = document.getElementById('wm-layout');
+        const textOptionsGroup = document.getElementById('text-options-group');
+        const imageOptionsGroup = document.getElementById('image-options-group');
+        const wmText = document.getElementById('wm-text');
+        const wmFont = document.getElementById('wm-font');
+        const wmColor = document.getElementById('wm-color');
+        const wmColorHex = document.getElementById('wm-color-hex');
+        const wmBold = document.getElementById('wm-bold');
+        const wmOutline = document.getElementById('wm-outline');
+        const logoFileInput = document.getElementById('logo-file-input');
+        
+        const wmSize = document.getElementById('wm-size');
+        const wmSizeVal = document.getElementById('wm-size-val');
+        const wmOpacity = document.getElementById('wm-opacity');
+        const wmOpacityVal = document.getElementById('wm-opacity-val');
+        const wmRotation = document.getElementById('wm-rotation');
+        const wmRotationVal = document.getElementById('wm-rotation-val');
+        const wmPosition = document.getElementById('wm-position');
+        const wmGap = document.getElementById('wm-gap');
+        const wmGapVal = document.getElementById('wm-gap-val');
+        const singlePosGroup = document.getElementById('single-pos-group');
+        const tilePosGroup = document.getElementById('tile-pos-group');
+
+        const outputFormat = document.getElementById('output-format');
+        const outputQuality = document.getElementById('output-quality');
+        const qualityVal = document.getElementById('quality-val');
+        
+        const downloadCurrentBtn = document.getElementById('download-current-btn');
+        const downloadAllBtn = document.getElementById('download-all-btn');
+        const downloadAllText = document.getElementById('download-all-text');
+        const clearAllBtn = document.getElementById('clear-all-btn');
+
+        // File Selection Handlers
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        addMoreInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            if (!files || files.length === 0) return;
+            
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedFiles.push({
+                            file: file,
+                            name: file.name,
+                            size: (file.size / 1024).toFixed(1) + ' KB',
+                            imgObj: img
+                        });
+                        if (uploadedFiles.length === 1) {
+                            currentIndex = 0;
+                            uploadSection.classList.add('hidden');
+                            editorSection.classList.remove('hidden');
+                        }
+                        renderThumbnails();
+                        updateCanvas();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderThumbnails() {
+            thumbnailsContainer.innerHTML = '';
+            uploadedFiles.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = `relative cursor-pointer rounded-lg border-2 p-1 transition shrink-0 ${idx === currentIndex ? 'border-emerald-600 bg-emerald-50' : 'border-slate-200 hover:border-slate-300'}`;
+                div.innerHTML = `
+                    <img src="${item.imgObj.src}" class="w-12 h-12 object-cover rounded">
+                    <button onclick="event.stopPropagation(); removeFile(${idx})" class="absolute -top-1.5 -right-1.5 bg-rose-600 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center hover:bg-rose-700">×</button>
+                `;
+                div.onclick = () => {
+                    currentIndex = idx;
+                    renderThumbnails();
+                    updateCanvas();
+                };
+                thumbnailsContainer.appendChild(div);
+            });
+            downloadAllText.innerText = `Download All (${uploadedFiles.length} ZIP)`;
+        }
+
+        window.removeFile = function(idx) {
+            uploadedFiles.splice(idx, 1);
+            if (uploadedFiles.length === 0) {
+                editorSection.classList.add('hidden');
+                uploadSection.classList.remove('hidden');
+                fileInput.value = '';
+            } else {
+                if (currentIndex >= uploadedFiles.length) currentIndex = uploadedFiles.length - 1;
+                renderThumbnails();
+                updateCanvas();
+            }
+        };
+
+        clearAllBtn.onclick = () => {
+            uploadedFiles = [];
+            editorSection.classList.add('hidden');
+            uploadSection.classList.remove('hidden');
+            fileInput.value = '';
+        };
+
+        // UI toggles
+        wmType.onchange = () => {
+            if (wmType.value === 'text') {
+                textOptionsGroup.classList.remove('hidden');
+                imageOptionsGroup.classList.add('hidden');
+            } else {
+                textOptionsGroup.classList.add('hidden');
+                imageOptionsGroup.classList.remove('hidden');
+            }
+            updateCanvas();
+        };
+
+        wmLayout.onchange = () => {
+            if (wmLayout.value === 'single') {
+                singlePosGroup.classList.remove('hidden');
+                tilePosGroup.classList.add('hidden');
+            } else {
+                singlePosGroup.classList.add('hidden');
+                tilePosGroup.classList.remove('hidden');
+            }
+            updateCanvas();
+        };
+
+        wmColor.oninput = (e) => {
+            wmColorHex.value = e.target.value.toUpperCase();
+            updateCanvas();
+        };
+        wmColorHex.oninput = (e) => {
+            if (e.target.value.startsWith('#') && e.target.value.length === 7) {
+                wmColor.value = e.target.value;
+                updateCanvas();
+            }
+        };
+
+        logoFileInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    logoImgObj = img;
+                    updateCanvas();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        // Slider value live bindings
+        wmSize.oninput = () => { wmSizeVal.innerText = wmSize.value + 'px'; updateCanvas(); };
+        wmOpacity.oninput = () => { wmOpacityVal.innerText = wmOpacity.value + '%'; updateCanvas(); };
+        wmRotation.oninput = () => { wmRotationVal.innerText = wmRotation.value + '°'; updateCanvas(); };
+        wmGap.oninput = () => { wmGapVal.innerText = wmGap.value + 'px'; updateCanvas(); };
+        outputQuality.oninput = () => { qualityVal.innerText = outputQuality.value + '%'; };
+
+        [wmText, wmFont, wmBold, wmOutline, wmPosition, outputFormat].forEach(el => {
+            el.onchange = updateCanvas;
+        });
+
+        function updateCanvas() {
+            if (uploadedFiles.length === 0) return;
+            const currentItem = uploadedFiles[currentIndex];
+            activeFileNameSpan.innerText = currentItem.name;
+
+            const img = currentItem.imgObj;
+            previewCanvas.width = img.naturalWidth;
+            previewCanvas.height = img.naturalHeight;
+            const ctx = previewCanvas.getContext('2d');
+
+            // 1. Draw base image
+            ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+            ctx.drawImage(img, 0, 0);
+
+            // 2. Prepare Watermark Parameters
+            const opacity = parseInt(wmOpacity.value) / 100;
+            const rotation = (parseInt(wmRotation.value) * Math.PI) / 180;
+            const size = parseInt(wmSize.value);
+            const layout = wmLayout.value;
+            const type = wmType.value;
+
+            ctx.save();
+            ctx.globalAlpha = opacity;
+
+            if (layout === 'single') {
+                drawWatermarkInstance(ctx, size, rotation, type, previewCanvas.width, previewCanvas.height, wmPosition.value);
+            } else {
+                // Tile Repeat Grid
+                const gap = parseInt(wmGap.value);
+                const stepX = Math.max(200, size * 4 + gap);
+                const stepY = Math.max(200, size * 3 + gap);
+
+                for (let x = -previewCanvas.width; x < previewCanvas.width * 2; x += stepX) {
+                    for (let y = -previewCanvas.height; y < previewCanvas.height * 2; y += stepY) {
+                        ctx.save();
+                        ctx.translate(x, y);
+                        drawWatermarkInstance(ctx, size, rotation, type, 0, 0, 'center', true);
+                        ctx.restore();
+                    }
+                }
+            }
+            ctx.restore();
+        }
+
+        function drawWatermarkInstance(ctx, size, rotation, type, canvasW, canvasH, position, isTiled = false) {
+            let x = 0, y = 0;
+
+            if (!isTiled) {
+                const padding = Math.round(canvasW * 0.04);
+                if (type === 'text') {
+                    ctx.font = `${wmBold.checked ? 'bold' : 'normal'} ${size}px ${wmFont.value}`;
+                    const metrics = ctx.measureText(wmText.value);
+                    const textW = metrics.width;
+                    const textH = size;
+
+                    if (position === 'center') { x = (canvasW - textW) / 2; y = (canvasH + textH) / 2; }
+                    else if (position === 'bottom-right') { x = canvasW - textW - padding; y = canvasH - padding; }
+                    else if (position === 'bottom-left') { x = padding; y = canvasH - padding; }
+                    else if (position === 'top-right') { x = canvasW - textW - padding; y = padding + textH; }
+                    else if (position === 'top-left') { x = padding; y = padding + textH; }
+
+                    ctx.translate(x, y);
+                    ctx.rotate(rotation);
+
+                    if (wmOutline.checked) {
+                        ctx.strokeStyle = '#000000';
+                        ctx.lineWidth = Math.max(2, size / 12);
+                        ctx.strokeText(wmText.value, 0, 0);
+                    }
+                    ctx.fillStyle = wmColor.value;
+                    ctx.fillText(wmText.value, 0, 0);
+
+                } else if (type === 'image' && logoImgObj) {
+                    const aspect = logoImgObj.naturalWidth / logoImgObj.naturalHeight;
+                    const logoW = size * 3;
+                    const logoH = logoW / aspect;
+
+                    if (position === 'center') { x = (canvasW - logoW) / 2; y = (canvasH - logoH) / 2; }
+                    else if (position === 'bottom-right') { x = canvasW - logoW - padding; y = canvasH - logoH - padding; }
+                    else if (position === 'bottom-left') { x = padding; y = canvasH - logoH - padding; }
+                    else if (position === 'top-right') { x = canvasW - logoW - padding; y = padding; }
+                    else if (position === 'top-left') { x = padding; y = padding; }
+
+                    ctx.translate(x + logoW / 2, y + logoH / 2);
+                    ctx.rotate(rotation);
+                    ctx.drawImage(logoImgObj, -logoW / 2, -logoH / 2, logoW, logoH);
+                }
+            } else {
+                // Tiled instance drawing at origin
+                ctx.rotate(rotation);
+                if (type === 'text') {
+                    ctx.font = `${wmBold.checked ? 'bold' : 'normal'} ${size}px ${wmFont.value}`;
+                    if (wmOutline.checked) {
+                        ctx.strokeStyle = '#000000';
+                        ctx.lineWidth = Math.max(2, size / 12);
+                        ctx.strokeText(wmText.value, 0, 0);
+                    }
+                    ctx.fillStyle = wmColor.value;
+                    ctx.fillText(wmText.value, 0, 0);
+                } else if (type === 'image' && logoImgObj) {
+                    const aspect = logoImgObj.naturalWidth / logoImgObj.naturalHeight;
+                    const logoW = size * 3;
+                    const logoH = logoW / aspect;
+                    ctx.drawImage(logoImgObj, -logoW / 2, -logoH / 2, logoW, logoH);
+                }
+            }
+        }
+
+        // Download Single Current Image
+        downloadCurrentBtn.onclick = () => {
+            if (uploadedFiles.length === 0) return;
+            updateCanvas();
+            const format = outputFormat.value;
+            const quality = parseInt(outputQuality.value) / 100;
+            const dataUrl = previewCanvas.toDataURL(format, quality);
+            const ext = format === 'image/jpeg' ? 'jpg' : format === 'image/png' ? 'png' : 'webp';
+            const baseName = uploadedFiles[currentIndex].name.substring(0, uploadedFiles[currentIndex].name.lastIndexOf('.')) || 'image';
+            
+            const link = document.createElement('a');
+            link.download = `${baseName}-watermarked.${ext}`;
+            link.href = dataUrl;
+            link.click();
+        };
+
+        // Download All as ZIP
+        downloadAllBtn.onclick = async () => {
+            if (uploadedFiles.length === 0) return;
+            downloadAllText.innerText = 'Zipping...';
+            const zip = new JSZip();
+            const format = outputFormat.value;
+            const quality = parseInt(outputQuality.value) / 100;
+            const ext = format === 'image/jpeg' ? 'jpg' : format === 'image/png' ? 'png' : 'webp';
+
+            // Create temporary hidden canvas for batch generation
+            const batchCanvas = document.createElement('canvas');
+            const bCtx = batchCanvas.getContext('2d');
+
+            const opacity = parseInt(wmOpacity.value) / 100;
+            const rotation = (parseInt(wmRotation.value) * Math.PI) / 180;
+            const size = parseInt(wmSize.value);
+            const layout = wmLayout.value;
+            const type = wmType.value;
+
+            for (let i = 0; i < uploadedFiles.length; i++) {
+                const item = uploadedFiles[i];
+                const img = item.imgObj;
+                batchCanvas.width = img.naturalWidth;
+                batchCanvas.height = img.naturalHeight;
+
+                bCtx.clearRect(0, 0, batchCanvas.width, batchCanvas.height);
+                bCtx.drawImage(img, 0, 0);
+
+                bCtx.save();
+                bCtx.globalAlpha = opacity;
+
+                if (layout === 'single') {
+                    drawWatermarkInstance(bCtx, size, rotation, type, batchCanvas.width, batchCanvas.height, wmPosition.value);
+                } else {
+                    const gap = parseInt(wmGap.value);
+                    const stepX = Math.max(200, size * 4 + gap);
+                    const stepY = Math.max(200, size * 3 + gap);
+                    for (let x = -batchCanvas.width; x < batchCanvas.width * 2; x += stepX) {
+                        for (let y = -batchCanvas.height; y < batchCanvas.height * 2; y += stepY) {
+                            bCtx.save();
+                            bCtx.translate(x, y);
+                            drawWatermarkInstance(bCtx, size, rotation, type, 0, 0, 'center', true);
+                            bCtx.restore();
+                        }
+                    }
+                }
+                bCtx.restore();
+
+                const dataUrl = batchCanvas.toDataURL(format, quality);
+                const base64Data = dataUrl.replace(/^data:image\/(png|jpeg|webp);base64,/, "");
+                const baseName = item.name.substring(0, item.name.lastIndexOf('.')) || `image_${i+1}`;
+                zip.file(`${baseName}-watermarked.${ext}`, base64Data, {base64: true});
+            }
+
+            const content = await zip.generateAsync({type: "blob"});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = "DocSmartly-Watermarked-Images.zip";
+            link.click();
+            downloadAllText.innerText = `Download All (${uploadedFiles.length} ZIP)`;
+        };
+    </script>
+</body>
+</html>

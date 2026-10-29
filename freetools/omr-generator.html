@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMR Sheet Generator & Checker - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: white !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-bold text-xl shadow-md">🔘</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">OMR Sheet Generator & Checker</h1>
+                    <p class="text-xs text-slate-500">Printable OMR sheet (A-D / A-E), answer key, marks calculation, multiple sheets PDF aur print.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-slate-100 border-b border-slate-200 py-2 px-4 text-center no-print">
+        <p class="text-xs text-slate-700 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
+    </div>
+
+    <!-- Mode Tabs -->
+    <div class="max-w-7xl mx-auto px-4 pt-4 no-print">
+        <div class="flex items-center space-x-2 border-b pb-3">
+            <button onclick="switchTab('omr')" id="tab-omr-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white transition shadow">🔘 OMR Sheet</button>
+            <button onclick="switchTab('key')" id="tab-key-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 transition">🔑 Answer Key</button>
+            <button onclick="switchTab('check')" id="tab-check-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 transition">✅ Check & Result</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- TAB 1: OMR Sheet Generator -->
+        <div id="section-omr" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Controls (5 Cols) -->
+            <div class="lg:col-span-5 space-y-4 no-print">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Exam title</label>
+                        <input type="text" id="omr-title" value="Unit Test" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Subject</label>
+                            <input type="text" id="omr-subject" value="Hindi" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">School / Institute</label>
+                            <input type="text" id="omr-school" value="Public School" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Questions</label>
+                            <input type="number" id="omr-qcount" value="50" min="10" max="100" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Options</label>
+                            <select id="omr-options" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                                <option value="4">A - D</option>
+                                <option value="5">A - E</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Print & PDF Action -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.print()" class="bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3 px-6 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                        <span>📥 Download PDF</span>
+                    </button>
+                    <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-xl text-xs transition">🖨️ Print</button>
+                </div>
+            </div>
+
+            <!-- Right Live Preview OMR Sheet (7 Cols) -->
+            <div class="lg:col-span-7 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <div class="text-center border-b pb-4 space-y-1">
+                    <div id="prev-school" class="text-sm font-bold text-slate-800 uppercase tracking-wide">Public School</div>
+                    <div id="prev-title" class="text-xl font-bold text-slate-900">Unit Test</div>
+                    <div id="prev-subject" class="text-xs font-semibold text-slate-600">Subject: Hindi</div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 border p-3 rounded-xl text-xs font-semibold text-slate-700">
+                    <div>STUDENT NAME: </div>
+                    <div>ROLL NO: </div>
+                    <div>CLASS: </div>
+                </div>
+
+                <!-- Questions Preview Table -->
+                <div id="omr-preview-grid" class="grid grid-cols-4 gap-4 text-xs">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Answer Key -->
+        <div id="section-key" class="hidden space-y-5">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b pb-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Sahi jawab par marks</label>
+                        <input type="number" id="key-marks" value="1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Galat par negative</label>
+                        <input type="number" id="key-neg" value="0" step="0.25" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="clearAnswerKey()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg text-xs transition">Key clear</button>
+                    </div>
+                </div>
+
+                <div id="answer-key-grid" class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Check & Result -->
+        <div id="section-check" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Student name</label>
+                        <input type="text" id="chk-name" value="LOVE" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Roll no.</label>
+                        <input type="text" id="chk-roll" value="123456" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none font-semibold">
+                    </div>
+                </div>
+
+                <!-- Student Answers Interactive Grid -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-700">Student ke jawab mark karein:</label>
+                    <div id="student-answers-grid" class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 pt-2">
+                    <button onclick="calculateResult()" class="bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3 px-6 rounded-xl text-xs shadow transition">Marks calculate & save</button>
+                    <button onclick="resetChecker()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-5 rounded-xl text-xs transition">Clear</button>
+                </div>
+            </div>
+
+            <!-- Result Summary Card -->
+            <div id="result-summary-card" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5 hidden">
+                <div class="bg-slate-900 text-white p-6 rounded-2xl text-center space-y-1">
+                    <div id="res-student-tag" class="text-xs text-slate-400">LOVE - Roll 123456</div>
+                    <div id="res-score-big" class="text-4xl font-bold font-mono">50 / 50</div>
+                    <div id="res-pct-big" class="text-sm font-semibold text-emerald-400">100%</div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <span class="text-xs font-semibold text-emerald-800 block">Sahi</span>
+                        <span id="res-sahi" class="text-xl font-bold text-emerald-900">50</span>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-xl border border-rose-200">
+                        <span class="text-xs font-semibold text-rose-800 block">Galat</span>
+                        <span id="res-galat" class="text-xl font-bold text-rose-900">0</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="text-xs font-semibold text-slate-600 block">Khali</span>
+                        <span id="res-khali" class="text-xl font-bold text-slate-800">0</span>
+                    </div>
+                </div>
+
+                <!-- Saved Results Table -->
+                <div class="space-y-3 pt-2">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <span class="text-xs font-bold text-slate-800">Saved results (1 student)</span>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="exportCSV()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition">CSV</button>
+                            <button onclick="copyTable()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition">Copy</button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b text-slate-400 font-semibold">
+                                    <th class="pb-2">#</th>
+                                    <th class="pb-2">Name</th>
+                                    <th class="pb-2">Roll</th>
+                                    <th class="pb-2 text-center">✓</th>
+                                    <th class="pb-2 text-center">✗</th>
+                                    <th class="pb-2 text-center">—</th>
+                                    <th class="pb-2">Score</th>
+                                    <th class="pb-2">%</th>
+                                </tr>
+                            </thead>
+                            <tbody id="saved-results-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500 no-print">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let qCount = 50;
+        let answerKey = {}; // qNum -> 'A'/'B'/etc
+        let studentAnswers = {}; // qNum -> 'A'/'B'/etc
+        let savedResults = [];
+
+        const omrTitle = document.getElementById('omr-title');
+        const omrSubject = document.getElementById('omr-subject');
+        const omrSchool = document.getElementById('omr-school');
+        const omrQCount = document.getElementById('omr-qcount');
+        const omrOptions = document.getElementById('omr-options');
+
+        function switchTab(tab) {
+            ['omr', 'key', 'check'].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}-btn`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 transition";
+            });
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}-btn`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white transition shadow";
+        }
+
+        function initApp() {
+            qCount = parseInt(omrQCount.value) || 50;
+            document.getElementById('prev-title').innerText = omrTitle.value || 'Unit Test';
+            document.getElementById('prev-subject').innerText = `Subject: ${omrSubject.value || 'Hindi'}`;
+            document.getElementById('prev-school').innerText = omrSchool.value || 'Public School';
+
+            // Initialize default answer key & student answers as 'A'
+            for (let i = 1; i <= qCount; i++) {
+                if (!answerKey[i]) answerKey[i] = 'A';
+                if (!studentAnswers[i]) studentAnswers[i] = 'A';
+            }
+
+            renderOMRPreview();
+            renderAnswerKeyUI();
+            renderStudentAnswersUI();
+        }
+
+        function renderOMRPreview() {
+            const grid = document.getElementById('omr-preview-grid');
+            grid.innerHTML = '';
+            const opts = parseInt(omrOptions.value) || 4;
+            const optChars = ['A', 'B', 'C', 'D', 'E'].slice(0, opts);
+
+            for (let i = 1; i <= qCount; i++) {
+                const div = document.createElement('div');
+                div.className = "flex items-center space-x-1 font-mono";
+                let bubbles = '';
+                optChars.forEach(ch => {
+                    bubbles += `<span class="w-4 h-4 rounded-full border border-slate-900 inline-flex items-center justify-center text-[9px]">${ch}</span>`;
+                });
+                div.innerHTML = `<span class="w-6 text-right font-bold">${i}.</span> ${bubbles}`;
+                grid.appendChild(div);
+            }
+        }
+
+        function renderAnswerKeyUI() {
+            const grid = document.getElementById('answer-key-grid');
+            grid.innerHTML = '';
+            const opts = parseInt(omrOptions.value) || 4;
+            const optChars = ['A', 'B', 'C', 'D', 'E'].slice(0, opts);
+
+            for (let i = 1; i <= qCount; i++) {
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between text-xs";
+                let selectOptions = '';
+                optChars.forEach(ch => {
+                    selectOptions += `<option value="${ch}" ${answerKey[i] === ch ? 'selected' : ''}>${ch}</option>`;
+                });
+                div.innerHTML = `<span class="font-bold">Q.${i}</span><select onchange="updateAnswerKey(${i}, this.value)" class="bg-white border rounded px-2 py-1 font-semibold">${selectOptions}</select>`;
+                grid.appendChild(div);
+            }
+        }
+
+        window.updateAnswerKey = function(q, val) {
+            answerKey[q] = val;
+        };
+
+        window.clearAnswerKey = function() {
+            for (let i = 1; i <= qCount; i++) answerKey[i] = 'A';
+            renderAnswerKeyUI();
+        };
+
+        function renderStudentAnswersUI() {
+            const grid = document.getElementById('student-answers-grid');
+            grid.innerHTML = '';
+            const opts = parseInt(omrOptions.value) || 4;
+            const optChars = ['A', 'B', 'C', 'D', 'E'].slice(0, opts);
+
+            for (let i = 1; i <= qCount; i++) {
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between text-xs";
+                let selectOptions = '';
+                optChars.forEach(ch => {
+                    selectOptions += `<option value="${ch}" ${studentAnswers[i] === ch ? 'selected' : ''}>${ch}</option>`;
+                });
+                div.innerHTML = `<span class="font-bold">Q.${i}</span><select onchange="updateStudentAnswer(${i}, this.value)" class="bg-white border rounded px-2 py-1 font-semibold">${selectOptions}</select>`;
+                grid.appendChild(div);
+            }
+        }
+
+        window.updateStudentAnswer = function(q, val) {
+            studentAnswers[q] = val;
+        };
+
+        window.calculateResult = function() {
+            const name = document.getElementById('chk-name').value || 'Student';
+            const roll = document.getElementById('chk-roll').value || '123';
+            const marksPerQ = parseFloat(document.getElementById('key-marks').value) || 1;
+            const negPerQ = parseFloat(document.getElementById('key-neg').value) || 0;
+
+            let sahi = 0, galat = 0, khali = 0;
+            for (let i = 1; i <= qCount; i++) {
+                const ans = studentAnswers[i];
+                const correct = answerKey[i];
+                if (!ans) khali++;
+                else if (ans === correct) sahi++;
+                else galat++;
+            }
+
+            const totalScore = (sahi * marksPerQ) - (galat * negPerQ);
+            const maxScore = qCount * marksPerQ;
+            const pct = ((totalScore / maxScore) * 100).toFixed(0);
+
+            // Update UI
+            document.getElementById('result-summary-card').classList.remove('hidden');
+            document.getElementById('res-student-tag').innerText = `${name} - Roll ${roll}`;
+            document.getElementById('res-score-big').innerText = `${totalScore} / ${maxScore}`;
+            document.getElementById('res-pct-big').innerText = `${pct}%`;
+            document.getElementById('res-sahi').innerText = sahi;
+            document.getElementById('res-galat').innerText = galat;
+            document.getElementById('res-khali').innerText = khali;
+
+            savedResults.push({ name, roll, sahi, galat, khali, score: `${totalScore} / ${maxScore}`, pct: `${pct}%` });
+            renderSavedResults();
+        };
+
+        function renderSavedResults() {
+            const tbody = document.getElementById('saved-results-tbody');
+            tbody.innerHTML = '';
+            savedResults.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-2">${idx + 1}</td>
+                    <td class="py-2 font-semibold">${r.name}</td>
+                    <td class="py-2 font-mono">${r.roll}</td>
+                    <td class="py-2 text-center text-emerald-700 font-bold">${r.sahi}</td>
+                    <td class="py-2 text-center text-rose-700 font-bold">${r.galat}</td>
+                    <td class="py-2 text-center text-slate-500">${r.khali}</td>
+                    <td class="py-2 font-mono font-bold">${r.score}</td>
+                    <td class="py-2 font-semibold text-emerald-700">${r.pct}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.resetChecker = function() {
+            for (let i = 1; i <= qCount; i++) studentAnswers[i] = 'A';
+            renderStudentAnswersUI();
+        };
+
+        window.exportCSV = function() {
+            let csv = "Name,Roll,Sahi,Galat,Khali,Score,Percentage\n";
+            savedResults.forEach(r => {
+                csv += `"${r.name}","${r.roll}",${r.sahi},${r.galat},${r.khali},"${r.score}","${r.pct}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'omr_results.csv';
+            link.click();
+        };
+
+        [omrTitle, omrSubject, omrSchool, omrQCount, omrOptions].forEach(el => {
+            el.addEventListener('input', initApp);
+            el.addEventListener('change', initApp);
+        });
+
+        // Initial setup
+        initApp();
+    </script>
+</body>
+</html>

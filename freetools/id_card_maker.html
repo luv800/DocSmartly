@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ID Card Maker – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- jsPDF for direct PDF downloads -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+/* Main Container */
+.main-shell {
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Title Row */
+.maker-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 20px;
+}
+.maker-title-left h1 { font-size: 1.15rem; font-weight: 700; color: #0f172a; }
+.maker-title-left p { font-size: 0.8rem; color: var(--mut); margin-top: 1px; }
+
+/* Workspace Grid */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.controls-column {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.section-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  background: #fafafa;
+}
+.section-card-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-row { display: flex; gap: 12px; }
+.form-row > * { flex: 1; }
+.field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.field-group:last-child { margin-bottom: 0; }
+.field-group label { font-size: 0.8rem; font-weight: 700; color: #334155; }
+.form-select, .form-input, .form-textarea {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 6px 10px; font-family: inherit; font-size: 0.85rem; color: var(--ink); background: #fff; outline: none;
+}
+.form-select:focus, .form-input:focus, .form-textarea:focus { border-color: var(--ac); }
+.form-textarea { resize: vertical; min-height: 60px; }
+
+/* Preview Column */
+.preview-column {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 76px;
+}
+.preview-title-bar {
+  width: 100%; font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 12px;
+}
+.card-stage-wrap {
+  width: 100%;
+  min-height: 480px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 16px;
+}
+#cardCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+
+.action-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.btn-action {
+  background: var(--ac); color: #fff; border: none; border-radius: 8px;
+  padding: 10px 14px; font-size: 0.82rem; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; transition: background 0.2s; flex: 1;
+}
+.btn-action:hover { background: var(--ac-hover); }
+.btn-action.secondary {
+  background: #fff; color: #334155; border: 1.5px solid var(--border);
+}
+.btn-action.secondary:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .workspace-grid { grid-template-columns: 1fr; }
+  .preview-column { position: static; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+</header>
+
+<main class="main-shell">
+  
+  <!-- Notice Alert -->
+  <div class="alert-box alert-green">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+  </div>
+
+  <!-- Title Row -->
+  <div class="maker-title-row">
+    <div class="maker-title-left">
+      <h1>ID Card Maker</h1>
+      <p>Portrait / landscape ID card — photo, logo, front &amp; back design, print-ready PDF / PNG.</p>
+    </div>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+
+  <!-- Workspace Grid -->
+  <div class="workspace-grid">
+    
+    <!-- Left Controls -->
+    <div class="controls-column">
+      
+      <!-- Top Global Bar matching screenshot -->
+      <div class="form-row">
+        <div class="field-group">
+          <label>Layout</label>
+          <select class="form-select" id="layoutSelect">
+            <option value="portrait" selected>Portrait (54 × 85.6 mm)</option>
+            <option value="landscape">Landscape (85.6 × 54 mm)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Header color</label>
+          <input type="color" class="form-input" id="headerColor" value="#800000" style="height:38px;padding:2px;cursor:pointer;">
+        </div>
+        <div class="field-group">
+          <label>Accent color</label>
+          <input type="color" class="form-input" id="accentColor" value="#d97706" style="height:38px;padding:2px;cursor:pointer;">
+        </div>
+      </div>
+
+      <!-- New Design Patterns & Presets Bar -->
+      <div class="section-card" style="background:#f8fafc;">
+        <div class="section-card-title">🎨 Professional Themes &amp; Patterns</div>
+        <div class="form-row" style="margin-bottom:8px;">
+          <div class="field-group">
+            <label>Readymade Presets</label>
+            <select class="form-select" id="presetThemeSelect">
+              <option value="custom">Custom Design</option>
+              <option value="corporate">Corporate Blue (Professional)</option>
+              <option value="school">School / College Green</option>
+              <option value="university">University Maroon (Standard)</option>
+              <option value="tech">Tech Startup Dark</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Card Background Pattern</label>
+            <select class="form-select" id="patternSelect">
+              <option value="none" selected>Plain Solid</option>
+              <option value="waves">Curved Waves Header</option>
+              <option value="diagonal">Diagonal Stripe Banner</option>
+              <option value="dots">Subtle Dot Grid</option>
+              <option value="shield">Watermark Emblem</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organisation Section -->
+      <div class="section-card">
+        <div class="section-card-title">🏢 Organisation</div>
+        <div class="field-group">
+          <label>Organisation name *</label>
+          <input type="text" class="form-input" id="orgName" value="Organisation Name">
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Tagline / sub-title</label>
+            <input type="text" class="form-input" id="orgTagline" value="">
+          </div>
+          <div class="field-group" style="max-width:120px;">
+            <label>Text Align</label>
+            <select class="form-select" id="orgTextAlign">
+              <option value="center" selected>Center</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Logo</label>
+          <input type="file" class="form-input" id="logoFile" accept="image/*">
+        </div>
+      </div>
+
+      <!-- Front side Section -->
+      <div class="section-card">
+        <div class="section-card-title">👤 Front side</div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Name *</label>
+            <input type="text" class="form-input" id="personName" value="Full Name">
+          </div>
+          <div class="field-group" style="max-width:100px;">
+            <label>Size (px)</label>
+            <input type="number" class="form-input" id="nameFontSize" value="28" min="12" max="60">
+          </div>
+          <div class="field-group" style="max-width:110px;">
+            <label>Alignment</label>
+            <select class="form-select" id="nameTextAlign">
+              <option value="center" selected>Center</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Designation</label>
+            <input type="text" class="form-input" id="personDesignation" value="Student / Employee">
+          </div>
+          <div class="field-group" style="max-width:100px;">
+            <label>Size (px)</label>
+            <input type="number" class="form-input" id="desigFontSize" value="18" min="10" max="40">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>ID number *</label>
+            <input type="text" class="form-input" id="personIdNum" value="DS-2026-001">
+          </div>
+          <div class="field-group">
+            <label>Department / Class</label>
+            <input type="text" class="form-input" id="personDept" value="Computer Science">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Custom field 1 (label)</label>
+            <input type="text" class="form-input" id="customLbl1" value="Blood Group">
+          </div>
+          <div class="field-group">
+            <label>Value</label>
+            <input type="text" class="form-input" id="customVal1" value="B+">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Custom field 2 (label)</label>
+            <input type="text" class="form-input" id="customLbl2" value="Mobile">
+          </div>
+          <div class="field-group">
+            <label>Value</label>
+            <input type="text" class="form-input" id="customVal2" value="+91 98765 43210">
+          </div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label>Photo *</label>
+          <input type="file" class="form-input" id="photoFile" accept="image/*">
+        </div>
+      </div>
+
+      <!-- Back side Section -->
+      <div class="section-card">
+        <div class="section-card-title">🔄 Back side</div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Date of birth</label>
+            <input type="text" class="form-input" id="backDob" value="01-01-2000">
+          </div>
+          <div class="field-group">
+            <label>Valid till</label>
+            <input type="text" class="form-input" id="backValid" value="31-12-2028">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Emergency contact</label>
+            <input type="text" class="form-input" id="backEmergency" value="+91 91234 56789">
+          </div>
+          <div class="field-group">
+            <label>Blood group</label>
+            <input type="text" class="form-input" id="backBlood" value="B+">
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Address</label>
+          <textarea class="form-textarea" id="backAddress">123, Main Street, Knowledge Park, Jaipur, Rajasthan - 302001</textarea>
+        </div>
+        <div class="field-group">
+          <label>Instructions / Terms</label>
+          <textarea class="form-textarea" id="backInstructions">This card is non-transferable. If found, please return to the address above.</textarea>
+        </div>
+        <div class="field-group">
+          <label>Authority signature image (optional)</label>
+          <input type="file" class="form-input" id="sigFile" accept="image/*">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Preview Column -->
+    <div class="preview-column">
+      <div class="preview-title-bar" id="previewTitleBar">Live preview · 54 × 85.6 mm (CR80)</div>
+      
+      <div class="card-stage-wrap">
+        <canvas id="cardCanvas"></canvas>
+      </div>
+
+      <div class="action-row">
+        <button type="button" class="btn-action" id="btnDownloadPdfCard">
+          <span>📄 PDF (card size)</span>
+        </button>
+        <button type="button" class="btn-action" id="btnDownloadA4Pdf">
+          <span>📑 A4 print sheet PDF</span>
+        </button>
+        <button type="button" class="btn-action secondary" id="btnDownloadPng">
+          <span>🖼️ PNG</span>
+        </button>
+        <button type="button" class="btn-action secondary" id="btnReset">
+          <span>↺ Reset</span>
+        </button>
+      </div>
+      <div style="font-size:0.75rem; color:var(--mut); margin-top:8px; text-align:center;">
+        300 DPI output. PVC printer ke liye card-size PDF, normal printer ke liye A4 sheet use karein.
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+/**
+ * DocSmartly ID Card Maker Engine with Text Size & Alignment controls
+ */
+
+let logoImg = null;
+let photoImg = null;
+let sigImg = null;
+
+const cardCanvas = document.getElementById('cardCanvas');
+const layoutSelect = document.getElementById('layoutSelect');
+const headerColor = document.getElementById('headerColor');
+const accentColor = document.getElementById('accentColor');
+const presetThemeSelect = document.getElementById('presetThemeSelect');
+const patternSelect = document.getElementById('patternSelect');
+const previewTitleBar = document.getElementById('previewTitleBar');
+
+// Inputs
+const orgName = document.getElementById('orgName');
+const orgTagline = document.getElementById('orgTagline');
+const orgTextAlign = document.getElementById('orgTextAlign');
+const personName = document.getElementById('personName');
+const nameFontSize = document.getElementById('nameFontSize');
+const nameTextAlign = document.getElementById('nameTextAlign');
+const personDesignation = document.getElementById('personDesignation');
+const desigFontSize = document.getElementById('desigFontSize');
+const personIdNum = document.getElementById('personIdNum');
+const personDept = document.getElementById('personDept');
+const customLbl1 = document.getElementById('customLbl1');
+const customVal1 = document.getElementById('customVal1');
+const customLbl2 = document.getElementById('customLbl2');
+const customVal2 = document.getElementById('customVal2');
+
+const backDob = document.getElementById('backDob');
+const backValid = document.getElementById('backValid');
+const backEmergency = document.getElementById('backEmergency');
+const backBlood = document.getElementById('backBlood');
+const backAddress = document.getElementById('backAddress');
+const backInstructions = document.getElementById('backInstructions');
+
+// File Uploads
+document.getElementById('logoFile').addEventListener('change', (e) => {
+  if (e.target.files.length) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => { logoImg = img; renderCardCanvas(); };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  }
+});
+
+document.getElementById('photoFile').addEventListener('change', (e) => {
+  if (e.target.files.length) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => { photoImg = img; renderCardCanvas(); };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  }
+});
+
+document.getElementById('sigFile').addEventListener('change', (e) => {
+  if (e.target.files.length) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => { sigImg = img; renderCardCanvas(); };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  }
+});
+
+presetThemeSelect.addEventListener('change', () => {
+  const t = presetThemeSelect.value;
+  if (t === 'corporate') {
+    headerColor.value = '#1e3a8a';
+    accentColor.value = '#38bdf8';
+    patternSelect.value = 'waves';
+  } else if (t === 'school') {
+    headerColor.value = '#15803d';
+    accentColor.value = '#facc15';
+    patternSelect.value = 'diagonal';
+  } else if (t === 'university') {
+    headerColor.value = '#800000';
+    accentColor.value = '#d97706';
+    patternSelect.value = 'shield';
+  } else if (t === 'tech') {
+    headerColor.value = '#0f172a';
+    accentColor.value = '#6366f1';
+    patternSelect.value = 'dots';
+  }
+  renderCardCanvas();
+});
+
+[layoutSelect, headerColor, accentColor, patternSelect, orgName, orgTagline, orgTextAlign, personName, nameFontSize, nameTextAlign, personDesignation, desigFontSize, personIdNum, personDept, customLbl1, customVal1, customLbl2, customVal2, backDob, backValid, backEmergency, backBlood, backAddress, backInstructions].forEach(el => {
+  if (el) {
+    el.addEventListener('input', renderCardCanvas);
+    el.addEventListener('change', renderCardCanvas);
+  }
+});
+
+function renderCardCanvas() {
+  const isPortrait = (layoutSelect.value === 'portrait');
+  const DPI = 300;
+  const MM_TO_INCH = 1 / 25.4;
+  const MM_TO_PX = MM_TO_INCH * DPI;
+
+  const cardW_mm = isPortrait ? 54 : 85.6;
+  const cardH_mm = isPortrait ? 85.6 : 54;
+
+  const cardPxW = Math.round(cardW_mm * MM_TO_PX);
+  const cardPxH = Math.round(cardH_mm * MM_TO_PX);
+
+  cardCanvas.width = cardPxW * 2 + 60;
+  cardCanvas.height = cardPxH;
+  const ctx = cardCanvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  ctx.fillStyle = '#f1f5f9';
+  ctx.fillRect(0, 0, cardCanvas.width, cardCanvas.height);
+
+  drawCardSide(ctx, 0, 0, cardPxW, cardPxH, true, isPortrait);
+  drawCardSide(ctx, cardPxW + 60, 0, cardPxW, cardPxH, false, isPortrait);
+
+  previewTitleBar.textContent = `Live preview · ${cardW_mm} × ${cardH_mm} mm (CR80) · Front & Back`;
+}
+
+function drawCardSide(ctx, startX, startY, w, h, isFront, isPortrait) {
+  ctx.save();
+  ctx.translate(startX, startY);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(0, 0, w, h, 20);
+  } else {
+    ctx.rect(0, 0, w, h);
+  }
+  ctx.fill();
+  ctx.strokeStyle = '#cbd5e1';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.clip();
+
+  const hCol = headerColor.value;
+  const aCol = accentColor.value;
+  const pattern = patternSelect.value;
+
+  if (isFront) {
+    ctx.fillStyle = hCol;
+    const bannerH = isPortrait ? h * 0.20 : h * 0.26;
+    ctx.fillRect(0, 0, w, bannerH);
+
+    ctx.fillStyle = aCol;
+    ctx.fillRect(0, bannerH, w, 4);
+
+    const orgAlign = orgTextAlign ? orgTextAlign.value : 'center';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold ${Math.round(w * 0.052)}px sans-serif`;
+    ctx.textAlign = orgAlign;
+    ctx.textBaseline = 'middle';
+    let orgX = w / 2;
+    if (orgAlign === 'left') orgX = w * 0.08;
+    if (orgAlign === 'right') orgX = w * 0.92;
+    ctx.fillText(orgName.value || 'Organisation Name', orgX, bannerH * 0.45);
+
+    if (orgTagline.value) {
+      ctx.font = `${Math.round(w * 0.032)}px sans-serif`;
+      ctx.fillStyle = '#fef3c7';
+      ctx.fillText(orgTagline.value, orgX, bannerH * 0.78);
+    }
+
+    const photoW = w * 0.38;
+    const photoH = photoW * 1.25;
+    const photoX = (w - photoW) / 2;
+    const photoY = bannerH + Math.round(h * 0.04);
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillRect(photoX, photoY, photoW, photoH);
+    ctx.strokeStyle = aCol;
+    ctx.lineWidth = 2.5;
+    ctx.strokeRect(photoX, photoY, photoW, photoH);
+
+    if (photoImg) {
+      ctx.drawImage(photoImg, photoX, photoY, photoW, photoH);
+    } else {
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = `bold ${Math.round(w * 0.038)}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('PHOTO', photoX + photoW/2, photoY + photoH/2);
+    }
+
+    let textY = photoY + photoH + Math.round(h * 0.045);
+    const nSize = nameFontSize ? parseInt(nameFontSize.value, 10) || 28 : 28;
+    const nAlign = nameTextAlign ? nameTextAlign.value : 'center';
+    let textX = w / 2;
+    if (nAlign === 'left') textX = w * 0.08;
+    if (nAlign === 'right') textX = w * 0.92;
+
+    ctx.fillStyle = hCol;
+    ctx.font = `bold ${nSize}px sans-serif`;
+    ctx.textAlign = nAlign;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(personName.value || 'Full Name', textX, textY);
+
+    textY += Math.round(h * 0.042);
+    const dSize = desigFontSize ? parseInt(desigFontSize.value, 10) || 18 : 18;
+    ctx.fillStyle = '#475569';
+    ctx.font = `bold ${dSize}px sans-serif`;
+    ctx.fillText(personDesignation.value || 'Designation', textX, textY);
+
+    textY += Math.round(h * 0.042);
+    ctx.font = `${Math.round(w * 0.034)}px sans-serif`;
+    ctx.fillText(`ID: ${personIdNum.value || 'N/A'}`, textX, textY);
+
+    textY += Math.round(h * 0.038);
+    ctx.fillText(`Dept: ${personDept.value || 'N/A'}`, textX, textY);
+
+    if (customLbl1.value && customVal1.value) {
+      textY += Math.round(h * 0.038);
+      ctx.fillText(`${customLbl1.value}: ${customVal1.value}`, textX, textY);
+    }
+
+    if (customLbl2.value && customVal2.value) {
+      textY += Math.round(h * 0.038);
+      ctx.fillText(`${customLbl2.value}: ${customVal2.value}`, textX, textY);
+    }
+
+  } else {
+    // --- BACK SIDE ---
+    ctx.fillStyle = hCol;
+    const bannerH = isPortrait ? h * 0.14 : h * 0.20;
+    ctx.fillRect(0, 0, w, bannerH);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold ${Math.round(w * 0.052)}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(orgName.value || 'Organisation Name', w / 2, bannerH / 2);
+
+    let curY = bannerH + Math.round(h * 0.05);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+
+    const leftX = w * 0.08;
+    const rowStep = Math.round(h * 0.045);
+
+    const drawRow = (lbl, val) => {
+      ctx.font = `bold ${Math.round(w * 0.034)}px sans-serif`;
+      ctx.fillStyle = '#475569';
+      ctx.fillText(lbl + ':', leftX, curY);
+      ctx.font = `${Math.round(w * 0.034)}px sans-serif`;
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText(val || '-', leftX + w * 0.28, curY);
+      curY += rowStep;
+    };
+
+    drawRow('DOB', backDob.value);
+    drawRow('Valid Till', backValid.value);
+    drawRow('Emergency', backEmergency.value);
+    drawRow('Blood Group', backBlood.value);
+
+    curY += Math.round(h * 0.015);
+    ctx.font = `bold ${Math.round(w * 0.034)}px sans-serif`;
+    ctx.fillStyle = '#475569';
+    ctx.fillText('Address:', leftX, curY);
+    curY += Math.round(h * 0.035);
+    ctx.font = `${Math.round(w * 0.03)}px sans-serif`;
+    ctx.fillStyle = '#1e293b';
+    
+    const addrLines = wrapText(ctx, backAddress.value, w * 0.84);
+    addrLines.forEach(line => {
+      ctx.fillText(line, leftX, curY);
+      curY += Math.round(h * 0.032);
+    });
+
+    curY += Math.round(h * 0.015);
+    ctx.font = `bold ${Math.round(w * 0.032)}px sans-serif`;
+    ctx.fillStyle = '#475569';
+    ctx.fillText('Instructions / Terms:', leftX, curY);
+    curY += Math.round(h * 0.032);
+    ctx.font = `${Math.round(w * 0.027)}px sans-serif`;
+    ctx.fillStyle = '#64748b';
+    const instLines = wrapText(ctx, backInstructions.value, w * 0.84);
+    instLines.forEach(line => {
+      ctx.fillText(line, leftX, curY);
+      curY += Math.round(h * 0.028);
+    });
+
+    const sigX = w * 0.58;
+    const sigY = h - Math.round(h * 0.09);
+    if (sigImg) {
+      ctx.drawImage(sigImg, sigX, sigY - 24, w * 0.34, 30);
+    }
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(sigX, sigY);
+    ctx.lineTo(w - leftX, sigY);
+    ctx.stroke();
+
+    ctx.font = `${Math.round(w * 0.027)}px sans-serif`;
+    ctx.fillStyle = '#475569';
+    ctx.textAlign = 'center';
+    ctx.fillText('Authorised Signatory', sigX + (w * 0.34)/2, sigY + 12);
+  }
+
+  ctx.restore();
+}
+
+function wrapText(ctx, text, maxWidth) {
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const width = ctx.measureText(currentLine + " " + word).width;
+    if (width < maxWidth) {
+      currentLine += " " + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+}
+
+// Download Handlers
+document.getElementById('btnDownloadPng').addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = `ID_Card_${personName.value || 'Card'}.png`;
+  link.href = cardCanvas.toDataURL('image/png', 1.0);
+  link.click();
+});
+
+document.getElementById('btnDownloadPdfCard').addEventListener('click', () => {
+  if (!window.jspdf || !window.jspdf.jsPDF) return;
+  const { jsPDF } = window.jspdf;
+  const isPortrait = (layoutSelect.value === 'portrait');
+  const w_mm = isPortrait ? 54 : 85.6;
+  const h_mm = isPortrait ? 85.6 : 54;
+
+  const pdf = new jsPDF({
+    orientation: isPortrait ? 'p' : 'l',
+    unit: 'mm',
+    format: [w_mm, h_mm]
+  });
+
+  const singleCanvas = document.createElement('canvas');
+  const DPI = 300;
+  const MM_TO_INCH = 1 / 25.4;
+  const MM_TO_PX = MM_TO_INCH * DPI;
+  singleCanvas.width = Math.round(w_mm * MM_TO_PX);
+  singleCanvas.height = Math.round(h_mm * MM_TO_PX);
+  const sCtx = singleCanvas.getContext('2d');
+  sCtx.fillStyle = '#ffffff';
+  sCtx.fillRect(0, 0, singleCanvas.width, singleCanvas.height);
+  drawCardSide(sCtx, 0, 0, singleCanvas.width, singleCanvas.height, true, isPortrait);
+
+  pdf.addImage(singleCanvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, w_mm, h_mm);
+  pdf.addPage([w_mm, h_mm], isPortrait ? 'p' : 'l');
+
+  const backCanvas = document.createElement('canvas');
+  backCanvas.width = singleCanvas.width;
+  backCanvas.height = singleCanvas.height;
+  const bCtx = backCanvas.getContext('2d');
+  bCtx.fillStyle = '#ffffff';
+  bCtx.fillRect(0, 0, backCanvas.width, backCanvas.height);
+  drawCardSide(bCtx, 0, 0, backCanvas.width, backCanvas.height, false, isPortrait);
+
+  pdf.addImage(backCanvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, w_mm, h_mm);
+  pdf.save(`ID_Card_Front_Back_${personName.value || 'Card'}.pdf`);
+});
+
+document.getElementById('btnDownloadA4Pdf').addEventListener('click', () => {
+  if (!window.jspdf || !window.jspdf.jsPDF) return;
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({
+    orientation: 'p',
+    unit: 'mm',
+    format: 'a4'
+  });
+
+  const imgData = cardCanvas.toDataURL('image/jpeg', 0.95);
+  pdf.addImage(imgData, 'JPEG', 10, 10, 190, 95);
+  pdf.save(`ID_Card_A4_Sheet_${Date.now()}.pdf`);
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  layoutSelect.value = 'portrait';
+  headerColor.value = '#800000';
+  accentColor.value = '#d97706';
+  orgName.value = 'Organisation Name';
+  orgTagline.value = '';
+  personName.value = 'Full Name';
+  personDesignation.value = 'Student / Employee';
+  personIdNum.value = 'DS-2026-001';
+  personDept.value = 'Computer Science';
+  logoImg = null;
+  photoImg = null;
+  sigImg = null;
+  renderCardCanvas();
+});
+
+renderCardCanvas();
+</script>
+</body>
+</html>

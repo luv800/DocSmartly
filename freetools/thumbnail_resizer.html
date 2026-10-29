@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Thumbnail Resizer – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- JSZip for batch zip downloading -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Main Container */
+.main-shell {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #16337a 0%, #0d2157 100%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(22, 51, 122, 0.18);
+}
+.hero-banner h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.hero-banner p {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+/* Card Shell */
+.app-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* Tool Header inside card matching screenshots */
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.tool-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tool-badge-icon {
+  width: 36px;
+  height: 36px;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.tool-title-wrap h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.tool-title-wrap p {
+  font-size: 0.82rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Upload Dropzone matching screenshot 1 */
+.upload-dropzone {
+  border: 1.8px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 44px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--ac);
+  background: #f7fdf9;
+}
+.upload-cloud-icon {
+  width: 36px;
+  height: 36px;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25);
+}
+.upload-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.upload-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 600;
+}
+#fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Compact Re-upload bar matching screenshot 2 */
+.reupload-bar {
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  background: #fff;
+  margin-bottom: 20px;
+  position: relative;
+  transition: all 0.2s;
+}
+.reupload-bar:hover { background: #f8fafc; border-color: var(--ac); }
+#reFileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Workspace Section matching screenshot 2 */
+.workspace-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Size Preset Chips matching screenshot 2 */
+.size-chips-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.size-chips-wrap label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+.size-chips-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.size-chip {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.size-chip:hover { border-color: #cbd5e1; background: #f8fafc; }
+.size-chip.active {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+}
+
+/* Config Grid matching screenshot 2 */
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+.config-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.config-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+.form-select, .form-input {
+  width: 100%;
+  height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: #ffffff;
+  outline: none;
+}
+.form-select:focus, .form-input:focus { border-color: var(--ac); }
+
+.quality-range-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+}
+.form-range {
+  width: 100%;
+  height: 6px;
+  accent-color: var(--ac);
+  cursor: pointer;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-resize-all {
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-resize-all:hover { background: var(--ac-hover); }
+
+/* File Cards List matching screenshot 2 */
+.file-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.file-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.file-card-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.file-thumb-wrap {
+  width: 50px;
+  height: 40px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.file-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.file-text-info .name { font-size: 0.9rem; font-weight: 700; color: #1e293b; }
+.file-text-info .meta { font-size: 0.78rem; color: var(--mut); margin-top: 2px; }
+
+.file-card-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-download-single {
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.btn-download-single:hover { background: var(--ac-hover); }
+.file-remove-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s;
+}
+.file-remove-btn:hover { background: #fee2e2; }
+
+/* Status bottom bar matching screenshot 2 */
+.status-bottom-bar {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Two Column Info Section */
+.info-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.info-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.info-steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.info-steps-list li span.num { font-weight: 700; margin-right: 6px; }
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.feature-list li { display: flex; align-items: center; gap: 10px; }
+.feature-list svg { width: 18px; height: 18px; color: #059669; flex-shrink: 0; }
+
+/* FAQ Section */
+.faq-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.faq-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.faq-item { border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.faq-question svg { width: 18px; height: 18px; transition: transform 0.2s ease; color: var(--mut); flex-shrink: 0; }
+.faq-item.active .faq-question svg { transform: rotate(90deg); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, padding 0.25s ease;
+  font-size: 0.9rem;
+  color: var(--mut);
+  line-height: 1.6;
+}
+.faq-item.active .faq-answer { max-height: 200px; padding-bottom: 16px; }
+
+/* Related Tools Grid */
+.related-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.related-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.related-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #ffffff;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.related-card:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+.related-icon {
+  width: 36px;
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #16337a;
+  flex-shrink: 0;
+}
+.related-icon svg { width: 20px; height: 20px; }
+.related-card span { font-size: 0.88rem; font-weight: 600; color: #1e293b; line-height: 1.25; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .config-grid { grid-template-columns: repeat(2, 1fr); }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .config-grid { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .info-columns { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+</header>
+
+<main class="main-shell">
+  
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <h1>Thumbnail Resizer</h1>
+    <p>Resize photos for YouTube 1280×720, banners, Instagram, Facebook or custom social media dimensions instantly.</p>
+  </div>
+
+  <!-- Card Shell -->
+  <div class="app-card">
+    
+    <div class="tool-header">
+      <div class="tool-title-wrap">
+        <div class="tool-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <div>
+          <h2>Thumbnail Resizer</h2>
+          <p>YouTube 1280×720, website aur social media sizes — crop / fit / stretch, batch resize.</p>
+        </div>
+      </div>
+      <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>All Tools</span>
+      </a>
+    </div>
+
+    <!-- Security Alert -->
+    <div class="alert-box alert-green">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+    </div>
+
+    <!-- Upload Dropzone matching screenshot 1 -->
+    <div class="upload-dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
+      <div class="upload-cloud-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+      <div class="upload-title">Images select karein (multiple bhi)</div>
+      <div class="upload-subtitle">ya yahan drag &amp; drop karein · original file change nahi hoti</div>
+    </div>
+
+    <!-- Workspace Section matching screenshot 2 (Hidden by default) -->
+    <div class="workspace-section" id="workspaceSection" hidden>
+      
+      <!-- Re-upload bar matching screenshot 2 -->
+      <div class="reupload-bar" id="reUploadZone">
+        <input type="file" id="reFileInput" accept="image/jpeg,image/png,image/webp" multiple>
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:0.88rem;color:#dc2626;">
+          <span style="background:#dc2626;color:#fff;border-radius:50%;width:18px;height:18px;display:grid;place-items:center;font-size:0.7rem;">↑</span>
+          <span>Images select karein (multiple bhi)</span>
+        </div>
+        <span style="font-size:0.76rem;color:#64748b;">ya yahan drag &amp; drop karein · original file change nahi hoti</span>
+      </div>
+
+      <!-- Size Preset Chips matching screenshot 2 -->
+      <div class="size-chips-wrap">
+        <label>Size preset</label>
+        <div class="size-chips-row" id="sizeChipsRow">
+          <button type="button" class="size-chip active" data-w="1280" data-h="720">YouTube thumbnail 1280×720</button>
+          <button type="button" class="size-chip" data-w="2560" data-h="1440">YouTube banner 2560×1440</button>
+          <button type="button" class="size-chip" data-w="1080" data-h="1080">Instagram post 1080×1080</button>
+          <button type="button" class="size-chip" data-w="1080" data-h="1920">Story / Reels 1080×1920</button>
+          <button type="button" class="size-chip" data-w="1200" data-h="630">Facebook / OG 1200×630</button>
+          <button type="button" class="size-chip" data-w="1600" data-h="900">X / Twitter 1600×900</button>
+          <button type="button" class="size-chip" data-w="400" data-h="300">Website thumb 400×300</button>
+          <button type="button" class="size-chip" data-w="640" data-h="360">Blog thumb 640×360</button>
+          <button type="button" class="size-chip" data-w="500" data-h="500">WhatsApp DP 500×500</button>
+        </div>
+      </div>
+
+      <!-- Config Grid matching screenshot 2 -->
+      <div class="config-grid">
+        <div class="config-group">
+          <label for="widthInput">Width (px)</label>
+          <input type="number" class="form-input" id="widthInput" value="1280" min="10" max="8000">
+        </div>
+
+        <div class="config-group">
+          <label for="heightInput">Height (px)</label>
+          <input type="number" class="form-input" id="heightInput" value="720" min="10" max="8000">
+        </div>
+
+        <div class="config-group">
+          <label for="formatSelect">Format</label>
+          <select class="form-select" id="formatSelect">
+            <option value="jpeg" selected>JPG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WEBP</option>
+          </select>
+        </div>
+
+        <div class="config-group">
+          <label for="resizeModeSelect">Resize mode</label>
+          <select class="form-select" id="resizeModeSelect">
+            <option value="crop" selected>Crop (fill, center)</option>
+            <option value="fit">Fit (add background)</option>
+            <option value="stretch">Stretch (exact)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div class="config-group" style="flex:1;">
+          <label for="qualityRange">Quality: <span id="qualityVal">90</span></label>
+          <div class="quality-range-wrap">
+            <input type="range" class="form-range" id="qualityRange" min="10" max="100" value="90">
+          </div>
+        </div>
+
+        <div class="config-group" style="flex:1;" id="bgGroup" hidden>
+          <label for="bgInput">Fit background</label>
+          <input type="color" class="form-input" id="bgInput" value="#000000" style="padding:2px;cursor:pointer;">
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding-top:18px;">
+          <input type="checkbox" id="aspectRatioLock" checked style="width:18px;height:18px;accent-color:var(--ac);">
+          <label for="aspectRatioLock" style="font-size:0.86rem;font-weight:600;cursor:pointer;">Aspect ratio lock</label>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button type="button" class="btn-resize-all" id="btnResizeAll">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+          <span>Resize all</span>
+        </button>
+      </div>
+
+      <!-- File List Container matching screenshot 2 -->
+      <div class="file-list-container" id="fileListContainer"></div>
+
+      <!-- Status Bottom Bar matching screenshot 2 -->
+      <div class="status-bottom-bar" id="statusBottomBar" hidden>
+        <span id="statusCountText">1 image ready — upar har image ke saath download button hai.</span>
+        <button type="button" class="btn-download-single" id="btnDownloadZip" style="background:var(--ac);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download all (ZIP)</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Two Column Info Section -->
+  <div class="info-columns">
+    <div class="info-card">
+      <h3>How to use Thumbnail Resizer</h3>
+      <ol class="info-steps-list">
+        <li><span class="num">1.</span> Upload one or multiple photos</li>
+        <li><span class="num">2.</span> Select a preset like YouTube 1280×720 or enter custom width &amp; height</li>
+        <li><span class="num">3.</span> Choose resize mode (Crop, Fit or Stretch)</li>
+        <li><span class="num">4.</span> Click Resize all and download</li>
+      </ol>
+    </div>
+
+    <div class="info-card">
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Popular social media presets</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Batch resize multiple images</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Crop, Fit and Stretch modes</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>100% secure client-side browser processing</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h3>FAQ – Thumbnail Resizer</h3>
+    
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>What is the standard YouTube thumbnail size?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        The standard recommended YouTube thumbnail size is 1280×720 pixels with a 16:9 aspect ratio.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is Thumbnail Resizer free?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, 100% free with no limits or watermarks required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Are my files uploaded to a server?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        No! All resizing happens securely right inside your browser.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Free Tools Grid -->
+  <div class="related-section">
+    <h3>Related free tools</h3>
+    <div class="related-grid">
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span>Image Format Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <span>Passport Photo Sheet</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2M15 12h2"></path><path d="M7 16h10"></path></svg>
+        </div>
+        <span>Document Scanner &amp; PDF</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </div>
+        <span>PDF Compressor (KB)</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/**
+ * DocSmartly Thumbnail Resizer Engine
+ */
+
+let uploadedImages = []; // Array of { id, file, name, size, imgObj, dataUrl, resizedDataUrl, resizedSizeStr, outW, outH }
+let zipBlobUrl = null;
+
+const fileInput = document.getElementById('fileInput');
+const reFileInput = document.getElementById('reFileInput');
+const dropZone = document.getElementById('dropZone');
+const workspaceSection = document.getElementById('workspaceSection');
+const sizeChipsRow = document.getElementById('sizeChipsRow');
+const widthInput = document.getElementById('widthInput');
+const heightInput = document.getElementById('heightInput');
+const formatSelect = document.getElementById('formatSelect');
+const resizeModeSelect = document.getElementById('resizeModeSelect');
+const qualityRange = document.getElementById('qualityRange');
+const qualityVal = document.getElementById('qualityVal');
+const bgGroup = document.getElementById('bgGroup');
+const bgInput = document.getElementById('bgInput');
+const aspectRatioLock = document.getElementById('aspectRatioLock');
+const btnResizeAll = document.getElementById('btnResizeAll');
+const fileListContainer = document.getElementById('fileListContainer');
+const statusBottomBar = document.getElementById('statusBottomBar');
+const statusCountText = document.getElementById('statusCountText');
+const btnDownloadZip = document.getElementById('btnDownloadZip');
+
+qualityRange.addEventListener('input', () => {
+  qualityVal.textContent = qualityRange.value;
+});
+
+resizeModeSelect.addEventListener('change', () => {
+  bgGroup.hidden = (resizeModeSelect.value !== 'fit');
+});
+
+// Size Chips
+sizeChipsRow.querySelectorAll('.size-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    sizeChipsRow.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    widthInput.value = chip.dataset.w;
+    heightInput.value = chip.dataset.h;
+  });
+});
+
+widthInput.addEventListener('input', () => {
+  if (aspectRatioLock.checked && uploadedImages.length > 0) {
+    const first = uploadedImages[0];
+    const ratio = first.width / first.height;
+    const w = parseInt(widthInput.value, 10);
+    if (!isNaN(w)) heightInput.value = Math.round(w / ratio);
+  }
+});
+
+heightInput.addEventListener('input', () => {
+  if (aspectRatioLock.checked && uploadedImages.length > 0) {
+    const first = uploadedImages[0];
+    const ratio = first.width / first.height;
+    const h = parseInt(heightInput.value, 10);
+    if (!isNaN(h)) widthInput.value = Math.round(h * ratio);
+  }
+});
+
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 KB';
+  const k = 1024;
+  const sizes = ['KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+function handleFiles(files) {
+  let validFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if (!validFiles.length) return;
+
+  let loaded = 0;
+  validFiles.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        uploadedImages.push({
+          id: 'img_' + Math.random().toString(36).substr(2, 9),
+          file: file,
+          name: file.name,
+          size: file.size,
+          imgObj: img,
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+          dataUrl: e.target.result,
+          resizedDataUrl: null,
+          resizedSizeStr: null,
+          outW: null,
+          outH: null
+        });
+        loaded++;
+        if (loaded === validFiles.length) {
+          updateWorkspace();
+          // Auto resize on upload
+          executeResize();
+        }
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleFiles(e.target.files);
+  fileInput.value = '';
+});
+reFileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleFiles(e.target.files);
+  reFileInput.value = '';
+});
+
+['dragenter', 'dragover'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+});
+['dragleave', 'drop'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+  });
+});
+dropZone.addEventListener('drop', (e) => {
+  if (e.dataTransfer.files.length) {
+    handleFiles(e.dataTransfer.files);
+  }
+});
+
+function updateWorkspace() {
+  if (uploadedImages.length === 0) {
+    workspaceSection.hidden = true;
+    dropZone.hidden = false;
+    return;
+  }
+
+  dropZone.hidden = true;
+  workspaceSection.hidden = false;
+
+  fileListContainer.innerHTML = '';
+  uploadedImages.forEach((imgObj, idx) => {
+    const card = document.createElement('div');
+    card.className = 'file-card';
+    const origSizeStr = formatBytes(imgObj.size);
+
+    let rightHtml = '';
+    if (imgObj.resizedDataUrl) {
+      const format = formatSelect.value;
+      const baseName = imgObj.name.substring(0, imgObj.name.lastIndexOf('.')) || imgObj.name;
+      rightHtml = `
+        <a href="${imgObj.resizedDataUrl}" download="${baseName}_${imgObj.outW}x${imgObj.outH}.${format}" class="btn-download-single">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download</span>
+        </a>
+      `;
+    }
+
+    card.innerHTML = `
+      <div class="file-card-left">
+        <div class="file-thumb-wrap">
+          <img src="${imgObj.dataUrl}" alt="${imgObj.name}">
+        </div>
+        <div class="file-text-info">
+          <div class="name">${imgObj.name}</div>
+          <div class="meta">${imgObj.width}×${imgObj.height} px · ${origSizeStr} ${imgObj.resizedSizeStr ? '→ <b style="color:var(--ac);">' + imgObj.outW + '×' + imgObj.outH + ' px · ' + imgObj.resizedSizeStr + '</b>' : ''}</div>
+        </div>
+      </div>
+      <div class="file-card-right">
+        ${rightHtml}
+        <button type="button" class="file-remove-btn" title="Remove">&times;</button>
+      </div>
+    `;
+
+    card.querySelector('.file-remove-btn').addEventListener('click', () => {
+      uploadedImages.splice(idx, 1);
+      updateWorkspace();
+      if (uploadedImages.length === 0) statusBottomBar.hidden = true;
+    });
+
+    fileListContainer.appendChild(card);
+  });
+}
+
+async function executeResize() {
+  if (uploadedImages.length === 0) return;
+
+  const targetW = parseInt(widthInput.value, 10) || 1280;
+  const targetH = parseInt(heightInput.value, 10) || 720;
+  const format = formatSelect.value;
+  const mime = format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg';
+  const quality = parseInt(qualityRange.value, 10) / 100;
+  const mode = resizeModeSelect.value;
+  const bgColor = bgInput.value;
+
+  const zip = new JSZip();
+
+  uploadedImages.forEach(imgObj => {
+    const canvas = document.createElement('canvas');
+    canvas.width = targetW;
+    canvas.height = targetH;
+    const ctx = canvas.getContext('2d');
+
+    if (mode === 'fit') {
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, targetW, targetH);
+
+      const ratio = imgObj.width / imgObj.height;
+      let dw = targetW, dh = targetH;
+      let dx = 0, dy = 0;
+      if (targetW / targetH > ratio) {
+        dw = targetH * ratio;
+        dx = (targetW - dw) / 2;
+      } else {
+        dh = targetW / ratio;
+        dy = (targetH - dh) / 2;
+      }
+      ctx.drawImage(imgObj.imgObj, dx, dy, dw, dh);
+    } else if (mode === 'crop') {
+      const srcRatio = imgObj.width / imgObj.height;
+      const targetRatio = targetW / targetH;
+      let sx = 0, sy = 0, sw = imgObj.width, sh = imgObj.height;
+
+      if (srcRatio > targetRatio) {
+        sw = imgObj.height * targetRatio;
+        sx = (imgObj.width - sw) / 2;
+      } else {
+        sh = imgObj.width / targetRatio;
+        sy = (imgObj.height - sh) / 2;
+      }
+      ctx.drawImage(imgObj.imgObj, sx, sy, sw, sh, 0, 0, targetW, targetH);
+    } else {
+      // Stretch
+      ctx.drawImage(imgObj.imgObj, 0, 0, targetW, targetH);
+    }
+
+    const dataUrl = canvas.toDataURL(mime, quality);
+    const base64Data = dataUrl.split(',')[1];
+    const sizeKb = ((base64Data.length * 3) / 4 / 1024).toFixed(1);
+    const baseName = imgObj.name.substring(0, imgObj.name.lastIndexOf('.')) || imgObj.name;
+    const newName = `${baseName}_${targetW}x${targetH}.${format}`;
+
+    zip.file(newName, base64Data, { base64: true });
+
+    imgObj.resizedDataUrl = dataUrl;
+    imgObj.resizedSizeStr = `${sizeKb} KB`;
+    imgObj.outW = targetW;
+    imgObj.outH = targetH;
+  });
+
+  const zipBlob = await zip.generateAsync({ type: 'blob' });
+  zipBlobUrl = URL.createObjectURL(zipBlob);
+
+  updateWorkspace();
+  statusCountText.textContent = `${uploadedImages.length} image${uploadedImages.length > 1 ? 's' : ''} ready — upar har image ke saath download button hai.`;
+  statusBottomBar.hidden = false;
+  statusBottomBar.scrollIntoView({ behavior: 'smooth' });
+}
+
+btnResizeAll.addEventListener('click', executeResize);
+
+btnDownloadZip.addEventListener('click', () => {
+  if (!zipBlobUrl) return;
+  const link = document.createElement('a');
+  link.href = zipBlobUrl;
+  link.download = `DocSmartly_Thumbnails_${Date.now()}.zip`;
+  link.click();
+});
+
+// FAQ Accordion Toggle
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

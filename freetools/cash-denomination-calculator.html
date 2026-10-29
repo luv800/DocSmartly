@@ -1,55 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cash Denomination Calculator – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Denomination Calculator - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Cash Denomination Calculator</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-white font-bold text-xl shadow-md">💵</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Cash Denomination Calculator</h1>
+                    <p class="text-xs text-slate-500">₹500 se ₹1 tak note / coin gino — total notes, coins aur grand total. Copy, print.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Cash Denomination Calculator'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Table Column (7 Cols) -->
+        <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="grid grid-cols-12 gap-2 text-xs font-bold text-slate-500 border-b pb-3">
+                <div class="col-span-3">Denomination</div>
+                <div class="col-span-3">Type</div>
+                <div class="col-span-3">Quantity</div>
+                <div class="col-span-2">Amount</div>
+                <div class="col-span-1"></div>
+            </div>
+
+            <!-- Denominations List Container -->
+            <div id="denom-container" class="space-y-3">
+                <!-- Rows populated dynamically -->
+            </div>
+
+            <!-- Custom Denomination Adder -->
+            <div class="pt-4 border-t space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+                    <div class="md:col-span-6">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Custom denomination (₹)</label>
+                        <input type="number" id="custom-denom-val" placeholder="jaise 2000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div class="md:col-span-6">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Type</label>
+                        <select id="custom-denom-type" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="Note">Note</option>
+                            <option value="Coin">Coin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 pt-1">
+                    <button onclick="addCustomDenom()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-4 rounded-xl text-xs shadow transition flex items-center space-x-1">
+                        <span>+ Denomination add karein</span>
+                    </button>
+                    <button onclick="resetQuantities()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-xl text-xs transition">🔄 Quantity reset</button>
+                    <button onclick="loadDefaultList()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-xl text-xs transition">📋 Default list</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Summary Column (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Counters Grid -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span class="text-[11px] font-semibold text-slate-400">Total notes</span>
+                    <div id="res-total-notes" class="text-2xl font-bold text-slate-900">0</div>
+                    <span class="text-[10px] text-slate-400 font-mono">₹0</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                    <span class="text-[11px] font-semibold text-slate-400">Total coins</span>
+                    <div id="res-total-coins" class="text-2xl font-bold text-slate-900">0</div>
+                    <span class="text-[10px] text-slate-400 font-mono">₹0</span>
+                </div>
+            </div>
+
+            <!-- Grand Total Card -->
+            <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-200 shadow-sm space-y-2">
+                <span class="text-xs font-bold text-emerald-800">Grand total cash</span>
+                <div id="res-grand-total" class="text-3xl font-bold text-emerald-900 font-mono">₹0</div>
+                <div id="amount-in-words" class="text-xs font-semibold text-emerald-700 pt-1 border-t border-emerald-200">
+                    Rupees Zero Only
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="copyReport()" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                    <span>📋 Copy report</span>
+                </button>
+                <button onclick="window.print()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                    <span>🖨️ Print report</span>
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let denominations = [
+            { val: 500, type: 'Note', qty: 0 },
+            { val: 200, type: 'Note', qty: 0 },
+            { val: 100, type: 'Note', qty: 0 },
+            { val: 50, type: 'Note', qty: 0 },
+            { val: 20, type: 'Note', qty: 0 },
+            { val: 10, type: 'Note', qty: 0 },
+            { val: 5, type: 'Coin', qty: 0 },
+            { val: 2, type: 'Coin', qty: 0 },
+            { val: 1, type: 'Coin', qty: 0 }
+        ];
+
+        function renderDenominations() {
+            const container = document.getElementById('denom-container');
+            container.innerHTML = '';
+
+            let totalNotesCount = 0;
+            let totalNotesVal = 0;
+            let totalCoinsCount = 0;
+            let totalCoinsVal = 0;
+            let grandTotal = 0;
+
+            denominations.forEach((item, index) => {
+                const amt = item.val * (item.qty || 0);
+                grandTotal += amt;
+
+                if (item.type === 'Note') {
+                    totalNotesCount += (item.qty || 0);
+                    totalNotesVal += amt;
+                } else {
+                    totalCoinsCount += (item.qty || 0);
+                    totalCoinsVal += amt;
+                }
+
+                const row = document.createElement('div');
+                row.className = "grid grid-cols-12 gap-2 items-center bg-slate-50 p-2.5 rounded-xl border border-slate-200";
+                row.innerHTML = `
+                    <div class="col-span-3 font-bold text-sm text-slate-800">₹${item.val}</div>
+                    <div class="col-span-3">
+                        <select onchange="updateType(${index}, this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs outline-none font-medium">
+                            <option value="Note" ${item.type === 'Note' ? 'selected' : ''}>Note</option>
+                            <option value="Coin" ${item.type === 'Coin' ? 'selected' : ''}>Coin</option>
+                        </select>
+                    </div>
+                    <div class="col-span-3">
+                        <input type="number" min="0" value="${item.qty || 0}" oninput="updateQty(${index}, this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs outline-none font-semibold">
+                    </div>
+                    <div class="col-span-2 font-mono font-bold text-xs text-slate-700">₹${amt.toLocaleString('en-IN')}</div>
+                    <div class="col-span-1 flex justify-end">
+                        <button onclick="removeDenom(${index})" class="text-rose-500 font-bold px-1 hover:text-rose-700">✕</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            document.getElementById('res-total-notes').innerText = totalNotesCount;
+            document.querySelector('#res-total-notes + span').innerText = `₹${totalNotesVal.toLocaleString('en-IN')}`;
+
+            document.getElementById('res-total-coins').innerText = totalCoinsCount;
+            document.querySelector('#res-total-coins + span').innerText = `₹${totalCoinsVal.toLocaleString('en-IN')}`;
+
+            document.getElementById('res-grand-total').innerText = `₹${grandTotal.toLocaleString('en-IN')}`;
+            document.getElementById('amount-in-words').innerText = `Rupees ${numberToWords(grandTotal)} Only`;
+        }
+
+        window.updateQty = function(index, val) {
+            denominations[index].qty = parseInt(val) || 0;
+            renderDenominations();
+        };
+
+        window.updateType = function(index, val) {
+            denominations[index].type = val;
+            renderDenominations();
+        };
+
+        window.removeDenom = function(index) {
+            denominations.splice(index, 1);
+            renderDenominations();
+        };
+
+        window.addCustomDenom = function() {
+            const valInput = document.getElementById('custom-denom-val');
+            const typeInput = document.getElementById('custom-denom-type');
+            const val = parseFloat(valInput.value);
+            if (isNaN(val) || val <= 0) return;
+
+            denominations.push({ val, type: typeInput.value, qty: 1 });
+            denominations.sort((a, b) => b.val - a.val);
+            valInput.value = '';
+            renderDenominations();
+        };
+
+        window.resetQuantities = function() {
+            denominations.forEach(d => d.qty = 0);
+            renderDenominations();
+        };
+
+        window.loadDefaultList = function() {
+            denominations = [
+                { val: 500, type: 'Note', qty: 0 },
+                { val: 200, type: 'Note', qty: 0 },
+                { val: 100, type: 'Note', qty: 0 },
+                { val: 50, type: 'Note', qty: 0 },
+                { val: 20, type: 'Note', qty: 0 },
+                { val: 10, type: 'Note', qty: 0 },
+                { val: 5, type: 'Coin', qty: 0 },
+                { val: 2, type: 'Coin', qty: 0 },
+                { val: 1, type: 'Coin', qty: 0 }
+            ];
+            renderDenominations();
+        };
+
+        window.copyReport = function() {
+            let report = "Cash Denomination Report:\n";
+            let total = 0;
+            denominations.forEach(d => {
+                if (d.qty > 0) {
+                    const amt = d.val * d.qty;
+                    report += `₹${d.val} (${d.type}) × ${d.qty} = ₹${amt}\n`;
+                    total += amt;
+                }
+            });
+            report += `\nGrand Total: ₹${total}`;
+            navigator.clipboard.writeText(report);
+            alert('Cash report copied to clipboard!');
+        };
+
+        function numberToWords(num) {
+            if (num === 0) return 'Zero';
+            return num.toLocaleString('en-IN') + " Rupees";
+        }
+
+        // Initial render
+        renderDenominations();
+    </script>
 </body>
 </html>

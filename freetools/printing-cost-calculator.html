@@ -1,55 +1,343 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Printing Cost Calculator – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing Cost Calculator - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Printing Cost Calculator</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-white font-bold text-xl shadow-md">🖨️</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Printing Cost Calculator</h1>
+                    <p class="text-xs text-slate-500">B/W aur color print, paper, binding, lamination — total, per copy cost aur balance due.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security Notice Banner -->
+    <div class="bg-emerald-50 border-b border-emerald-100 py-2 px-4 text-center">
+        <p class="text-xs text-emerald-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Printing Cost Calculator'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Job Details -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">📋 Job details</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Customer name</label>
+                        <input type="text" id="job-cust" placeholder="Customer name" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Estimate no.</label>
+                        <input type="text" id="job-est" value="72933" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">B/W pages (1 copy me)</label>
+                        <input type="number" id="job-bw" value="10" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Color pages (1 copy me)</label>
+                        <input type="number" id="job-color" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Copies</label>
+                        <input type="number" id="job-copies" value="1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Printing side</label>
+                        <select id="job-side" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="single">Single-sided</option>
+                            <option value="double">Double-sided (Duplex)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rates (€) -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">💰 Rates (₹) — editable, default save ho sakte hain</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">B/W rate per side</label>
+                        <input type="number" id="rate-bw" value="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Color rate per side</label>
+                        <input type="number" id="rate-color" value="10" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Paper cost per sheet</label>
+                        <input type="number" id="rate-paper" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Binding (per copy)</label>
+                        <input type="number" id="rate-binding" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Lamination (per sheet)</label>
+                        <input type="number" id="rate-lam" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Laminated sheets (per copy)</label>
+                        <input type="number" id="rate-lam-sheets" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Cutting charge (total)</label>
+                    <input type="number" id="rate-cutting" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+            </div>
+
+            <!-- Extra, discount & payment -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-slate-800 border-b pb-2">➕ Extra, discount & payment</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Discount</label>
+                        <input type="number" id="pay-disc" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Discount type</label>
+                        <select id="pay-disc-type" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="amount">₹ amount</option>
+                            <option value="percent">% percent</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Amount received (₹)</label>
+                    <input type="number" id="pay-received" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Estimate Summary Column (5 Cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+            <!-- Estimate Preview Card -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="border-b pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">Printing Estimate</h3>
+                        <p id="est-sub-id" class="text-xs text-slate-400 font-mono">#72933 · 29-10-2026</p>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Estimate</span>
+                </div>
+
+                <div id="est-line-items" class="space-y-2 text-xs border-b pb-4">
+                    <div class="flex justify-between text-slate-700">
+                        <span>Printing — B/W 10 + Color 0 pages × 1 copies</span>
+                        <span class="font-mono">₹20.00</span>
+                    </div>
+                    <div class="flex justify-between text-slate-700">
+                        <span>Paper — 10 sheets</span>
+                        <span class="font-mono">₹0.00</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2 text-xs border-b pb-4">
+                    <div class="flex justify-between text-slate-600 font-medium">
+                        <span>Subtotal</span>
+                        <span id="res-subtotal" class="font-mono">₹20.00</span>
+                    </div>
+                    <div class="flex justify-between text-slate-900 font-bold text-sm bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                        <span>Total cost</span>
+                        <span id="res-total" class="font-mono text-emerald-700">₹20.00</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600 font-medium">
+                        <span>Cost per copy</span>
+                        <span id="res-per-copy" class="font-mono">₹20.00</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600 font-medium">
+                        <span>Amount received</span>
+                        <span id="res-received" class="font-mono">₹0.00</span>
+                    </div>
+                    <div class="flex justify-between text-rose-700 font-bold">
+                        <span>Balance due</span>
+                        <span id="res-due" class="font-mono">₹20.00</span>
+                    </div>
+                </div>
+
+                <div id="amount-in-words" class="text-xs font-semibold text-slate-600">
+                    Rupees Twenty Only
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 pt-2">
+                    <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📥 PDF</span>
+                    </button>
+                    <button onclick="copyEstimate()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1">
+                        <span>📋 Copy</span>
+                    </button>
+                    <button onclick="resetCalculator()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center">
+                        <span>🔄 Reset</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const jobEst = document.getElementById('job-est');
+        const jobBw = document.getElementById('job-bw');
+        const jobColor = document.getElementById('job-color');
+        const jobCopies = document.getElementById('job-copies');
+        const jobSide = document.getElementById('job-side');
+
+        const rateBw = document.getElementById('rate-bw');
+        const rateColor = document.getElementById('rate-color');
+        const ratePaper = document.getElementById('rate-paper');
+        const rateBinding = document.getElementById('rate-binding');
+        const rateLam = document.getElementById('rate-lam');
+        const rateLamSheets = document.getElementById('rate-lam-sheets');
+        const rateCutting = document.getElementById('rate-cutting');
+
+        const payDisc = document.getElementById('pay-disc');
+        const payDiscType = document.getElementById('pay-disc-type');
+        const payReceived = document.getElementById('pay-received');
+
+        [jobEst, jobBw, jobColor, jobCopies, jobSide, rateBw, rateColor, ratePaper, rateBinding, rateLam, rateLamSheets, rateCutting, payDisc, payDiscType, payReceived].forEach(el => {
+            el.addEventListener('input', calculatePrinting);
+            el.addEventListener('change', calculatePrinting);
+        });
+
+        function calculatePrinting() {
+            const estNo = jobEst.value || '72933';
+            const bwPages = parseInt(jobBw.value) || 0;
+            const colorPages = parseInt(jobColor.value) || 0;
+            const copies = parseInt(jobCopies.value) || 1;
+            const isDuplex = jobSide.value === 'double';
+            const sheetMultiplier = isDuplex ? 0.5 : 1; // Double-sided halves sheet count approximately
+
+            const bRate = parseFloat(rateBw.value) || 0;
+            const cRate = parseFloat(rateColor.value) || 0;
+            const paperRate = parseFloat(ratePaper.value) || 0;
+            const bindingRate = parseFloat(rateBinding.value) || 0;
+            const lamRate = parseFloat(rateLam.value) || 0;
+            const lamSheets = parseInt(rateLamSheets.value) || 0;
+            const cutting = parseFloat(rateCutting.value) || 0;
+
+            const totalBwPages = bwPages * copies;
+            const totalColorPages = colorPages * copies;
+            const totalSheets = Math.ceil((bwPages + colorPages) * copies * sheetMultiplier);
+
+            const printCost = (totalBwPages * bRate) + (totalColorPages * cRate);
+            const paperCost = totalSheets * paperRate;
+            const bindingCost = copies * bindingRate;
+            const lamCost = copies * lamSheets * lamRate;
+
+            let subtotal = printCost + paperCost + bindingCost + lamCost + cutting;
+
+            const discVal = parseFloat(payDisc.value) || 0;
+            let discountAmt = 0;
+            if (payDiscType.value === 'amount') {
+                discountAmt = discVal;
+            } else {
+                discountAmt = (subtotal * discVal) / 100;
+            }
+
+            let totalCost = Math.max(0, subtotal - discountAmt);
+            const costPerCopy = copies > 0 ? totalCost / copies : totalCost;
+            const received = parseFloat(payReceived.value) || 0;
+            const balanceDue = Math.max(0, totalCost - received);
+
+            // Update UI
+            document.getElementById('est-sub-id').innerText = `#${estNo} · ${new Date().toLocaleDateString()}`;
+            document.getElementById('est-line-items').innerHTML = `
+                <div class="flex justify-between text-slate-700">
+                    <span>Printing — B/W ${bwPages} + Color ${colorPages} pages × ${copies} copies</span>
+                    <span class="font-mono">₹${printCost.toFixed(2)}</span>
+                </div>
+                ${paperCost > 0 ? `<div class="flex justify-between text-slate-700"><span>Paper — ${totalSheets} sheets</span><span class="font-mono">₹${paperCost.toFixed(2)}</span></div>` : ''}
+                ${bindingCost > 0 ? `<div class="flex justify-between text-slate-700"><span>Binding</span><span class="font-mono">₹${bindingCost.toFixed(2)}</span></div>` : ''}
+            `;
+
+            document.getElementById('res-subtotal').innerText = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('res-total').innerText = `₹${totalCost.toFixed(2)}`;
+            document.getElementById('res-per-copy').innerText = `₹${costPerCopy.toFixed(2)}`;
+            document.getElementById('res-received').innerText = `₹${received.toFixed(2)}`;
+            document.getElementById('res-due').innerText = `₹${balanceDue.toFixed(2)}`;
+            document.getElementById('amount-in-words').innerText = `Rupees ${numberToWords(Math.round(totalCost))} Only`;
+        }
+
+        window.copyEstimate = function() {
+            const text = `Printing Estimate #${jobEst.value}\nTotal Cost: ${document.getElementById('res-total').innerText}\nBalance Due: ${document.getElementById('res-due').innerText}`;
+            navigator.clipboard.writeText(text);
+            alert('Estimate copied to clipboard!');
+        };
+
+        window.resetCalculator = function() {
+            jobEst.value = "72933";
+            jobBw.value = 10;
+            jobColor.value = 0;
+            jobCopies.value = 1;
+            rateBw.value = 2;
+            rateColor.value = 10;
+            payDisc.value = 0;
+            payReceived.value = 0;
+            calculatePrinting();
+        };
+
+        function numberToWords(num) {
+            if (num === 0) return 'Zero';
+            return num.toLocaleString('en-IN') + " Rupees";
+        }
+
+        // Initial render
+        calculatePrinting();
+    </script>
 </body>
 </html>

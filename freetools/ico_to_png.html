@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ICO to PNG Converter – DocSmartly</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2036%2036%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233b73f5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2316337a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2236%22%20height%3D%2236%22%20rx%3D%229%22%20fill%3D%22url%28%23lgG%29%22/%3E%3Cpath%20d%3D%22M9%207.5h11l6%206V27a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V9.5a2%202%200%200%201%202-2z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M20%207.5v6h6%22%20fill%3D%22%23c9dbff%22/%3E%3Cpath%20d%3D%22M11%2017h9M11%2021h6%22%20stroke%3D%22%232457d6%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%2215%22%20height%3D%2210%22%20rx%3D%222.6%22%20fill%3D%22%23f5b83d%22/%3E%3Crect%20x%3D%2219.5%22%20y%3D%2224.8%22%20width%3D%224.6%22%20height%3D%223.6%22%20rx%3D%221%22%20fill%3D%22%23a86a00%22/%3E%3Cpath%20d%3D%22M26%2025h3M26%2028h3%22%20stroke%3D%22%23a86a00%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- JSZip for packaging all extracted PNG sizes into a ZIP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --ac: #005a36;
+  --ac-hover: #004429;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px;
+}
+
+/* Header */
+header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.header-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.btn-nav-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-nav-tools:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Main Container */
+.main-shell {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #16337a 0%, #0d2157 100%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(22, 51, 122, 0.18);
+}
+.hero-banner h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.hero-banner p {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+/* Card Shell */
+.app-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+/* Tool Header inside card */
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.tool-title-wrap h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.tool-title-wrap p {
+  font-size: 0.86rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+
+/* Notice Alert */
+.alert-box {
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  line-height: 1.45;
+}
+.alert-green {
+  background: #eaf7f0;
+  border: 1px solid #c1ebd4;
+  color: #0d6838;
+}
+
+/* Upload Dropzone matching screenshot 1 */
+.upload-dropzone {
+  border: 1.8px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--ac);
+  background: #f7fdf9;
+}
+.upload-cloud-icon {
+  width: 36px;
+  height: 36px;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+.upload-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.upload-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 600;
+}
+#fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Compact Re-upload bar when ICO loaded (matching screenshot 2) */
+.reupload-bar {
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  background: #fff;
+  margin-bottom: 16px;
+  position: relative;
+  transition: all 0.2s;
+}
+.reupload-bar:hover { background: #f8fafc; border-color: var(--ac); }
+#reFileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* File Loaded Bar (matching screenshot 2) */
+.file-loaded-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.file-loaded-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.file-loaded-icon {
+  width: 32px;
+  height: 32px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+}
+.file-loaded-text .name { font-size: 0.9rem; font-weight: 700; color: #1e293b; }
+.file-loaded-text .sub { font-size: 0.78rem; color: var(--mut); }
+
+/* Download All ZIP button */
+.btn-download-zip {
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 18px;
+  transition: background 0.2s;
+}
+.btn-download-zip:hover { background: var(--ac-hover); }
+
+/* Extracted Sizes Grid (matching screenshot 2) */
+.extracted-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+}
+.size-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  transition: transform 0.15s;
+}
+.size-card:hover { transform: translateY(-2px); border-color: #cbd5e1; }
+.size-thumb-wrap {
+  width: 100%;
+  height: 90px;
+  background: repeating-conic-gradient(#cbd5e1 0% 25%, #f1f5f9 0% 50%);
+  background-size: 12px 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.size-thumb-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.size-card-footer {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  width: 100%;
+}
+.btn-mini-png {
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+.btn-mini-png:hover { background: var(--ac-hover); }
+
+/* Two Column Info Section */
+.info-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.info-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.info-steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.info-steps-list li span.num { font-weight: 700; margin-right: 6px; }
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.feature-list li { display: flex; align-items: center; gap: 10px; }
+.feature-list svg { width: 18px; height: 18px; color: #059669; flex-shrink: 0; }
+
+/* FAQ Section */
+.faq-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.faq-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.faq-item { border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.faq-question svg { width: 18px; height: 18px; transition: transform 0.2s ease; color: var(--mut); flex-shrink: 0; }
+.faq-item.active .faq-question svg { transform: rotate(90deg); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, padding 0.25s ease;
+  font-size: 0.9rem;
+  color: var(--mut);
+  line-height: 1.6;
+}
+.faq-item.active .faq-answer { max-height: 200px; padding-bottom: 16px; }
+
+/* Related Tools Grid */
+.related-section {
+  background: var(--sf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.related-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.related-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #ffffff;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.related-card:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+.related-icon {
+  width: 36px;
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #16337a;
+  flex-shrink: 0;
+}
+.related-icon svg { width: 20px; height: 20px; }
+.related-card span { font-size: 0.88rem; font-weight: 600; color: #1e293b; line-height: 1.25; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 960px) {
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .info-columns { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="https://docsmartly.pages.dev/dashboard">
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgH" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b73f5"/>
+            <stop offset="1" stop-color="#16337a"/>
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#lgH)"/>
+        <path d="M9 7.5h11l6 6V27a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M20 7.5v6h6" fill="#c9dbff"/>
+        <path d="M11 17h9M11 21h6" stroke="#2457d6" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="17" y="22" width="15" height="10" rx="2.6" fill="#f5b83d"/>
+        <rect x="19.5" y="24.8" width="4.6" height="3.6" rx="1" fill="#a86a00"/>
+        <path d="M26 25h3M26 28h3" stroke="#a86a00" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span>DocSmartly</span>
+    </a>
+    <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>All Tools</span>
+    </a>
+  </div>
+</header>
+
+<main class="main-shell">
+  
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <h1>ICO to PNG Converter</h1>
+    <p>Extract all resolutions and sizes from any .ico favicon or application icon file instantly into transparent PNGs.</p>
+  </div>
+
+  <!-- Card Shell -->
+  <div class="app-card">
+    
+    <div class="tool-header">
+      <div class="tool-title-wrap">
+        <h2>ICO to PNG</h2>
+        <p>ICO file ke andar ke saare sizes dekhein aur PNG me download karein.</p>
+      </div>
+      <a class="btn-nav-tools" href="https://docsmartly.pages.dev/dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>All Tools</span>
+      </a>
+    </div>
+
+    <!-- Security Alert -->
+    <div class="alert-box alert-green">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>Files aapke browser me hi process hoti hain — server par upload nahi hoti.</span>
+    </div>
+
+    <!-- Upload Dropzone matching screenshot 1 -->
+    <div class="upload-dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/x-icon,image/vnd.microsoft.icon,.ico">
+      <div class="upload-cloud-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+      <div class="upload-title">.ICO file select karein</div>
+      <div class="upload-subtitle">ya yahan drag &amp; drop karein · max 10 MB</div>
+    </div>
+
+    <!-- Workspace Section (Hidden by default) -->
+    <div class="workspace-section" id="workspaceSection" hidden>
+      
+      <!-- Re-upload bar -->
+      <div class="reupload-bar" id="reUploadZone">
+        <input type="file" id="reFileInput" accept="image/x-icon,image/vnd.microsoft.icon,.ico">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:0.88rem;color:#2563eb;">
+          <span style="background:#2563eb;color:#fff;border-radius:50%;width:18px;height:18px;display:grid;place-items:center;font-size:0.7rem;">↑</span>
+          <span>.ICO file select karein</span>
+        </div>
+        <span style="font-size:0.78rem;color:#64748b;">ya yahan drag &amp; drop karein · max 10 MB</span>
+      </div>
+
+      <!-- File Loaded Bar matching screenshot 2 -->
+      <div class="file-loaded-card">
+        <div class="file-loaded-left">
+          <div class="file-loaded-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          </div>
+          <div class="file-loaded-text">
+            <div class="name" id="fileNameText">app-icon.ico</div>
+            <div class="sub" id="fileMetaText">9 sizes mile · 24.1 KB</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download All ZIP Button -->
+      <button type="button" class="btn-download-zip" id="btnDownloadZip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span>Download all PNG (ZIP)</span>
+      </button>
+
+      <!-- Extracted Sizes Grid matching screenshot 2 -->
+      <div class="extracted-grid" id="extractedGridContainer"></div>
+
+    </div>
+
+  </div>
+
+  <!-- Two Column Info Section -->
+  <div class="info-columns">
+    <div class="info-card">
+      <h3>How to use ICO to PNG Converter</h3>
+      <ol class="info-steps-list">
+        <li><span class="num">1.</span> Upload your .ico favicon or application icon file</li>
+        <li><span class="num">2.</span> Instantly view all embedded image resolutions and sizes</li>
+        <li><span class="num">3.</span> Download any specific size as PNG or get all sizes in a ZIP archive</li>
+      </ol>
+    </div>
+
+    <div class="info-card">
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Extracts multiple embedded icon sizes</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Transparent background support</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>Instant ZIP package download</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"/></svg>
+          <span>100% secure client-side browser processing</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h3>FAQ – ICO to PNG Converter</h3>
+    
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Why does an ICO file contain multiple sizes?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Windows and web browsers use different icon resolutions depending on where the icon is displayed (desktop shortcut, taskbar, browser tab favicon, etc.). An ICO file can package all these dimensions together.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Is ICO to PNG Converter free?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        Yes, 100% free with no limits or watermarks required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" type="button">
+        <span>Are my files uploaded to a server?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        No! All parsing and conversion happen securely right inside your browser.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Free Tools Grid -->
+  <div class="related-section">
+    <h3>Related free tools</h3>
+    <div class="related-grid">
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <span>Image Format Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span>JPG to PDF Converter</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2M15 12h2"></path><path d="M7 16h10"></path></svg>
+        </div>
+        <span>Passport Photo Sheet</span>
+      </a>
+
+      <a href="https://docsmartly.pages.dev/dashboard" class="related-card">
+        <div class="related-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </div>
+        <span>PDF Compressor (KB)</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/**
+ * DocSmartly ICO to PNG Converter Engine
+ */
+
+let extractedIcons = []; // Array of { width, height, sizeBytes, dataUrl, base64 }
+let zipBlobUrl = null;
+let currentFileName = 'app-icon.ico';
+
+const fileInput = document.getElementById('fileInput');
+const reFileInput = document.getElementById('reFileInput');
+const dropZone = document.getElementById('dropZone');
+const workspaceSection = document.getElementById('workspaceSection');
+const fileNameText = document.getElementById('fileNameText');
+const fileMetaText = document.getElementById('fileMetaText');
+const extractedGridContainer = document.getElementById('extractedGridContainer');
+const btnDownloadZip = document.getElementById('btnDownloadZip');
+
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+async function handleIcoFile(file) {
+  if (!file) return;
+  currentFileName = file.name;
+  const arrayBuffer = await file.arrayBuffer();
+  const dataView = new DataView(arrayBuffer);
+
+  // Parse ICO Header
+  // Reserved (2 bytes) = 0, Type (2 bytes) = 1 (ICO), Count (2 bytes) = number of images
+  const type = dataView.getUint16(2, true);
+  const count = dataView.getUint16(4, true);
+
+  extractedIcons = [];
+  const zip = new JSZip();
+
+  for (let i = 0; i < count; i++) {
+    const entryOffset = 6 + (i * 16);
+    let width = dataView.getUint8(entryOffset);
+    let height = dataView.getUint8(entryOffset + 1);
+    if (width === 0) width = 256;
+    if (height === 0) height = 256;
+
+    const imgSize = dataView.getUint32(entryOffset + 8, true);
+    const imgOffset = dataView.getUint32(entryOffset + 12, true);
+
+    const imgBytes = new Uint8Array(arrayBuffer, imgOffset, imgSize);
+    
+    // Check if PNG format inside ICO or BMP
+    const isPng = (imgBytes[0] === 137 && imgBytes[1] === 80 && imgBytes[2] === 78 && imgBytes[3] === 71);
+
+    if (isPng) {
+      const blob = new Blob([imgBytes], { type: 'image/png' });
+      const dataUrl = URL.createObjectURL(blob);
+      const base64 = btoa(String.fromCharCode.apply(null, imgBytes));
+      const sizeStr = formatBytes(imgSize);
+
+      extractedIcons.push({ width, height, sizeStr, sizeBytes: imgSize, dataUrl, base64 });
+      zip.file(`${width}x${height}.png`, base64, { base64: true });
+    } else {
+      // Render BMP icon via canvas
+      try {
+        const blob = new Blob([imgBytes]);
+        const url = URL.createObjectURL(blob);
+        await new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/png');
+            const base64 = dataUrl.split(',')[1];
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let j = 0; j < len; j++) bytes[j] = binaryString.charCodeAt(j);
+            const sizeStr = formatBytes(bytes.length);
+
+            extractedIcons.push({ width, height, sizeStr, sizeBytes: bytes.length, dataUrl, base64 });
+            zip.file(`${width}x${height}.png`, base64, { base64: true });
+            resolve();
+          };
+          img.onerror = resolve;
+          img.src = url;
+        });
+      } catch (err) {
+        console.warn("BMP icon parse error:", err);
+      }
+    }
+  }
+
+  // Fallback if standard ICO header parsing finds 0 items or custom format
+  if (extractedIcons.length === 0) {
+    const blob = new Blob([arrayBuffer]);
+    const url = URL.createObjectURL(blob);
+    await new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || 64;
+        canvas.height = img.naturalHeight || 64;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataUrl = canvas.toDataURL('image/png');
+        const base64 = dataUrl.split(',')[1];
+        extractedIcons.push({ width: canvas.width, height: canvas.height, sizeStr: formatBytes(file.size), sizeBytes: file.size, dataUrl, base64 });
+        zip.file(`${canvas.width}x${canvas.height}.png`, base64, { base64: true });
+        resolve();
+      };
+      img.onerror = resolve;
+      img.src = url;
+    });
+  }
+
+  const zipBlob = await zip.generateAsync({ type: 'blob' });
+  zipBlobUrl = URL.createObjectURL(zipBlob);
+
+  fileNameText.textContent = file.name;
+  fileMetaText.textContent = `${extractedIcons.length} sizes mile · ${formatBytes(file.size)}`;
+
+  dropZone.hidden = true;
+  workspaceSection.hidden = false;
+
+  renderExtractedGrid();
+}
+
+function renderExtractedGrid() {
+  extractedGridContainer.innerHTML = '';
+  extractedIcons.forEach(icon => {
+    const card = document.createElement('div');
+    card.className = 'size-card';
+    card.innerHTML = `
+      <div class="size-thumb-wrap">
+        <img src="${icon.dataUrl}" alt="${icon.width}x${icon.height}">
+      </div>
+      <div class="size-card-footer">
+        <div>${icon.width} × ${icon.height} · ${icon.sizeStr}</div>
+        <button type="button" class="btn-mini-png">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>PNG</span>
+        </button>
+      </div>
+    `;
+
+    card.querySelector('button').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.href = icon.dataUrl;
+      const baseName = currentFileName.substring(0, currentFileName.lastIndexOf('.')) || currentFileName;
+      link.download = `${baseName}_${icon.width}x${icon.height}.png`;
+      link.click();
+    });
+
+    extractedGridContainer.appendChild(card);
+  });
+}
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleIcoFile(e.target.files[0]);
+  fileInput.value = '';
+});
+reFileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) handleIcoFile(e.target.files[0]);
+  reFileInput.value = '';
+});
+
+['dragenter', 'dragover'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+});
+['dragleave', 'drop'].forEach(name => {
+  dropZone.addEventListener(name, (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+  });
+});
+dropZone.addEventListener('drop', (e) => {
+  if (e.dataTransfer.files.length) {
+    handleIcoFile(e.dataTransfer.files[0]);
+  }
+});
+
+btnDownloadZip.addEventListener('click', () => {
+  if (!zipBlobUrl) return;
+  const link = document.createElement('a');
+  link.href = zipBlobUrl;
+  const baseName = currentFileName.substring(0, currentFileName.lastIndexOf('.')) || currentFileName;
+  link.download = `${baseName}_PNG_Sizes_${Date.now()}.zip`;
+  link.click();
+});
+
+// FAQ Accordion Toggle
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

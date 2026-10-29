@@ -1,55 +1,456 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Stamp Designer – DocSmartly Free Online Tools</title>
-<link rel="stylesheet" href="../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.tb-card { max-width: 680px; margin: 34px auto; background: #fff; border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 8px 24px -14px rgba(19,35,63,.15); }
-.tb-head { border-bottom: 1px solid var(--ln); padding-bottom: 16px; margin-bottom: 20px; }
-.tb-head h1 { font-size: 1.65rem; color: var(--ink); }
-.tb-head p { color: var(--mut); margin-top: 4px; font-size: 0.92rem; }
-.bk-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ac); margin-bottom: 16px; text-decoration: none; }
-.bk-btn:hover { text-decoration: underline; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stamp Designer - DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .transparent-bg {
+            background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+                              linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+                              linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+    </style>
 </head>
-<body>
-<header>
-  <div class="w">
-    <a class="logo" href="../index.html"><span class="lt">DocSmartly</span></a>
-    <nav>
-      <a href="../index.html#services">Services</a>
-      <a href="../index.html#tools">Free Tools</a>
-      <a href="../dashboard.html">Dashboard</a>
-    </nav>
-  </div>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
 
-<main class="w">
-  <div class="tb-card">
-    <a href="../index.html#tools" class="bk-btn">← Back to Free Tools</a>
-    <div class="tb-head">
-      <h1>Stamp Designer</h1>
-      <p>100% Free &amp; Private. Processed in your own browser.</p>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white font-bold text-xl shadow-md">🔏</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Stamp Designer</h1>
+                    <p class="text-xs text-slate-500">Round, oval, rectangle stamp / seal design — curved text, transparent PNG.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="https://docsmartly.pages.dev/dashboard" class="flex items-center space-x-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span>All Tools</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Security & Legal Notice Banner -->
+    <div class="bg-amber-50 border-b border-amber-200 py-2 px-4 text-center">
+        <p class="text-xs text-amber-800 font-medium flex items-center justify-center space-x-1.5">
+            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span>⚠️ Stamp design sirf aapke <b>apne / authorised business</b> ke liye banayein. Kisi sarkari office, bank ya dusri company ki nakli mohar banana kanoonan apradh hai.</span>
+        </p>
     </div>
-    <div id="mount-point"></div>
-  </div>
-</main>
 
-<script src="../tools.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const mount = document.getElementById('mount-point');
-  const tool = window.DSTools && window.DSTools['Stamp Designer'];
-  if (tool) {
-    mount.innerHTML = tool.html;
-    if (tool.init) tool.init(mount);
-  } else {
-    mount.innerHTML = '<p class="sub">Tool is ready to use.</p>';
-  }
-});
-</script>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls Column (6 Cols) -->
+        <div class="lg:col-span-6 space-y-5">
+
+            <!-- Shape Selector -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <label class="block text-xs font-semibold text-slate-600">Shape</label>
+                <div class="flex items-center space-x-2">
+                    <button onclick="setShape('round')" id="shape-round" class="shape-btn px-4 py-2 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-semibold text-xs transition">Round</button>
+                    <button onclick="setShape('oval')" id="shape-oval" class="shape-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Oval</button>
+                    <button onclick="setShape('rectangle')" id="shape-rectangle" class="shape-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Rectangle</button>
+                    <button onclick="setShape('square')" id="shape-square" class="shape-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition">Square</button>
+                </div>
+            </div>
+
+            <!-- Text Fields -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Top text (curved)</label>
+                        <input type="text" id="top-text" value="SHARMA DIGITAL SEVA KENDRA" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Bottom text (curved)</label>
+                        <input type="text" id="bottom-text" value="PATNA, BIHAR" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Center line 1</label>
+                        <input type="text" id="center-line-1" value="PROPRIETOR" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Center line 2</label>
+                        <input type="text" id="center-line-2" value="" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Registration / extra line</label>
+                        <input type="text" id="reg-line" value="Reg. No. 12345" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Logo (center, optional)</label>
+                        <input type="file" id="logo-input" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ink Color & Typography -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-2">Ink color</label>
+                    <div class="flex items-center space-x-3 flex-wrap gap-y-2">
+                        <button onclick="setInkColor('#1d4ed8', this)" class="ink-btn w-7 h-7 rounded-full bg-blue-700 ring-2 ring-offset-2 ring-blue-700 transition"></button>
+                        <button onclick="setInkColor('#6b21a8', this)" class="ink-btn w-7 h-7 rounded-full bg-purple-800 transition"></button>
+                        <button onclick="setInkColor('#dc2626', this)" class="ink-btn w-7 h-7 rounded-full bg-red-600 transition"></button>
+                        <button onclick="setInkColor('#000000', this)" class="ink-btn w-7 h-7 rounded-full bg-black transition"></button>
+                        <button onclick="setInkColor('#16a34a', this)" class="ink-btn w-7 h-7 rounded-full bg-green-600 transition"></button>
+                        <input type="color" id="custom-ink" value="#1d4ed8" class="w-7 h-7 rounded-full border cursor-pointer p-0 bg-transparent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Font</label>
+                        <select id="font-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="Poppins">Poppins</option>
+                            <option value="Roboto">Roboto</option>
+                            <option value="Montserrat">Montserrat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Separator</label>
+                        <select id="separator-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium outline-none">
+                            <option value="★ Stars">★ Stars</option>
+                            <option value="• Bullets">• Bullets</option>
+                            <option value="— Dashes">— Dashes</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-2 text-xs font-medium text-slate-750 cursor-pointer">
+                            <input type="checkbox" id="double-border" checked class="rounded text-blue-600 focus:ring-blue-500">
+                            <span>Double border</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-xs font-medium text-slate-750 cursor-pointer">
+                            <input type="checkbox" id="ink-texture" class="rounded text-blue-600 focus:ring-blue-500">
+                            <span>Ink texture (real stamp look)</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span>Border width</span>
+                        </div>
+                        <input type="range" id="border-range" min="2" max="25" value="10" class="w-full accent-blue-600">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span>Text size</span>
+                        </div>
+                        <input type="range" id="text-size-range" min="60" max="140" value="100" class="w-full accent-blue-600">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Preview Column (6 Cols) -->
+        <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span id="preview-title" class="text-xs font-bold text-slate-700">Preview — Round, transparent background</span>
+                </div>
+
+                <!-- Canvas Preview Container -->
+                <div class="w-full h-[460px] rounded-2xl border border-slate-200 transparent-bg relative overflow-hidden flex items-center justify-center p-4">
+                    <canvas id="stamp-canvas" class="max-w-full max-h-full object-contain"></canvas>
+                </div>
+            </div>
+
+            <!-- Download Action -->
+            <div class="flex items-center space-x-3 pt-2">
+                <button onclick="downloadPNG()" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-xl text-xs shadow transition flex items-center justify-center space-x-1.5">
+                    <span>📥 Download transparent PNG</span>
+                </button>
+                <button onclick="resetDefaults()" class="p-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs transition">🔄 Reset</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 DocSmartly Utilities. All rights reserved. Processed locally in your browser.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentShape = 'round';
+        let inkColor = '#1d4ed8';
+        let logoImg = null;
+
+        const canvas = document.getElementById('stamp-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Inputs
+        const topText = document.getElementById('top-text');
+        const bottomText = document.getElementById('bottom-text');
+        const centerLine1 = document.getElementById('center-line-1');
+        const centerLine2 = document.getElementById('center-line-2');
+        const regLine = document.getElementById('reg-line');
+        const logoInput = document.getElementById('logo-input');
+        const fontSelect = document.getElementById('font-select');
+        const separatorSelect = document.getElementById('separator-select');
+        const doubleBorder = document.getElementById('double-border');
+        const inkTexture = document.getElementById('ink-texture');
+        const borderRange = document.getElementById('border-range');
+        const textSizeRange = document.getElementById('text-size-range');
+
+        window.setShape = function(shape) {
+            currentShape = shape;
+            document.querySelectorAll('.shape-btn').forEach(b => {
+                b.className = "shape-btn px-4 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-700 font-semibold text-xs transition";
+            });
+            document.getElementById(`shape-${shape}`).className = "shape-btn px-4 py-2 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-semibold text-xs transition";
+            document.getElementById('preview-title').innerText = `Preview — ${shape.charAt(0).toUpperCase() + shape.slice(1)}, transparent background`;
+            renderStamp();
+        };
+
+        window.setInkColor = function(color, btn) {
+            inkColor = color;
+            document.getElementById('custom-ink').value = color;
+            document.querySelectorAll('.ink-btn').forEach(b => b.classList.remove('ring-2', 'ring-offset-2', 'ring-blue-700'));
+            if (btn) btn.classList.add('ring-2', 'ring-offset-2', 'ring-blue-700');
+            renderStamp();
+        };
+
+        document.getElementById('custom-ink').oninput = (e) => {
+            inkColor = e.target.value;
+            renderStamp();
+        };
+
+        logoInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => { logoImg = img; renderStamp(); };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        [topText, bottomText, centerLine1, centerLine2, regLine, fontSelect, separatorSelect, doubleBorder, inkTexture, borderRange, textSizeRange].forEach(el => {
+            el.addEventListener('input', renderStamp);
+            el.addEventListener('change', renderStamp);
+        });
+
+        function renderStamp() {
+            const size = 1200;
+            canvas.width = size;
+            canvas.height = size;
+            ctx.clearRect(0, 0, size, size);
+
+            ctx.save();
+            ctx.strokeStyle = inkColor;
+            ctx.fillStyle = inkColor;
+
+            const bWidth = parseInt(borderRange.value);
+            const scale = parseInt(textSizeRange.value) / 100;
+            const font = fontSelect.value;
+
+            if (currentShape === 'round') {
+                const cx = size / 2, cy = size / 2;
+                const rOuter = size * 0.45;
+                const rInner = rOuter - 25;
+
+                // Outer Borders
+                ctx.lineWidth = bWidth;
+                ctx.beginPath(); ctx.arc(cx, cy, rOuter, 0, Math.PI * 2); ctx.stroke();
+
+                if (doubleBorder.checked) {
+                    ctx.lineWidth = bWidth * 0.4;
+                    ctx.beginPath(); ctx.arc(cx, cy, rInner, 0, Math.PI * 2); ctx.stroke();
+                }
+
+                // Curved Top Text
+                let tText = topText.value.trim();
+                if (separatorSelect.value === '★ Stars') tText = `★ ${tText} ★`;
+                else if (separatorSelect.value === '• Bullets') tText = `• ${tText} •`;
+                else if (separatorSelect.value === '— Dashes') tText = `— ${tText} —`;
+
+                drawCurvedText(ctx, tText, cx, cy, rOuter - 65, -Math.PI / 2, Math.PI, `bold ${Math.round(48 * scale)}px '${font}', sans-serif`);
+
+                // Curved Bottom Text
+                let bText = bottomText.value.trim();
+                if (separatorSelect.value === '★ Stars') bText = `★ ${bText} ★`;
+                else if (separatorSelect.value === '• Bullets') bText = `• ${bText} •`;
+                else if (separatorSelect.value === '— Dashes') bText = `— ${bText} —`;
+
+                drawCurvedText(ctx, bText, cx, cy, rOuter - 65, Math.PI / 2, Math.PI, `bold ${Math.round(48 * scale)}px '${font}', sans-serif`, true);
+
+                // Center Content
+                let currentY = cy - 40;
+                if (logoImg) {
+                    const logoSize = 140;
+                    ctx.drawImage(logoImg, cx - logoSize/2, currentY - 80, logoSize, logoSize);
+                    currentY += 70;
+                }
+
+                if (centerLine1.value) {
+                    ctx.font = `bold ${Math.round(62 * scale)}px '${font}', sans-serif`;
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(centerLine1.value, cx, currentY);
+                    currentY += 65;
+                }
+
+                if (centerLine2.value) {
+                    ctx.font = `600 ${Math.round(48 * scale)}px '${font}', sans-serif`;
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(centerLine2.value, cx, currentY);
+                    currentY += 55;
+                }
+
+                if (regLine.value) {
+                    ctx.font = `600 ${Math.round(44 * scale)}px '${font}', sans-serif`;
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(regLine.value, cx, currentY);
+                }
+
+            } else if (currentShape === 'rectangle') {
+                const x = 100, y = 200, w = 1000, h = 800;
+                ctx.lineWidth = bWidth;
+                ctx.strokeRect(x, y, w, h);
+                if (doubleBorder.checked) {
+                    ctx.lineWidth = bWidth * 0.4;
+                    ctx.strokeRect(x + 15, y + 15, w - 30, h - 30);
+                }
+
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.font = `bold ${Math.round(56 * scale)}px '${font}', sans-serif`;
+                ctx.fillText(topText.value, size/2, y + 90);
+
+                if (centerLine1.value) {
+                    ctx.font = `bold ${Math.round(72 * scale)}px '${font}', sans-serif`;
+                    ctx.fillText(centerLine1.value, size/2, y + h/2 - 20);
+                }
+                if (centerLine2.value) {
+                    ctx.font = `600 ${Math.round(52 * scale)}px '${font}', sans-serif`;
+                    ctx.fillText(centerLine2.value, size/2, y + h/2 + 50);
+                }
+                if (regLine.value) {
+                    ctx.font = `600 ${Math.round(46 * scale)}px '${font}', sans-serif`;
+                    ctx.fillText(regLine.value, size/2, y + h - 80);
+                }
+            } else {
+                // Oval / Square fallback
+                const cx = size / 2, cy = size / 2;
+                ctx.lineWidth = bWidth;
+                ctx.beginPath(); ctx.ellipse(cx, cy, size * 0.45, size * 0.32, 0, 0, Math.PI * 2); ctx.stroke();
+                if (doubleBorder.checked) {
+                    ctx.lineWidth = bWidth * 0.4;
+                    ctx.beginPath(); ctx.ellipse(cx, cy, size * 0.42, size * 0.29, 0, 0, Math.PI * 2); ctx.stroke();
+                }
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.font = `bold ${Math.round(56 * scale)}px '${font}', sans-serif`;
+                ctx.fillText(topText.value, cx, cy - 60);
+                if (centerLine1.value) {
+                    ctx.font = `bold ${Math.round(64 * scale)}px '${font}', sans-serif`;
+                    ctx.fillText(centerLine1.value, cx, cy + 10);
+                }
+                if (regLine.value) {
+                    ctx.font = `600 ${Math.round(44 * scale)}px '${font}', sans-serif`;
+                    ctx.fillText(regLine.value, cx, cy + 70);
+                }
+            }
+
+            // Ink Texture Effect
+            if (inkTexture.checked) {
+                applyInkTexture(ctx, size);
+            }
+
+            ctx.restore();
+        }
+
+        function drawCurvedText(ctx, str, cx, cy, radius, startAngle, angleLength, font, reverse = false) {
+            ctx.save();
+            ctx.font = font;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            const len = str.length;
+            let totalAngle = 0;
+            const charAngles = [];
+            for (let i = 0; i < len; i++) {
+                const a = ctx.measureText(str[i]).width / radius;
+                charAngles.push(a);
+                totalAngle += a;
+            }
+
+            let curAngle = startAngle - (totalAngle / 2);
+            if (reverse) curAngle = startAngle + (totalAngle / 2);
+
+            for (let i = 0; i < len; i++) {
+                const char = reverse ? str[len - 1 - i] : str[i];
+                const a = charAngles[reverse ? len - 1 - i] : charAngles[i];
+                if (!reverse) curAngle += a / 2;
+                else curAngle -= a / 2;
+
+                ctx.save();
+                ctx.translate(cx + radius * Math.cos(curAngle), cy + radius * Math.sin(curAngle));
+                ctx.rotate(curAngle + Math.PI / 2);
+                ctx.fillText(char, 0, 0);
+                ctx.restore();
+
+                if (!reverse) curAngle += a / 2;
+                else curAngle -= a / 2;
+            }
+            ctx.restore();
+        }
+
+        function applyInkTexture(ctx, size) {
+            const imgData = ctx.getImageData(0, 0, size, size);
+            const data = imgData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i + 3] > 0) {
+                    if (Math.random() < 0.12) {
+                        data[i + 3] = Math.floor(data[i + 3] * (0.5 + Math.random() * 0.4));
+                    }
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        window.resetDefaults = function() {
+            topText.value = "SHARMA DIGITAL SEVA KENDRA";
+            bottomText.value = "PATNA, BIHAR";
+            centerLine1.value = "PROPRIETOR";
+            centerLine2.value = "";
+            regLine.value = "Reg. No. 12345";
+            renderStamp();
+        };
+
+        window.downloadPNG = function() {
+            const link = document.createElement('a');
+            link.download = 'stamp_design.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        };
+
+        // Initial render
+        renderStamp();
+    </script>
 </body>
 </html>
