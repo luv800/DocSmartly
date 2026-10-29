@@ -537,7 +537,7 @@ $('#panG').innerHTML=[["New PAN Card Apply","newdoc"],["PAN Update / Correction"
 $('#conv').innerHTML=[["Aadhaar","fing","0000 0000 0000"],["PAN Card","pan","XXXXX0000X"],["Voter ID","vote","XXX0000000"],["Driving Licence (DL)","id","XX00 0000000000"],["Vehicle RC","car","XX 00 XX 0000"],["Any Other Document","doc","XXXX XXXX"]].map((c,i)=>`<button class="card" data-svc>${th("conv:"+c[0],c[1],c[2],i+1)}<h3>${c[0]} PVC Converter</h3><div class="pr">₹5</div></button>`).join('');
 /* name|category|icon */
 const TL={"Most Used":"Passport Photo Sheet|img;QR Code Generator|qr;Stamp Designer|stamp;ID Card Front & Back to A4|a4;What Is My IP|globe;Letterhead Maker|text;Visiting Card Designer|id;Marriage Biodata Maker|doc;Age Calculator|clock;Photo & Signature Resizer|resize",
-"PDF":"JPG / PNG to PDF|img;PDF Merge|merge;PDF Split & Page Extract|split;PDF to JPG|conv;PDF Rotate & Reorder|rot;PDF Compressor (KB)|zip;Document Scanner & PDF|scan;PDF Page Number Adder|text;PDF Header & Footer Maker|text",
+"PDF": "JPG / PNG to PDF|img;PDF Merge|merge;PDF Split & Page Extract|split;PDF to JPG|conv;PDF Rotate & Reorder|rot;PDF Compressor (KB)|zip;Document Scanner & PDF|scan;PDF Page Number Adder|text;PDF Header & Footer Maker|text",
 "Image":"Photo Compressor (KB)|zip;Image Format Converter|conv;Background Remover|layers;WebP to JPG Converter|conv;ICO to PNG|conv;ICO Converter (Favicon)|frame;Thumbnail Resizer|resize;Favicon Preview Tool & Maker|frame",
 "Photo Editing":"Image Watermark Maker|drop;Digital Signature Maker|sign;Photo Color Changer|drop;Photo Blur Tool|blur;Image to Black & White|blur;Background Black & White|layers;Photo Border Maker|frame;Color Picker from Image|drop;Name, Date & Text on Photo|text;Instagram Reel Cover Maker|img",
 "Print & ID":"ID Card Maker|id;QR Code Designer & Modifier|qr;Employee ID Card Maker|id;Student ID Card Maker|id;A4 Photo Print Layout|a4",
@@ -566,9 +566,9 @@ function getToolUrl(name) {
     "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
     "PDF Compressor (KB)": "pdf-compressor.html",
     "Document Scanner & PDF": "document-scanner.html",
-    "Photo Compressor (KB)": "photo-compressor.html",
     "PDF Page Number Adder": "pdf-page-number-adder.html",
     "PDF Header & Footer Maker": "pdf-header-footer-maker.html",
+    "Photo Compressor (KB)": "photo-compressor.html",
     "Image Format Converter": "image-converter.html",
     "Background Remover": "background-remover.html",
     "WebP to JPG Converter": "webp-to-jpg.html",
@@ -590,7 +590,6 @@ function getToolUrl(name) {
   const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return `freetools/${fallback}.html`;
 }
-
 function rt(){
   const q=$('#tq').value.toLowerCase();
   $('#cats').innerHTML=cats.map(c=>`<button class="${c==cat&&!q?'on':''}" data-c="${c}">${c}</button>`).join('');
