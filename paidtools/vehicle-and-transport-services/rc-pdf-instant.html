@@ -1,645 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>RC PDF Instant – DocSmartly</title>
-<link rel="stylesheet" href="../../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
-  window.location.replace('../../login.html');
-}
-</script>
-<style>
-:root {
-  --bg: #f4f7fe;
-  --sf: #ffffff;
-  --ink: #13233f;
-  --mut: #64748b;
-  --ln: #e2e8f0;
-  --ac: #2457d6;
-  --ac2: #16337a;
-  --tint: #eff4ff;
-  --ok: #16a34a;
-  --er: #dc2626;
-  --warn: #d97706;
-}
-body { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background-color: var(--bg); color: var(--ink); }
-.ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
-.ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
-.tb { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-.chip { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-weight: 700; color: var(--ac2); text-decoration: none; font-size: 0.9rem; }
-.container { max-width: 860px; margin: 30px auto; padding: 0 20px; }
-.card { background: var(--sf); border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 24px; position: relative; overflow: hidden; }
-.badge-charge { display: inline-flex; align-items: center; gap: 6px; background: #e6f4ea; color: #137333; font-weight: 700; font-size: 0.85rem; padding: 6px 14px; border-radius: 99px; border: 1px solid #ceead6; margin-bottom: 16px; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--ink); }
-.form-group input, .form-group textarea { width: 100%; height: 44px; padding: 10px 14px; border: 1.5px solid var(--ln); border-radius: 10px; font-family: inherit; font-size: 0.92rem; box-sizing: border-box; outline: none; transition: border-color .2s; }
-.form-group textarea { height: 80px; resize: vertical; }
-.form-group input:focus, .form-group textarea:focus { border-color: var(--ac); }
-.chk-wrap { display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; color: #475569; margin: 20px 0; background: #fff8e6; padding: 12px 14px; border-radius: 10px; border: 1px solid #fef3c7; }
-.chk-wrap input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
-.btn-primary { background: var(--ac); color: #fff; border: none; font-weight: 700; font-size: 0.95rem; height: 46px; border-radius: 10px; cursor: pointer; width: 100%; transition: background .2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-.btn-primary:hover { background: var(--ac2); }
-.status-box { text-align: center; padding: 30px 10px; }
-.spinner { width: 44px; height: 44px; border: 4px solid var(--ln); border-top-color: var(--ac); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
-table { width: 100%; border-collapse: collapse; min-width: 500px; }
-th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .88rem; }
-th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); background: var(--tint); }
-.sb-status { display: inline-block; border-radius: 99px; padding: 3px 10px; font-size: .75rem; font-weight: 800; text-transform: capitalize; }
-.s-pending { background: #fff1cc; color: #6b4200; }
-.s-processing { background: #dbe7ff; color: #1b44ad; }
-.s-success { background: #e0f5ea; color: #0f6b45; }
-.s-failed { background: #fdecea; color: #7a1a12; }
-</style>
-</head>
-<body>
-
-<header class="ap">
-  <div class="w">
-    <a href="../../dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
-    <div class="tb">
-      <span class="chip" id="walletBal">₹0.00</span>
-      <a class="btn-primary" href="../../dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
-    </div>
-  </div>
-</header>
-
-<div class="container">
-  
-  <!-- SERVICE MAIN CARD -->
-  <div class="card" id="mainServiceCard">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <h1 style="font-size: 1.6rem; margin: 0 0 6px;">RC PDF Instant (RTO Verification)</h1>
-      <p style="color: var(--mut); margin: 0 0 12px; font-size: 0.9rem;">Instant RTO verification &amp; non-chip / chip RC PDF document generation.</p>
-      <div class="badge-charge">🏷️ Charge: ₹40.00 / Request</div>
-    </div>
-
-    <!-- STEP 1: INPUT FORM -->
-    <div id="step1Form">
-      <form id="fRcForm">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
-          <div class="form-group">
-            <label for="vNo">Vehicle Number *</label>
-            <input type="text" id="vNo" placeholder="EX: RJ14AB1234" required style="text-transform:uppercase;">
-          </div>
-          <div class="form-group">
-            <label for="chNo">Chassis Number *</label>
-            <input type="text" id="chNo" placeholder="Enter last 5 or full Chassis No." required style="text-transform:uppercase;">
-          </div>
-          <div class="form-group">
-            <label for="engNo">Engine Number *</label>
-            <input type="text" id="engNo" placeholder="Enter last 5 or full Engine No." required style="text-transform:uppercase;">
-          </div>
-          <div class="form-group">
-            <label for="mobNo">Registered Mobile Number *</label>
-            <input type="tel" id="mobNo" placeholder="10 Digit Registered Mobile No." pattern="[0-9]{10}" maxlength="10" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="regAddr">Registered Owner Address *</label>
-          <textarea id="regAddr" placeholder="Enter full registered address as per RTO records" required></textarea>
-        </div>
-
-        <div class="chk-wrap">
-          <input type="checkbox" id="chkConfirm" required>
-          <label for="chkConfirm" style="cursor:pointer;">
-            Main ye poori tarah se confirm karta hu ki di gayi sabhi jankari (Vehicle, Chassis, Engine No. aur Address) bilkul sahi hain. Galat jankari paye jane par hone wale kisi bhi nuksan ki zimmedari meri khud ki hogi.
-          </label>
-        </div>
-
-        <button type="submit" class="btn-primary" id="btnSubStep1">Submit &amp; Proceed to OTP</button>
-      </form>
-    </div>
-
-    <!-- STEP 2: OTP CONFIRMATION SCREEN -->
-    <div id="step2Otp" style="display: none;">
-      <div class="status-box">
-        <div class="spinner" id="otpSpinner"></div>
-        <h3 id="otpTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Wait for OTP confirmation from RTO officials</h3>
-        <p id="otpMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
-          Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
-        </p>
-
-        <!-- Wrong OTP message -->
-        <div id="otpErrBox" role="alert" style="display: none; margin: 0 auto 16px; padding: 12px 16px; border-radius: 10px; max-width: 340px; font-size: 0.88rem; font-weight: 700; background: #fdecea; color: #7a1a12; border: 1px solid #f3b8b2;"></div>
-
-        <form id="fOtpForm" style="max-width: 340px; margin: 0 auto;">
-          <div class="form-group">
-            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
-          </div>
-          <button type="submit" class="btn-primary" id="btnOtpSubmit">Verify &amp; Submit OTP</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- STEP 3: WAITING FOR ADMIN OTP & PDF UPLOAD -->
-    <div id="step3Waiting" style="display: none;">
-      <div class="status-box">
-        <div class="spinner" id="waitSpinner"></div>
-        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ac);">Checking OTP confirmation...</h3>
-        <p id="waitMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
-          Admin dwara OTP verify kiya ja raha hai. Verification ke baad official RC PDF upload hote hi yahan download button aa jayega.
-        </p>
-
-        <!-- Live Status / Rejection / Approval Message Box -->
-        <div id="liveStatusBox" style="display: none; margin: 15px auto; padding: 14px 18px; border-radius: 10px; max-width: 480px; font-size: 0.9rem; font-weight: 600;"></div>
-
-        <div id="downloadContainer" style="display: none;">
-          <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
-            📥 Download RC PDF Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- RECENT HISTORY CARD -->
-  <div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-      <div>
-        <h3 style="margin: 0; font-size: 1.1rem;">History</h3>
-        <p style="margin: 2px 0 0; font-size: 0.82rem; color: var(--mut);">Is service ki aapki recent requests — click karke kisi bhi order ko resume kar sakte hain</p>
-      </div>
-      <a href="../../dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
-    </div>
-
-    <div class="tw">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Vehicle No</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="historyTbody">
-          <tr><td colspan="4" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-</div>
-
-<script src="../../tools.js"></script>
-<script>
-const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const CHARGE = 40;
-// Ye text admin page ke WRONG_OTP_REMARK se EXACT same hona chahiye
-const WRONG_OTP_REMARK = 'Incorrect OTP entered. Please re-enter correct OTP.';
-let currentRequestId = localStorage.getItem('ds_current_rc_req') || null;
-let pollTimer = null;
-
-// ---------- Session-aware fetch ----------
-// Server {"error":"session"} / 401 de to chup-chaap fail hone ki jagah user ko login par bhejo
-let sessionDead = false;
-function goLogin() { window.location.replace('../../login.html'); }
-function sessionExpired() {
-  if (sessionDead) return;
-  sessionDead = true;
-  clearInterval(pollTimer);
-  localStorage.removeItem('ds_token');
-  localStorage.removeItem('ds_session');
-  alert('Aapka login session expire ho gaya hai. Kripya dobara login karein.');
-  goLogin();
-}
-async function apiFetch(url, opts) {
-  const r = await fetch(url, opts);
-  if (!r.ok) {
-    let t = '';
-    try { t = await r.clone().text(); } catch (_) {}
-    if (r.status === 401 || /"error"\s*:\s*"session"/.test(t)) {
-      sessionExpired();
-      throw new Error('session');
-    }
-  }
-  return r;
-}
-const isSessionErr = e => !!e && e.message === 'session';
-
-function user() {
-  try {
-    const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-    const sess = localStorage.getItem('ds_session');
-    return list.find(x => x.id === sess) || { name: 'User', bal: 0, orders: [], tx: [] };
-  } catch (e) {
-    return { name: 'User', bal: 0, orders: [], tx: [] };
-  }
-}
-
-function saveUser(u) {
-  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-  const idx = list.findIndex(x => x.id === u.id);
-  if (idx >= 0) list[idx] = u; else list.push(u);
-  localStorage.setItem('ds_users', JSON.stringify(list));
-}
-
-function updateWalletUI() {
-  const u = user();
-  document.getElementById('walletBal').textContent = '₹' + Number(u.bal || 0).toLocaleString('en-IN');
-}
-
-function renderHistoryTable() {
-  const u = user();
-  const rcOrders = (u.orders || []).filter(o => o.n === 'RC PDF INSTANT').sort((a,b) => b.t - a.t);
-  const tbody = document.getElementById('historyTbody');
-  
-  if (!rcOrders.length) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = rcOrders.map(o => `
-    <tr style="cursor:pointer;" title="Click to resume this order" onclick="resumeOrder('${o.id}')">
-      <td>${new Date(o.t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
-      <td><b>${o.doc || o.id}</b></td>
-      <td><span class="sb-status s-${o.s}">${o.s}</span></td>
-      <td>
-        ${o.file ? `<button class="btn-primary" onclick="event.stopPropagation(); downloadFile('${o.id}', '${o.file.name}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok)">Download</button>` : `<button class="btn-primary" onclick="event.stopPropagation(); resumeOrder('${o.id}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ac)">Resume / View</button>`}
-      </td>
-    </tr>
-  `).join('');
-}
-
-async function resumeOrder(reqId) {
-  currentRequestId = reqId;
-  localStorage.setItem('ds_current_rc_req', reqId);
-  await checkAndRestoreStep();
-}
-
-async function checkAndRestoreStep() {
-  if (!currentRequestId) return;
-
-  try {
-    const r = await apiFetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-    });
-    if (!r.ok) return;
-    const data = await r.json();
-    const req = data.request;
-    if (!req) return;
-
-    document.getElementById('step1Form').style.display = 'none';
-
-    const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
-
-    if (req.s === 'success') {
-      // Admin ne approve kiya: success message + file ka wait (ya file ready)
-      showApproved(req);
-      if (req.file) {
-        clearInterval(pollTimer);
-        localStorage.removeItem('ds_current_rc_req');
-      } else {
-        startStatusPolling();
-      }
-    }
-    else if (otpStatus === 'wrong' || req.s === 'failed') {
-      clearInterval(pollTimer);
-      showWrongOtp(req.remark);
-    }
-    else if (otpStatus === 'waiting_verify' || req.s === 'processing') {
-      showChecking(req.remark);
-      startStatusPolling();
-    } else {
-      // OTP abhi enter nahi hua -> normal OTP page
-      clearInterval(pollTimer);
-      showOtpPage();
-    }
-  } catch (err) {
-    if (isSessionErr(err)) return;
-    console.error('Restore step error:', err);
-  }
-}
-
-// Step 1: Submit Form
-document.getElementById('fRcForm').onsubmit = async function(e) {
-  e.preventDefault();
-  const u = user();
-  
-  if (u.bal < CHARGE) {
-    alert('Insufficient balance! Kripya pehle wallet top-up karein.');
-    window.location.href = '../../dashboard.html#addmoney';
-    return;
-  }
-
-  const vNo = document.getElementById('vNo').value.trim().toUpperCase();
-  const chNo = document.getElementById('chNo').value.trim().toUpperCase();
-  const engNo = document.getElementById('engNo').value.trim().toUpperCase();
-  const mobNo = document.getElementById('mobNo').value.trim();
-  const regAddr = document.getElementById('regAddr').value.trim();
-
-  try {
-    const res = await apiFetch(API + '/api/requests', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-user-token': localStorage.getItem('ds_token') || ''
-      },
-      body: JSON.stringify({
-        k: 'RC Services|RC PDF INSTANT',
-        sec: 'RC Services',
-        amt: CHARGE,
-        data: {
-          'Vehicle Number': vNo,
-          'Chassis Number': chNo,
-          'Engine Number': engNo,
-          'Mobile Number': mobNo,
-          'Registered Address': regAddr,
-          'otp_status': 'pending'
-        }
-      })
-    });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      alert('Failed to submit request to server: ' + errText);
-      return;
-    }
-
-    const j = await res.json();
-    if (j.user) saveUser(j.user);
-    
-    currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id);
-    
-    if (!currentRequestId) {
-      const latestUser = user();
-      const latestOrder = (latestUser.orders || []).sort((a,b) => b.t - a.t)[0];
-      if (latestOrder) {
-        currentRequestId = latestOrder.id;
-      }
-    }
-
-    if (!currentRequestId) {
-      alert('Error: Server did not return a valid Request ID.');
-      return;
-    }
-
-    localStorage.setItem('ds_current_rc_req', currentRequestId);
-
-    updateWalletUI();
-    renderHistoryTable();
-
-    document.getElementById('step1Form').style.display = 'none';
-    showOtpPage();
-
-  } catch (err) {
-    if (isSessionErr(err)) return;
-    console.error('Submit Error:', err);
-    alert('Network error while submitting request.');
-  }
+// --- FREE TOOLS MAPPING ---
+const freeToolsMap = {
+  "Passport Photo Sheet": "passport-photo-sheet.html",
+  "Passport Photo Maker": "passport_photo.html",
+  "PDF to Excel": "pdf-to-excel.html",
+  "QR Code Generator": "qr-code-generator.html",
+  "Stamp Designer": "stamp-designer.html",
+  "ID Card Front & Back to A4": "id-card-front-back-a4.html",
+  "What Is My IP": "what-is-my-ip.html",
+  "Letterhead Maker": "letterhead-maker.html",
+  "Visiting Card Designer": "visiting-card-designer.html",
+  "Marriage Biodata Maker": "marriage-biodata-maker.html",
+  "Age Calculator": "age-calculator.html",
+  "Photo & Signature Resizer": "photo-signature-resizer.html",
+  "JPG / PNG to PDF": "jpg-png-to-pdf.html",
+  "PDF Merge": "pdf-merge.html",
+  "PDF Split & Page Extract": "pdf-split-extract.html",
+  "PDF to JPG": "pdf-to-jpg.html",
+  "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
+  "PDF Compressor (KB)": "pdf-compressor.html",
+  "Document Scanner & PDF": "document-scanner.html",
+  "PDF Page Number Adder": "pdf_page_number_adder.html",
+  "PDF Header & Footer Maker": "pdf_header_footer_maker.html",
+  "Photo Compressor (KB)": "photo-compressor.html",
+  "Image Format Converter": "image-converter.html",
+  "Background Remover": "background-remover.html",
+  "WebP to JPG Converter": "webp-to-jpg.html",
+  "Digital Signature Maker": "digital-signature-maker.html",
+  "Photo Color Changer": "photo-color-changer.html",
+  "Photo Blur Tool": "photo-blur.html",
+  "Image to Black & White": "image-black-and-white.html",
+  "Background Black & White": "background_black_white.html",
+  "Photo Border Maker": "photo-border.html",
+  "Color Picker from Image": "color-picker.html",
+  "ID Card Maker": "id_card_maker.html",
+  "Employee ID Card Maker": "employee-id-card-maker.html",
+  "Student ID Card Maker": "student-id-card-maker.html",
+  "A4 Photo Print Layout": "a4-photo-print-layout.html",
+  "Text to PDF / Application": "text-to-pdf.html",
+  "Resume Maker": "resume-maker.html",
+  "Invoice Maker": "invoice-maker.html",
+  "Quotation Maker": "quotation-maker.html",
+  "Hindi Typing Tool": "hindi-typing.html",
+  "GST Calculator": "gst-calculator.html",
+  "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
+  "Printing Cost Calculator": "printing-cost-calculator.html",
+  "Cash Denomination Calculator": "cash-denomination-calculator.html",
+  "Salary Calculator": "salary-calculator.html",
+  "Percentage Calculator": "percentage-calculator.html",
+  "Loan / EMI Calculator": "loan-emi-calculator.html",
+  "Word Counter": "word-counter.html",
+  "ICO to PNG": "ico_to_png.html",
+  "ICO Converter (Favicon)": "ico_converter_favicon.html",
+  "Thumbnail Resizer": "thumbnail_resizer.html",
+  "Favicon Preview Tool & Maker": "favicon_preview_tool_maker.html",
+  "Image Watermark Maker": "image-watermark-maker.html",
+  "Calculator — Basic & Scientific": "calculator.html",
+  "Online Stopwatch": "stopwatch.html",
+  "Name, Date & Text on Photo": "name_date_text_on_photo.html",
+  "Instagram Reel Cover Maker": "instagram_reel_cover_maker.html",
+  "Password to MD5 / SHA-256": "password-to-md5.html",
+  "Meta Title & Description Generator": "meta-generator.html",
+  "OMR Sheet Generator & Checker": "omr-generator.html",
+  "Typing Speed Test — Hindi & English": "typing-test.html",
+  "Online Exam System — Teacher & Student": "online-exam.html"
 };
 
-// Step 2: Submit OTP
-document.getElementById('fOtpForm').onsubmit = async function(e) {
-  e.preventDefault();
-  const otp = document.getElementById('otpCode').value.trim();
-  if (!otp) return;
-
-  if (!currentRequestId) {
-    currentRequestId = localStorage.getItem('ds_current_rc_req');
-  }
-
-  if (!currentRequestId) {
-    alert('Session expired or Request ID missing. Kripya form dobara bharein.');
-    location.reload();
-    return;
-  }
-
-  const btn = document.getElementById('btnOtpSubmit');
-  const btnText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Submitting...';
-
-  const url = API + '/api/requests/' + encodeURIComponent(currentRequestId);
-  const hdr = { 'x-user-token': localStorage.getItem('ds_token') || '' };
-
-  try {
-    let existingData = {};
-    try {
-      const getRes = await apiFetch(url, { headers: hdr });
-      if (getRes.ok) {
-        const resJson = await getRes.json();
-        if (resJson.request && resJson.request.data) {
-          existingData = resJson.request.data;
-        }
-      }
-    } catch (gErr) {
-      if (isSessionErr(gErr)) throw gErr;
-      console.warn('Could not fetch existing request data, proceeding:', gErr);
-    }
-
-    const patchRes = await apiFetch(url, {
-      method: 'PATCH',
-      headers: { ...hdr, 'content-type': 'application/json' },
-      body: JSON.stringify({
-        s: 'processing',
-        data: {
-          ...existingData,
-          entered_otp: otp,
-          otp_status: 'waiting_verify'
-        }
-      })
-    });
-
-    const patchText = await patchRes.text();
-    if (!patchRes.ok) {
-      alert('Server Error (' + patchRes.status + '): ' + patchText);
-      return;
-    }
-
-    // Verify: server ne OTP sach me save kiya? Nahi to admin ko OTP nahi dikhega
-    // aur user bina wajah "Checking..." par atka rahega.
-    let saved = false, lastReq = null;
-    for (let i = 0; i < 3 && !saved; i++) {
-      if (i) await new Promise(r => setTimeout(r, 1000));
-      try {
-        const vr = await apiFetch(url, { headers: hdr });
-        if (vr.ok) {
-          lastReq = (await vr.json()).request;
-          saved = !!(lastReq && lastReq.data && String(lastReq.data.entered_otp) === otp);
-        }
-      } catch (ve) { if (isSessionErr(ve)) throw ve; }
-    }
-
-    if (!saved) {
-      console.error('OTP save verify failed. PATCH response:', patchRes.status, patchText, '| request now:', lastReq);
-      alert('OTP server par save nahi hua, isliye admin ko nahi dikhega.\n\n(PATCH ' + patchRes.status + ') Backend worker ko PATCH /api/requests/:id par "data" (entered_otp) save karna chahiye. Kripya dobara try karein ya admin ko batayein.');
-      return;
-    }
-  } catch (err) {
-    if (isSessionErr(err)) return;
-    console.error('OTP Submit Error:', err);
-    alert('Network error while submitting OTP.');
-    return;
-  } finally {
-    btn.disabled = false;
-    btn.textContent = btnText;
-  }
-
-  showChecking('');
-  startStatusPolling();
+// --- PAID SERVICES MAPPING ---
+const paidToolsMap = {
+  "RC PDF INSTANT": "vehicle-and-transport-services/rc-pdf-instant.html"
+  // Baki paid services ke dynamic pages banne par yahan add karte jayen
 };
 
-// ---------- Screen helpers ----------
-const $id = x => document.getElementById(x);
-
-function showNote(remark) {
-  const box = $id('liveStatusBox');
-  // Admin ka auto "wrong OTP" remark yahan note ke roop me nahi dikhana
-  if (remark && remark !== WRONG_OTP_REMARK) {
-    box.style.display = 'block';
-    box.style.background = '#e6f4ea';
-    box.style.color = '#137333';
-    box.style.border = '1px solid #ceead6';
-    box.textContent = 'ℹ️ Note: ' + remark;
-  } else {
-    box.style.display = 'none';
+// MAIN GET URL FUNCTION
+function getToolUrl(name) {
+  // 1. Check if it's a Paid Service
+  if (paidToolsMap[name]) {
+    return `paidtools/${paidToolsMap[name]}`;
   }
-}
 
-// Normal OTP page (OTP abhi enter karna hai)
-function showOtpPage() {
-  $id('step3Waiting').style.display = 'none';
-  $id('step2Otp').style.display = 'block';
-  $id('otpSpinner').style.display = 'block';
-  $id('otpTitle').textContent = 'Wait for OTP confirmation from RTO officials';
-  $id('otpTitle').style.color = 'var(--warn)';
-  $id('otpMsg').textContent = 'Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.';
-  $id('otpErrBox').style.display = 'none';
-}
-
-// OTP submit ho gaya, admin ke decision ka wait
-function showChecking(remark) {
-  $id('step2Otp').style.display = 'none';
-  $id('step3Waiting').style.display = 'block';
-  $id('waitSpinner').style.display = 'block';
-  $id('waitTitle').textContent = 'Checking OTP confirmation...';
-  $id('waitTitle').style.color = 'var(--ac)';
-  $id('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
-  $id('downloadContainer').style.display = 'none';
-  showNote(remark);
-}
-
-// Admin ne APPROVE kiya: success message + "file ka wait" (file aate hi download button)
-function showApproved(req) {
-  $id('step1Form').style.display = 'none';
-  $id('step2Otp').style.display = 'none';
-  $id('step3Waiting').style.display = 'block';
-  showNote(req.remark);
-
-  if (req.file) {
-    $id('waitSpinner').style.display = 'none';
-    $id('waitTitle').textContent = '✅ RC PDF Ready for Download!';
-    $id('waitTitle').style.color = 'var(--ok)';
-    $id('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
-    $id('liveStatusBox').style.display = 'none';
-    $id('btnDownloadPdf').onclick = () => downloadFile(req.id, req.file.name);
-    $id('downloadContainer').style.display = 'block';
-    renderHistoryTable();
-  } else {
-    $id('waitSpinner').style.display = 'block';
-    $id('waitTitle').textContent = '✅ Success! OTP Verified';
-    $id('waitTitle').style.color = 'var(--ok)';
-    $id('waitMsg').textContent = 'Aapka OTP RTO dwara verify ho gaya hai. Please wait for your file — admin aapka RC PDF upload kar rahe hain, upload hote hi yahan Download button aa jayega.';
-    $id('downloadContainer').style.display = 'none';
+  // 2. Check if it's a Free Tool
+  if (freeToolsMap[name]) {
+    return `freetools/${freeToolsMap[name]}`;
   }
+
+  // 3. Fallback for unmapped free tools
+  const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return `freetools/${fallback}.html`;
 }
-
-// Admin ne REJECT kiya: wrong OTP message + OTP dobara enter karne ka box
-function showWrongOtp(remark) {
-  $id('step1Form').style.display = 'none';
-  $id('step3Waiting').style.display = 'none';
-  $id('step2Otp').style.display = 'block';
-  $id('otpSpinner').style.display = 'none';
-  $id('otpTitle').textContent = 'Wrong OTP — sahi OTP dobara enter karein';
-  $id('otpTitle').style.color = 'var(--er)';
-  $id('otpMsg').textContent = 'RTO authority dwara aapke registered mobile par bheja gaya sahi OTP niche enter karke dobara submit karein.';
-  const errBox = $id('otpErrBox');
-  errBox.style.display = 'block';
-  errBox.textContent = '❌ ' + (remark || WRONG_OTP_REMARK);
-  const otpInput = $id('otpCode');
-  otpInput.value = '';
-  otpInput.focus();
-}
-
-function startStatusPolling() {
-  if (pollTimer) clearInterval(pollTimer);
-
-  pollTimer = setInterval(async () => {
-    if (!currentRequestId) currentRequestId = localStorage.getItem('ds_current_rc_req');
-    if (!currentRequestId) return;
-
-    try {
-      const r = await apiFetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-        headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-      });
-      if (!r.ok) return;
-      const data = await r.json();
-      const req = data.request;
-      if (!req) return;
-
-      const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
-
-      // 1) APPROVED -> success + file ka wait (success pehle check hota hai,
-      //    taaki purana "wrong" flag approve ke baad bhi wrong na dikhaye)
-      if (req.s === 'success') {
-        showApproved(req);
-        if (req.file) {
-          clearInterval(pollTimer);
-          localStorage.removeItem('ds_current_rc_req');
-        }
-        return;
-      }
-
-      // 2) REJECTED -> wrong OTP message + OTP dobara enter
-      if (otpStatus === 'wrong' || req.s === 'failed') {
-        clearInterval(pollTimer);
-        showWrongOtp(req.remark);
-        return;
-      }
-
-      // 3) Abhi decision pending -> sirf admin ka custom note update karo
-      showNote(req.remark);
-    } catch (e) {
-      if (isSessionErr(e)) return;
-      console.error('Polling error:', e);
-    }
-  }, 3000);
-}
-
-async function downloadFile(reqId, fileName) {
-  try {
-    const r = await apiFetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
-      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-    });
-    if (!r.ok) {
-      alert('File download failed.');
-      return;
-    }
-    const b = await r.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(b);
-    a.download = fileName || 'RC_Document.pdf';
-    a.click();
-  } catch (err) {
-    if (isSessionErr(err)) return;
-    alert('Downloading PDF...');
-  }
-}
-
-updateWalletUI();
-renderHistoryTable();
-
-if (currentRequestId) {
-  checkAndRestoreStep();
-}
-</script>
-</body>
-</html>
