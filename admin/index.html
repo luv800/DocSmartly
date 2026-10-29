@@ -56,7 +56,7 @@ tr.dt td{background:var(--bg);padding:14px 18px}
 
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const REFRESH_MS = 3000; // Fast live sync every 3 seconds
+const REFRESH_MS = 3000; // Live sync every 3 seconds
 const $ = s => document.querySelector(s);
 const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
@@ -117,14 +117,12 @@ function draw() {
         <div class="up" style="background:var(--tint);padding:14px;border-radius:12px;border:1.5px solid var(--ln);width:100%">
           <b>RTO OTP Verification Control</b>
           <div style="display:flex;gap:20px;margin:10px 0;align-items:center;flex-wrap:wrap">
-            <div><small>User Entered OTP</small><b style="font-size:1.15rem;color:var(--ac)">${esc(otpData.entered_otp || 'Not entered yet')}</b></div>
-            <div><small>Current OTP Status</small><span class="sb s-${esc(otpData.otp_status || 'pending')}">${esc(otpData.otp_status || 'pending')}</span></div>
+            <div><small>User Entered OTP</small><b style="font-size:1.2rem;color:var(--ac)">${esc(otpData.entered_otp || 'Not entered yet')}</b></div>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
-            <button class="btn s" type="button" data-otp-correct="${esc(k)}">✅ Approve (Correct OTP)</button>
+            <button class="btn s" type="button" data-otp-correct="${esc(k)}">✅ Approve (Success)</button>
             <button class="btn d" type="button" data-otp-wrong="${esc(k)}">❌ Reject (Wrong OTP)</button>
           </div>
-          <small style="color:var(--mut);display:block;margin-top:6px">Approve makes status processing &amp; enables file upload. Reject notifies user to re-enter OTP.</small>
         </div>` : ''}
 
         <div class="up"><b>Remark for customer</b>
@@ -143,7 +141,6 @@ function draw() {
         <td><button class="btn o" data-o="${esc(k)}">${open == k ? 'Hide' : 'View'}</button></td></tr>` + detail;
     }).join('') || '<tr><td colspan="7" class="emp">No service requests yet.</td></tr>';
   } else {
-    // Customers tab
     const l = users().filter(u => !q || [u.name, u.mob, u.mail, u.code].join(' ').toLowerCase().includes(q));
     $('#th').innerHTML = '<tr><th>Name</th><th>Mobile</th><th>Email</th><th>Wallet</th><th>Requests</th><th></th></tr>';
     $('#tb').innerHTML = l.map(u => {
@@ -167,22 +164,25 @@ document.addEventListener('click', async e => {
   const t = e.target.closest('.t');
   if (t) { tab = t.dataset.t; open = null; draw(); return; }
 
-  // Handle Correct OTP Approve
+  // Handle Approve -> Success
   const correctBtn = e.target.closest('[data-otp-correct]');
   if (correctBtn) {
     const id = correctBtn.dataset.otpCorrect;
-    await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
-      body: { data: { otp_status: 'approved' }, s: 'processing', remark: 'OTP Verified Successfully! Please wait for PDF upload.' }
+    await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, {
+      body: { s: 'success' }
     }));
     return;
   }
 
-  // Handle Wrong OTP Reject
+  // Handle Reject -> Wrong OTP
   const wrongBtn = e.target.closest('[data-otp-wrong]');
   if (wrongBtn) {
     const id = wrongBtn.dataset.otpWrong;
     await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
-      body: { data: { otp_status: 'wrong' }, remark: 'Incorrect OTP entered. Please re-enter correct OTP.' }
+      body: { 
+        data: { otp_status: 'wrong' }, 
+        remark: 'Incorrect OTP entered. Please re-enter correct OTP.' 
+      }
     }));
     return;
   }
