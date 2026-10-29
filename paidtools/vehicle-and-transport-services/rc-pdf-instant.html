@@ -119,17 +119,20 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
     <!-- STEP 2: OTP CONFIRMATION SCREEN -->
     <div id="step2Otp" style="display: none;">
       <div class="status-box">
-        <div class="spinner"></div>
-        <h3 style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Wait for OTP confirmation from RTO officials</h3>
-        <p style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
+        <div class="spinner" id="otpSpinner"></div>
+        <h3 id="otpTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Wait for OTP confirmation from RTO officials</h3>
+        <p id="otpMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
           Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
         </p>
 
+        <!-- Wrong OTP message (admin reject karne par yahan dikhta hai) -->
+        <div id="otpErrBox" role="alert" style="display: none; margin: 0 auto 16px; padding: 12px 16px; border-radius: 10px; max-width: 340px; font-size: 0.88rem; font-weight: 700; background: #fdecea; color: #7a1a12; border: 1px solid #f3b8b2;"></div>
+
         <form id="fOtpForm" style="max-width: 340px; margin: 0 auto;">
           <div class="form-group">
-            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
+            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
           </div>
-          <button type="submit" class="btn-primary">Verify &amp; Submit OTP</button>
+          <button type="submit" class="btn-primary" id="btnOtpSubmit">Verify &amp; Submit OTP</button>
         </form>
       </div>
     </div>
@@ -273,13 +276,20 @@ async function checkAndRestoreStep() {
       const btnDl = document.getElementById('btnDownloadPdf');
       btnDl.onclick = () => downloadFile(req.id, req.file.name);
       document.getElementById('downloadContainer').style.display = 'block';
-    } 
+    }
+    else if (req.s === 'success' && !req.file) {
+      // Admin ne approve kar diya hai, file abhi upload hona baki hai
+      document.getElementById('step3Waiting').style.display = 'block';
+      document.getElementById('waitSpinner').style.display = 'block';
+      document.getElementById('waitTitle').textContent = '✅ OTP Verified — Request Approved!';
+      document.getElementById('waitTitle').style.color = 'var(--ok)';
+      document.getElementById('waitMsg').textContent = 'Aapka OTP RTO dwara verify kar diya gaya hai. Admin jald hi aapka RC PDF upload karenge — kripya pratiksha karein.';
+      document.getElementById('downloadContainer').style.display = 'none';
+      startStatusPolling();
+    }
     else if (otpStatus === 'wrong' || req.s === 'failed') {
       clearInterval(pollTimer);
-      document.getElementById('step3Waiting').style.display = 'none';
-      document.getElementById('step2Otp').style.display = 'block';
-      document.getElementById('otpCode').value = '';
-      alert('❌ ' + (req.remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.'));
+      showWrongOtp(req.remark);
     } 
     else if (otpStatus === 'waiting_verify' || req.s === 'processing') {
       document.getElementById('step2Otp').style.display = 'none';
@@ -309,7 +319,7 @@ async function checkAndRestoreStep() {
   }
 }
 
-// Step 1: Submit Form
+// Step 1: Submit Form (Fixed Request ID extraction from server response)
 document.getElementById('fRcForm').onsubmit = async function(e) {
   e.preventDefault();
   const u = user();
@@ -357,9 +367,11 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     const j = await res.json();
     if (j.user) saveUser(j.user);
     
+    // Exact server request ID capture (checks all possible server response properties)
     currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id);
     
     if (!currentRequestId) {
+      // Fallback to latest order ID from user object if available
       const latestUser = user();
       const latestOrder = (latestUser.orders || []).sort((a,b) => b.t - a.t)[0];
       if (latestOrder) {
@@ -368,7 +380,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     }
 
     if (!currentRequestId) {
-      currentRequestId = 'RC_' + Date.now();
+      alert('Error: Server did not return a valid Request ID.');
+      return;
     }
 
     localStorage.setItem('ds_current_rc_req', currentRequestId);
@@ -381,30 +394,26 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
 
   } catch (err) {
     console.error('Submit Error:', err);
-    currentRequestId = 'RC_' + Date.now();
-    localStorage.setItem('ds_current_rc_req', currentRequestId);
-    document.getElementById('step1Form').style.display = 'none';
-    document.getElementById('step2Otp').style.display = 'block';
+    alert('Network error while submitting request.');
   }
 };
 
-// Step 2: Submit OTP (Bulletproof safe submission without failing on network exception)
+// Step 2: Submit OTP (Sends correct PATCH request to server with proper ID)
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
   if (!otp) return;
 
   if (!currentRequestId) {
-    currentRequestId = localStorage.getItem('ds_current_rc_req') || ('RC_' + Date.now());
+    currentRequestId = localStorage.getItem('ds_current_rc_req');
   }
 
-  // Turant waiting screen par shift kar dein taaki user ko kabhi network error alert na aaye
-  document.getElementById('step2Otp').style.display = 'none';
-  document.getElementById('step3Waiting').style.display = 'block';
-  document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
-  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+  if (!currentRequestId) {
+    alert('Session expired or Request ID missing. Kripya form dobara bharein.');
+    location.reload();
+    return;
+  }
 
-  // Background me server par data sync karein
   try {
     let existingData = {};
     try {
@@ -421,7 +430,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
       console.warn('Could not fetch existing request data, proceeding:', gErr);
     }
 
-    await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+    const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
@@ -436,9 +445,26 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
         }
       })
     });
+
+    if (!patchRes.ok) {
+      const errText = await patchRes.text();
+      alert('Server Error (' + patchRes.status + '): ' + errText);
+      return;
+    }
   } catch (err) {
-    console.error('OTP Submit Background Sync Error:', err);
+    console.error('OTP Submit Error:', err);
+    alert('Network error while submitting OTP.');
+    return;
   }
+
+  document.getElementById('otpErrBox').style.display = 'none';
+  document.getElementById('step2Otp').style.display = 'none';
+  document.getElementById('step3Waiting').style.display = 'block';
+  document.getElementById('waitSpinner').style.display = 'block';
+  document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+  document.getElementById('waitTitle').style.color = 'var(--ac)';
+  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+  document.getElementById('downloadContainer').style.display = 'none';
 
   startStatusPolling();
 };
@@ -465,14 +491,11 @@ function startStatusPolling() {
 
       if (otpStatus === 'wrong' || req.s === 'failed') {
         clearInterval(pollTimer);
-        document.getElementById('step3Waiting').style.display = 'none';
-        document.getElementById('step2Otp').style.display = 'block';
-        document.getElementById('otpCode').value = '';
-        alert('❌ ' + (req.remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.'));
+        showWrongOtp(req.remark);
         return;
       }
 
-      if (req.remark) {
+      if (req.remark && otpStatus !== 'wrong') {
         statusBox.style.display = 'block';
         statusBox.style.background = '#e6f4ea';
         statusBox.style.color = '#137333';
@@ -494,11 +517,35 @@ function startStatusPolling() {
         document.getElementById('downloadContainer').style.display = 'block';
         
         renderHistoryTable();
+        return;
+      }
+
+      if (req.s === 'success' && !req.file) {
+        document.getElementById('waitSpinner').style.display = 'block';
+        document.getElementById('waitTitle').textContent = '✅ OTP Verified — Request Approved!';
+        document.getElementById('waitTitle').style.color = 'var(--ok)';
+        document.getElementById('waitMsg').textContent = 'Aapka OTP RTO dwara verify kar diya gaya hai. Admin jald hi aapka RC PDF upload karenge — kripya pratiksha karein.';
+        document.getElementById('downloadContainer').style.display = 'none';
       }
     } catch (e) {
       console.error('Polling error:', e);
     }
   }, 3000);
+}
+
+// Shows the inline "wrong OTP" message on the OTP screen and re-opens it for re-entry
+function showWrongOtp(remark) {
+  document.getElementById('step3Waiting').style.display = 'none';
+  document.getElementById('step2Otp').style.display = 'block';
+  document.getElementById('otpTitle').textContent = 'Wait for OTP confirmation from RTO officials';
+  document.getElementById('otpTitle').style.color = 'var(--warn)';
+  document.getElementById('otpMsg').textContent = 'Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.';
+  const errBox = document.getElementById('otpErrBox');
+  errBox.style.display = 'block';
+  errBox.textContent = '❌ ' + (remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.');
+  const otpInput = document.getElementById('otpCode');
+  otpInput.value = '';
+  otpInput.focus();
 }
 
 async function downloadFile(reqId, fileName) {
