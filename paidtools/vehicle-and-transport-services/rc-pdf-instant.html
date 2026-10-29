@@ -197,6 +197,33 @@ const WRONG_OTP_REMARK = 'Incorrect OTP entered. Please re-enter correct OTP.';
 let currentRequestId = localStorage.getItem('ds_current_rc_req') || null;
 let pollTimer = null;
 
+// ---------- Session-aware fetch ----------
+// Server {"error":"session"} / 401 de to chup-chaap fail hone ki jagah user ko login par bhejo
+let sessionDead = false;
+function goLogin() { window.location.replace('../../login.html'); }
+function sessionExpired() {
+  if (sessionDead) return;
+  sessionDead = true;
+  clearInterval(pollTimer);
+  localStorage.removeItem('ds_token');
+  localStorage.removeItem('ds_session');
+  alert('Aapka login session expire ho gaya hai. Kripya dobara login karein.');
+  goLogin();
+}
+async function apiFetch(url, opts) {
+  const r = await fetch(url, opts);
+  if (!r.ok) {
+    let t = '';
+    try { t = await r.clone().text(); } catch (_) {}
+    if (r.status === 401 || /"error"\s*:\s*"session"/.test(t)) {
+      sessionExpired();
+      throw new Error('session');
+    }
+  }
+  return r;
+}
+const isSessionErr = e => !!e && e.message === 'session';
+
 function user() {
   try {
     const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
@@ -251,7 +278,7 @@ async function checkAndRestoreStep() {
   if (!currentRequestId) return;
 
   try {
-    const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+    const r = await apiFetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
       headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
     });
     if (!r.ok) return;
@@ -286,6 +313,7 @@ async function checkAndRestoreStep() {
       showOtpPage();
     }
   } catch (err) {
+    if (isSessionErr(err)) return;
     console.error('Restore step error:', err);
   }
 }
@@ -308,7 +336,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   const regAddr = document.getElementById('regAddr').value.trim();
 
   try {
-    const res = await fetch(API + '/api/requests', {
+    const res = await apiFetch(API + '/api/requests', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -362,6 +390,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     showOtpPage();
 
   } catch (err) {
+    if (isSessionErr(err)) return;
     console.error('Submit Error:', err);
     alert('Network error while submitting request.');
   }
@@ -394,7 +423,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
   try {
     let existingData = {};
     try {
-      const getRes = await fetch(url, { headers: hdr });
+      const getRes = await apiFetch(url, { headers: hdr });
       if (getRes.ok) {
         const resJson = await getRes.json();
         if (resJson.request && resJson.request.data) {
@@ -402,10 +431,11 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
         }
       }
     } catch (gErr) {
+      if (isSessionErr(gErr)) throw gErr;
       console.warn('Could not fetch existing request data, proceeding:', gErr);
     }
 
-    const patchRes = await fetch(url, {
+    const patchRes = await apiFetch(url, {
       method: 'PATCH',
       headers: { ...hdr, 'content-type': 'application/json' },
       body: JSON.stringify({
@@ -430,12 +460,12 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
     for (let i = 0; i < 3 && !saved; i++) {
       if (i) await new Promise(r => setTimeout(r, 1000));
       try {
-        const vr = await fetch(url, { headers: hdr });
+        const vr = await apiFetch(url, { headers: hdr });
         if (vr.ok) {
           lastReq = (await vr.json()).request;
           saved = !!(lastReq && lastReq.data && String(lastReq.data.entered_otp) === otp);
         }
-      } catch (_) {}
+      } catch (ve) { if (isSessionErr(ve)) throw ve; }
     }
 
     if (!saved) {
@@ -444,6 +474,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
       return;
     }
   } catch (err) {
+    if (isSessionErr(err)) return;
     console.error('OTP Submit Error:', err);
     alert('Network error while submitting OTP.');
     return;
@@ -546,7 +577,7 @@ function startStatusPolling() {
     if (!currentRequestId) return;
 
     try {
-      const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+      const r = await apiFetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
         headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
       });
       if (!r.ok) return;
@@ -577,6 +608,7 @@ function startStatusPolling() {
       // 3) Abhi decision pending -> sirf admin ka custom note update karo
       showNote(req.remark);
     } catch (e) {
+      if (isSessionErr(e)) return;
       console.error('Polling error:', e);
     }
   }, 3000);
@@ -584,7 +616,7 @@ function startStatusPolling() {
 
 async function downloadFile(reqId, fileName) {
   try {
-    const r = await fetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
+    const r = await apiFetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
       headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
     });
     if (!r.ok) {
@@ -597,6 +629,7 @@ async function downloadFile(reqId, fileName) {
     a.download = fileName || 'RC_Document.pdf';
     a.click();
   } catch (err) {
+    if (isSessionErr(err)) return;
     alert('Downloading PDF...');
   }
 }
