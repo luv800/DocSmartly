@@ -475,7 +475,13 @@ function setupSidebarCategories() {
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
       <div class="sb-sub-list">
         ${items.map(it => {
-          if (it.isPaid) {
+          // Check if paid service has a dedicated custom page
+          if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
+            return `<a href="${getToolUrl(it.n)}" class="sb-item">
+              <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
+              <span style="font-size:0.72rem;color:#b45309;font-weight:700">${inr(it.amt)}</span>
+            </a>`;
+          } else if (it.isPaid) {
             return `<button type="button" class="sb-item" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
               <span style="font-size:0.72rem;color:#b45309;font-weight:700">${inr(it.amt)}</span>
@@ -513,7 +519,17 @@ function renderDashboardSections() {
         <div class="ig">
           ${filteredItems.map(it => {
             globalIndex++;
-            if (it.isPaid) {
+            if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
+              return `
+                <a href="${getToolUrl(it.n)}" class="it">
+                  ${getThumbHtml(it, globalIndex)}
+                  <div style="flex:1">
+                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
+                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(it.sec)}</p>
+                  </div>
+                  <div class="badge-paid">${inr(it.amt)}</div>
+                </a>`;
+            } else if (it.isPaid) {
               return `
                 <div class="it" style="cursor:pointer" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
                   ${getThumbHtml(it, globalIndex)}
@@ -542,7 +558,6 @@ function renderDashboardSections() {
 
   mount.innerHTML = html || '<p style="color:var(--mut);font-size:0.9rem;padding:12px">No tools or services match your search.</p>';
 }
-
 function renderDashboard() {
   const u = user();
   const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
