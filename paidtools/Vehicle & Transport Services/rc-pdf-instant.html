@@ -26,6 +26,7 @@ function updateWalletUI() {
   document.getElementById('walletBal').textContent = '₹' + Number(u.bal || 0).toLocaleString('en-IN');
 }
 
+// History table with click to resume / view order
 function renderHistoryTable() {
   const u = user();
   const rcOrders = (u.orders || []).filter(o => o.n === 'RC PDF INSTANT').sort((a,b) => b.t - a.t);
@@ -37,15 +38,71 @@ function renderHistoryTable() {
   }
 
   tbody.innerHTML = rcOrders.map(o => `
-    <tr>
+    <tr style="cursor:pointer;" title="Click to resume this order" onclick="resumeOrder('${o.id}')">
       <td>${new Date(o.t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
       <td><b>${o.doc || o.id}</b></td>
       <td><span class="sb-status s-${o.s}">${o.s}</span></td>
       <td>
-        ${o.file ? `<button class="btn-primary" onclick="downloadFile('${o.id}', '${o.file.name}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok)">Download</button>` : '<span style="color:var(--mut);font-size:0.8rem;">In Progress</span>'}
+        ${o.file ? `<button class="btn-primary" onclick="event.stopPropagation(); downloadFile('${o.id}', '${o.file.name}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok)">Download</button>` : `<button class="btn-primary" onclick="event.stopPropagation(); resumeOrder('${o.id}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ac)">Resume / View</button>`}
       </td>
     </tr>
   `).join('');
+}
+
+// Function to resume any order from history
+async function resumeOrder(reqId) {
+  currentRequestId = reqId;
+  localStorage.setItem('ds_current_rc_req', reqId);
+  await checkAndRestoreStep();
+}
+
+// Server se status check karke exact UI step restore karna
+async function checkAndRestoreStep() {
+  if (!currentRequestId) return;
+
+  try {
+    const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+    });
+    if (!r.ok) return;
+    const data = await r.json();
+    const req = data.request;
+    if (!req) return;
+
+    document.getElementById('step1Form').style.display = 'none';
+
+    const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
+
+    if (req.s === 'success' && req.file) {
+      document.getElementById('step2Otp').style.display = 'none';
+      document.getElementById('step3Waiting').style.display = 'block';
+      document.getElementById('waitSpinner').style.display = 'none';
+      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
+      document.getElementById('waitTitle').style.color = 'var(--ok)';
+      document.getElementById('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
+      
+      const btnDl = document.getElementById('btnDownloadPdf');
+      btnDl.onclick = () => downloadFile(req.id, req.file.name);
+      document.getElementById('downloadContainer').style.display = 'block';
+    } else if (otpStatus === 'wrong') {
+      document.getElementById('step3Waiting').style.display = 'none';
+      document.getElementById('step2Otp').style.display = 'block';
+      document.getElementById('otpCode').value = '';
+    } else if (otpStatus === 'waiting_verify' || otpStatus === 'approved') {
+      document.getElementById('step2Otp').style.display = 'none';
+      document.getElementById('step3Waiting').style.display = 'block';
+      document.getElementById('waitSpinner').style.display = 'block';
+      document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+      document.getElementById('downloadContainer').style.display = 'none';
+      startStatusPolling();
+    } else {
+      document.getElementById('step3Waiting').style.display = 'none';
+      document.getElementById('step2Otp').style.display = 'block';
+    }
+  } catch (err) {
+    console.error('Restore step error:', err);
+  }
 }
 
 // Step 1: Submit Form & Send to Backend API
@@ -95,14 +152,12 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     const j = await res.json();
     if (j.user) saveUser(j.user);
     
-    // Save request ID securely in variable and localStorage
     currentRequestId = j.request ? j.request.id : ('RC_' + Date.now());
     localStorage.setItem('ds_current_rc_req', currentRequestId);
 
     updateWalletUI();
     renderHistoryTable();
 
-    // Move to Step 2 (OTP Screen)
     document.getElementById('step1Form').style.display = 'none';
     document.getElementById('step2Otp').style.display = 'block';
 
@@ -112,7 +167,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   }
 };
 
-// Step 2: Submit OTP (Fixed with proper ID check and data merging)
+// Step 2: Submit OTP
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
@@ -234,4 +289,9 @@ async function downloadFile(reqId, fileName) {
 
 updateWalletUI();
 renderHistoryTable();
+
+// Page load hone par automatically check karein agar koi active request pending/waiting me thi
+if (currentRequestId) {
+  checkAndRestoreStep();
+}
 </script>
