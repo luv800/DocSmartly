@@ -1,6 +1,8 @@
 function getToolUrl(name) {
   const slugMap = {
     "Passport Photo Sheet": "passport-photo-sheet.html",
+    "Passport Photo Maker": "passport_photo.html",
+    "PDF to Excel": "pdf-to-excel.html",
     "QR Code Generator": "qr-code-generator.html",
     "Stamp Designer": "stamp-designer.html",
     "ID Card Front & Back to A4": "id-card-front-back-a4.html",
@@ -27,6 +29,17 @@ function getToolUrl(name) {
     "Photo Color Changer": "photo-color-changer.html",
     "Photo Blur Tool": "photo-blur.html",
     "Image to Black & White": "image-black-and-white.html",
+    "Background Black & White": "background_black_white.html",
+    "Photo Border Maker": "photo-border.html",
+    "Color Picker from Image": "color-picker.html",
+    "ID Card Maker": "id_card_maker.html",
+    "Employee ID Card Maker": "employee-id-card-maker.html",
+    "Student ID Card Maker": "student-id-card-maker.html",
+    "A4 Photo Print Layout": "a4-photo-print-layout.html",
+    "Text to PDF / Application": "text-to-pdf.html",
+    "Resume Maker": "resume-maker.html",
+    "Invoice Maker": "invoice-maker.html",
+    "Quotation Maker": "quotation-maker.html",
     "Hindi Typing Tool": "hindi-typing.html",
     "GST Calculator": "gst-calculator.html",
     "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
@@ -35,7 +48,21 @@ function getToolUrl(name) {
     "Salary Calculator": "salary-calculator.html",
     "Percentage Calculator": "percentage-calculator.html",
     "Loan / EMI Calculator": "loan-emi-calculator.html",
-    "Word Counter": "word-counter.html"
+    "Word Counter": "word-counter.html",
+    "ICO to PNG": "ico_to_png.html",
+    "ICO Converter (Favicon)": "ico_converter_favicon.html",
+    "Thumbnail Resizer": "thumbnail_resizer.html",
+    "Favicon Preview Tool & Maker": "favicon_preview_tool_maker.html",
+    "Image Watermark Maker": "image-watermark-maker.html",
+    "Calculator — Basic & Scientific": "calculator.html",
+    "Online Stopwatch": "stopwatch.html",
+    "Name, Date & Text on Photo": "name_date_text_on_photo.html",
+    "Instagram Reel Cover Maker": "instagram_reel_cover_maker.html",
+    "Password to MD5 / SHA-256": "password-to-md5.html",
+    "Meta Title & Description Generator": "meta-generator.html",
+    "OMR Sheet Generator & Checker": "omr-generator.html",
+    "Typing Speed Test — Hindi & English": "typing-test.html",
+    "Online Exam System — Teacher & Student": "online-exam.html"
   };
 
   if (slugMap[name]) return `freetools/${slugMap[name]}`;
