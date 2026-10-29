@@ -192,6 +192,8 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
 const CHARGE = 40;
+// Ye text admin page ke WRONG_OTP_REMARK se EXACT same hona chahiye
+const WRONG_OTP_REMARK = 'Incorrect OTP entered. Please re-enter correct OTP.';
 let currentRequestId = localStorage.getItem('ds_current_rc_req') || null;
 let pollTimer = null;
 
@@ -260,58 +262,28 @@ async function checkAndRestoreStep() {
     document.getElementById('step1Form').style.display = 'none';
 
     const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
-    const statusBox = document.getElementById('liveStatusBox');
 
-    if (req.s === 'success' && req.file) {
-      clearInterval(pollTimer);
-      localStorage.removeItem('ds_current_rc_req');
-      document.getElementById('step2Otp').style.display = 'none';
-      document.getElementById('step3Waiting').style.display = 'block';
-      document.getElementById('waitSpinner').style.display = 'none';
-      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
-      document.getElementById('waitTitle').style.color = 'var(--ok)';
-      document.getElementById('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
-      
-      statusBox.style.display = 'none';
-      const btnDl = document.getElementById('btnDownloadPdf');
-      btnDl.onclick = () => downloadFile(req.id, req.file.name);
-      document.getElementById('downloadContainer').style.display = 'block';
-    }
-    else if (req.s === 'success' && !req.file) {
-      document.getElementById('step3Waiting').style.display = 'block';
-      document.getElementById('waitSpinner').style.display = 'block';
-      document.getElementById('waitTitle').textContent = '✅ OTP Verified — Request Approved!';
-      document.getElementById('waitTitle').style.color = 'var(--ok)';
-      document.getElementById('waitMsg').textContent = 'Aapka OTP RTO dwara verify kar diya gaya hai. Admin jald hi aapka RC PDF upload karenge — kripya pratiksha karein.';
-      document.getElementById('downloadContainer').style.display = 'none';
-      startStatusPolling();
+    if (req.s === 'success') {
+      // Admin ne approve kiya: success message + file ka wait (ya file ready)
+      showApproved(req);
+      if (req.file) {
+        clearInterval(pollTimer);
+        localStorage.removeItem('ds_current_rc_req');
+      } else {
+        startStatusPolling();
+      }
     }
     else if (otpStatus === 'wrong' || req.s === 'failed') {
       clearInterval(pollTimer);
       showWrongOtp(req.remark);
-    } 
+    }
     else if (otpStatus === 'waiting_verify' || req.s === 'processing') {
-      document.getElementById('step2Otp').style.display = 'none';
-      document.getElementById('step3Waiting').style.display = 'block';
-      document.getElementById('waitSpinner').style.display = 'block';
-      document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
-      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
-      
-      if (req.remark) {
-        statusBox.style.display = 'block';
-        statusBox.style.background = '#e6f4ea';
-        statusBox.style.color = '#137333';
-        statusBox.style.border = '1px solid #ceead6';
-        statusBox.innerHTML = 'ℹ️ Note: ' + req.remark;
-      } else {
-        statusBox.style.display = 'none';
-      }
-      
-      document.getElementById('downloadContainer').style.display = 'none';
+      showChecking(req.remark);
       startStatusPolling();
     } else {
-      document.getElementById('step3Waiting').style.display = 'none';
-      document.getElementById('step2Otp').style.display = 'block';
+      // OTP abhi enter nahi hua -> normal OTP page
+      clearInterval(pollTimer);
+      showOtpPage();
     }
   } catch (err) {
     console.error('Restore step error:', err);
@@ -387,7 +359,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     renderHistoryTable();
 
     document.getElementById('step1Form').style.display = 'none';
-    document.getElementById('step2Otp').style.display = 'block';
+    showOtpPage();
 
   } catch (err) {
     console.error('Submit Error:', err);
@@ -454,21 +426,95 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
     return;
   }
 
-  document.getElementById('otpErrBox').style.display = 'none';
-  document.getElementById('step2Otp').style.display = 'none';
-  document.getElementById('step3Waiting').style.display = 'block';
-  document.getElementById('waitSpinner').style.display = 'block';
-  document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
-  document.getElementById('waitTitle').style.color = 'var(--ac)';
-  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
-  document.getElementById('downloadContainer').style.display = 'none';
-
+  showChecking('');
   startStatusPolling();
 };
 
+// ---------- Screen helpers ----------
+const $id = x => document.getElementById(x);
+
+function showNote(remark) {
+  const box = $id('liveStatusBox');
+  // Admin ka auto "wrong OTP" remark yahan note ke roop me nahi dikhana
+  if (remark && remark !== WRONG_OTP_REMARK) {
+    box.style.display = 'block';
+    box.style.background = '#e6f4ea';
+    box.style.color = '#137333';
+    box.style.border = '1px solid #ceead6';
+    box.textContent = 'ℹ️ Note: ' + remark;
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+// Normal OTP page (OTP abhi enter karna hai)
+function showOtpPage() {
+  $id('step3Waiting').style.display = 'none';
+  $id('step2Otp').style.display = 'block';
+  $id('otpSpinner').style.display = 'block';
+  $id('otpTitle').textContent = 'Wait for OTP confirmation from RTO officials';
+  $id('otpTitle').style.color = 'var(--warn)';
+  $id('otpMsg').textContent = 'Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.';
+  $id('otpErrBox').style.display = 'none';
+}
+
+// OTP submit ho gaya, admin ke decision ka wait
+function showChecking(remark) {
+  $id('step2Otp').style.display = 'none';
+  $id('step3Waiting').style.display = 'block';
+  $id('waitSpinner').style.display = 'block';
+  $id('waitTitle').textContent = 'Checking OTP confirmation...';
+  $id('waitTitle').style.color = 'var(--ac)';
+  $id('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+  $id('downloadContainer').style.display = 'none';
+  showNote(remark);
+}
+
+// Admin ne APPROVE kiya: success message + "file ka wait" (file aate hi download button)
+function showApproved(req) {
+  $id('step1Form').style.display = 'none';
+  $id('step2Otp').style.display = 'none';
+  $id('step3Waiting').style.display = 'block';
+  showNote(req.remark);
+
+  if (req.file) {
+    $id('waitSpinner').style.display = 'none';
+    $id('waitTitle').textContent = '✅ RC PDF Ready for Download!';
+    $id('waitTitle').style.color = 'var(--ok)';
+    $id('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
+    $id('liveStatusBox').style.display = 'none';
+    $id('btnDownloadPdf').onclick = () => downloadFile(req.id, req.file.name);
+    $id('downloadContainer').style.display = 'block';
+    renderHistoryTable();
+  } else {
+    $id('waitSpinner').style.display = 'block';
+    $id('waitTitle').textContent = '✅ Success! OTP Verified';
+    $id('waitTitle').style.color = 'var(--ok)';
+    $id('waitMsg').textContent = 'Aapka OTP RTO dwara verify ho gaya hai. Please wait for your file — admin aapka RC PDF upload kar rahe hain, upload hote hi yahan Download button aa jayega.';
+    $id('downloadContainer').style.display = 'none';
+  }
+}
+
+// Admin ne REJECT kiya: wrong OTP message + OTP dobara enter karne ka box
+function showWrongOtp(remark) {
+  $id('step1Form').style.display = 'none';
+  $id('step3Waiting').style.display = 'none';
+  $id('step2Otp').style.display = 'block';
+  $id('otpSpinner').style.display = 'none';
+  $id('otpTitle').textContent = 'Wrong OTP — sahi OTP dobara enter karein';
+  $id('otpTitle').style.color = 'var(--er)';
+  $id('otpMsg').textContent = 'RTO authority dwara aapke registered mobile par bheja gaya sahi OTP niche enter karke dobara submit karein.';
+  const errBox = $id('otpErrBox');
+  errBox.style.display = 'block';
+  errBox.textContent = '❌ ' + (remark || WRONG_OTP_REMARK);
+  const otpInput = $id('otpCode');
+  otpInput.value = '';
+  otpInput.focus();
+}
+
 function startStatusPolling() {
   if (pollTimer) clearInterval(pollTimer);
-  
+
   pollTimer = setInterval(async () => {
     if (!currentRequestId) currentRequestId = localStorage.getItem('ds_current_rc_req');
     if (!currentRequestId) return;
@@ -480,68 +526,34 @@ function startStatusPolling() {
       if (!r.ok) return;
       const data = await r.json();
       const req = data.request;
-
       if (!req) return;
 
       const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
-      const statusBox = document.getElementById('liveStatusBox');
 
+      // 1) APPROVED -> success + file ka wait (success pehle check hota hai,
+      //    taaki purana "wrong" flag approve ke baad bhi wrong na dikhaye)
+      if (req.s === 'success') {
+        showApproved(req);
+        if (req.file) {
+          clearInterval(pollTimer);
+          localStorage.removeItem('ds_current_rc_req');
+        }
+        return;
+      }
+
+      // 2) REJECTED -> wrong OTP message + OTP dobara enter
       if (otpStatus === 'wrong' || req.s === 'failed') {
         clearInterval(pollTimer);
         showWrongOtp(req.remark);
         return;
       }
 
-      if (req.remark && otpStatus !== 'wrong') {
-        statusBox.style.display = 'block';
-        statusBox.style.background = '#e6f4ea';
-        statusBox.style.color = '#137333';
-        statusBox.style.border = '1px solid #ceead6';
-        statusBox.innerHTML = 'ℹ️ Note: ' + req.remark;
-      }
-
-      if (req.s === 'success' && req.file) {
-        clearInterval(pollTimer);
-        localStorage.removeItem('ds_current_rc_req');
-        document.getElementById('waitSpinner').style.display = 'none';
-        document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
-        document.getElementById('waitTitle').style.color = 'var(--ok)';
-        document.getElementById('waitMsg').textContent = 'OTP verified & official RC PDF uploaded by Admin. Aap niche button par click karke download kar sakte hain.';
-        
-        statusBox.style.display = 'none';
-        const btnDl = document.getElementById('btnDownloadPdf');
-        btnDl.onclick = () => downloadFile(req.id, req.file.name);
-        document.getElementById('downloadContainer').style.display = 'block';
-        
-        renderHistoryTable();
-        return;
-      }
-
-      if (req.s === 'success' && !req.file) {
-        document.getElementById('waitSpinner').style.display = 'block';
-        document.getElementById('waitTitle').textContent = '✅ OTP Verified — Request Approved!';
-        document.getElementById('waitTitle').style.color = 'var(--ok)';
-        document.getElementById('waitMsg').textContent = 'Aapka OTP RTO dwara verify kar diya gaya hai. Admin jald hi aapka RC PDF upload karenge — kripya pratiksha karein.';
-        document.getElementById('downloadContainer').style.display = 'none';
-      }
+      // 3) Abhi decision pending -> sirf admin ka custom note update karo
+      showNote(req.remark);
     } catch (e) {
       console.error('Polling error:', e);
     }
   }, 3000);
-}
-
-function showWrongOtp(remark) {
-  document.getElementById('step3Waiting').style.display = 'none';
-  document.getElementById('step2Otp').style.display = 'block';
-  document.getElementById('otpTitle').textContent = 'Wait for OTP confirmation from RTO officials';
-  document.getElementById('otpTitle').style.color = 'var(--warn)';
-  document.getElementById('otpMsg').textContent = 'Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.';
-  const errBox = document.getElementById('otpErrBox');
-  errBox.style.display = 'block';
-  errBox.textContent = '❌ ' + (remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.');
-  const otpInput = document.getElementById('otpCode');
-  otpInput.value = '';
-  otpInput.focus();
 }
 
 async function downloadFile(reqId, fileName) {
