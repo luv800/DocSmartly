@@ -31,34 +31,25 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .stt { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
 .stt > div { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 14px 16px; }
 .stt b { font: 800 1.6rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ac2); display: block; }
-
 .ds { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 4px 16px; margin-bottom: 14px; }
 .ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; font-weight: 700; color: var(--ink); }
 .ds summary em { font-style: normal; font-size: 0.8rem; background: var(--tint); color: var(--ac2); padding: 2px 10px; border-radius: 99px; }
 .ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding-bottom: 14px; }
 .it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
 .it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
-
-/* Exact Homepage SVG Thumbnail Canvas */
 .sv { position: relative; aspect-ratio: 16/10; border-radius: 9px; margin-bottom: 8px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
 .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
 .fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
 .sa { fill: none; stroke: var(--a); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-
-/* Badges */
 .badge-free { background: var(--ok); color: #fff; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; width: fit-content; margin-top: 8px; }
 .badge-paid { background: #fff1cc; color: #6b4200; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; border: 1px solid #f0cf7d; width: fit-content; margin-top: 8px; }
-
-/* Search & Filters */
 .tools-dash-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 32px; margin-bottom: 14px; }
 .dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
 .dash-search-bar input { height: 40px; min-height: 40px; padding: 6px 12px; font-size: 0.88rem; }
 .dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
 .dash-cats button { border: 1px solid var(--ln); background: #fff; border-radius: 99px; padding: 6px 14px; font: 600 .8rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; }
 .dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
-
-/* Left Sidebar Accordions */
 .sb-category { margin-top: 10px; border-top: 1px solid var(--ln); padding-top: 10px; }
 .sb-group { margin-bottom: 4px; }
 .sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-size: 0.84rem; font-weight: 700; color: var(--ink); cursor: pointer; border-radius: 8px; list-style: none; }
@@ -70,7 +61,6 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .sb-item:hover { color: var(--ac); background: var(--tint); }
 .sb-ic { display: inline-flex; align-items: center; gap: 8px; }
 .sb-ic svg { width: 15px; height: 15px; color: var(--ac); flex: none; }
-
 .tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
 table { width: 100%; border-collapse: collapse; min-width: 520px; }
 th, td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .92rem; }
@@ -80,7 +70,6 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 .s-processing { background: #dbe7ff; color: #1b44ad; }
 .s-success { background: #e0f5ea; color: #0f6b45; }
 .s-failed { background: #fdecea; color: #7a1a12; }
-
 @media (max-width: 900px) { .shell { display: block; } #sb { display: none; } }
 </style>
 </head>
@@ -138,79 +127,8 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 
 <script src="tools.js"></script>
 <script>
-/* ---------- Tool URL Slug Resolver ---------- */
-function getToolUrl(name) {
-  const customSlugs = {
-    "Passport Photo Sheet": "passport-photo-sheet.html",
-    "Passport Photo Maker": "passport_photo.html",
-    "PDF to Excel": "pdf-to-excel.html",
-    "QR Code Generator": "qr-code-generator.html",
-    "Stamp Designer": "stamp-designer.html",
-    "ID Card Front & Back to A4": "id-card-front-back-a4.html",
-    "What Is My IP": "what-is-my-ip.html",
-    "Letterhead Maker": "letterhead-maker.html",
-    "Visiting Card Designer": "visiting-card-designer.html",
-    "Marriage Biodata Maker": "marriage-biodata-maker.html",
-    "Age Calculator": "age-calculator.html",
-    "Photo & Signature Resizer": "photo-signature-resizer.html",
-    "JPG / PNG to PDF": "jpg-png-to-pdf.html",
-    "PDF Merge": "pdf-merge.html",
-    "PDF Split & Page Extract": "pdf-split-extract.html",
-    "PDF to JPG": "pdf-to-jpg.html",
-    "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
-    "PDF Compressor (KB)": "pdf-compressor.html",
-    "Document Scanner & PDF": "document-scanner.html",
-    "PDF Page Number Adder": "pdf_page_number_adder.html",
-    "PDF Header & Footer Maker": "pdf_header_footer_maker.html",
-    "Photo Compressor (KB)": "photo-compressor.html",
-    "Image Format Converter": "image-converter.html",
-    "Background Remover": "background-remover.html",
-    "WebP to JPG Converter": "webp-to-jpg.html",
-    "Digital Signature Maker": "digital-signature-maker.html",
-    "Photo Color Changer": "photo-color-changer.html",
-    "Photo Blur Tool": "photo-blur.html",
-    "Image to Black & White": "image-black-and-white.html",
-    "Background Black & White": "background_black_white.html",
-    "Photo Border Maker": "photo-border.html",
-    "Color Picker from Image": "color-picker.html",
-    "ID Card Maker": "id_card_maker.html",
-    "Employee ID Card Maker": "employee-id-card-maker.html",
-    "Student ID Card Maker": "student-id-card-maker.html",
-    "A4 Photo Print Layout": "a4-photo-print-layout.html",
-    "Text to PDF / Application": "text-to-pdf.html",
-    "Resume Maker": "resume-maker.html",
-    "Invoice Maker": "invoice-maker.html",
-    "Quotation Maker": "quotation-maker.html",
-    "Hindi Typing Tool": "hindi-typing.html",
-    "GST Calculator": "gst-calculator.html",
-    "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
-    "Printing Cost Calculator": "printing-cost-calculator.html",
-    "Cash Denomination Calculator": "cash-denomination-calculator.html",
-    "Salary Calculator": "salary-calculator.html",
-    "Percentage Calculator": "percentage-calculator.html",
-    "Loan / EMI Calculator": "loan-emi-calculator.html",
-    "Word Counter": "word-counter.html",
-    "ICO to PNG": "ico_to_png.html",
-    "ICO Converter (Favicon)": "ico_converter_favicon.html",
-    "Thumbnail Resizer": "thumbnail_resizer.html",
-    "Favicon Preview Tool & Maker": "favicon_preview_tool_maker.html",
-    "Image Watermark Maker": "image-watermark-maker.html",
-    "Calculator — Basic & Scientific": "calculator.html",
-    "Online Stopwatch": "stopwatch.html",
-    "Name, Date & Text on Photo": "name_date_text_on_photo.html",
-    "Instagram Reel Cover Maker": "instagram_reel_cover_maker.html",
-    "Password to MD5 / SHA-256": "password-to-md5.html",
-    "Meta Title & Description Generator": "meta-generator.html",
-    "OMR Sheet Generator & Checker": "omr-generator.html",
-    "Typing Speed Test — Hindi & English": "typing-test.html",
-    "Online Exam System — Teacher & Student": "online-exam.html"
-  };
-  if (customSlugs[name]) return 'freetools/' + customSlugs[name];
-  const fallback = String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  return 'freetools/' + fallback + '.html';
-}
-  const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const API = 'https://docsmartly-api.hm2351994.workers.dev';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;n'}[c]||c));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
 const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '-';
 const tokenHdr = () => ({ 'x-user-token': localStorage.getItem('ds_token') || '' });
@@ -237,7 +155,6 @@ function updateBalance() {
   if (u) document.getElementById('aB').textContent = inr(u.bal);
 }
 
-/* ---------- Homepage SVG Graphic Engines (Exact Replicas) ---------- */
 const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
 const T=["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
 const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
@@ -284,6 +201,8 @@ const V={
 
 const TA={
   "Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
+  "Passport Photo Maker": () => PG(30,6,100,88) + H(60,20,40,50) + X(80,82,'PASSPORT',6.5,'fa'),
+  "PDF to Excel": () => PG(20,8,56,84) + X(48,22,'PDF',8) + AR(82,46) + R(100,18,48,64,'fg',4) + X(124,32,'XLS',7,'fw'),
   "QR Code Generator":()=>QR(44,14),
   "Stamp Designer":()=>C(80,50,38,'sa')+C(80,50,30,'sa')+X(80,48,'DOCSMARTLY',8,'fa')+X(80,60,'★ ★ ★',6,'fa'),
   "ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
@@ -340,8 +259,6 @@ const TA={
   "Name, Date & Text on Photo":()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw'),
   "Instagram Reel Cover Maker":()=>PHN(48,4,64,92)+IMG(54,12,52,48),
   "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
-  "PDF to Excel": () => PG(20,8,56,84) + X(48,22,'PDF',8) + AR(82,46) + R(100,18,48,64,'fg',4) + X(124,32,'XLS',7,'fw'),
-  "Passport Photo Maker": () => PG(30,6,100,88) + H(60,20,40,50) + X(80,82,'PASSPORT',6.5,'fa')
 };
 
 const DA={
@@ -398,16 +315,6 @@ function getArtworkFor(item) {
     if (sec && V[sec]) return V[sec]();
     if (DA[n]) return DA[n]();
     if (TA[n]) return TA[n]();
-    const lower = String(n).toLowerCase();
-    if (lower.includes("rc")) return V["RC Services"]();
-    if (lower.includes("dl") || lower.includes("licence")) return V["DL Services"]();
-    if (lower.includes("voter")) return V["Voter Services"]();
-    if (lower.includes("farmer") || lower.includes("kisan")) return V["Farmer Services"]();
-    if (lower.includes("pan")) return V["PAN Services"]();
-    if (lower.includes("gst")) return V["GST Services"]();
-    if (lower.includes("calc")) return CALC('18%');
-    if (lower.includes("photo") || lower.includes("image") || lower.includes("jpg") || lower.includes("png")) return IMG(24,16,112,68);
-    if (lower.includes("pdf")) return PDF(44,8,72,84);
   } catch(e) {}
   return PG();
 }
@@ -420,7 +327,6 @@ const getThumbHtml=(item, idx)=>{
   }
 };
 
-/* Complete Catalog of All Tools and Services */
 const CATEGORIES = {
   "Vehicle & Transport Services (Paid)": [
     { n: "RC PDF INSTANT", sec: "RC Services", amt: 40, isPaid: true, ic: "car" },
@@ -488,7 +394,7 @@ const CATEGORIES = {
     { n: "PDF Merge", isPaid: false, ic: "merge" },
     { n: "PDF Split & Page Extract", isPaid: false, ic: "doc" },
     { n: "PDF to JPG", isPaid: false, ic: "img" },
-    { n: "PDF to Excel", isPaid: false, ic: "doc" }, // <--- Yeh Naya Add Karen
+    { n: "PDF to Excel", isPaid: false, ic: "doc" },
     { n: "PDF Rotate & Reorder", isPaid: false, ic: "doc" },
     { n: "PDF Compressor (KB)", isPaid: false, ic: "zip" },
     { n: "Document Scanner & PDF", isPaid: false, ic: "doc" },
@@ -516,7 +422,7 @@ const CATEGORIES = {
   ],
   "Print & ID Cards (Free)": [
     { n: "Passport Photo Sheet", isPaid: false, ic: "img" },
-    { n: "Passport Photo Maker", isPaid: false, ic: "img" }, // <--- Yeh Naya Add Karen
+    { n: "Passport Photo Maker", isPaid: false, ic: "img" },
     { n: "ID Card Front & Back to A4", isPaid: false, ic: "id" },
     { n: "ID Card Maker", isPaid: false, ic: "id" },
     { n: "Employee ID Card Maker", isPaid: false, ic: "id" },
@@ -787,7 +693,6 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 
-// Order Request Modal logic for Paid services
 let curKey = '', curAmt = 0;
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-svc]');
@@ -867,7 +772,6 @@ function logout() {
 document.getElementById('btnLogOut').onclick = logout;
 document.getElementById('loSb').onclick = logout;
 
-// Initial safe setup
 try {
   setupSidebarCategories();
 } catch (e) {
