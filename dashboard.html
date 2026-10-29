@@ -158,8 +158,8 @@ function getToolUrl(name) {
     "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
     "PDF Compressor (KB)": "pdf-compressor.html",
     "Document Scanner & PDF": "document-scanner.html",
-    "PDF Page Number Adder": "pdf-page-number-adder.html",
-    "PDF Header & Footer Maker": "pdf-header-footer-maker.html",
+    "PDF Page Number Adder": "pdf_page_number_adder.html",
+    "PDF Header & Footer Maker": "pdf_header_footer_maker.html",
     "Photo Compressor (KB)": "photo-compressor.html",
     "Image Format Converter": "image-converter.html",
     "Background Remover": "background-remover.html",
@@ -182,7 +182,7 @@ function getToolUrl(name) {
   const fallback = String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return 'freetools/' + fallback + '.html';
 }
-const API = 'https://docsmartly-api.hm2351994.workers.dev';
+  const API = 'https://docsmartly-api.hm2351994.workers.dev';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
 const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '-';
