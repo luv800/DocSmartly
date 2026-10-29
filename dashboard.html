@@ -340,6 +340,8 @@ const TA={
   "Name, Date & Text on Photo":()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw'),
   "Instagram Reel Cover Maker":()=>PHN(48,4,64,92)+IMG(54,12,52,48),
   "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
+  "PDF to Excel": () => PG(20,8,56,84) + X(48,22,'PDF',8) + AR(82,46) + R(100,18,48,64,'fg',4) + X(124,32,'XLS',7,'fw'),
+  "Passport Photo Maker": () => PG(30,6,100,88) + H(60,20,40,50) + X(80,82,'PASSPORT',6.5,'fa')
 };
 
 const DA={
@@ -486,6 +488,7 @@ const CATEGORIES = {
     { n: "PDF Merge", isPaid: false, ic: "merge" },
     { n: "PDF Split & Page Extract", isPaid: false, ic: "doc" },
     { n: "PDF to JPG", isPaid: false, ic: "img" },
+    { n: "PDF to Excel", isPaid: false, ic: "doc" }, // <--- Yeh Naya Add Karen
     { n: "PDF Rotate & Reorder", isPaid: false, ic: "doc" },
     { n: "PDF Compressor (KB)", isPaid: false, ic: "zip" },
     { n: "Document Scanner & PDF", isPaid: false, ic: "doc" },
@@ -513,6 +516,7 @@ const CATEGORIES = {
   ],
   "Print & ID Cards (Free)": [
     { n: "Passport Photo Sheet", isPaid: false, ic: "img" },
+    { n: "Passport Photo Maker", isPaid: false, ic: "img" }, // <--- Yeh Naya Add Karen
     { n: "ID Card Front & Back to A4", isPaid: false, ic: "id" },
     { n: "ID Card Maker", isPaid: false, ic: "id" },
     { n: "Employee ID Card Maker", isPaid: false, ic: "id" },
