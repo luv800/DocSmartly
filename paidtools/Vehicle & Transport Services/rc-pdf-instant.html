@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>RC PDF Instant – DocSmartly</title>
+<link rel="stylesheet" href="../css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
+  window.location.replace('../login.html');
+}
+</script>
+<style>
+:root {
+  --bg: #f4f7fe;
+  --sf: #ffffff;
+  --ink: #13233f;
+  --mut: #64748b;
+  --ln: #e2e8f0;
+  --ac: #2457d6;
+  --ac2: #16337a;
+  --tint: #eff4ff;
+  --ok: #16a34a;
+  --er: #dc2626;
+  --warn: #d97706;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+.ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
+.ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
+.tb { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.chip { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-weight: 700; color: var(--ac2); text-decoration: none; font-size: 0.9rem; }
+
+.container { max-width: 860px; margin: 30px auto; padding: 0 20px; }
+.card { background: var(--sf); border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 24px; position: relative; overflow: hidden; }
+
+.badge-charge { display: inline-flex; align-items: center; gap: 6px; background: #e6f4ea; color: #137333; font-weight: 700; font-size: 0.85rem; padding: 6px 14px; border-radius: 99px; border: 1px solid #ceead6; margin-bottom: 16px; }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--ink); }
+.form-group input, .form-group textarea { width: 100%; height: 44px; padding: 10px 14px; border: 1.5px solid var(--ln); border-radius: 10px; font-family: inherit; font-size: 0.92rem; box-sizing: border-box; outline: none; transition: border-color .2s; }
+.form-group textarea { height: 80px; resize: vertical; }
+.form-group input:focus, .form-group textarea:focus { border-color: var(--ac); }
+
+.chk-wrap { display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; color: #475569; margin: 20px 0; background: #fff8e6; padding: 12px 14px; border-radius: 10px; border: 1px solid #fef3c7; }
+.chk-wrap input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
+
+.btn-primary { background: var(--ac); color: #fff; border: none; font-weight: 700; font-size: 0.95rem; height: 46px; border-radius: 10px; cursor: pointer; width: 100%; transition: background .2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+.btn-primary:hover { background: var(--ac2); }
+
+.status-box { text-align: center; padding: 30px 10px; }
+.spinner { width: 44px; height: 44px; border: 4px solid var(--ln); border-top-color: var(--ac); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 500px; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .88rem; }
+th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); background: var(--tint); }
+.sb-status { display: inline-block; border-radius: 99px; padding: 3px 10px; font-size: .75rem; font-weight: 800; text-transform: capitalize; }
+.s-pending { background: #fff1cc; color: #6b4200; }
+.s-processing { background: #dbe7ff; color: #1b44ad; }
+.s-success { background: #e0f5ea; color: #0f6b45; }
+.s-failed { background: #fdecea; color: #7a1a12; }
+</style>
+</head>
+<body>
+
+<header class="ap">
+  <div class="w">
+    <a href="../dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
+    <div class="tb">
+      <span class="chip" id="walletBal">₹0.00</span>
+      <a class="btn-primary" href="../dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  
+  <!-- SERVICE MAIN CARD -->
+  <div class="card" id="mainServiceCard">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h1 style="font-size: 1.6rem; margin: 0 0 6px;">RC PDF Instant (RTO Verification)</h1>
+      <p style="color: var(--mut); margin: 0 0 12px; font-size: 0.9rem;">Instant RTO verification &amp; non-chip / chip RC PDF document generation.</p>
+      <div class="badge-charge">🏷️ Charge: ₹40.00 / Request</div>
+    </div>
+
+    <!-- STEP 1: INPUT FORM -->
+    <div id="step1Form">
+      <form id="fRcForm">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+          <div class="form-group">
+            <label for="vNo">Vehicle Number *</label>
+            <input type="text" id="vNo" placeholder="EX: RJ14AB1234" required style="text-transform:uppercase;">
+          </div>
+          <div class="form-group">
+            <label for="chNo">Chassis Number *</label>
+            <input type="text" id="chNo" placeholder="Enter last 5 or full Chassis No." required style="text-transform:uppercase;">
+          </div>
+          <div class="form-group">
+            <label for="engNo">Engine Number *</label>
+            <input type="text" id="engNo" placeholder="Enter last 5 or full Engine No." required style="text-transform:uppercase;">
+          </div>
+          <div class="form-group">
+            <label for="mobNo">Registered Mobile Number *</label>
+            <input type="tel" id="mobNo" placeholder="10 Digit Registered Mobile No." pattern="[0-9]{10}" maxlength="10" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regAddr">Registered Owner Address *</label>
+          <textarea id="regAddr" placeholder="Enter full registered address as per RTO records" required></textarea>
+        </div>
+
+        <div class="chk-wrap">
+          <input type="checkbox" id="chkConfirm" required>
+          <label for="chkConfirm" style="cursor:pointer;">
+            Main ye purni tarah se confirm karta hu ki di gayi sabhi jankari (Vehicle, Chassis, Engine No. aur Address) bilkul sahi hain. Galat jankari paye jane par hone wale kisi bhi nuksan ki zimmedari meri khud ki hogi.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnSubStep1">Submit &amp; Proceed to OTP</button>
+      </form>
+    </div>
+
+    <!-- STEP 2: OTP CONFIRMATION SCREEN -->
+    <div id="step2Otp" style="display: none;">
+      <div class="status-box">
+        <div class="spinner"></div>
+        <h3 style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Wait for OTP confirmation from RTO officials</h3>
+        <p style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
+          Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
+        </p>
+
+        <form id="fOtpForm" style="max-width: 340px; margin: 0 auto;">
+          <div class="form-group">
+            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
+          </div>
+          <button type="submit" class="btn-primary">Verify &amp; Submit OTP</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- STEP 3: WAITING FOR ADMIN PDF UPLOAD -->
+    <div id="step3Waiting" style="display: none;">
+      <div class="status-box">
+        <div class="spinner" id="waitSpinner"></div>
+        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ac);">Request Processed &amp; Under RTO Verification</h3>
+        <p id="waitMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
+          Aapki OTP confirmation verify ho chuki hai. Admin panel se official PDF upload hote hi yahan PDF Download button aa jayega.
+        </p>
+
+        <div id="downloadContainer" style="display: none;">
+          <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
+            📥 Download RC PDF Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RECENT HISTORY CARD -->
+  <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <div>
+        <h3 style="margin: 0; font-size: 1.1rem;">History</h3>
+        <p style="margin: 2px 0 0; font-size: 0.82rem; color: var(--mut);">Is service ki aapki recent requests — PDF yahin se dobara download kar sakte hain</p>
+      </div>
+      <a href="../dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Vehicle No</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="historyTbody">
+          <tr><td colspan="4" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="../tools.js"></script>
+<script>
+const API = 'https://docsmartly-api.hm2351994.workers.dev';
+const CHARGE = 40;
+let currentRequestId = null;
+let pollTimer = null;
+
+function user() {
+  try {
+    const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+    const sess = localStorage.getItem('ds_session');
+    return list.find(x => x.id === sess) || { name: 'User', bal: 0, orders: [], tx: [] };
+  } catch (e) {
+    return { name: 'User', bal: 0, orders: [], tx: [] };
+  }
+}
+
+function saveUser(u) {
+  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+  const idx = list.findIndex(x => x.id === u.id);
+  if (idx >= 0) list[idx] = u; else list.push(u);
+  localStorage.setItem('ds_users', JSON.stringify(list));
+}
+
+function updateWalletUI() {
+  const u = user();
+  document.getElementById('walletBal').textContent = '₹' + Number(u.bal || 0).toLocaleString('en-IN');
+}
+
+function renderHistoryTable() {
+  const u = user();
+  const rcOrders = (u.orders || []).filter(o => o.n === 'RC PDF INSTANT').sort((a,b) => b.t - a.t);
+  const tbody = document.getElementById('historyTbody');
+  
+  if (!rcOrders.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rcOrders.map(o => `
+    <tr>
+      <td>${new Date(o.t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
+      <td><b>${o.doc || o.id}</b></td>
+      <td><span class="sb-status s-${o.s}">${o.s}</span></td>
+      <td>
+        ${o.file ? `<button class="btn-primary" onclick="downloadFile('${o.id}', '${o.file.name}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok)">Download</button>` : '<span style="color:var(--mut);font-size:0.8rem;">In Progress</span>'}
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Step 1: Submit Form & Deduct Wallet
+document.getElementById('fRcForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const u = user();
+  
+  if (u.bal < CHARGE) {
+    alert('Insufficient balance! Kripya pehle wallet top-up karein.');
+    window.location.href = '../dashboard.html#addmoney';
+    return;
+  }
+
+  const vNo = document.getElementById('vNo').value.trim().toUpperCase();
+  const chNo = document.getElementById('chNo').value.trim().toUpperCase();
+  const engNo = document.getElementById('engNo').value.trim().toUpperCase();
+  const mobNo = document.getElementById('mobNo').value.trim();
+  const regAddr = document.getElementById('regAddr').value.trim();
+
+  currentRequestId = 'RC_' + Date.now();
+
+  const requestPayload = {
+    id: currentRequestId,
+    k: 'RC Services|RC PDF INSTANT',
+    sec: 'RC Services',
+    n: 'RC PDF INSTANT',
+    amt: CHARGE,
+    t: Date.now(),
+    s: 'processing',
+    doc: vNo,
+    details: { chassis: chNo, engine: engNo, mobile: mobNo, address: regAddr }
+  };
+
+  u.bal -= CHARGE;
+  u.orders = u.orders || [];
+  u.orders.unshift(requestPayload);
+  u.tx = u.tx || [];
+  u.tx.unshift({ t: Date.now(), note: 'RC PDF INSTANT - ' + vNo, type: 'debit', amt: CHARGE });
+  saveUser(u);
+
+  updateWalletUI();
+  renderHistoryTable();
+
+  document.getElementById('step1Form').style.display = 'none';
+  document.getElementById('step2Otp').style.display = 'block';
+};
+
+// Step 2: Submit OTP
+document.getElementById('fOtpForm').onsubmit = function(e) {
+  e.preventDefault();
+  const otp = document.getElementById('otpCode').value.trim();
+  if (!otp) return;
+
+  document.getElementById('step2Otp').style.display = 'none';
+  document.getElementById('step3Waiting').style.display = 'block';
+
+  startPdfStatusCheck();
+};
+
+// Step 3: Check status continuously
+function startPdfStatusCheck() {
+  if (pollTimer) clearInterval(pollTimer);
+  
+  pollTimer = setInterval(() => {
+    const u = user();
+    const ord = (u.orders || []).find(o => o.id === currentRequestId);
+    
+    if (ord && ord.s === 'success' && ord.file) {
+      clearInterval(pollTimer);
+      document.getElementById('waitSpinner').style.display = 'none';
+      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
+      document.getElementById('waitTitle').style.color = 'var(--ok)';
+      document.getElementById('waitMsg').textContent = 'Admin panel se official RC PDF upload kar di gayi hai. Aap niche button par click karke download kar sakte hain.';
+      
+      const btnDl = document.getElementById('btnDownloadPdf');
+      btnDl.onclick = () => downloadFile(ord.id, ord.file.name);
+      document.getElementById('downloadContainer').style.display = 'block';
+      
+      renderHistoryTable();
+    }
+  }, 3000);
+}
+
+async function downloadFile(reqId, fileName) {
+  try {
+    const r = await fetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
+      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+    });
+    if (!r.ok) {
+      alert('File local storage/server me available hai.');
+      return;
+    }
+    const b = await r.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = fileName || 'RC_Document.pdf';
+    a.click();
+  } catch (err) {
+    alert('Downloading PDF...');
+  }
+}
+
+updateWalletUI();
+renderHistoryTable();
+</script>
+</body>
+</html>
