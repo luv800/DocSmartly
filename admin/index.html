@@ -51,7 +51,7 @@ tr.dt td{background:var(--bg);padding:14px 18px}
 
 <main class="w" id="main" hidden style="padding-block:8px 60px">
 <div class="stt" id="stt"></div>
-<div class="note">Live auto-sync active (Updates every 3 seconds). Approve or Reject user OTPs instantly.</div>
+<div class="note">Live auto-sync active (Updates every 3 seconds). Approve or Reject user OTPs instantly. <b id="ls">Last sync: -</b> <button class="btn o" id="rf" type="button" style="min-height:30px;padding:3px 10px;margin-left:6px">Refresh now</button></div>
 <div class="tabs"><button class="t on" data-t="req">Service requests</button><button class="t" data-t="cus">Customers</button><span class="sp"></span>
 <button class="btn o" id="csv">Export CSV</button></div>
 <div class="bar"><input id="q" type="search" placeholder="Search name, mobile, email, service, request ID" aria-label="Search"><select id="fs" aria-label="Filter by status"><option value="">All statuses</option><option>pending</option><option>processing</option><option>success</option><option>failed</option></select></div>
@@ -258,11 +258,17 @@ $('#q').oninput = draw;
 $('#fs').onchange = draw;
 
 // Live auto-refresh background sync every 3 seconds
-const typing = () => { const el = document.activeElement; return !!el && ['TEXTAREA', 'SELECT', 'INPUT'].includes(el.tagName); };
-setInterval(async () => {
-  if (!PASS || document.hidden || typing()) return;
-  try { await load(); draw(); } catch {}
-}, REFRESH_MS);
+const stamp = ok => { const el = $('#ls'); if (el) { el.textContent = ok ? 'Last sync: ' + new Date().toLocaleTimeString('en-IN') : 'Sync failed - Refresh now dabayein / dobara login karein'; el.style.color = ok ? '' : 'var(--er)'; } };
+// Sirf table ke andar ka input/select/textarea (remark box, status dropdown, file picker) re-render me kharab hota hai.
+// Search box ya filter par focus hone se sync ab nahi rukta.
+const typing = () => { const el = document.activeElement; return !!el && !!el.closest && !!el.closest('#tb') && ['TEXTAREA', 'SELECT', 'INPUT'].includes(el.tagName); };
+async function sync(force) {
+  if (!PASS) return;
+  if (!force && (document.hidden || typing())) return;
+  try { await load(); draw(); stamp(true); } catch { stamp(false); }
+}
+setInterval(() => sync(false), REFRESH_MS);
+$('#rf').onclick = () => sync(true);
 
 (async () => {
   const p = sessionStorage.getItem('ds_admin_pass');
