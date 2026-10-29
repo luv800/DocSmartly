@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>RC PDF Instant – DocSmartly</title>
-<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../../css/styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
 if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
-  window.location.replace('../login.html');
+  window.location.replace('../../login.html');
 }
 </script>
 <style>
@@ -75,10 +75,10 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 
 <header class="ap">
   <div class="w">
-    <a href="../dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
+    <a href="../../dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
     <div class="tb">
       <span class="chip" id="walletBal">₹0.00</span>
-      <a class="btn-primary" href="../dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
+      <a class="btn-primary" href="../../dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
     </div>
   </div>
 </header>
@@ -123,7 +123,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
         <div class="chk-wrap">
           <input type="checkbox" id="chkConfirm" required>
           <label for="chkConfirm" style="cursor:pointer;">
-            Main ye purni tarah se confirm karta hu ki di gayi sabhi jankari (Vehicle, Chassis, Engine No. aur Address) bilkul sahi hain. Galat jankari paye jane par hone wale kisi bhi nuksan ki zimmedari meri khud ki hogi.
+            Main ye poori tarah se confirm karta hu ki di gayi sabhi jankari (Vehicle, Chassis, Engine No. aur Address) bilkul sahi hain. Galat jankari paye jane par hone wale kisi bhi nuksan ki zimmedari meri khud ki hogi.
           </label>
         </div>
 
@@ -175,7 +175,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
         <h3 style="margin: 0; font-size: 1.1rem;">History</h3>
         <p style="margin: 2px 0 0; font-size: 0.82rem; color: var(--mut);">Is service ki aapki recent requests — PDF yahin se dobara download kar sakte hain</p>
       </div>
-      <a href="../dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
+      <a href="../../dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
     </div>
 
     <div class="tw">
@@ -197,7 +197,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 
 </div>
 
-<script src="../tools.js"></script>
+<script src="../../tools.js"></script>
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
 const CHARGE = 40;
@@ -255,7 +255,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   
   if (u.bal < CHARGE) {
     alert('Insufficient balance! Kripya pehle wallet top-up karein.');
-    window.location.href = '../dashboard.html#addmoney';
+    window.location.href = '../../dashboard.html#addmoney';
     return;
   }
 
