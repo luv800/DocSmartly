@@ -309,7 +309,7 @@ async function checkAndRestoreStep() {
   }
 }
 
-// Step 1: Submit Form (Bulletproof ID extraction & auto-fallback)
+// Step 1: Submit Form (Fixed Request ID extraction from server response)
 document.getElementById('fRcForm').onsubmit = async function(e) {
   e.preventDefault();
   const u = user();
@@ -357,8 +357,23 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     const j = await res.json();
     if (j.user) saveUser(j.user);
     
-    // Smart Request ID extractor with fallback so it never fails
-    currentRequestId = (j.request && (j.request.id || j.request.uuid || j.request._id)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id) || ('RC_' + Date.now());
+    // Exact server request ID capture (checks all possible server response properties)
+    currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id);
+    
+    if (!currentRequestId) {
+      // Fallback to latest order ID from user object if available
+      const latestUser = user();
+      const latestOrder = (latestUser.orders || []).sort((a,b) => b.t - a.t)[0];
+      if (latestOrder) {
+        currentRequestId = latestOrder.id;
+      }
+    }
+
+    if (!currentRequestId) {
+      alert('Error: Server did not return a valid Request ID.');
+      return;
+    }
+
     localStorage.setItem('ds_current_rc_req', currentRequestId);
 
     updateWalletUI();
@@ -369,22 +384,24 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
 
   } catch (err) {
     console.error('Submit Error:', err);
-    // Fallback ID generation in case of any network/parsing anomaly so user is never blocked
-    currentRequestId = 'RC_' + Date.now();
-    localStorage.setItem('ds_current_rc_req', currentRequestId);
-    document.getElementById('step1Form').style.display = 'none';
-    document.getElementById('step2Otp').style.display = 'block';
+    alert('Network error while submitting request.');
   }
 };
 
-// Step 2: Submit OTP
+// Step 2: Submit OTP (Sends correct PATCH request to server with proper ID)
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
   if (!otp) return;
 
   if (!currentRequestId) {
-    currentRequestId = localStorage.getItem('ds_current_rc_req') || ('RC_' + Date.now());
+    currentRequestId = localStorage.getItem('ds_current_rc_req');
+  }
+
+  if (!currentRequestId) {
+    alert('Session expired or Request ID missing. Kripya form dobara bharein.');
+    location.reload();
+    return;
   }
 
   try {
@@ -403,7 +420,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
       console.warn('Could not fetch existing request data, proceeding:', gErr);
     }
 
-    await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+    const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
@@ -418,8 +435,16 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
         }
       })
     });
+
+    if (!patchRes.ok) {
+      const errText = await patchRes.text();
+      alert('Server Error (' + patchRes.status + '): ' + errText);
+      return;
+    }
   } catch (err) {
     console.error('OTP Submit Error:', err);
+    alert('Network error while submitting OTP.');
+    return;
   }
 
   document.getElementById('step2Otp').style.display = 'none';
