@@ -349,14 +349,20 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     });
 
     if (!res.ok) {
-      alert('Failed to submit request to server.');
+      const errText = await res.text();
+      alert('Failed to submit request to server: ' + errText);
       return;
     }
 
     const j = await res.json();
     if (j.user) saveUser(j.user);
     
-    currentRequestId = j.request ? j.request.id : ('RC_' + Date.now());
+    // Robust Request ID extraction from server response
+    currentRequestId = (j.request && (j.request.id || j.request.uuid || j.request._id)) || j.id || j.requestId;
+    if (!currentRequestId) {
+      alert('Server response error: Request ID missing.');
+      return;
+    }
     localStorage.setItem('ds_current_rc_req', currentRequestId);
 
     updateWalletUI();
@@ -366,12 +372,12 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     document.getElementById('step2Otp').style.display = 'block';
 
   } catch (err) {
-    console.error('Error:', err);
-    alert('Network error while submitting request.');
+    console.error('Submit Error:', err);
+    alert('Network error while submitting request: ' + err.message);
   }
 };
 
-// Step 2: Submit OTP
+// Step 2: Submit OTP (Bulletproof ID and error handling)
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
   const otp = document.getElementById('otpCode').value.trim();
@@ -388,16 +394,19 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
   }
 
   try {
-    const getRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-    });
-    
     let existingData = {};
-    if (getRes.ok) {
-      const resJson = await getRes.json();
-      if (resJson.request && resJson.request.data) {
-        existingData = resJson.request.data;
+    try {
+      const getRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+        headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+      });
+      if (getRes.ok) {
+        const resJson = await getRes.json();
+        if (resJson.request && resJson.request.data) {
+          existingData = resJson.request.data;
+        }
       }
+    } catch (gErr) {
+      console.warn('Could not fetch existing request data, proceeding:', gErr);
     }
 
     const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
@@ -423,7 +432,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
     }
   } catch (err) {
     console.error('OTP Submit Error:', err);
-    alert('Network error while submitting OTP.');
+    alert('Network error while submitting OTP: ' + err.message);
     return;
   }
 
