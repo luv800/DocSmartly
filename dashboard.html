@@ -19,11 +19,8 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
   --text:#172033;
   --muted:#667085;
   --border:#e7eaf1;
-  --success:#15956a;
   --radius:18px;
   --shadow:0 8px 28px rgba(22,34,66,.055);
-  --tint:#edf3ff;
-  --error:#dc3e4b;
 }
 * {box-sizing:border-box;margin:0;padding:0}
 body {
@@ -33,15 +30,11 @@ body {
   -webkit-font-smoothing:antialiased;
 }
 button,input {font:inherit}
-.layout {
-  display:grid;
-  grid-template-columns:260px minmax(0,1fr);
-  min-height:100vh;
-}
+.layout {display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh}
 .sidebar {
   background:#111a2e;
   color:#e5eaf4;
-  padding:24px 16px 18px;
+  padding:22px 14px 16px;
   position:sticky;
   top:0;
   height:100vh;
@@ -53,289 +46,145 @@ button,input {font:inherit}
   border-right:1px solid rgba(255,255,255,.06);
 }
 .brand {
-  display:flex;
-  align-items:center;
-  gap:11px;
-  font-size:19px;
-  font-weight:800;
-  letter-spacing:-.04em;
-  color:#fff;
-  margin:0 8px 26px;
-  text-decoration:none;
+  display:flex;align-items:center;gap:11px;
+  font-size:19px;font-weight:800;letter-spacing:-.04em;
+  color:#fff;margin:0 8px 20px;text-decoration:none;
 }
 .brand span {
   background:linear-gradient(145deg,#5480ff,#315eea);
-  width:39px;
-  height:39px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  font-size:18px;
+  width:39px;height:39px;border-radius:13px;
+  display:grid;place-items:center;font-size:18px;
   box-shadow:0 7px 18px rgba(49,94,234,.32);
 }
-.nav {display:flex;flex-direction:column;gap:5px;flex:1}
+.nav {display:flex;flex-direction:column;gap:4px;flex:1}
 .nav a,.mi {
-  display:flex;
-  align-items:center;
-  gap:11px;
-  color:#aeb9cb;
-  text-decoration:none;
-  padding:11px 13px;
-  border-radius:11px;
-  font-size:13px;
-  font-weight:600;
+  display:flex;align-items:center;gap:10px;
+  color:#aeb9cb;text-decoration:none;
+  padding:10px 12px;border-radius:10px;
+  font-size:12px;font-weight:600;
   transition:background .18s,color .18s;
-  background:none;
-  border:none;
-  cursor:pointer;
-  text-align:left;
-  width:100%;
+  background:none;border:none;cursor:pointer;
+  text-align:left;width:100%;
 }
-.nav a:hover,.nav a.active,.mi:hover {
-  background:rgba(81,126,255,.16);
-  color:#fff;
-}
+.nav a:hover,.nav a.active,.mi:hover {background:rgba(81,126,255,.16);color:#fff}
 .nav a.active {box-shadow:inset 3px 0 #6e93ff}
-.sidebar-footer {
-  margin-top:auto;
-  border-top:1px solid rgba(255,255,255,.1);
-  padding-top:14px;
+.nav-label {
+  color:#8393ad;font-size:10px;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:17px 12px 5px;
 }
-main {padding:30px clamp(20px,3vw,42px);min-width:0}
+.sidebar-footer {margin-top:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
+main {padding:28px clamp(18px,3vw,40px);min-width:0}
 .topbar {
   background:rgba(255,255,255,.94);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:22px 25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  box-shadow:var(--shadow);
-  flex-wrap:wrap;
-  margin-bottom:24px;
+  border:1px solid var(--border);border-radius:20px;
+  padding:21px 24px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+  box-shadow:var(--shadow);margin-bottom:22px;
 }
 .welcome h1 {font-size:clamp(20px,2vw,25px);letter-spacing:-.045em}
 .welcome p {color:var(--muted);font-size:13px;margin-top:5px}
 .top-actions {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .balance-pill {
-  background:#f0f5ff;
-  color:#244ac4;
-  border:1px solid #dce6ff;
-  padding:10px 15px;
-  border-radius:12px;
-  font-weight:700;
-  text-decoration:none;
-  font-size:13px;
+  background:#f0f5ff;color:#244ac4;border:1px solid #dce6ff;
+  padding:10px 14px;border-radius:12px;font-weight:700;
+  text-decoration:none;font-size:13px;
 }
 .btn {
-  border:none;
-  cursor:pointer;
-  padding:11px 17px;
-  border-radius:11px;
-  font-weight:700;
-  font-size:13px;
-  transition:.18s ease;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  border:none;cursor:pointer;padding:11px 16px;border-radius:11px;
+  font-weight:700;font-size:13px;transition:.18s ease;
+  text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
 }
-.btn-primary {
-  background:linear-gradient(135deg,#416ff2,#315eea);
-  color:#fff;
-  box-shadow:0 5px 13px rgba(49,94,234,.2);
-}
-.btn-primary:hover {
-  background:linear-gradient(135deg,#315eea,#244ac4);
-  transform:translateY(-1px);
-}
+.btn-primary {background:linear-gradient(135deg,#416ff2,#315eea);color:#fff;box-shadow:0 5px 13px rgba(49,94,234,.2)}
+.btn-primary:hover {background:linear-gradient(135deg,#315eea,#244ac4);transform:translateY(-1px)}
 .btn-light {background:#fff;border:1px solid var(--border);color:var(--text)}
-.btn-light:hover {background:#f7f9fc;border-color:#cfd6e3}
-.stats {
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:15px;
-  margin-bottom:30px;
-}
-.stat {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:19px;
-  box-shadow:var(--shadow);
-  transition:transform .18s,box-shadow .18s;
-}
-.stat:hover {transform:translateY(-2px);box-shadow:0 12px 30px rgba(22,34,66,.09)}
+.stats {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:26px}
+.stat {background:var(--card);border:1px solid var(--border);border-radius:17px;padding:18px;box-shadow:var(--shadow)}
 .stat-head {display:flex;justify-content:space-between;align-items:center;gap:10px}
 .stat h3 {font-size:12px;color:var(--muted);font-weight:700}
-.icon {width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:16px}
+.stat-icon {width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:17px}
 .blue {background:#edf3ff}.green {background:#eaf8f1}.orange {background:#fff4e8}.purple {background:#f2efff}
-.stat-value {font-size:25px;font-weight:800;letter-spacing:-.04em;margin-top:13px}
+.stat-value {font-size:24px;font-weight:800;letter-spacing:-.04em;margin-top:12px}
 .stat-note {font-size:12px;color:var(--muted);margin-top:3px}
-
-.ds {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:17px;
-  margin-bottom:14px;
-  box-shadow:var(--shadow);
+.tools-heading {
+  display:flex;justify-content:space-between;align-items:end;
+  gap:14px;flex-wrap:wrap;margin:25px 0 14px;
 }
+.tools-heading h2 {font-size:21px;letter-spacing:-.035em}
+.tools-heading p {color:var(--muted);font-size:12px;margin-top:4px}
+.filters {display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.filters button {
+  border:1px solid var(--border);background:#fff;border-radius:999px;
+  padding:8px 13px;font:700 12px 'Plus Jakarta Sans',sans-serif;
+  cursor:pointer;color:var(--muted);
+}
+.filters button.on {background:#172033;color:#fff;border-color:#172033}
+.ds {background:var(--card);border:1px solid var(--border);border-radius:16px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow);scroll-margin-top:18px}
 .ds summary {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  cursor:pointer;
-  font-weight:800;
-  color:var(--text);
-  font-size:14px;
-  list-style:none;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;cursor:pointer;font-weight:800;color:var(--text);
+  font-size:13px;list-style:none;
 }
 .ds summary::-webkit-details-marker {display:none}
-.ds summary em {
-  font-style:normal;
-  font-size:11px;
-  background:var(--tint);
-  color:var(--primary-dark);
-  padding:4px 10px;
-  border-radius:99px;
-}
-.ig {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
-  gap:12px;
-  margin-top:15px;
-}
-.it {
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px;
-  text-decoration:none;
-  color:inherit;
+.ds summary em {font-style:normal;font-size:10px;background:#edf3ff;color:var(--primary-dark);padding:4px 9px;border-radius:99px}
+.tool-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:11px;margin-top:14px}
+.tool-card {
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:11px;text-decoration:none;color:inherit;min-width:0;
   transition:transform .18s,border-color .18s,box-shadow .18s;
-  min-width:0;
 }
-.it:hover {
-  border-color:#b6c8ff;
-  transform:translateY(-3px);
-  box-shadow:0 9px 22px rgba(36,87,214,.09);
+.tool-card:hover {border-color:#b6c8ff;transform:translateY(-3px);box-shadow:0 9px 22px rgba(36,87,214,.09)}
+.tool-icon {
+  height:82px;border-radius:11px;margin-bottom:10px;
+  display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(135deg,#eaf0ff,#f7f9ff);
 }
-.sv {
-  position:relative;
-  aspect-ratio:16/10;
-  border-radius:10px;
-  margin-bottom:11px;
-  overflow:hidden;
-  background:radial-gradient(rgba(19,35,63,.07) 1px,transparent 1.5px) 0 0/12px 12px,linear-gradient(135deg,var(--t),#fff);
-}
-.art {position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 4px 5px rgba(19,35,63,.2))}
-.fa {fill:var(--a)}.fb {fill:var(--b)}.fw {fill:#fff}.fl {fill:#dbe4f3}.fk {fill:#13233f}
-.fy {fill:#f5c451}.fg {fill:#16a34a}.fr {fill:#dc2626}.fm {fill:#8a93a6}.fo {fill:#fff;fill-opacity:.4}
-.sa {fill:none;stroke:var(--a);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.sw {fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.badge-free,.badge-paid {
-  font-size:10px;
-  padding:5px 10px;
-  border-radius:999px;
-  font-weight:800;
-  width:fit-content;
-  margin-top:9px;
-}
+.tool-icon svg {width:67px;height:59px;filter:drop-shadow(0 4px 4px rgba(19,35,63,.12))}
+.tool-name {font-size:12px;font-weight:800;line-height:1.45}
+.tool-category {font-size:10px;color:var(--muted);margin-top:3px}
+.badge-free,.badge-paid {font-size:10px;padding:5px 9px;border-radius:999px;font-weight:800;width:fit-content;margin-top:8px}
 .badge-free {background:#e8f7ef;color:#12805b}
 .badge-paid {background:#fff5df;color:#805600;border:1px solid #f2dfa9}
-.tools-dash-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:34px;
-  margin-bottom:15px;
-}
-.tools-dash-head h2 {letter-spacing:-.035em}
-.dash-cats {display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}
-.dash-cats button {
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:999px;
-  padding:8px 14px;
-  font:700 12px 'Plus Jakarta Sans',sans-serif;
-  cursor:pointer;
-  transition:.18s;
-  color:var(--muted);
-}
-.dash-cats button:hover {border-color:#b8c8f8;color:var(--primary)}
-.dash-cats button.on {background:#172033;color:#fff;border-color:#172033}
-.tw {
-  overflow-x:auto;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-}
-table {width:100%;border-collapse:collapse;min-width:520px}
-th,td {padding:14px 17px;text-align:left;border-bottom:1px solid var(--border);font-size:12px}
+.tblue {fill:#315eea}.tdark {fill:#173573}.tlight {fill:#eff4ff}.twhite {fill:#fff}
+.tgreen {fill:#20a779}.torange {fill:#f4b544}.tgray {fill:#dbe3f0}
+.tline {fill:none;stroke:#315eea;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.tstroke {fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.table-wrap {overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:15px;box-shadow:var(--shadow)}
+table {width:100%;border-collapse:collapse;min-width:500px}
+th,td {padding:13px 15px;text-align:left;border-bottom:1px solid var(--border);font-size:12px}
 th {font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:#f8f9fc;font-weight:800}
 tbody tr:last-child td {border-bottom:0}
-tbody tr:hover {background:#fafbfe}
-.sb-status {display:inline-block;border-radius:99px;padding:5px 10px;font-size:10px;font-weight:800;text-transform:capitalize}
-.s-pending {background:#fff4e8;color:#c45b08}
-.s-processing {background:#eaf0ff;color:#3157ae}
-.s-success {background:#eaf8f1;color:#12805b}
-.s-failed {background:#fdeeee;color:#b4232e}
-.panel-view {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:25px;
-  box-shadow:var(--shadow);
-  max-width:520px;
-}
-.panel-view h1 {font-size:20px;letter-spacing:-.035em;margin-bottom:15px}
+.status {display:inline-block;border-radius:99px;padding:5px 9px;font-size:10px;font-weight:800;text-transform:capitalize}
+.s-pending {background:#fff4e8;color:#c45b08}.s-processing {background:#eaf0ff;color:#3157ae}.s-success {background:#eaf8f1;color:#12805b}.s-failed {background:#fdeeee;color:#b4232e}
+.panel {background:#fff;border:1px solid var(--border);border-radius:17px;padding:23px;box-shadow:var(--shadow);max-width:520px}
+.panel h1 {font-size:20px;letter-spacing:-.035em;margin-bottom:14px}
+.field {width:100%;height:43px;padding:8px 12px;border:1px solid var(--border);border-radius:9px;margin:6px 0 15px}
+[data-v][hidden] {display:none!important}
 :focus-visible {outline:3px solid rgba(49,94,234,.35);outline-offset:2px}
 
 @media(max-width:1050px) {
   .layout {grid-template-columns:225px minmax(0,1fr)}
-  main {padding:22px}
+  main {padding:20px}
   .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:760px) {
   .layout {grid-template-columns:1fr}
   .sidebar {
-    position:sticky;
-    top:0;
-    height:auto;
-    max-height:45vh;
-    overflow-y:auto;
-    padding:14px 14px 12px;
-    z-index:100;
+    position:sticky;top:0;height:auto;max-height:52vh;
+    overflow-y:auto;padding:12px 12px 10px;z-index:100;
     box-shadow:0 8px 20px rgba(10,18,35,.18);
   }
-  .brand {margin:0 6px 12px}
-  .nav {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .nav a,.mi {padding:10px;font-size:12px}
-  .sidebar-footer {margin-top:10px}
-  main {padding:18px 14px 28px}
-  .topbar {padding:18px;border-radius:16px}
+  .brand {margin:0 6px 10px}
+  .nav {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+  .nav-label {grid-column:1/-1;padding-top:12px}
+  .nav a,.mi {padding:9px 8px;font-size:11px}
+  .sidebar-footer {margin-top:8px}
+  main {padding:16px 12px 26px}
+  .topbar {padding:17px;border-radius:16px}
   .top-actions {width:100%}
   .top-actions>* {flex:1}
-  .stats {gap:10px}
-  .stat {padding:15px}
-  .stat-value {font-size:22px}
-  .ig {grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:9px}
-}
-@media(max-width:420px) {
-  .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
-  .nav {grid-template-columns:1fr 1fr}
-  .dash-cats {gap:6px}
-  .dash-cats button {padding:7px 10px;font-size:11px}
-  .panel-view {padding:19px}
+  .tool-grid {grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
 }
 </style>
 </head>
@@ -344,6 +193,7 @@ tbody tr:hover {background:#fafbfe}
 <div class="layout">
   <aside class="sidebar">
     <a class="brand" href="#dashboard"><span>D</span> DocSmartly</a>
+
     <nav class="nav">
       <a href="#dashboard">🏠 Dashboard</a>
       <a href="#history">🕘 Request History</a>
@@ -352,8 +202,22 @@ tbody tr:hover {background:#fafbfe}
       <a href="#referral">🎁 Refer &amp; Earn</a>
       <a href="#profile">👤 My Profile</a>
       <a href="#contact">🎧 Contact Support</a>
-      <a href="index.html" style="color:#91adff;font-weight:700">🌐 Homepage →</a>
+
+      <div class="nav-label">🚀 Services</div>
+      <a href="#services-vehicle">🚗 Vehicle &amp; Transport</a>
+      <a href="#services-licence">🪪 Licence &amp; Identity</a>
+      <a href="#services-tax">📑 PAN, Tax &amp; Business</a>
+      <a href="#services-citizen">🌾 Citizen &amp; Farmer</a>
+      <a href="#services-govt">🏗️ Govt &amp; Contractor</a>
+      <a href="#services-pdf">📄 PDF Tools</a>
+      <a href="#services-image">🖼️ Image &amp; Photo Tools</a>
+      <a href="#services-print">🪪 Print &amp; ID Cards</a>
+      <a href="#services-documents">📝 Documents &amp; Letters</a>
+      <a href="#services-utilities">🧮 Calculators &amp; Utilities</a>
+
+      <a href="index.html">🌐 Homepage →</a>
     </nav>
+
     <div class="sidebar-footer">
       <button class="mi" id="loSb" style="color:#fca5a5">🚪 Logout</button>
     </div>
@@ -361,8 +225,8 @@ tbody tr:hover {background:#fafbfe}
 
   <main>
     <section data-v="dashboard"></section>
-    <section data-v="passbook" hidden></section>
     <section data-v="history" hidden></section>
+    <section data-v="passbook" hidden></section>
     <section data-v="addmoney" hidden></section>
     <section data-v="referral" hidden></section>
     <section data-v="profile" hidden></section>
@@ -371,12 +235,12 @@ tbody tr:hover {background:#fafbfe}
 </div>
 
 <div id="rm" style="display:none;position:fixed;inset:0;background:rgba(10,18,35,.58);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(5px);padding:16px">
-  <div style="background:#fff;width:100%;max-width:420px;border-radius:18px;padding:28px;box-shadow:0 16px 50px rgba(0,0,0,.2);position:relative">
-    <button id="rx" type="button" style="position:absolute;top:16px;right:16px;border:none;background:none;font-size:1.2rem;cursor:pointer">✕</button>
-    <div style="text-align:center;margin-bottom:16px">
-      <div style="font-size:2.2rem;margin-bottom:8px">⚠️</div>
-      <h2 id="rt" style="font-size:1.3rem;margin:0 0 6px;color:var(--text)">Service request</h2>
-      <p id="rp" style="color:var(--muted);font-size:.88rem;margin:0;line-height:1.5"></p>
+  <div style="background:#fff;width:100%;max-width:420px;border-radius:18px;padding:25px;box-shadow:0 16px 50px rgba(0,0,0,.2);position:relative">
+    <button id="rx" type="button" style="position:absolute;top:14px;right:15px;border:none;background:none;font-size:1.2rem;cursor:pointer">✕</button>
+    <div style="text-align:center;margin-bottom:15px">
+      <div style="font-size:2rem;margin-bottom:7px">⚠️</div>
+      <h2 id="rt" style="font-size:1.2rem;margin-bottom:6px">Service request</h2>
+      <p id="rp" style="color:#667085;font-size:.85rem;line-height:1.5"></p>
     </div>
     <form id="fRq"></form>
   </div>
@@ -385,7 +249,7 @@ tbody tr:hover {background:#fafbfe}
 <script src="tools.js"></script>
 <script>
 const API='https://docsmartly-api.hm2351994.workers.dev';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
 const dt=t=>t?new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'-';
 const tokenHdr=()=>({'x-user-token':localStorage.getItem('ds_token')||''});
@@ -413,128 +277,18 @@ function saveUser(u){
   if(idx>=0)list[idx]=u;else list.push(u);
   localStorage.setItem('ds_users',JSON.stringify(list));
 }
-function updateBalance(){
-  const el=document.getElementById('aB');
-  if(el)el.textContent='Wallet: '+inr(user().bal);
-}
 
-const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
-const T=["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
-const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
-const art=h=>`<svg class="art" viewBox="0 0 160 100" aria-hidden="true">${h}</svg>`;
-const R=(x,y,w,h,c,r=3)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
-const C=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
-const X=(x,y,t,s,c='fk',a='middle')=>`<text x="${x}" y="${y}" font-size="${s}" class="${c}" text-anchor="${a}" font-weight="700">${t}</text>`;
-const Pa=(d,c)=>`<path d="${d}" class="${c}"/>`;
-const H=(x,y,w,h)=>R(x,y,w,h,'fw',4)+C(x+w/2,y+h*.38,w*.2,'fw')+Pa(`M${x+w*.15} ${y+h}q${w*.35} ${-h*.5} ${w*.7} 0z`,'fw');
-const PG=(x=52,y=8,w=56,h=84)=>R(x,y,w,h,'fw',4);
-const AR=(x,y,c='sa')=>Pa(`M${x} ${y}h16m-5-5 5 5-5 5`,c);
-const CAR=(x,y,s=1,c='fw')=>`<g transform="translate(${x} ${y}) scale(${s})">${R(0,8,44,12,c,4)}${R(8,0,28,10,c,4)}${C(11,22,4,'fk')}${C(33,22,4,'fk')}</g>`;
-const CARD=(x,y,w,h,c='fa')=>R(x,y,w,h,c,7);
-const L=(x,y,w,n=3,g=6,c='fl')=>Array.from({length:n},(_,i)=>R(x,y+i*g,i===n-1?w*.6:w,2.4,c,1.2)).join('');
-const QR=(x,y,s=72)=>{
-  let o=R(x,y,s,s,'fw',5);
-  const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);
-  o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);
-  for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);
-  return o;
-};
-const CALC=d=>R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c===3?'fy':'fb',2)).join('')).join('');
-const BRW=(x,y,w,h)=>R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
-const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6);
-
-const V={
-"RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
-"DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw'),
-"Voter Services":()=>CARD(18,20,124,64)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo'),
-"Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw'),
-"PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36),
-"RC Full Details":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+X(46,19,'VEHICLE DETAILS',6.5,'fw','start')+[0,1,2,3,4].map(i=>R(44,32+i*11,26,3,'fl',1.5)+R(78,32+i*11,36,3,'fb',1.5)).join(''),
-"Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+L(46,70,68,2,6),
-"LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
-"Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
-"Mobile Services":()=>R(56,6,48,88,'fk',6)+R(59,11,42,78,'fw',3)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb'),
-"GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+L(54,30,52,2,6)+C(80,62,17,'fa')+X(80,69,'%',20,'fw'),
-"Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.5,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
-"Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+R(100,16,34,68,'fk',6)+R(103,21,28,58,'fw',3)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
-"Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')+L(38,30,48,3,7)+X(62,68,'₹500',15,'fr'),
-"DBT Seeding Status":()=>Pa('M80 14l46 22H34z','fa')+R(30,74,100,8,'fa',2)+C(130,24,13,'fg')+Pa('M123 24l5 5 9-10','sw'),
-"TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7)
-};
-const TA={
-"Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
-"QR Code Generator":()=>QR(44,14),
-"Stamp Designer":()=>C(80,50,38,'sa')+C(80,50,30,'sa')+X(80,48,'DOCSMARTLY',8,'fa')+X(80,60,'★ ★ ★',6,'fa'),
-"ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
-"What Is My IP":()=>C(52,50,30,'sa')+R(84,38,62,24,'fk',6)+X(115,54,'103.xx.xx.12',6.5,'fw'),
-"Letterhead Maker":()=>PG(44,6,72,88)+C(58,22,7,'fa')+R(70,17,36,3,'fa',1.5)+L(52,44,56,6,7),
-"Visiting Card Designer":()=>R(60,46,76,46,'fw',5)+R(24,10,76,46,'fa',5)+X(36,30,'DocSmartly',8,'fw','start')+L(36,38,40,2,6,'fo'),
-"Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8),
-"Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+X(80,84,'Age: 28 years',7),
-"Photo & Signature Resizer":()=>R(30,18,76,56,'fb',4)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+X(118,88,'35×45 mm',7),
-"JPG / PNG to PDF":()=>R(14,26,48,40,'fb',4)+AR(68,44),
-"PDF Merge":()=>AR(74,48),
-"PDF Split & Page Extract":()=>AR(66,48),
-"PDF to JPG":()=>R(90,28,52,44,'fb',4)+X(116,86,'JPG',7,'fa'),
-"PDF Rotate & Reorder":()=>Pa('M146 58a20 20 0 1 1-6-14','sa'),
-"PDF Compressor (KB)":()=>R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8),
-"Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5),
-"PDF Page Number Adder":()=>C(80,80,7,'fa')+X(80,83.5,'1',8,'fw'),
-"PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw'),
-"Photo Compressor (KB)":()=>R(18,16,70,56,'fb',4)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7),
-"Image Format Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'JPG',8)+AR(68,44),
-"Background Remover":()=>R(36,10,88,80,'fl',6)+H(58,22,44,66),
-"WebP to JPG Converter":()=>R(14,26,48,40,'fb',4)+AR(68,44),
-"ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46),
-"ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
-"Thumbnail Resizer":()=>R(16,14,84,66,'fb',4)+R(112,34,32,26,'fa',4),
-"Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,40,100,3,'fl',1.5),
-"Image Watermark Maker":()=>R(24,16,112,68,'fb',4)+X(80,56,'DOCSMARTLY',13,'fo'),
-"Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa'),
-"Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa'),
-"Photo Blur Tool":()=>R(14,22,56,48,'fb',4)+AR(74,42),
-"Image to Black & White":()=>R(14,22,56,48,'fb',4)+AR(74,42),
-"Background Black & White":()=>H(14,14,56,72)+AR(74,44),
-"Photo Border Maker":()=>R(28,10,104,80,'fa',6)+R(40,22,80,56,'fb',4),
-"Color Picker from Image":()=>R(16,16,90,68,'fb',4)+Pa('M108 56l22-22 8 8-22 22-10 2z','fa'),
-"ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw'),
-"QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
-"Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
-"Student ID Card Maker":()=>IDV(52,4,56,92,'STUDENT','fb'),
-"A4 Photo Print Layout":()=>PG(36,4,88,92)+[0,1,2,3].map(r=>[0,1,2].map(c=>H(44+c*26,12+r*21,20,16)).join('')).join(''),
-"Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7),
-"Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2),
-"Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+L(44,44,72,4,8),
-"Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+L(44,44,72,4,8),
-"Hindi Typing Tool":()=>X(80,34,'अ आ इ ई',15,'fa')+R(16,44,128,44,'fw',6),
-"GST Calculator":()=>CALC('18%'),
-"GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
-"Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+C(118,50,24,'fy'),
-"Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw'),
-"Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7),
-"Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa'),
-"Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11),
-"Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8),
-"Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
-"Name, Date & Text on Photo":()=>R(20,14,120,72,'fb',4)+X(80,46,'Your Name',10,'fw'),
-"Instagram Reel Cover Maker":()=>R(48,4,64,92,'fk',6)+R(54,12,52,48,'fb',4),
-"Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)
-};
-const DA={
-"New Digital Signature (DSC)":()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa'),
-"E-procurement registration":()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa'),
-"Tender upload (for contractor)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa'),
-"Tender upload (for department)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa'),
-"Building estimate creator":()=>R(12,12,136,76,'fb',6)+PG(100,18,40,64),
-"BOQ creator":()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa'),
-"Govt civil & electric bill maker (Excel)":()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4),
-"Bill form":()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4),
-"Extra item sheet":()=>PG(28,8,92,84)+X(74,22,'EXTRA ITEMS',6.5,'fa'),
-"Excess item sheet":()=>PG(28,8,92,84)+X(74,22,'EXCESS ITEMS',6.5,'fa'),
-"QC register creator":()=>R(30,10,100,82,'fb',6)+C(122,80,12,'fg'),
-"Work escalation statement":()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa'),
-"OMR Sheet Generator & Checker":()=>PG(32,6,96,88)+R(44,82,72,8,'fa',3),
-"Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)
+const categoryIds={
+  "Vehicle & Transport Services (Paid)":"services-vehicle",
+  "Licence & Identity Services (Paid)":"services-licence",
+  "PAN, Tax & Business Services (Paid)":"services-tax",
+  "Citizen, Banking & Farmer Services (Paid)":"services-citizen",
+  "Govt & Contractor Work (Paid)":"services-govt",
+  "PDF Tools (Free)":"services-pdf",
+  "Image & Photo Tools (Free)":"services-image",
+  "Print & ID Cards (Free)":"services-print",
+  "Documents & Letters (Free)":"services-documents",
+  "Calculators & Utilities (Free)":"services-utilities"
 };
 
 const CATEGORIES={
@@ -600,9 +354,10 @@ const CATEGORIES={
 {n:"Work escalation statement",sec:"Govt Contractor",amt:700,isPaid:true}
 ],
 "PDF Tools (Free)":[
-{n:"JPG / PNG to PDF"},{n:"PDF Merge"},{n:"PDF Split & Page Extract"},{n:"PDF to JPG"},
-{n:"PDF to Excel"},{n:"PDF Rotate & Reorder"},{n:"PDF Compressor (KB)"},
-{n:"Document Scanner & PDF"},{n:"PDF Page Number Adder"},{n:"PDF Header & Footer Maker"}
+{n:"JPG / PNG to PDF"},{n:"PDF Merge"},{n:"PDF Split & Page Extract"},
+{n:"PDF to JPG"},{n:"PDF to Excel"},{n:"PDF Rotate & Reorder"},
+{n:"PDF Compressor (KB)"},{n:"Document Scanner & PDF"},
+{n:"PDF Page Number Adder"},{n:"PDF Header & Footer Maker"}
 ],
 "Image & Photo Tools (Free)":[
 {n:"Photo Compressor (KB)"},{n:"Image Format Converter"},{n:"Background Remover"},
@@ -622,54 +377,44 @@ const CATEGORIES={
 {n:"Marriage Biodata Maker"},{n:"Resume Maker"},{n:"Invoice Maker"},{n:"Quotation Maker"}
 ],
 "Calculators & Utilities (Free)":[
-{n:"GST Calculator"},{n:"GST Inclusive & Exclusive Calculator"},{n:"Printing Cost Calculator"},
-{n:"Cash Denomination Calculator"},{n:"Salary Calculator"},{n:"Percentage Calculator"},
-{n:"Loan / EMI Calculator"},{n:"Age Calculator"},{n:"Online Stopwatch"},
-{n:"Password to MD5 / SHA-256"},{n:"QR Code Generator"},{n:"QR Code Designer & Modifier"},
-{n:"Hindi Typing Tool"},{n:"Word Counter"},{n:"What Is My IP"},
-{n:"Meta Title & Description Generator"},{n:"OMR Sheet Generator & Checker"}
+{n:"GST Calculator"},{n:"GST Inclusive & Exclusive Calculator"},
+{n:"Printing Cost Calculator"},{n:"Cash Denomination Calculator"},
+{n:"Salary Calculator"},{n:"Percentage Calculator"},{n:"Loan / EMI Calculator"},
+{n:"Age Calculator"},{n:"Online Stopwatch"},{n:"Password to MD5 / SHA-256"},
+{n:"QR Code Generator"},{n:"QR Code Designer & Modifier"},{n:"Hindi Typing Tool"},
+{n:"Word Counter"},{n:"What Is My IP"},{n:"Meta Title & Description Generator"},
+{n:"OMR Sheet Generator & Checker"}
 ]
 };
 
-let curFilter='All';
-
-function renderDashboardSections(){
-  const mount=document.getElementById('bifurcatedSections');
-  if(!mount)return;
-
-  let html='',globalIndex=0;
-  Object.entries(CATEGORIES).forEach(([catName,items])=>{
-    if(curFilter==='Free Only'&&catName.includes('(Paid)'))return;
-    if(curFilter==='Paid Only'&&catName.includes('(Free)'))return;
-
-    html+=`<details class="ds" open>
-      <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
-      <div class="ig">${items.map(it=>{
-        globalIndex++;
-        const thumb=typeof getThumbHtml==='function'
-          ?getThumbHtml(it,globalIndex)
-          :`<div class="sv" style="${sty(globalIndex)}">${art((TA[it.n]||V[it.sec]||DA[it.n]||(()=>CARD(32,18,96,64)))())}</div>`;
-        const isPaidTool=typeof paidToolsMap!=='undefined'&&paidToolsMap[it.n];
-
-        if(isPaidTool){
-          return `<a href="${getToolUrl(it.n)}" class="it">${thumb}<div style="flex:1"><h3 style="font-size:.9rem;margin:0">${esc(it.n)}</h3><p style="font-size:.75rem;color:var(--muted);margin-top:2px">${esc(catName)}</p></div><div class="badge-paid">${inr(it.amt)}</div></a>`;
-        }
-        if(it.isPaid){
-          return `<div class="it" style="cursor:pointer" data-svc="${esc(it.sec+'|'+it.n)}" data-amt="${it.amt}">${thumb}<div style="flex:1"><h3 style="font-size:.9rem;margin:0">${esc(it.n)}</h3><p style="font-size:.75rem;color:var(--muted);margin-top:2px">${esc(catName)}</p></div><div class="badge-paid">${inr(it.amt)}</div></div>`;
-        }
-        return `<a href="${getToolUrl(it.n)}" class="it">${thumb}<div style="flex:1"><h3 style="font-size:.9rem;margin:0">${esc(it.n)}</h3><p style="font-size:.75rem;color:var(--muted);margin-top:2px">${esc(catName)}</p></div><div class="badge-free">FREE</div></a>`;
-      }).join('')}</div>
-    </details>`;
-  });
-
-  mount.innerHTML=html||'<p style="color:var(--muted);padding:12px">Is category mein koi service nahi hai.</p>';
+function iconSvg(index,name){
+  const icons=[
+    `<rect x="18" y="27" width="64" height="38" rx="6" class="tblue"/><path d="M26 46h24M26 54h16" class="tstroke"/><circle cx="67" cy="46" r="9" class="torange"/>`,
+    `<rect x="31" y="15" width="38" height="68" rx="7" class="tdark"/><rect x="36" y="22" width="28" height="48" rx="3" class="twhite"/><circle cx="50" cy="76" r="3" class="tlight"/>`,
+    `<path d="M25 23h50v58H25z" class="twhite"/><path d="M36 36h28M36 46h28M36 56h20" class="tline"/><circle cx="67" cy="68" r="9" class="tgreen"/>`,
+    `<rect x="17" y="30" width="66" height="42" rx="7" class="tblue"/><circle cx="38" cy="48" r="9" class="twhite"/><path d="M30 65q8-16 16 0M54 44h20M54 53h17M54 62h12" class="tstroke"/>`,
+    `<path d="M27 20h46v62H27z" class="twhite"/><path d="M39 38h22M39 48h22M39 58h14" class="tline"/><path d="M34 68h32" class="tstroke"/>`,
+    `<circle cx="49" cy="49" r="27" class="tlight"/><path d="M49 29v22l14 9" class="tline"/><path d="M70 31h12v12" class="tgreen"/>`,
+    `<rect x="18" y="20" width="64" height="58" rx="7" class="tlight"/><path d="M29 34h42M29 45h42M29 56h28" class="tline"/><circle cx="68" cy="67" r="8" class="tgreen"/>`,
+    `<path d="M50 15l31 18v36L50 86 19 69V33z" class="tblue"/><path d="M50 15v35m31-17L50 50 19 33m31 17v36" class="tstroke"/>`,
+    `<rect x="16" y="23" width="68" height="48" rx="5" class="twhite"/><path d="M16 36h68" class="tline"/><circle cx="29" cy="30" r="2" class="torange"/><circle cx="36" cy="30" r="2" class="tgreen"/>`,
+    `<circle cx="50" cy="50" r="28" class="tblue"/><path d="M50 33v34M33 50h34" class="tstroke"/>`,
+    `<rect x="22" y="17" width="56" height="66" rx="5" class="twhite"/><path d="M33 32h34M33 42h34M33 52h26M33 62h30" class="tline"/>`,
+    `<path d="M50 17l32 17v32L50 83 18 66V34z" class="tblue"/><path d="M50 17v34m32-17L50 51 18 34m32 17v32" class="tstroke"/>`,
+    `<rect x="18" y="27" width="65" height="46" rx="6" class="twhite"/><path d="M30 39h40M30 49h32M30 59h23" class="tline"/><circle cx="70" cy="65" r="7" class="tgreen"/>`,
+    `<circle cx="50" cy="49" r="29" class="tlight"/><path d="M50 29v21l14 9" class="tline"/><path d="M68 26l12 1-1 12" class="torange"/>`,
+    `<rect x="18" y="22" width="64" height="54" rx="5" class="twhite"/><path d="M29 34h40M29 44h40M29 54h27" class="tline"/><path d="M62 64l7 7 14-17" class="tgreen"/>`,
+    `<circle cx="50" cy="49" r="28" class="tblue"/><path d="M50 33v17l13 10" class="tstroke"/><circle cx="50" cy="49" r="35" class="tline"/>`
+  ];
+  const idx=(index+name.length)%icons.length;
+  return `<svg viewBox="0 0 100 100" role="img" aria-label="${esc(name)} icon">${icons[idx]}</svg>`;
 }
 
+let curFilter='All';
 function renderDashboard(){
-  const u=user(),o=u.orders||[];
-  const cnt=s=>o.filter(x=>x.s===s).length;
+  const u=user(),orders=u.orders||[];
+  const count=status=>orders.filter(x=>x.s===status).length;
   const mount=document.querySelector('[data-v="dashboard"]');
-  if(!mount)return;
 
   mount.innerHTML=`
   <section class="topbar">
@@ -682,83 +427,125 @@ function renderDashboard(){
       <a class="btn btn-primary" href="#addmoney">+ Add Balance</a>
     </div>
   </section>
-  <section class="stats">
-    <div class="stat"><div class="stat-head"><h3>Wallet Balance</h3><div class="icon blue">💰</div></div><div class="stat-value">${inr(u.bal)}</div><div class="stat-note">Available for services</div></div>
-    <div class="stat"><div class="stat-head"><h3>Total Requests</h3><div class="icon purple">📄</div></div><div class="stat-value">${o.length}</div><div class="stat-note">All service requests</div></div>
-    <div class="stat"><div class="stat-head"><h3>Pending</h3><div class="icon orange">⏳</div></div><div class="stat-value">${cnt('pending')}</div><div class="stat-note">Awaiting action</div></div>
-    <div class="stat"><div class="stat-head"><h3>Successful</h3><div class="icon green">✅</div></div><div class="stat-value">${cnt('success')}</div><div class="stat-note">Completed requests</div></div>
-  </section>
-  <div class="tools-dash-head">
-    <div><h2 style="font-size:1.3rem;margin:0">Tools &amp; Services Portal</h2><p style="color:var(--muted);font-size:.85rem;margin-top:3px">Services are arranged by category.</p></div>
-  </div>
-  <div class="dash-cats" id="dashCats">
-    ${['All','Free Only','Paid Only'].map(c=>`<button type="button" class="${c===curFilter?'on':''}" data-cat="${c}">${c}</button>`).join('')}
-  </div>
-  <div id="bifurcatedSections"></div>`;
 
-  renderDashboardSections();
-  document.getElementById('dashCats')?.addEventListener('click',e=>{
-    const btn=e.target.closest('[data-cat]');
-    if(!btn)return;
-    curFilter=btn.dataset.cat;
-    document.querySelectorAll('#dashCats button').forEach(b=>b.classList.toggle('on',b.dataset.cat===curFilter));
-    renderDashboardSections();
+  <section class="stats">
+    <div class="stat"><div class="stat-head"><h3>Wallet Balance</h3><div class="stat-icon blue">💰</div></div><div class="stat-value">${inr(u.bal)}</div><div class="stat-note">Available for services</div></div>
+    <div class="stat"><div class="stat-head"><h3>Total Requests</h3><div class="stat-icon purple">📄</div></div><div class="stat-value">${orders.length}</div><div class="stat-note">All service requests</div></div>
+    <div class="stat"><div class="stat-head"><h3>Pending</h3><div class="stat-icon orange">⏳</div></div><div class="stat-value">${count('pending')}</div><div class="stat-note">Awaiting action</div></div>
+    <div class="stat"><div class="stat-head"><h3>Successful</h3><div class="stat-icon green">✅</div></div><div class="stat-value">${count('success')}</div><div class="stat-note">Completed requests</div></div>
+  </section>
+
+  <div class="tools-heading">
+    <div><h2>Tools &amp; Services Portal</h2><p>Browse services by category. Every service has its own icon.</p></div>
+  </div>
+  <div class="filters" id="filters">
+    ${['All','Free Only','Paid Only'].map(x=>`<button type="button" data-filter="${x}" class="${x===curFilter?'on':''}">${x}</button>`).join('')}
+  </div>
+  <div id="serviceSections"></div>`;
+
+  renderSections();
+
+  document.getElementById('filters').addEventListener('click',e=>{
+    const b=e.target.closest('[data-filter]');
+    if(!b)return;
+    curFilter=b.dataset.filter;
+    document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x.dataset.filter===curFilter));
+    renderSections();
   });
+}
+
+function renderSections(){
+  const root=document.getElementById('serviceSections');
+  if(!root)return;
+  let index=0,html='';
+
+  Object.entries(CATEGORIES).forEach(([category,items])=>{
+    if(curFilter==='Free Only'&&category.includes('(Paid)'))return;
+    if(curFilter==='Paid Only'&&category.includes('(Free)'))return;
+
+    const sectionId=categoryIds[category]||'';
+    html+=`<details class="ds" id="${sectionId}" open>
+      <summary><span>${esc(category)}</span><em>${items.length} services</em></summary>
+      <div class="tool-grid">`;
+
+    items.forEach(item=>{
+      index++;
+      const paid=!!item.isPaid;
+      const icon=`<div class="tool-icon">${iconSvg(index,item.n)}</div>`;
+      const label=paid
+        ?`<div class="badge-paid">${inr(item.amt)}</div>`
+        :`<div class="badge-free">FREE</div>`;
+
+      if(paid){
+        html+=`<div class="tool-card" role="button" tabindex="0" data-service="${esc(item.sec+'|'+item.n)}" data-amount="${item.amt}">
+          ${icon}<div><div class="tool-name">${esc(item.n)}</div><div class="tool-category">${esc(category)}</div></div>${label}
+        </div>`;
+      } else {
+        const url=typeof getToolUrl==='function'?getToolUrl(item.n):'#';
+        html+=`<a class="tool-card" href="${esc(url)}">
+          ${icon}<div><div class="tool-name">${esc(item.n)}</div><div class="tool-category">${esc(category)}</div></div>${label}
+        </a>`;
+      }
+    });
+
+    html+='</div></details>';
+  });
+
+  root.innerHTML=html;
 }
 
 function renderHistory(){
   const orders=(user().orders||[]).slice().sort((a,b)=>b.t-a);
   document.querySelector('[data-v="history"]').innerHTML=`
-    <h1 style="margin-bottom:16px;font-size:22px">Request History</h1>
-    <div class="tw"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead><tbody>
-    ${orders.map(x=>`<tr><td>${dt(x.t)}</td><td><b>${esc(x.n)}</b>${x.remark?`<br><small style="color:var(--muted)">Remark: ${esc(x.remark)}</small>`:''}</td><td><span class="sb-status s-${esc(x.s)}">${esc(x.s)}</span></td><td>${inr(x.amt)}</td><td>${x.file?`<button class="btn btn-light" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:5px 10px;font-size:.8rem">Download</button>`:'<span style="color:var(--muted)">In progress</span>'}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}
+    <h1 style="font-size:22px;margin-bottom:15px">Request History</h1>
+    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead><tbody>
+    ${orders.map(x=>`<tr><td>${dt(x.t)}</td><td><b>${esc(x.n)}</b></td><td><span class="status s-${esc(x.s)}">${esc(x.s)}</span></td><td>${inr(x.amt)}</td><td>${x.file?`<button class="btn btn-light" data-download="${esc(x.id)}" data-filename="${esc(x.file.name)}">Download</button>`:'In progress'}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}
     </tbody></table></div>`;
 }
 function renderPassbook(){
-  const tx=(user().tx||[]).slice().sort((a,b)=>b.t-a.t);
+  const tx=(user().tx||[]).slice().sort((a,b)=>b.t-a);
   document.querySelector('[data-v="passbook"]').innerHTML=`
-    <h1 style="margin-bottom:16px;font-size:22px">Passbook Transactions</h1>
-    <div class="tw"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead><tbody>
-    ${tx.map(t=>`<tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td><b>${esc(t.type)}</b></td><td><b>${t.type==='credit'?'+':'-'}${inr(t.amt)}</b></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center">No transactions yet.</td></tr>'}
+    <h1 style="font-size:22px;margin-bottom:15px">Passbook Transactions</h1>
+    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead><tbody>
+    ${tx.map(t=>`<tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td>${esc(t.type)}</td><td>${t.type==='credit'?'+':'-'}${inr(t.amt)}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center">No transactions yet.</td></tr>'}
     </tbody></table></div>`;
 }
 function renderAddMoney(){
   document.querySelector('[data-v="addmoney"]').innerHTML=`
-    <div class="panel-view"><h1>Add Money to Wallet</h1>
-    <p style="margin-bottom:14px;color:var(--muted)">Current Balance: <b>${inr(user().bal)}</b></p>
-    <form id="fAdd"><label for="amt" style="display:block;font-weight:700;margin-bottom:6px;font-size:14px">Amount (Min ₹200)</label>
-    <input id="amt" type="number" min="200" value="500" required style="width:100%;height:43px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:16px">
+    <div class="panel"><h1>Add Money to Wallet</h1>
+    <p style="color:var(--muted);margin-bottom:12px">Current Balance: <b>${inr(user().bal)}</b></p>
+    <form id="fAdd"><label for="amt" style="font-weight:700;font-size:13px">Amount (minimum ₹200)</label>
+    <input class="field" id="amt" type="number" min="200" value="500" required>
     <button class="btn btn-primary" type="submit" style="width:100%">Pay via UPI</button></form></div>`;
 }
 function renderReferral(){
   const u=user(),link=location.origin+'/register.html?ref='+(u.code||'');
   document.querySelector('[data-v="referral"]').innerHTML=`
-    <div class="panel-view"><h1>Refer &amp; Earn</h1>
-    <p style="margin-bottom:14px;color:var(--muted)">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
-    <input id="refLink" readonly value="${esc(link)}" style="width:100%;height:42px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:14px;background:#f8fafc">
+    <div class="panel"><h1>Refer &amp; Earn</h1>
+    <p style="color:var(--muted);margin-bottom:12px">Share your referral link and invite friends.</p>
+    <input class="field" id="refLink" readonly value="${esc(link)}">
     <button class="btn btn-primary" id="copyReferral" style="width:100%">Copy Link</button></div>`;
-  document.getElementById('copyReferral')?.addEventListener('click',async()=>{
+  document.getElementById('copyReferral').onclick=async()=>{
     try {await navigator.clipboard.writeText(link);alert('Link copied!')}
     catch {document.getElementById('refLink').select();alert('Please copy the selected link.')}
-  });
+  };
 }
 function renderProfile(){
   const u=user();
   document.querySelector('[data-v="profile"]').innerHTML=`
-    <div class="panel-view"><h1>My Profile</h1><div style="display:grid;gap:10px;font-size:14px">
-    <p><b>Name:</b> ${esc(u.name)}</p><p><b>Mobile:</b> ${esc(u.mob)}</p>
-    <p><b>Email:</b> ${esc(u.mail)}</p><p><b>Referral Code:</b> ${esc(u.code||'-')}</p>
-    </div></div>`;
+    <div class="panel"><h1>My Profile</h1>
+    <p><b>Name:</b> ${esc(u.name)}</p><p style="margin-top:8px"><b>Mobile:</b> ${esc(u.mob)}</p>
+    <p style="margin-top:8px"><b>Email:</b> ${esc(u.mail)}</p>
+    <p style="margin-top:8px"><b>Referral Code:</b> ${esc(u.code||'-')}</p></div>`;
 }
 function renderContact(){
   document.querySelector('[data-v="contact"]').innerHTML=`
-    <div class="panel-view"><h1>Contact Support</h1>
-    <p style="margin-bottom:16px;color:var(--muted)">Need help with an order, wallet balance, or custom requirement?</p>
-    <a class="btn btn-primary" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" style="width:100%">Chat on WhatsApp</a>
-    </div>`;
+    <div class="panel"><h1>Contact Support</h1>
+    <p style="color:var(--muted);margin-bottom:14px">Need help with an order or wallet?</p>
+    <a class="btn btn-primary" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" style="width:100%">Chat on WhatsApp</a></div>`;
 }
 
-const VIEWS={
+const views={
   dashboard:renderDashboard,
   history:renderHistory,
   passbook:renderPassbook,
@@ -767,31 +554,61 @@ const VIEWS={
   profile:renderProfile,
   contact:renderContact
 };
+
 function route(){
   const hash=location.hash.slice(1)||'dashboard';
-  document.querySelectorAll('[data-v]').forEach(el=>el.hidden=el.dataset.v!==hash);
-  if(VIEWS[hash])VIEWS[hash]();
-  updateBalance();
+  const isCategory=hash.startsWith('services-');
+  document.querySelectorAll('[data-v]').forEach(el=>{
+    el.hidden=el.dataset.v!==(isCategory?'dashboard':hash);
+  });
+  if(isCategory){
+    renderDashboard();
+    requestAnimationFrame(()=>{
+      const section=document.getElementById(hash);
+      if(section){
+        section.open=true;
+        section.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  } else if(views[hash]){
+    views[hash]();
+  } else {
+    renderDashboard();
+  }
   document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+hash));
 }
 window.addEventListener('hashchange',route);
 
-let curKey='',curAmt=0;
+let currentKey='',currentAmount=0;
 document.addEventListener('click',e=>{
-  const btn=e.target.closest('[data-svc]');
-  if(!btn)return;
-  curKey=btn.dataset.svc;
-  curAmt=Number(btn.dataset.amt);
-  const u=user();
-  const serviceName=curKey.split('|')[1]||curKey;
-  document.getElementById('rt').textContent=serviceName;
-  document.getElementById('rp').innerHTML=`Is service ke liye aapke wallet balance se <b style="color:var(--primary);font-size:1.05rem">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--muted)">Current Balance: ${inr(u.bal)}</small>`;
-  document.getElementById('fRq').innerHTML=`
-    <div style="margin-bottom:12px"><label for="rqDoc" style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label><input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%;height:42px;padding:8px 12px;border:1px solid var(--border);border-radius:8px"></div>
-    <div style="margin-bottom:16px"><label for="rqRem" style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label><input id="rqRem" type="text" placeholder="Special instruction" style="width:100%;height:42px;padding:8px 12px;border:1px solid var(--border);border-radius:8px"></div>
-    <div style="display:flex;gap:10px"><button type="button" id="btnCancelModal" class="btn btn-light" style="flex:1">Cancel</button><button class="btn btn-primary" type="submit" style="flex:1">Confirm &amp; Proceed</button></div>`;
-  document.getElementById('rm').style.display='flex';
+  const card=e.target.closest('[data-service]');
+  if(!card)return;
+  openRequest(card);
 });
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-service]')){
+    e.preventDefault();
+    openRequest(e.target);
+  }
+});
+
+function openRequest(card){
+  currentKey=card.dataset.service;
+  currentAmount=Number(card.dataset.amount);
+  const u=user(),serviceName=currentKey.split('|')[1]||currentKey;
+  document.getElementById('rt').textContent=serviceName;
+  document.getElementById('rp').innerHTML=`Is service ke liye <b>${inr(currentAmount)}</b> wallet se charge honge.<br>Current Balance: ${inr(u.bal)}`;
+  document.getElementById('fRq').innerHTML=`
+    <label style="display:block;font-weight:700;font-size:13px" for="rqDoc">Vehicle / Document / Application Number</label>
+    <input class="field" id="rqDoc" required placeholder="Enter number">
+    <label style="display:block;font-weight:700;font-size:13px" for="rqRem">Remarks (optional)</label>
+    <input class="field" id="rqRem" placeholder="Special instruction">
+    <div style="display:flex;gap:9px">
+      <button type="button" id="btnCancelModal" class="btn btn-light" style="flex:1">Cancel</button>
+      <button class="btn btn-primary" type="submit" style="flex:1">Confirm &amp; Proceed</button>
+    </div>`;
+  document.getElementById('rm').style.display='flex';
+}
 
 document.getElementById('rx').onclick=()=>document.getElementById('rm').style.display='none';
 document.addEventListener('click',e=>{
@@ -804,26 +621,26 @@ document.getElementById('fRq').onsubmit=async e=>{
   const rem=document.getElementById('rqRem').value.trim();
   const u=user();
 
-  if(u.bal<curAmt){
-    alert('Insufficient balance. Please add money first.');
-    location.hash='#addmoney';
+  if(u.bal<currentAmount){
+    alert('Insufficient wallet balance. Please add money first.');
     document.getElementById('rm').style.display='none';
+    location.hash='#addmoney';
     return;
   }
   try {
     const res=await api('POST','/api/requests',{
-      k:curKey,
-      sec:curKey.split('|')[0],
+      k:currentKey,
+      sec:currentKey.split('|')[0],
       doc,
-      amt:curAmt,
+      amt:currentAmount,
       data:{'Document Number':doc,'Remarks':rem}
     });
     if(!res.ok){alert('Failed to submit request.');return}
-    const j=await res.json();
-    saveUser(j.user);
+    const data=await res.json();
+    saveUser(data.user);
     document.getElementById('rm').style.display='none';
     alert('Request submitted successfully!');
-    route();
+    location.hash='#history';
   } catch(err) {
     console.error(err);
     alert('Network error. Please try again.');
@@ -837,15 +654,11 @@ document.addEventListener('submit',async e=>{
   if(amt<200){alert('Minimum top-up amount is ₹200.');return}
   try {
     const res=await api('POST','/api/topup',{amt});
-    if(res.ok){
-      const j=await res.json();
-      saveUser(j.user);
-      alert('Wallet recharged: '+inr(amt));
-      location.hash='#dashboard';
-      route();
-    } else {
-      alert('Unable to start wallet recharge. Please try again.');
-    }
+    if(!res.ok){alert('Unable to start wallet recharge.');return}
+    const data=await res.json();
+    if(data.user)saveUser(data.user);
+    alert('Wallet recharge request submitted.');
+    route();
   } catch(err) {
     console.error(err);
     alert('Network error. Please try again.');
@@ -853,30 +666,27 @@ document.addEventListener('submit',async e=>{
 });
 
 document.addEventListener('click',async e=>{
-  const dl=e.target.closest('[data-dl]');
-  if(!dl)return;
+  const btn=e.target.closest('[data-download]');
+  if(!btn)return;
   try {
-    const r=await fetch(API+'/api/requests/'+encodeURIComponent(dl.dataset.dl)+'/file',{headers:tokenHdr()});
-    if(!r.ok){alert('File not available.');return}
-    const blob=await r.blob();
-    const url=URL.createObjectURL(blob);
+    const res=await fetch(API+'/api/requests/'+encodeURIComponent(btn.dataset.download)+'/file',{headers:tokenHdr()});
+    if(!res.ok){alert('File not available.');return}
+    const blob=await res.blob(),url=URL.createObjectURL(blob);
     const a=document.createElement('a');
-    a.href=url;
-    a.download=dl.dataset.fn||'result.pdf';
-    a.click();
+    a.href=url;a.download=btn.dataset.filename||'result.pdf';a.click();
     URL.revokeObjectURL(url);
   } catch(err) {
     console.error(err);
-    alert('Unable to download the file. Please try again.');
+    alert('Unable to download file.');
   }
 });
 
-function logout(){
+document.getElementById('loSb').onclick=()=>{
   localStorage.removeItem('ds_session');
   localStorage.removeItem('ds_token');
   window.location.replace('index.html');
-}
-document.getElementById('loSb').onclick=logout;
+};
+
 route();
 </script>
 </body>
