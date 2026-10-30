@@ -147,19 +147,40 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
           </label>
         </div>
 
-        <button type="submit" class="btn-primary" id="btnSubStep1">Submit &amp; Proceed</button>
+        <button type="submit" class="btn-primary" id="btnSubStep1">Submit &amp; Proceed to OTP</button>
       </form>
     </div>
 
+    <!-- Step 2: OTP Input Form -->
+    <div id="step2Otp" style="display: none;">
+      <div class="status-box">
+        <h3 id="otpTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Enter OTP sent to Registered Mobile</h3>
+        <p id="otpMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px;">
+          Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
+        </p>
+
+        <!-- Red Inline Error Message -->
+        <div id="otpErrMsg" style="display: none; color: var(--er); font-weight: 700; font-size: 0.95rem; margin-bottom: 14px;">
+          Incorrect OTP
+        </div>
+
+        <form id="fOtpForm" style="max-width: 340px; margin: 0 auto;">
+          <div class="form-group">
+            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
+          </div>
+          <button type="submit" class="btn-primary" id="btnOtpSubmit">Verify &amp; Submit OTP</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Step 3: Waiting / Confirmation Area -->
     <div id="step3Waiting" style="display: none;">
       <div class="status-box">
         <div class="spinner" id="waitSpinner"></div>
-        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ac);">Verification in progress...</h3>
+        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ac);">Checking OTP confirmation...</h3>
         <p id="waitMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
-          Admin dwara aapki request verify ki ja rahi hai. Verification ke baad official RC PDF upload hote hi yahan download button aa jayega.
+          Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.
         </p>
-
-        <div id="liveStatusBox" style="display: none; margin: 15px auto; padding: 14px 18px; border-radius: 10px; max-width: 480px; font-size: 0.9rem; font-weight: 600;"></div>
 
         <div id="downloadContainer" style="display: none;">
           <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
@@ -282,41 +303,40 @@ async function checkAndRestoreStep() {
     if (!req) return;
 
     document.getElementById('step1Form').style.display = 'none';
-    const statusBox = document.getElementById('liveStatusBox');
+
+    const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
 
     if (req.s === 'success' && req.file) {
       clearInterval(pollTimer);
       localStorage.removeItem('ds_current_rc_req');
+      document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'none';
       document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
       document.getElementById('waitTitle').style.color = 'var(--ok)';
       document.getElementById('waitMsg').textContent = 'Request verify ho chuki hai & official RC PDF upload kar diya gaya hai.';
       
-      statusBox.style.display = 'none';
       const btnDl = document.getElementById('btnDownloadPdf');
       btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
       document.getElementById('downloadContainer').style.display = 'block';
     }
-    else {
+    else if (otpStatus === 'wrong' || req.s === 'failed') {
+      clearInterval(pollTimer);
+      showWrongOtp();
+    }
+    else if (otpStatus === 'waiting_verify' || req.s === 'processing') {
+      document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
-      document.getElementById('waitTitle').textContent = 'Checking confirmation...';
-      document.getElementById('waitMsg').textContent = 'Admin dwara request verify ki ja rahi hai. Kripya pratiksha karein.';
-      
-      // SIRF TABHI NOTE DIKHEGA JAB ADMIN NE EXPLICIT REMARK DALA HO
-      if (req.remark && req.remark.trim() !== '') {
-        statusBox.style.display = 'block';
-        statusBox.style.background = '#e6f4ea';
-        statusBox.style.color = '#137333';
-        statusBox.style.border = '1px solid #ceead6';
-        statusBox.innerHTML = 'ℹ️ Note: ' + req.remark;
-      } else {
-        statusBox.style.display = 'none';
-      }
-      
+      document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
       document.getElementById('downloadContainer').style.display = 'none';
       startStatusPolling();
+    }
+    else {
+      document.getElementById('step3Waiting').style.display = 'none';
+      document.getElementById('step2Otp').style.display = 'block';
+      document.getElementById('otpErrMsg').style.display = 'none';
     }
   } catch (err) {
     console.error('Restore step error:', err);
@@ -362,7 +382,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
           'Chassis Number': chNo,
           'Engine Number': engNo,
           'Mobile Number': mobNo,
-          'Registered Address': regAddr
+          'Registered Address': regAddr,
+          'otp_status': 'pending'
         }
       })
     });
@@ -394,8 +415,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     renderHistoryTable();
 
     document.getElementById('step1Form').style.display = 'none';
-    document.getElementById('step3Waiting').style.display = 'block';
-    startStatusPolling();
+    document.getElementById('step2Otp').style.display = 'block';
+    document.getElementById('otpErrMsg').style.display = 'none';
 
   } catch (err) {
     console.error('Submit Error:', err);
@@ -403,6 +424,70 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
   }
+};
+
+document.getElementById('fOtpForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const submitBtn = document.getElementById('btnOtpSubmit');
+  const originalText = submitBtn.innerHTML;
+
+  const otp = document.getElementById('otpCode').value.trim();
+  if (!otp) return;
+
+  if (!currentRequestId) {
+    currentRequestId = localStorage.getItem('ds_current_rc_req');
+  }
+
+  if (!currentRequestId) {
+    alert('Session expired or Request ID missing. Kripya form dobara bharein.');
+    location.reload();
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '⏳ Verifying OTP...';
+
+  try {
+    const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'x-user-token': localStorage.getItem('ds_token') || ''
+      },
+      body: JSON.stringify({
+        s: 'processing',
+        data: {
+          entered_otp: otp,
+          otp_status: 'waiting_verify'
+        }
+      })
+    });
+
+    if (!patchRes.ok) {
+      const errText = await patchRes.text();
+      alert('Server Error (' + patchRes.status + '): ' + errText);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+      return;
+    }
+  } catch (err) {
+    console.error('OTP Submit Error:', err);
+    alert('Network error while submitting OTP.');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+    return;
+  }
+
+  document.getElementById('otpErrMsg').style.display = 'none';
+  document.getElementById('step2Otp').style.display = 'none';
+  document.getElementById('step3Waiting').style.display = 'block';
+  document.getElementById('waitSpinner').style.display = 'block';
+  document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+  document.getElementById('waitTitle').style.color = 'var(--ac)';
+  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+  document.getElementById('downloadContainer').style.display = 'none';
+
+  startStatusPolling();
 };
 
 function startStatusPolling() {
@@ -422,28 +507,24 @@ function startStatusPolling() {
 
       if (!req) return;
 
-      const statusBox = document.getElementById('liveStatusBox');
+      const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
 
-      // SIRF TABHI NOTE DIKHEGA JAB ADMIN NE EXPLICIT REMARK DALA HO
-      if (req.remark && req.remark.trim() !== '') {
-        statusBox.style.display = 'block';
-        statusBox.style.background = '#e6f4ea';
-        statusBox.style.color = '#137333';
-        statusBox.style.border = '1px solid #ceead6';
-        statusBox.innerHTML = 'ℹ️ Note: ' + req.remark;
-      } else {
-        statusBox.style.display = 'none';
+      if (otpStatus === 'wrong' || req.s === 'failed') {
+        clearInterval(pollTimer);
+        showWrongOtp();
+        return;
       }
 
       if (req.s === 'success' && req.file) {
         clearInterval(pollTimer);
         localStorage.removeItem('ds_current_rc_req');
+        document.getElementById('step2Otp').style.display = 'none';
+        document.getElementById('step3Waiting').style.display = 'block';
         document.getElementById('waitSpinner').style.display = 'none';
         document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
         document.getElementById('waitTitle').style.color = 'var(--ok)';
         document.getElementById('waitMsg').textContent = 'Request verify ho chuki hai & official RC PDF upload kar diya gaya hai.';
         
-        statusBox.style.display = 'none';
         const btnDl = document.getElementById('btnDownloadPdf');
         btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
         document.getElementById('downloadContainer').style.display = 'block';
@@ -455,6 +536,23 @@ function startStatusPolling() {
       console.error('Polling error:', e);
     }
   }, 3000);
+}
+
+function showWrongOtp() {
+  document.getElementById('step3Waiting').style.display = 'none';
+  document.getElementById('step2Otp').style.display = 'block';
+  
+  const errMsg = document.getElementById('otpErrMsg');
+  errMsg.style.display = 'block';
+  errMsg.textContent = 'Incorrect OTP';
+
+  const submitBtn = document.getElementById('btnOtpSubmit');
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = 'Verify &amp; Submit OTP';
+
+  const otpInput = document.getElementById('otpCode');
+  otpInput.value = '';
+  otpInput.focus();
 }
 
 async function downloadFile(reqId, fileName, btnElem) {
