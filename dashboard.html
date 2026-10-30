@@ -2,805 +2,451 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dashboard – DocSmartly</title>
-<link rel="stylesheet" href="css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
-  window.location.replace('login.html');
-}
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocSmartly Dashboard</title>
 <style>
-#app { min-height: 100vh; background: var(--bg); }
-.ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
-.ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-block: 8px; min-height: 60px; max-width: 1400px; }
-.tb { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .92rem; font-weight: 700; color: var(--ac2); text-decoration: none; transition: all 0.2s ease; }
-.chip:active { transform: scale(0.95); }
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --success: #16a34a;
+    --radius: 16px;
+    --shadow: 0 8px 24px rgba(17, 24, 39, .06);
+  }
 
-/* Universal Button & Card Click Effects */
-.btn, button, .it, .chip {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-}
-.btn:active, button:active, .it:active, .chip:active {
-  transform: scale(0.96) translateY(1px) !important;
-  filter: brightness(0.92);
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-.shell { display: grid; grid-template-columns: 290px minmax(0,1fr); max-width: 1400px; margin: 0 auto; }
-.apm { padding-inline: 24px; padding-block: 28px 64px; min-width: 0; }
-#sb { position: sticky; top: 61px; height: calc(100vh - 61px); display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--ln); z-index: 6; }
-.sbs { flex: 1; overflow-y: auto; padding: 12px; }
-.sbf { padding: 12px; border-top: 1px solid var(--ln); }
-.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; text-decoration: none; transition: all 0.2s; }
-.mi:hover { background: var(--tint); color: var(--ac); }
-.mi:active { transform: scale(0.97); }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
 
-.gc { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; background: var(--ink); color: #e3ebfb; border-radius: 18px; padding: 24px; }
-.gc h1 { color: #fff; }
-.gw { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.gw b { font: 800 1.8rem 'Plus Jakarta Sans',system-ui,sans-serif; color: #fff; }
-.stt { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
-.stt > div { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 14px 16px; }
-.stt b { font: 800 1.6rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ac2); display: block; }
-.ds { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 4px 16px; margin-bottom: 14px; }
-.ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; font-weight: 700; color: var(--ink); }
-.ds summary em { font-style: normal; font-size: 0.8rem; background: var(--tint); color: var(--ac2); padding: 2px 10px; border-radius: 99px; }
-.ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding-bottom: 14px; }
-.it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s, box-shadow .2s; }
-.it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
-.sv { position: relative; aspect-ratio: 16/10; border-radius: 99px; margin-bottom: 8px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
-.art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
-.fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
-.sa { fill: none; stroke: var(--a); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.badge-free { background: var(--ok); color: #fff; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; width: fit-content; margin-top: 8px; }
-.badge-paid { background: #fff1cc; color: #6b4200; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; border: 1px solid #f0cf7d; width: fit-content; margin-top: 8px; }
-.tools-dash-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 32px; margin-bottom: 14px; }
-.dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
-.dash-search-bar input { height: 40px; min-height: 40px; padding: 6px 12px; font-size: 0.88rem; }
-.dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.dash-cats button { border: 1px solid var(--ln); background: #fff; border-radius: 99px; padding: 6px 14px; font: 600 .8rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; transition: all 0.2s; }
-.dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
-.sb-category { margin-top: 10px; border-top: 1px solid var(--ln); padding-top: 10px; }
-.sb-group { margin-bottom: 4px; }
-.sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-size: 0.84rem; font-weight: 700; color: var(--ink); cursor: pointer; border-radius: 8px; list-style: none; }
-.sb-group summary:hover { background: var(--tint); }
-.sb-group summary::-webkit-details-marker { display: none; }
-.sb-group summary em { font-style: normal; font-size: 0.72rem; color: var(--mut); }
-.sb-sub-list { padding-left: 6px; margin-top: 4px; display: grid; gap: 2px; }
-.sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.8rem; font-weight: 500; color: var(--mut); text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.2s; }
-.sb-item:hover { color: var(--ac); background: var(--tint); }
-.sb-ic { display: inline-flex; align-items: center; gap: 8px; }
-.sb-ic svg { width: 15px; height: 15px; color: var(--ac); flex: none; }
-.tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
-table { width: 100%; border-collapse: collapse; min-width: 520px; }
-th, td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .92rem; }
-th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); background: var(--tint); }
-.sb-status { display: inline-block; border-radius: 99px; padding: 3px 11px; font-size: .76rem; font-weight: 800; text-transform: capitalize; }
-.s-pending { background: #fff1cc; color: #6b4200; }
-.s-processing { background: #dbe7ff; color: #1b44ad; }
-.s-success { background: #e0f5ea; color: #0f6b45; }
-.s-failed { background: #fdecea; color: #7a1a12; }
-@media (max-width: 900px) { .shell { display: block; } #sb { display: none; } }
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 24px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 32px;
+  }
+
+  .brand span {
+    background: var(--primary);
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+  }
+
+  .nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    margin-bottom: 6px;
+    transition: .2s;
+  }
+
+  .nav a:hover,
+  .nav a.active {
+    background: rgba(37, 99, 235, .18);
+    color: #fff;
+  }
+
+  .sidebar-footer {
+    margin-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 18px;
+  }
+
+  /* Main */
+  main {
+    padding: 28px;
+  }
+
+  .topbar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+  }
+
+  .welcome h1 {
+    font-size: 22px;
+  }
+
+  .welcome p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .balance-pill {
+    background: #eff6ff;
+    color: var(--primary-dark);
+    border: 1px solid #bfdbfe;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .btn {
+    border: none;
+    cursor: pointer;
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: .2s;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-dark);
+  }
+
+  .btn-light {
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+  }
+
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stat h3 {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+  }
+
+  .blue { background: #eff6ff; }
+  .green { background: #ecfdf5; }
+  .orange { background: #fff7ed; }
+  .purple { background: #f5f3ff; }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 14px;
+  }
+
+  .stat-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* Panels */
+  .grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .panel-head h2 {
+    font-size: 17px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 13px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .status {
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .completed {
+    background: #ecfdf5;
+    color: var(--success);
+  }
+
+  .pending {
+    background: #fff7ed;
+    color: #ea580c;
+  }
+
+  .quick-links {
+    display: grid;
+    gap: 12px;
+  }
+
+  .quick-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--text);
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 12px;
+    transition: .2s;
+  }
+
+  .quick-link:hover {
+    border-color: var(--primary);
+    background: #eff6ff;
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: relative;
+      height: auto;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    main {
+      padding: 18px;
+    }
+  }
 </style>
 </head>
 <body>
-<div id="app">
-  <header class="ap">
-    <div class="w">
-      <a class="logo" href="dashboard.html"><span class="lt">DocSmartly</span></a>
-      <div class="tb">
-        <a class="chip" id="aB" href="#passbook">₹0.00</a>
-        <a class="btn" href="#addmoney" style="min-height:38px;padding:8px 14px;font-size:0.85rem">+ Add Balance</a>
-        <button class="btn o" id="btnLogOut" style="min-height:38px;padding:8px 14px;font-size:0.85rem">Logout</button>
-      </div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span>D</span> DocSmartly
     </div>
-  </header>
 
-  <div class="shell">
-    <aside id="sb">
-      <div class="sbs">
-        <a class="mi" href="#passbook">Passbook</a>
-        <a class="mi" href="#history">History</a>
-        <a class="mi" href="#referral">Refer &amp; Earn</a>
-        <a class="mi" href="#profile">Profile</a>
-        <a class="mi" href="#contact">Contact Support</a>
-        <a class="mi" href="index.html" style="color:var(--ac);font-weight:700">Homepage →</a>
+    <nav class="nav">
+      <a href="#" class="active">🏠 Dashboard</a>
+      <a href="#">📄 Service Request</a>
+      <a href="#">🗂️ Categories</a>
+      <a href="#">🧰 Tools</a>
+      <a href="#">📒 Passbook</a>
+      <a href="#">🕘 History</a>
+      <a href="#">🎁 Refer & Earn</a>
+      <a href="#">👤 Profile</a>
+      <a href="#">🎧 Contact Support</a>
+    </nav>
 
-        <div class="sb-category">
-          <p style="font-size:0.75rem;font-weight:700;color:var(--mut);text-transform:uppercase;margin:6px 12px 10px;letter-spacing:0.04em">Categories &amp; Tools</p>
-          <div id="sbCategories"></div>
+    <div class="sidebar-footer">
+      <a class="nav" href="#" style="color:#fca5a5;">🚪 Logout</a>
+    </div>
+  </aside>
+
+  <main>
+    <section class="topbar">
+      <div class="welcome">
+        <h1>Welcome back 👋</h1>
+        <p>Manage your documents, requests and wallet from one place.</p>
+      </div>
+
+      <div class="top-actions">
+        <div class="balance-pill">Wallet: ₹0.00</div>
+        <button class="btn btn-primary">+ Add Balance</button>
+        <button class="btn btn-light">🔔</button>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Wallet Balance</h3>
+          <div class="icon blue">💰</div>
+        </div>
+        <div class="stat-value">₹0.00</div>
+        <div class="stat-note">Available for services</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Total Requests</h3>
+          <div class="icon purple">📄</div>
+        </div>
+        <div class="stat-value">0</div>
+        <div class="stat-note">All service requests</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Pending</h3>
+          <div class="icon orange">⏳</div>
+        </div>
+        <div class="stat-value">0</div>
+        <div class="stat-note">Awaiting action</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Referral Earnings</h3>
+          <div class="icon green">🎁</div>
+        </div>
+        <div class="stat-value">₹0.00</div>
+        <div class="stat-note">From referrals</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Recent Service Requests</h2>
+          <button class="btn btn-light">View All</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Document Service</td>
+              <td>—</td>
+              <td>₹0.00</td>
+              <td><span class="status pending">Pending</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Quick Actions</h2>
+        </div>
+
+        <div class="quick-links">
+          <a class="quick-link" href="#">
+            <span>➕ New Service Request</span>
+            <span>→</span>
+          </a>
+          <a class="quick-link" href="#">
+            <span>💳 Add Money</span>
+            <span>→</span>
+          </a>
+          <a class="quick-link" href="#">
+            <span>📒 Check Passbook</span>
+            <span>→</span>
+          </a>
+          <a class="quick-link" href="#">
+            <span>🎁 Invite & Earn</span>
+            <span>→</span>
+          </a>
         </div>
       </div>
-      <div class="sbf"><button class="mi" id="loSb" style="color:var(--er)">Log Out</button></div>
-    </aside>
+    </section>
+  </main>
 
-    <main class="apm">
-      <section data-v="dashboard"></section>
-      <section data-v="passbook" hidden></section>
-      <section data-v="history" hidden></section>
-      <section data-v="addmoney" hidden></section>
-      <section data-v="referral" hidden></section>
-      <section data-v="profile" hidden></section>
-      <section data-v="contact" hidden></section>
-    </main>
-  </div>
 </div>
 
-<!-- Modal for Paid Service Confirmation -->
-<div class="modal" id="rm" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-  <div class="box" style="background:#fff; width:100%; max-width:420px; border-radius:18px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,0.15); position:relative;">
-    <button class="x" id="rx" type="button" style="position:absolute; top:16px; right:16px; border:none; background:none; font-size:1.2rem; cursor:pointer;">✕</button>
-    <div style="text-align:center; margin-bottom:16px;">
-      <div style="font-size:2.2rem; margin-bottom:8px;">⚠️</div>
-      <h2 id="rt" style="font-size:1.3rem; margin:0 0 6px; color:var(--ink);">Service request</h2>
-      <p id="rp" style="color:var(--mut); font-size:.88rem; margin:0; line-height:1.5;"></p>
-    </div>
-    <form id="fRq"></form>
-  </div>
-</div>
-
-<script src="tools.js"></script>
-<script>
-const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c));
-const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
-const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '-';
-const tokenHdr = () => ({ 'x-user-token': localStorage.getItem('ds_token') || '' });
-const api = (m, p, b) => fetch(API + p, { method: m, headers: { 'content-type': 'application/json', ...tokenHdr() }, body: b === undefined ? undefined : JSON.stringify(b) });
-
-function user() {
-  try {
-    const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-    const sess = localStorage.getItem('ds_session');
-    const u = list.find(x => x.id === sess);
-    return u || { name: 'User', bal: 0, orders: [], tx: [], code: '' };
-  } catch (e) {
-    return { name: 'User', bal: 0, orders: [], tx: [], code: '' };
-  }
-}
-function saveUser(u) {
-  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-  const idx = list.findIndex(x => x.id === u.id);
-  if (idx >= 0) list[idx] = u; else list.push(u);
-  localStorage.setItem('ds_users', JSON.stringify(list));
-}
-function updateBalance() {
-  const u = user();
-  if (u) document.getElementById('aB').textContent = inr(u.bal);
-}
-
-const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
-const T=["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
-const sty=i=>`--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
-const art=h=>`<svg class="art" viewBox="0 0 160 100" aria-hidden="true">${h}</svg>`;
-
-const R=(x,y,w,h,c,r=3)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
-const C=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
-const X=(x,y,t,s,c='fk',a='middle')=>`<text x="${x}" y="${y}" font-size="${s}" class="${c}" text-anchor="${a}" font-weight="700">${t}</text>`;
-const Pa=(d,c)=>`<path d="${d}" class="${c}"/>`;
-const H=(x,y,w,h,c='fb')=>R(x,y,w,h,c,3)+C(x+w/2,y+h*.38,w*.2,'fw')+Pa(`M${x+w*.15} ${y+h}q${w*.35} ${-h*.5} ${w*.7} 0z`,'fw');
-const PG=(x=52,y=8,w=56,h=84)=>R(x,y,w,h,'fw',4);
-const AR=(x,y,c='sa')=>Pa(`M${x} ${y}h16m-5-5 5 5-5 5`,c);
-const CAR=(x,y,s=1,c='fw')=>`<g transform="translate(${x} ${y}) scale(${s})">${R(0,8,44,12,c,4)}${R(8,0,28,10,c,4)}${C(11,22,4,'fk')}${C(33,22,4,'fk')}</g>`;
-const CARD=(x,y,w,h,c='fa')=>R(x,y,w,h,c,7);
-const L=(x,y,w,n=3,g=6,c='fl')=>Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*.6:w,2.4,c,1.2)).join('');
-const QR=(x,y,s=72)=>{let o=R(x,y,s,s,'fw',5);const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);return o};
-const CALC=d=>R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c==3?'fy':'fb',2)).join('')).join('');
-const BRW=(x,y,w,h)=>R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
-const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6,'fb');
-
-const V={
-  "RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
-  "DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw'),
-  "Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo'),
-  "Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw'),
-  "PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36),
-  "RC Full Details":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+X(46,19,'VEHICLE DETAILS',6.5,'fw','start')+[0,1,2,3,4].map(i=>R(44,32+i*11,26,3,'fl',1.5)+R(78,32+i*11,36,3,'fb',1.5)).join(''),
-  "Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+L(46,70,68,2,6),
-  "LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
-  "Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
-  "Mobile Services":()=>R(56,6,48,88,'fk',6)+R(59,11,42,78,'fw',3)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb'),
-  "GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+L(54,30,52,2,6)+C(80,62,17,'fa')+X(80,69,'%',20,'fw'),
-  "Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.5,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
-  "Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+R(100,16,34,68,'fk',6)+R(103,21,28,58,'fw',3)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
-  "Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')+L(38,30,48,3,7)+X(62,68,'₹500',15,'fr'),
-  "DBT Seeding Status":()=>Pa('M80 14l46 22H34z','fa')+R(30,74,100,8,'fa',2)+C(130,24,13,'fg')+Pa('M123 24l5 5 9-10','sw'),
-  "TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7)
-};
-
-const TA={
-  "Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
-  "QR Code Generator":()=>QR(44,14),
-  "Stamp Designer":()=>C(80,50,38,'sa')+C(80,50,30,'sa')+X(80,48,'DOCSMARTLY',8,'fa')+X(80,60,'★ ★ ★',6,'fa'),
-  "ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
-  "What Is My IP":()=>C(52,50,30,'sa')+R(84,38,62,24,'fk',6)+X(115,54,'103.xx.xx.12',6.5,'fw'),
-  "Letterhead Maker":()=>PG(44,6,72,88)+C(58,22,7,'fa')+R(70,17,36,3,'fa',1.5)+L(52,44,56,6,7),
-  "Visiting Card Designer":()=>R(60,46,76,46,'fw',5)+R(24,10,76,46,'fa',5)+X(36,30,'DocSmartly',8,'fw','start')+L(36,38,40,2,6,'fo'),
-  "Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8),
-  "Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+X(80,84,'Age: 28 years',7),
-  "Photo & Signature Resizer":()=>R(30,18,76,56,'fb',4)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+X(118,88,'35×45 mm',7),
-  "JPG / PNG to PDF":()=>R(14,26,48,40,'fb',4)+AR(68,44)+PDF(92,14,52,72),
-  "PDF Merge":()=>PDF(14,22,36,50)+PDF(30,34,36,50)+AR(74,48)+PDF(98,14,46,72),
-  "PDF Split & Page Extract":()=>PDF(14,14,46,72)+AR(66,48)+PDF(92,8,38,40)+PDF(92,54,38,40),
-  "PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+R(90,28,52,44,'fb',4)+X(116,86,'JPG',7,'fa'),
-  "PDF Rotate & Reorder":()=>PDF(30,14,46,72)+Pa('M146 58a20 20 0 1 1-6-14','sa'),
-  "PDF Compressor (KB)":()=>PDF(18,14,52,72)+R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8)+R(90,62,56,18,'fa',9)+X(118,75,'200 KB',8,'fw'),
-  "Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5),
-  "PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.5,'1',8,'fw'),
-  "PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw')+L(52,30,56,6,8)+R(44,80,72,12,'fb',4)+X(80,89,'FOOTER',6.5,'fw'),
-  "Photo Compressor (KB)":()=>R(18,16,70,56,'fb',4)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
-  "Image Format Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'JPG',8)+AR(68,44)+R(90,26,48,40,'fb',4)+X(114,80,'PNG',8),
-  "Background Remover":()=>R(36,10,88,80,'fl',6)+H(58,22,44,66,'fa'),
-  "WebP to JPG Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'WEBP',8)+AR(68,44)+R(90,26,48,40,'fb',4)+X(114,80,'JPG',8),
-  "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+R(90,28,52,44,'fb',4),
-  "ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
-  "Thumbnail Resizer":()=>R(16,14,84,66,'fb',4)+R(112,34,32,26,'fa',4)+X(128,74,'150×150',6),
-  "Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,40,100,3,'fl',1.5)+R(30,68,24,24,'fa',6)+X(120,86,'16·32',6),
-  "Image Watermark Maker":()=>R(24,16,112,68,'fb',4)+X(80,56,'DOCSMARTLY',13,'fo'),
-  "Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa'),
-  "Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa')+C(124,30,10,'fy')+C(100,58,10,'fr'),
-  "Photo Blur Tool":()=>R(14,22,56,48,'fb',4)+AR(74,42)+R(92,22,56,48,'fb',4)+C(118,46,20,'fo'),
-  "Image to Black & White":()=>R(14,22,56,48,'fb',4)+AR(74,42)+R(92,22,56,48,'fk',4),
-  "Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44)+H(90,14,56,72,'fk'),
-  "Photo Border Maker":()=>R(28,10,104,80,'fa',6)+R(40,22,80,56,'fb',4),
-  "Color Picker from Image":()=>R(16,16,90,68,'fb',4)+Pa('M108 56l22-22 8 8-22 22z','fa'),
-  "ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw')+H(34,38,28,38),
-  "QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
-  "Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
-  "Student ID Card Maker":()=>IDV(52,4,56,92,'STUDENT','fb'),
-  "A4 Photo Print Layout":()=>PG(36,4,88,92)+[0,1,2,3].map(r=>[0,1,2].map(c=>H(44+c*26,12+r*21,20,16)).join('')).join(''),
-  "Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7)+AR(82,46)+PDF(104,18,42,64),
-  "Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2)+L(44,60,72,4,7),
-  "Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+L(44,44,72,4,8)+R(76,76,40,12,'fa',3)+X(96,85,'₹ 4,500',6.5,'fw'),
-  "Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+L(44,44,72,4,8)+R(76,76,40,12,'fb',3)+X(96,85,'₹ 12,000',6.5,'fw'),
-  "Hindi Typing Tool":()=>X(80,34,'अ आ इ ई',15,'fa')+R(16,44,128,44,'fw',6),
-  "GST Calculator":()=>CALC('18%'),
-  "GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
-  "Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+C(118,50,24,'fy')+X(118,59,'₹',24),
-  "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw')+R(48,44,80,40,'fb',4)+X(88,70,'₹100',12,'fw'),
-  "Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7)+R(44,66,72,16,'fa',4)+X(80,77,'₹ 25,000',8,'fw'),
-  "Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa')+Pa('M54 80L106 20','sa')+X(120,32,'%',22,'fa'),
-  "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw'),
-  "Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8),
-  "Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
-  "Name, Date & Text on Photo":()=>R(20,14,120,72,'fb',4)+X(80,46,'Your Name',10,'fw'),
-  "Instagram Reel Cover Maker":()=>R(48,4,64,92,'fk',6)+R(54,12,52,48,'fb',4),
-  "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
-};
-
-const DA={
-  "New Digital Signature (DSC)":()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa')+R(98,36,34,24,'fb',5)+X(115,52,'DSC',8,'fw'),
-  "E-procurement registration":()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa')+R(50,68,60,12,'fa',4)+X(80,77,'Register',6.5,'fw'),
-  "Tender upload (for contractor)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7),
-  "Tender upload (for department)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7),
-  "Building estimate creator":()=>R(12,12,136,76,'fb',6)+PG(100,18,40,64)+X(120,34,'₹',13,'fa'),
-  "BOQ creator":()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2),
-  "Govt civil & electric bill maker (Excel)":()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw'),
-  "Bill form":()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw'),
-  "Extra item sheet":()=>PG(28,8,92,84)+X(74,22,'EXTRA ITEMS',6.5,'fa')+C(122,76,13,'fg'),
-  "Excess item sheet":()=>PG(28,8,92,84)+X(74,22,'EXCESS ITEMS',6.5,'fa')+C(122,76,13,'fr'),
-  "QC register creator":()=>R(30,10,100,82,'fb',6)+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
-  "Work escalation statement":()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa'),
-  "OMR Sheet Generator & Checker":()=>PG(32,6,96,88)+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
-  "Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')
-};
-
-const ICONS_PATH={
-  car:'M5 16v-5l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3',
-  id:'M3 7h18v12H3zM8 13a2 2 0 1 0 0-.01M6 17c1-2 4-2 5 0M14 11h4M14 15h4',
-  vote:'M4 9h16v11H4zM8 9V5h8v4M9 14l2 2 4-4',
-  leaf:'M12 20V10M12 10c0-4 3-6 6-6 0 4-2 6-6 6M12 14c0-3-2-5-5-5 0 3 2 5 5 5',
-  pan:'M3 5h18v14H3zM7 10h6M7 14h10M15 8h3v3h-3z',
-  doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',
-  store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',
-  phone:'M7 3h10v18H7zM11 18h2',
-  pct:'M6 18L18 6M7 7m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M17 17m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0',
-  calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M12 15h2',
-  img:'M3 5h18v14H3zM9 10m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',
-  qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',
-  text:'M5 6h14M5 10h14M5 14h10M5 18h8',
-  globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
-  merge:'M3 4h8v10H3zM13 10h8v10h-8z',
-  zip:'M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5',
-  stamp:'M9 4h6v6l3 4v3H6v-3l3-4zM5 21h14',
-  shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',
-  bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18'
-};
-const getMiniSvg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS_PATH[k]||ICONS_PATH.doc}"/></svg>`;
-
-function getArtworkFor(item) {
-  try {
-    const n = item.n, sec = item.sec;
-    if (V[n]) return V[n]();
-    if (sec && V[sec]) return V[sec]();
-    if (DA[n]) return DA[n]();
-    if (TA[n]) return TA[n]();
-  } catch(e) {}
-  return PG();
-}
-
-const getThumbHtml=(item, idx)=>{
-  try {
-    return `<div class="sv" style="${sty(idx)}">${art(getArtworkFor(item))}</div>`;
-  } catch(e) {
-    return `<div class="sv" style="${sty(idx)}">${art(PG())}</div>`;
-  }
-};
-
-const CATEGORIES = {
-  "Vehicle & Transport Services (Paid)": [
-    { n: "RC PDF INSTANT", sec: "RC Services", amt: 40, isPaid: true, ic: "car" },
-    { n: "RC PDF Server 1", sec: "RC Services", amt: 30, isPaid: true, ic: "car" },
-    { n: "RC PDF Server 2", sec: "RC Services", amt: 40, isPaid: true, ic: "car" },
-    { n: "RC Full Details", sec: "RC Full Details", amt: 50, isPaid: true, ic: "doc" },
-    { n: "Chassis to RC", sec: "Chassis to RC", amt: 70, isPaid: true, ic: "car" },
-    { n: "Vehicle to Mobile Find", sec: "Vehicle To Mobile Find", amt: 80, isPaid: true, ic: "phone" },
-    { n: "Challan Details", sec: "Challan Details", amt: 10, isPaid: true, ic: "doc" }
-  ],
-  "Licence & Identity Services (Paid)": [
-    { n: "DL PDF INSTANT", sec: "DL Services", amt: 50, isPaid: true, ic: "id" },
-    { n: "DL PDF Server 1", sec: "DL Services", amt: 50, isPaid: true, ic: "id" },
-    { n: "DL PDF Server 2 (Blue)", sec: "DL Services", amt: 50, isPaid: true, ic: "id" },
-    { n: "LL PDF", sec: "LL Services", amt: 30, isPaid: true, ic: "id" },
-    { n: "LL Exam Request", sec: "LL Services", amt: 80, isPaid: true, ic: "doc" },
-    { n: "Voter Mobile Link", sec: "Voter Services", amt: 40, isPaid: true, ic: "vote" },
-    { n: "Voter Mobile Link S1", sec: "Voter Services", amt: 40, isPaid: true, ic: "vote" },
-    { n: "Voter PDF", sec: "Voter Services", amt: 100, isPaid: true, ic: "vote" }
-  ],
-  "PAN, Tax & Business Services (Paid)": [
-    { n: "Aadhaar to PAN", sec: "PAN Services", amt: 250, isPaid: true, ic: "pan" },
-    { n: "Aadhaar to PAN S1", sec: "PAN Services", amt: 40, isPaid: true, ic: "pan" },
-    { n: "PAN Details", sec: "PAN Services", amt: 40, isPaid: true, ic: "pan" },
-    { n: "New PAN apply", sec: "PAN Card Service", amt: 600, isPaid: true, ic: "pan" },
-    { n: "PAN update / correction", sec: "PAN Card Service", amt: 600, isPaid: true, ic: "pan" },
-    { n: "PAN to Udyam S2", sec: "Udyam Services", amt: 100, isPaid: true, ic: "store" },
-    { n: "New UDYAM CERTIFICATE", sec: "Udyam Services", amt: 200, isPaid: true, ic: "store" },
-    { n: "New GST Certificate", sec: "GST Services", amt: 1200, isPaid: true, ic: "pct" },
-    { n: "GST Download", sec: "GST Services", amt: 200, isPaid: true, ic: "pct" },
-    { n: "PAN to GST", sec: "GST Services", amt: 10, isPaid: true, ic: "pct" },
-    { n: "GST Details", sec: "GST Services", amt: 10, isPaid: true, ic: "pct" },
-    { n: "TAN Verification", sec: "TAN Verification", amt: 30, isPaid: true, ic: "shield" }
-  ],
-  "Citizen, Banking & Farmer Services (Paid)": [
-    { n: "KISAN CARD", sec: "Farmer Services", amt: 25, isPaid: true, ic: "leaf" },
-    { n: "Farmer PDF S1", sec: "Farmer Services", amt: 25, isPaid: true, ic: "leaf" },
-    { n: "Farmer PDF All State", sec: "Farmer Services", amt: 30, isPaid: true, ic: "leaf" },
-    { n: "AgriStack Farmer PDF", sec: "Farmer Services", amt: 30, isPaid: true, ic: "leaf" },
-    { n: "AADHAAR Update", sec: "Aadhaar & Ration", amt: 150, isPaid: true, ic: "id" },
-    { n: "Ration PDF S1", sec: "Aadhaar & Ration", amt: 20, isPaid: true, ic: "doc" },
-    { n: "Ration PDF S2 (Aadhaar)", sec: "Aadhaar & Ration", amt: 30, isPaid: true, ic: "doc" },
-    { n: "DBT Seeding Status", sec: "DBT Seeding Status", amt: 20, isPaid: true, ic: "bank" },
-    { n: "Mobile Details Find", sec: "Mobile Services", amt: 30, isPaid: true, ic: "phone" },
-    { n: "Mobile Details S1", sec: "Mobile Services", amt: 30, isPaid: true, ic: "phone" },
-    { n: "Mobile Details S2", sec: "Mobile Services", amt: 30, isPaid: true, ic: "phone" },
-    { n: "Other Mobile Issue", sec: "Mobile Services", amt: 50, isPaid: true, ic: "phone" }
-  ],
-  "Govt & Contractor Work (Paid)": [
-    { n: "New Digital Signature (DSC)", sec: "Govt Contractor", amt: 2500, isPaid: true, ic: "shield" },
-    { n: "E-procurement registration", sec: "Govt Contractor", amt: 500, isPaid: true, ic: "doc" },
-    { n: "Tender upload (for contractor)", sec: "Govt Contractor", amt: 300, isPaid: true, ic: "doc" },
-    { n: "Tender upload (for department)", sec: "Govt Contractor", amt: 700, isPaid: true, ic: "doc" },
-    { n: "Building estimate creator", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "calc" },
-    { n: "BOQ creator", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "doc" },
-    { n: "Govt civil & electric bill maker (Excel)", sec: "Govt Contractor", amt: 1000, isPaid: true, ic: "doc" },
-    { n: "Bill form", sec: "Govt Contractor", amt: 400, isPaid: true, ic: "doc" },
-    { n: "Extra item sheet", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "doc" },
-    { n: "Excess item sheet", sec: "Govt Contractor", amt: 200, isPaid: true, ic: "doc" },
-    { n: "QC register creator", sec: "Govt Contractor", amt: 500, isPaid: true, ic: "doc" },
-    { n: "Work escalation statement", sec: "Govt Contractor", amt: 700, isPaid: true, ic: "doc" }
-  ],
-  "PDF Tools (Free)": [
-    { n: "JPG / PNG to PDF", isPaid: false, ic: "img" },
-    { n: "PDF Merge", isPaid: false, ic: "merge" },
-    { n: "PDF Split & Page Extract", isPaid: false, ic: "doc" },
-    { n: "PDF to JPG", isPaid: false, ic: "img" },
-    { n: "PDF to Excel", isPaid: false, ic: "doc" },
-    { n: "PDF Rotate & Reorder", isPaid: false, ic: "doc" },
-    { n: "PDF Compressor (KB)", isPaid: false, ic: "zip" },
-    { n: "Document Scanner & PDF", isPaid: false, ic: "doc" },
-    { n: "PDF Page Number Adder", isPaid: false, ic: "text" },
-    { n: "PDF Header & Footer Maker", isPaid: false, ic: "text" }
-  ],
-  "Image & Photo Tools (Free)": [
-    { n: "Photo Compressor (KB)", isPaid: false, ic: "zip" },
-    { n: "Image Format Converter", isPaid: false, ic: "img" },
-    { n: "Background Remover", isPaid: false, ic: "img" },
-    { n: "WebP to JPG Converter", isPaid: false, ic: "img" },
-    { n: "ICO to PNG", isPaid: false, ic: "img" },
-    { n: "ICO Converter (Favicon)", isPaid: false, ic: "img" },
-    { n: "Thumbnail Resizer", isPaid: false, ic: "img" },
-    { n: "Favicon Preview Tool & Maker", isPaid: false, ic: "img" },
-    { n: "Image Watermark Maker", isPaid: false, ic: "img" },
-    { n: "Photo Color Changer", isPaid: false, ic: "img" },
-    { n: "Photo Blur Tool", isPaid: false, ic: "img" },
-    { n: "Image to Black & White", isPaid: false, ic: "img" },
-    { n: "Background Black & White", isPaid: false, ic: "img" },
-    { n: "Photo Border Maker", isPaid: false, ic: "img" },
-    { n: "Color Picker from Image", isPaid: false, ic: "img" },
-    { n: "Name, Date & Text on Photo", isPaid: false, ic: "text" },
-    { n: "Instagram Reel Cover Maker", isPaid: false, ic: "img" }
-  ],
-  "Print & ID Cards (Free)": [
-    { n: "Passport Photo Sheet", isPaid: false, ic: "img" },
-    { n: "ID Card Front & Back to A4", isPaid: false, ic: "id" },
-    { n: "ID Card Maker", isPaid: false, ic: "id" },
-    { n: "Employee ID Card Maker", isPaid: false, ic: "id" },
-    { n: "Student ID Card Maker", isPaid: false, ic: "id" },
-    { n: "A4 Photo Print Layout", isPaid: false, ic: "id" },
-    { n: "Photo & Signature Resizer", isPaid: false, ic: "id" },
-    { n: "Digital Signature Maker", isPaid: false, ic: "doc" },
-    { n: "Stamp Designer", isPaid: false, ic: "stamp" }
-  ],
-  "Documents & Letters (Free)": [
-    { n: "Text to PDF / Application", isPaid: false, ic: "text" },
-    { n: "Letterhead Maker", isPaid: false, ic: "text" },
-    { n: "Visiting Card Designer", isPaid: false, ic: "id" },
-    { n: "Marriage Biodata Maker", isPaid: false, ic: "doc" },
-    { n: "Resume Maker", isPaid: false, ic: "doc" },
-    { n: "Invoice Maker", isPaid: false, ic: "doc" },
-    { n: "Quotation Maker", isPaid: false, ic: "doc" }
-  ],
-  "Calculators & Utilities (Free)": [
-    { n: "GST Calculator", isPaid: false, ic: "pct" },
-    { n: "GST Inclusive & Exclusive Calculator", isPaid: false, ic: "pct" },
-    { n: "Printing Cost Calculator", isPaid: false, ic: "calc" },
-    { n: "Cash Denomination Calculator", isPaid: false, ic: "calc" },
-    { n: "Salary Calculator", isPaid: false, ic: "calc" },
-    { n: "Percentage Calculator", isPaid: false, ic: "calc" },
-    { n: "Loan / EMI Calculator", isPaid: false, ic: "calc" },
-    { n: "Age Calculator", isPaid: false, ic: "calc" },
-    { n: "Online Stopwatch", isPaid: false, ic: "calc" },
-    { n: "Password to MD5 / SHA-256", isPaid: false, ic: "shield" },
-    { n: "QR Code Generator", isPaid: false, ic: "qr" },
-    { n: "QR Code Designer & Modifier", isPaid: false, ic: "qr" },
-    { n: "Hindi Typing Tool", isPaid: false, ic: "text" },
-    { n: "Word Counter", isPaid: false, ic: "text" },
-    { n: "What Is My IP", isPaid: false, ic: "globe" },
-    { n: "Meta Title & Description Generator", isPaid: false, ic: "globe" },
-    { n: "OMR Sheet Generator & Checker", isPaid: false, ic: "doc" }
-  ]
-};
-
-let curFilter = "All";
-
-function setupSidebarCategories() {
-  const mount = document.getElementById('sbCategories');
-  if (!mount) return;
-  mount.innerHTML = Object.entries(CATEGORIES).map(([catName, items], idx) => `
-    <details class="sb-group" ${idx < 2 ? 'open' : ''}>
-      <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
-      <div class="sb-sub-list">
-        ${items.map(it => {
-          if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
-            return `<a href="${getToolUrl(it.n)}" class="sb-item">
-              <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
-              <span style="font-size:0.72rem;color:#b45309;font-weight:700">${inr(it.amt)}</span>
-            </a>`;
-          } else if (it.isPaid) {
-            return `<button type="button" class="sb-item" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
-              <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
-              <span style="font-size:0.72rem;color:#b45309;font-weight:700">${inr(it.amt)}</span>
-            </button>`;
-          } else {
-            return `<a href="${getToolUrl(it.n)}" class="sb-item">
-              <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
-              <span style="font-size:0.72rem;color:var(--ok);font-weight:700">Free</span>
-            </a>`;
-          }
-        }).join('')}
-      </div>
-    </details>
-  `).join('');
-}
-
-function renderDashboardSections() {
-  const q = (document.getElementById('dashToolQ')?.value || '').trim().toLowerCase();
-  const mount = document.getElementById('bifurcatedSections');
-  if (!mount) return;
-
-  let html = '', globalIndex = 0;
-
-  Object.entries(CATEGORIES).forEach(([catName, items]) => {
-    if (curFilter === "Free Only" && catName.includes("(Paid)")) return;
-    if (curFilter === "Paid Only" && catName.includes("(Free)")) return;
-    if (curFilter !== "All" && curFilter !== "Free Only" && curFilter !== "Paid Only" && !catName.toLowerCase().includes(curFilter.toLowerCase())) return;
-
-    const filteredItems = items.filter(t => !q || t.n.toLowerCase().includes(q) || (t.sec && t.sec.toLowerCase().includes(q)));
-    if (!filteredItems.length) return;
-
-    html += `
-      <details class="ds" open>
-        <summary><span>${esc(catName)}</span><em>${filteredItems.length}</em></summary>
-        <div class="ig">
-          ${filteredItems.map(it => {
-            globalIndex++;
-            if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
-              return `
-                <a href="${getToolUrl(it.n)}" class="it">
-                  ${getThumbHtml(it, globalIndex)}
-                  <div style="flex:1">
-                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(it.sec)}</p>
-                  </div>
-                  <div class="badge-paid">${inr(it.amt)}</div>
-                </a>`;
-            } else if (it.isPaid) {
-              return `
-                <div class="it" style="cursor:pointer" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
-                  ${getThumbHtml(it, globalIndex)}
-                  <div style="flex:1">
-                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(it.sec)}</p>
-                  </div>
-                  <div class="badge-paid">${inr(it.amt)}</div>
-                </div>`;
-            } else {
-              return `
-                <a href="${getToolUrl(it.n)}" class="it">
-                  ${getThumbHtml(it, globalIndex)}
-                  <div style="flex:1">
-                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(catName.split(' ')[0])}</p>
-                  </div>
-                  <div class="badge-free">FREE</div>
-                </a>`;
-            }
-          }).join('')}
-        </div>
-      </details>
-    `;
-  });
-
-  mount.innerHTML = html || '<p style="color:var(--mut);font-size:0.9rem;padding:12px">No tools or services match your search.</p>';
-}
-function renderDashboard() {
-  const u = user();
-  const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
-  const cats = ["All", "Free Only", "Paid Only", "Vehicle", "Identity", "Tax", "Citizen", "Govt", "PDF", "Photo", "Print", "Documents", "Calculators"];
-
-  const dashMount = document.querySelector('[data-v="dashboard"]');
-  if (!dashMount) return;
-
-  dashMount.innerHTML = `
-    <div class="gc">
-      <div><p style="color:#a9c4ff;font-weight:700">Welcome back,</p><h1>${esc(u.name)}</h1></div>
-      <div class="gw"><div><small style="opacity:.8">Wallet Balance</small><br><b>${inr(u.bal)}</b></div><a class="btn" href="#addmoney">+ Add Money</a></div>
-    </div>
-    <div class="stt">
-      <div><b>${o.length}</b><span>Total Requests</span></div>
-      <div><b>${cnt('pending')}</b><span>Pending</span></div>
-      <div><b>${cnt('processing')}</b><span>Processing</span></div>
-      <div><b>${cnt('success')}</b><span>Success</span></div>
-      <div><b>${cnt('failed')}</b><span>Failed</span></div>
-    </div>
-
-    <div class="tools-dash-head">
-      <div>
-        <h2 style="font-size:1.4rem;margin:0">Tools &amp; Services Portal (100+ Total)</h2>
-        <p style="color:var(--mut);font-size:0.85rem;margin-top:2px">All Free browser tools and Paid print services categorized with live preview icons</p>
-      </div>
-      <div class="dash-search-bar">
-        <input id="dashToolQ" type="search" placeholder="Search by name (e.g. RC, PDF, PAN)..." aria-label="Search tools">
-        <button class="btn" type="button" id="dashSearchBtn" style="min-height:40px;padding:6px 14px;font-size:0.85rem">Search</button>
-      </div>
-    </div>
-    <div class="dash-cats" id="dashCats">
-      ${cats.map(c => `<button type="button" class="${c === curFilter ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
-    </div>
-
-    <div id="bifurcatedSections"></div>
-  `;
-
-  renderDashboardSections();
-
-  const qInp = document.getElementById('dashToolQ');
-  if (qInp) qInp.oninput = renderDashboardSections;
-  const sBtn = document.getElementById('dashSearchBtn');
-  if (sBtn) sBtn.onclick = renderDashboardSections;
-
-  const catsEl = document.getElementById('dashCats');
-  if (catsEl) {
-    catsEl.onclick = e => {
-      const btn = e.target.closest('[data-cat]');
-      if (!btn) return;
-      curFilter = btn.dataset.cat;
-      document.querySelectorAll('#dashCats button').forEach(b => b.classList.toggle('on', b.dataset.cat === curFilter));
-      renderDashboardSections();
-    };
-  }
-}
-
-function renderHistory() {
-  const u = user(), o = (u.orders || []).slice().sort((a,b) => b.t - a.t);
-  document.querySelector('[data-v="history"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Request History</h1>
-    <div class="tw"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead>
-    <tbody>${o.map(x => `
-      <tr>
-        <td>${dt(x.t)}</td>
-        <td><b>${esc(x.n)}</b>${x.remark ? `<br><small style="color:var(--mut)">Remark: ${esc(x.remark)}</small>` : ''}</td>
-        <td><span class="sb-status s-${esc(x.s)}">${esc(x.s)}</span></td>
-        <td>${inr(x.amt)}</td>
-        <td>${x.file ? `<button class="btn o" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:4px 10px;min-height:32px;font-size:.8rem">Download</button>` : '<span style="color:var(--mut)">In progress</span>'}</td>
-      </tr>
-    `).join('') || '<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}</tbody></table></div>
-  `;
-}
-
-function renderPassbook() {
-  const u = user(), tx = (u.tx || []).slice().sort((a,b) => b.t - a.t);
-  document.querySelector('[data-v="passbook"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Passbook</h1>
-    <div class="tw"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead>
-    <tbody>${tx.map(t => `
-      <tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td><b>${t.type}</b></td><td><b>${t.type==='credit'?'+':'-'}${inr(t.amt)}</b></td></tr>
-    `).join('') || '<tr><td colspan="4" style="text-align:center">No transactions yet.</td></tr>'}</tbody></table></div>
-  `;
-}
-
-function renderAddMoney() {
-  const u = user();
-  document.querySelector('[data-v="addmoney"]').innerHTML = `
-    <h1>Add Money</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px;margin-top:14px">
-      <p style="margin-bottom:10px">Current Balance: <b>${inr(u.bal)}</b></p>
-      <form id="fAdd">
-        <label style="display:block;font-weight:700;margin-bottom:6px">Amount (Min ₹200)</label>
-        <input id="amt" type="number" min="200" value="500" required style="margin-bottom:14px">
-        <button class="btn" type="submit" style="width:100%">Pay via UPI</button>
-      </form>
-    </div>
-  `;
-}
-
-function renderReferral() {
-  const u = user();
-  const link = location.origin + '/register.html?ref=' + (u.code || '');
-  document.querySelector('[data-v="referral"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Refer &amp; Earn</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
-      <p style="margin-bottom:10px">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
-      <input readonly value="${esc(link)}" style="margin-bottom:14px">
-      <button class="btn" onclick="navigator.clipboard.writeText('${esc(link)}');alert('Link copied!')">Copy Link</button>
-    </div>
-  `;
-}
-
-function renderProfile() {
-  const u = user();
-  document.querySelector('[data-v="profile"]').innerHTML = `
-    <h1 style="margin-bottom:14px">My Profile</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
-      <p><b>Name:</b> ${esc(u.name)}</p>
-      <p><b>Mobile:</b> ${esc(u.mob)}</p>
-      <p><b>Email:</b> ${esc(u.mail)}</p>
-      <p><b>Referral Code:</b> ${esc(u.code || '-')}</p>
-    </div>
-  `;
-}
-
-function renderContact() {
-  document.querySelector('[data-v="contact"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Contact Support</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
-      <p style="margin-bottom:16px">Need help with an order, wallet balance, or custom requirement?</p>
-      <a class="btn" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank">Chat on WhatsApp</a>
-    </div>
-  `;
-}
-
-const VIEWS = { dashboard: renderDashboard, history: renderHistory, passbook: renderPassbook, addmoney: renderAddMoney, referral: renderReferral, profile: renderProfile, contact: renderContact };
-
-function route() {
-  try {
-    const h = location.hash.slice(1) || 'dashboard';
-    document.querySelectorAll('[data-v]').forEach(el => el.hidden = el.dataset.v !== h);
-    if (VIEWS[h]) VIEWS[h]();
-    updateBalance();
-  } catch (err) {
-    console.error("Route execution error:", err);
-  }
-}
-window.addEventListener('hashchange', route);
-
-let curKey = '', curAmt = 0;
-document.addEventListener('click', e => {
-  const btn = e.target.closest('[data-svc]');
-  if (!btn) return;
-  curKey = btn.dataset.svc;
-  curAmt = Number(btn.dataset.amt);
-  const u = user();
-  const serviceName = curKey.split('|')[1] || curKey;
-  
-  document.getElementById('rt').textContent = serviceName;
-  document.getElementById('rp').innerHTML = `Is service ke liye aapke wallet balance se <b style="color:var(--ac); font-size:1.05rem;">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--mut);">Current Balance: ${inr(u.bal)}</small>`;
-  
-  document.getElementById('fRq').innerHTML = `
-    <div style="margin-bottom:12px">
-      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
-      <input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%; height:42px; padding:8px 12px; border:1.5px solid var(--ln); border-radius:8px; box-sizing:border-box;">
-    </div>
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label>
-      <input id="rqRem" type="text" placeholder="Special instruction" style="width:100%; height:42px; padding:8px 12px; border:1.5px solid var(--ln); border-radius:8px; box-sizing:border-box;">
-    </div>
-    <div style="display:flex; gap:10px;">
-      <button type="button" id="btnCancelModal" style="flex:1; height:42px; border:1.5px solid var(--ln); background:#fff; font-weight:700; border-radius:8px; cursor:pointer;">Cancel</button>
-      <button class="btn" type="submit" style="flex:1; height:42px;">Confirm &amp; Proceed</button>
-    </div>
-  `;
-  document.getElementById('rm').style.display = 'flex';
-});
-
-document.getElementById('rx').onclick = () => document.getElementById('rm').style.display = 'none';
-document.addEventListener('click', e => {
-  if (e.target.id === 'btnCancelModal') document.getElementById('rm').style.display = 'none';
-});
-
-document.getElementById('fRq').onsubmit = async e => {
-  e.preventDefault();
-  const doc = document.getElementById('rqDoc').value.trim();
-  const rem = document.getElementById('rqRem').value.trim();
-  const u = user();
-  if (u.bal < curAmt) {
-    alert('Insufficient balance. Please add money first.');
-    location.hash = '#addmoney';
-    document.getElementById('rm').style.display = 'none';
-    return;
-  }
-  const res = await api('POST', '/api/requests', {
-    k: curKey, sec: curKey.split('|')[0], doc: doc, amt: curAmt, data: { 'Document Number': doc, 'Remarks': rem }
-  });
-  if (!res.ok) { alert('Failed to submit request.'); return; }
-  const j = await res.json();
-  saveUser(j.user);
-  document.getElementById('rm').style.display = 'none';
-  alert('Request submitted successfully!');
-  route();
-};
-
-document.addEventListener('submit', async e => {
-  if (e.target.id !== 'fAdd') return;
-  e.preventDefault();
-  const amt = Number(document.getElementById('amt').value);
-  const res = await api('POST', '/api/topup', { amt });
-  if (res.ok) {
-    const j = await res.json();
-    saveUser(j.user);
-    alert('Wallet recharged: ' + inr(amt));
-    location.hash = '#dashboard';
-    route();
-  }
-});
-
-document.addEventListener('click', async e => {
-  const dl = e.target.closest('[data-dl]');
-  if (!dl) return;
-  const r = await fetch(API + '/api/requests/' + encodeURIComponent(dl.dataset.dl) + '/file', { headers: tokenHdr() });
-  if (!r.ok) { alert('File not available.'); return; }
-  const b = await r.blob();
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(b); a.download = dl.dataset.fn || 'result.pdf'; a.click();
-});
-
-function logout() {
-  localStorage.removeItem('ds_session');
-  localStorage.removeItem('ds_token');
-  window.location.replace('index.html');
-}
-document.getElementById('btnLogOut').onclick = logout;
-document.getElementById('loSb').onclick = logout;
-
-try {
-  setupSidebarCategories();
-} catch (e) {
-  console.error("Sidebar setup error:", e);
-}
-route();
-</script>
 </body>
 </html>
