@@ -681,8 +681,6 @@ const CATEGORIES = {
   ]
 };
 
-let curFilter = "All";
-
 function setupSidebarCategories() {
   const mount = document.getElementById('sbCategories');
   if (!mount) return;
@@ -1058,6 +1056,7 @@ function logout() {
 document.getElementById('btnLogOut').onclick = logout;
 document.getElementById('loSb').onclick = logout;
 
+// Ensure sidebar categories are populated on page load
 try {
   setupSidebarCategories();
 } catch (e) {
