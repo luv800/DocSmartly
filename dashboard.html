@@ -689,8 +689,9 @@ function setupSidebarCategories() {
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
       <div class="sb-sub-list">
         ${items.map(it => {
+          const toolUrl = (typeof getToolUrl === 'function') ? getToolUrl(it.n) : ('freetools/' + it.n.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.html');
           if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
-            return `<a href="${getToolUrl(it.n)}" class="sb-item">
+            return `<a href="${toolUrl}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
               <span style="font-size:0.7rem;color:#f59e0b;font-weight:700">${inr(it.amt)}</span>
             </a>`;
@@ -700,7 +701,7 @@ function setupSidebarCategories() {
               <span style="font-size:0.7rem;color:#f59e0b;font-weight:700">${inr(it.amt)}</span>
             </button>`;
           } else {
-            return `<a href="${getToolUrl(it.n)}" class="sb-item">
+            return `<a href="${toolUrl}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
               <span style="font-size:0.7rem;color:#4ade80;font-weight:700">Free</span>
             </a>`;
@@ -732,9 +733,10 @@ function renderDashboardSections() {
         <div class="ig">
           ${filteredItems.map(it => {
             globalIndex++;
+            const toolUrl = (typeof getToolUrl === 'function') ? getToolUrl(it.n) : ('freetools/' + it.n.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.html');
             if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
               return `
-                <a href="${getToolUrl(it.n)}" class="it">
+                <a href="${toolUrl}" class="it">
                   ${getThumbHtml(it, globalIndex)}
                   <div style="flex:1">
                     <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
@@ -754,7 +756,7 @@ function renderDashboardSections() {
                 </div>`;
             } else {
               return `
-                <a href="${getToolUrl(it.n)}" class="it">
+                <a href="${toolUrl}" class="it">
                   ${getThumbHtml(it, globalIndex)}
                   <div style="flex:1">
                     <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
@@ -1056,13 +1058,15 @@ function logout() {
 document.getElementById('btnLogOut').onclick = logout;
 document.getElementById('loSb').onclick = logout;
 
-// Ensure sidebar categories are populated on page load
-try {
-  setupSidebarCategories();
-} catch (e) {
-  console.error("Sidebar setup error:", e);
-}
-route();
+// Safely initialize sidebar categories and start router
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    setupSidebarCategories();
+  } catch (e) {
+    console.error("Sidebar setup error:", e);
+  }
+  route();
+});
 </script>
 </body>
 </html>
