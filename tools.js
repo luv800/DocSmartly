@@ -67,8 +67,9 @@ const freeToolsMap = {
 
 // --- PAID SERVICES MAPPING ---
 const paidToolsMap = {
-  "RC PDF INSTANT": "Vehicle & Transport Services/rc-pdf-instant.html"
-  // Baki paid services ke dynamic pages banne par yahan add karte jayen
+  "RC PDF INSTANT": "vehicle-and-transport-services/rc-pdf-instant.html",
+  "RC PDF Server 1": "vehicle-and-transport-services/rc-pdf-instant.html",
+  "RC PDF Server 2": "vehicle-and-transport-services/rc-pdf-instant.html"
 };
 
 // MAIN GET URL FUNCTION
