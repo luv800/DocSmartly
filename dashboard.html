@@ -42,7 +42,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 
   .layout {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 280px 1fr;
     min-height: 100vh;
   }
 
@@ -50,7 +50,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
   .sidebar {
     background: #0f172a;
     color: #e2e8f0;
-    padding: 24px 18px;
+    padding: 24px 16px;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -67,7 +67,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
     font-size: 20px;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     text-decoration: none;
   }
 
@@ -85,6 +85,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    flex: 1;
   }
 
   .nav a, .mi {
@@ -279,14 +280,14 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
   .dash-cats button { border: 1px solid var(--border); background: #fff; border-radius: 99px; padding: 7px 16px; font: 600 .85rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; transition: all 0.2s; color: var(--muted); }
   .dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-  /* Sub Sidebar Category list */
+  /* Dropdown Sidebar Category styling */
   .sb-category { margin-top: 14px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; }
-  .sb-group { margin-bottom: 4px; }
-  .sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-size: 0.82rem; font-weight: 700; color: #cbd5e1; cursor: pointer; border-radius: 8px; list-style: none; }
-  .sb-group summary:hover { background: rgba(255,255,255,.05); color: #fff; }
+  .sb-group { margin-bottom: 6px; background: rgba(255,255,255,.02); border-radius: 8px; overflow: hidden; }
+  .sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; font-size: 0.82rem; font-weight: 700; color: #cbd5e1; cursor: pointer; border-radius: 8px; list-style: none; }
+  .sb-group summary:hover { background: rgba(255,255,255,.07); color: #fff; }
   .sb-group summary::-webkit-details-marker { display: none; }
-  .sb-group summary em { font-style: normal; font-size: 0.7rem; color: #94a3b8; }
-  .sb-sub-list { padding-left: 6px; margin-top: 4px; display: grid; gap: 2px; }
+  .sb-group summary em { font-style: normal; font-size: 0.7rem; background: rgba(37,99,235,.2); color: #60a5fa; padding: 2px 8px; border-radius: 99px; }
+  .sb-sub-list { padding: 4px 6px 8px 10px; display: grid; gap: 2px; max-height: 220px; overflow-y: auto; }
   .sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.78rem; font-weight: 500; color: #94a3b8; text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.2s; }
   .sb-item:hover { color: #fff; background: rgba(37,99,235,.2); }
   .sb-ic { display: inline-flex; align-items: center; gap: 8px; }
@@ -334,7 +335,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
       <a href="index.html" style="color:#60a5fa; font-weight:700;">🌐 Homepage →</a>
 
       <div class="sb-category">
-        <p style="font-size:0.7rem; font-weight:700; color:#94a3b8; text-transform:uppercase; margin:6px 8px 8px; letter-spacing:0.04em">Quick Tool Categories</p>
+        <p style="font-size:0.7rem; font-weight:700; color:#94a3b8; text-transform:uppercase; margin:6px 8px 8px; letter-spacing:0.04em">Services &amp; Tools Menu</p>
         <div id="sbCategories"></div>
       </div>
     </nav>
@@ -698,7 +699,7 @@ function setupSidebarCategories() {
   const mount = document.getElementById('sbCategories');
   if (!mount) return;
   mount.innerHTML = Object.entries(CATEGORIES).map(([catName, items], idx) => `
-    <details class="sb-group" ${idx < 1 ? 'open' : ''}>
+    <details class="sb-group" ${idx === 0 ? 'open' : ''}>
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
       <div class="sb-sub-list">
         ${items.map(it => {
@@ -968,7 +969,6 @@ function route() {
     if (VIEWS[h]) VIEWS[h]();
     updateBalance();
 
-    // Update active sidebar nav link style
     document.querySelectorAll('.nav a').forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === '#' + h);
     });
