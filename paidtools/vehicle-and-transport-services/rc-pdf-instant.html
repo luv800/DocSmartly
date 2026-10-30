@@ -177,9 +177,9 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
     <div id="step3Waiting" style="display: none;">
       <div class="status-box">
         <div class="spinner" id="waitSpinner"></div>
-        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.25rem; color: var(--ok);">✅ OTP Verified</h3>
+        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.25rem; color: var(--ok);">✅ RC PDF Ready For Download!</h3>
         <p id="waitMsg" style="color: var(--mut); font-size: 0.9rem; max-width: 500px; margin: 0 auto 20px; line-height: 1.5;">
-          Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.
+          Official RC PDF upload kar diya gaya hai.
         </p>
 
         <div id="downloadContainer" style="display: none;">
@@ -205,14 +205,13 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
       <table>
         <thead>
           <tr>
-            <th>Date</th>
             <th>Vehicle No</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody id="historyTbody">
-          <tr><td colspan="4" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>
+          <tr><td colspan="3" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -255,7 +254,7 @@ function renderHistoryTable() {
   const tbody = document.getElementById('historyTbody');
   
   if (!rcOrders.length) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>';
     return;
   }
 
@@ -265,9 +264,9 @@ function renderHistoryTable() {
     let actionBtn = '';
     if (o.file) {
       if (o.downloaded) {
-        actionBtn = `<span style="color: var(--ok); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">✓ Downloaded</span>`;
+        actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFileWithCharge('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Downloaded</button>`;
       } else {
-        actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFile('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Download</button>`;
+        actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFileWithCharge('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Download</button>`;
       }
     } else {
       actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); resumeOrder('${o.id}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ac)">Resume / View</button>`;
@@ -275,7 +274,6 @@ function renderHistoryTable() {
 
     return `
       <tr style="cursor:pointer;" title="Click to view this order" onclick="resumeOrder('${o.id}')">
-        <td>${new Date(o.t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
         <td><b>${vehicleNo}</b></td>
         <td><span class="sb-status s-${o.s}">${o.s}</span></td>
         <td>${actionBtn}</td>
@@ -312,12 +310,24 @@ async function checkAndRestoreStep() {
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'none';
-      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
+      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready For Download!';
       document.getElementById('waitTitle').style.color = 'var(--ok)';
       document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
       
       const btnDl = document.getElementById('btnDownloadPdf');
-      btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
+      
+      // Check if already downloaded in local user history
+      const u = user();
+      const order = (u.orders || []).find(x => x.id === req.id);
+      if (order && order.downloaded) {
+        btnDl.innerText = 'Downloaded';
+        btnDl.style.background = 'var(--ok)';
+      } else {
+        btnDl.innerText = '📥 Download RC PDF Now';
+        btnDl.style.background = 'var(--ok)';
+      }
+
+      btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
       document.getElementById('downloadContainer').style.display = 'block';
     }
     else if (otpStatus === 'wrong' || req.s === 'failed') {
@@ -330,7 +340,7 @@ async function checkAndRestoreStep() {
       document.getElementById('waitSpinner').style.display = 'block';
       document.getElementById('waitTitle').innerHTML = '✅ OTP Verified';
       document.getElementById('waitTitle').style.color = 'var(--ok)';
-      document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.';
+      document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein.';
       document.getElementById('downloadContainer').style.display = 'none';
       startStatusPolling();
     }
@@ -529,12 +539,20 @@ function startStatusPolling() {
         document.getElementById('step2Otp').style.display = 'none';
         document.getElementById('step3Waiting').style.display = 'block';
         document.getElementById('waitSpinner').style.display = 'none';
-        document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
+        document.getElementById('waitTitle').textContent = '✅ RC PDF Ready For Download!';
         document.getElementById('waitTitle').style.color = 'var(--ok)';
         document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
         
         const btnDl = document.getElementById('btnDownloadPdf');
-        btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
+        const u = user();
+        const order = (u.orders || []).find(x => x.id === req.id);
+        if (order && order.downloaded) {
+          btnDl.innerText = 'Downloaded';
+        } else {
+          btnDl.innerText = '📥 Download RC PDF Now';
+        }
+
+        btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
         document.getElementById('downloadContainer').style.display = 'block';
         
         renderHistoryTable();
@@ -544,7 +562,7 @@ function startStatusPolling() {
         document.getElementById('waitSpinner').style.display = 'block';
         document.getElementById('waitTitle').innerHTML = '✅ OTP Verified';
         document.getElementById('waitTitle').style.color = 'var(--ok)';
-        document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.';
+        document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein.';
         document.getElementById('downloadContainer').style.display = 'none';
       }
     } catch (e) {
@@ -570,7 +588,27 @@ function showWrongOtp() {
   otpInput.focus();
 }
 
-async function downloadFile(reqId, fileName, btnElem) {
+async function downloadFileWithCharge(reqId, fileName, btnElem) {
+  const u = user();
+  const order = (u.orders || []).find(x => x.id === reqId);
+  
+  // Agar pehle download ho chuka hai, to confirmation popup dikhao
+  if (order && order.downloaded) {
+    const confirmDeduct = confirm('Aap is file ko pehle hi download kar chuke hain. Dubara download karne ke liye ₹' + CHARGE + ' aapke wallet se fir se deduct honge. Kya aap confirm karte hain?');
+    if (!confirmDeduct) return;
+
+    if (u.bal < CHARGE) {
+      alert('Insufficient balance! Kripya pehle wallet top-up karein.');
+      window.location.href = '../../dashboard.html#addmoney';
+      return;
+    }
+
+    // Deduct charge from user wallet locally & sync
+    u.bal -= CHARGE;
+    saveUser(u);
+    updateWalletUI();
+  }
+
   if (btnElem) {
     btnElem.disabled = true;
     btnElem.innerText = '⏳ Downloading...';
@@ -584,7 +622,7 @@ async function downloadFile(reqId, fileName, btnElem) {
       alert('File download failed.');
       if (btnElem) {
         btnElem.disabled = false;
-        btnElem.innerText = 'Download';
+        btnElem.innerText = 'Downloaded';
       }
       return;
     }
@@ -594,20 +632,22 @@ async function downloadFile(reqId, fileName, btnElem) {
     a.download = fileName || 'RC_Document.pdf';
     a.click();
 
-    const u = user();
-    if (u.orders) {
-      const order = u.orders.find(x => x.id === reqId);
-      if (order) {
-        order.downloaded = true;
-        saveUser(u);
-        renderHistoryTable();
-      }
+    // Mark as downloaded in user order history
+    if (order) {
+      order.downloaded = true;
+      saveUser(u);
+      renderHistoryTable();
     }
-  } catch (err) {
-    alert('Downloading PDF...');
+
     if (btnElem) {
       btnElem.disabled = false;
-      btnElem.innerText = 'Download';
+      btnElem.innerText = 'Downloaded';
+    }
+  } catch (err) {
+    alert('Error downloading file.');
+    if (btnElem) {
+      btnElem.disabled = false;
+      btnElem.innerText = 'Downloaded';
     }
   }
 }
