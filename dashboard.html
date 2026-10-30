@@ -379,7 +379,6 @@ const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month
 const tokenHdr = () => ({ 'x-user-token': localStorage.getItem('ds_token') || '' });
 const api = (m, p, b) => fetch(API + p, { method: m, headers: { 'content-type': 'application/json', ...tokenHdr() }, body: b === undefined ? undefined : JSON.stringify(b) });
 
-// Fallback helper in case tools.js doesn't define getToolUrl
 if (typeof getToolUrl === 'undefined') {
   window.getToolUrl = function(name) {
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -547,25 +546,6 @@ const ICONS_PATH={
   bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18'
 };
 const getMiniSvg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS_PATH[k]||ICONS_PATH.doc}"/></svg>`;
-
-function getArtworkFor(item) {
-  try {
-    const n = item.n, sec = item.sec;
-    if (V[n]) return V[n]();
-    if (sec && V[sec]) return V[sec]();
-    if (DA[n]) return DA[n]();
-    if (TA[n]) return TA[n]();
-  } catch(e) {}
-  return PG();
-}
-
-const getThumbHtml=(item, idx)=>{
-  try {
-    return `<div class="sv" style="${sty(idx)}">${art(getArtworkFor(item))}</div>`;
-  } catch(e) {
-    return `<div class="sv" style="${sty(idx)}">${art(PG())}</div>`;
-  }
-};
 
 const CATEGORIES = {
   "Vehicle & Transport Services (Paid)": [
