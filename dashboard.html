@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dashboard – DocSmartly</title>
-<link rel="stylesheet" href="css/styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
 if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
@@ -12,122 +11,349 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 }
 </script>
 <style>
-#app { min-height: 100vh; background: var(--bg); }
-.ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
-.ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-block: 8px; min-height: 60px; max-width: 1400px; }
-.tb { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .92rem; font-weight: 700; color: var(--ac2); text-decoration: none; transition: all 0.2s ease; }
-.chip:active { transform: scale(0.95); }
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --success: #16a34a;
+    --radius: 16px;
+    --shadow: 0 8px 24px rgba(17, 24, 39, .06);
+    --ink: #0f172a;
+    --tint: #eff6ff;
+    --ac: #2563eb;
+    --ac2: #1d4ed8;
+    --ln: #e5e7eb;
+    --sf: #ffffff;
+    --ok: #16a34a;
+    --er: #dc2626;
+  }
 
-/* Universal Button & Card Click Effects */
-.btn, button, .it, .chip {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-}
-.btn:active, button:active, .it:active, .chip:active {
-  transform: scale(0.96) translateY(1px) !important;
-  filter: brightness(0.92);
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-.shell { display: grid; grid-template-columns: 290px minmax(0,1fr); max-width: 1400px; margin: 0 auto; }
-.apm { padding-inline: 24px; padding-block: 28px 64px; min-width: 0; }
-#sb { position: sticky; top: 61px; height: calc(100vh - 61px); display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--ln); z-index: 6; }
-.sbs { flex: 1; overflow-y: auto; padding: 12px; }
-.sbf { padding: 12px; border-top: 1px solid var(--ln); }
-.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; text-decoration: none; transition: all 0.2s; }
-.mi:hover { background: var(--tint); color: var(--ac); }
-.mi:active { transform: scale(0.97); }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
 
-.gc { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; background: var(--ink); color: #e3ebfb; border-radius: 18px; padding: 24px; }
-.gc h1 { color: #fff; }
-.gw { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.gw b { font: 800 1.8rem 'Plus Jakarta Sans',system-ui,sans-serif; color: #fff; }
-.stt { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
-.stt > div { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 14px 16px; }
-.stt b { font: 800 1.6rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ac2); display: block; }
-.ds { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 4px 16px; margin-bottom: 14px; }
-.ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; font-weight: 700; color: var(--ink); }
-.ds summary em { font-style: normal; font-size: 0.8rem; background: var(--tint); color: var(--ac2); padding: 2px 10px; border-radius: 99px; }
-.ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding-bottom: 14px; }
-.it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s, box-shadow .2s; }
-.it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
-.sv { position: relative; aspect-ratio: 16/10; border-radius: 99px; margin-bottom: 8px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
-.art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
-.fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
-.sa { fill: none; stroke: var(--a); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.badge-free { background: var(--ok); color: #fff; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; width: fit-content; margin-top: 8px; }
-.badge-paid { background: #fff1cc; color: #6b4200; font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; border: 1px solid #f0cf7d; width: fit-content; margin-top: 8px; }
-.tools-dash-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 32px; margin-bottom: 14px; }
-.dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
-.dash-search-bar input { height: 40px; min-height: 40px; padding: 6px 12px; font-size: 0.88rem; }
-.dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.dash-cats button { border: 1px solid var(--ln); background: #fff; border-radius: 99px; padding: 6px 14px; font: 600 .8rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; transition: all 0.2s; }
-.dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
-.sb-category { margin-top: 10px; border-top: 1px solid var(--ln); padding-top: 10px; }
-.sb-group { margin-bottom: 4px; }
-.sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-size: 0.84rem; font-weight: 700; color: var(--ink); cursor: pointer; border-radius: 8px; list-style: none; }
-.sb-group summary:hover { background: var(--tint); }
-.sb-group summary::-webkit-details-marker { display: none; }
-.sb-group summary em { font-style: normal; font-size: 0.72rem; color: var(--mut); }
-.sb-sub-list { padding-left: 6px; margin-top: 4px; display: grid; gap: 2px; }
-.sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.8rem; font-weight: 500; color: var(--mut); text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.2s; }
-.sb-item:hover { color: var(--ac); background: var(--tint); }
-.sb-ic { display: inline-flex; align-items: center; gap: 8px; }
-.sb-ic svg { width: 15px; height: 15px; color: var(--ac); flex: none; }
-.tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
-table { width: 100%; border-collapse: collapse; min-width: 520px; }
-th, td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .92rem; }
-th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); background: var(--tint); }
-.sb-status { display: inline-block; border-radius: 99px; padding: 3px 11px; font-size: .76rem; font-weight: 800; text-transform: capitalize; }
-.s-pending { background: #fff1cc; color: #6b4200; }
-.s-processing { background: #dbe7ff; color: #1b44ad; }
-.s-success { background: #e0f5ea; color: #0f6b45; }
-.s-failed { background: #fdecea; color: #7a1a12; }
-@media (max-width: 900px) { .shell { display: block; } #sb { display: none; } }
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 24px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 24px;
+    text-decoration: none;
+  }
+
+  .brand span {
+    background: var(--primary);
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .nav a, .mi {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+  }
+
+  .nav a:hover,
+  .nav a.active, .mi:hover {
+    background: rgba(37, 99, 235, .18);
+    color: #fff;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 16px;
+  }
+
+  /* Main Area */
+  main {
+    padding: 28px;
+    min-width: 0;
+  }
+
+  .topbar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .welcome h1 {
+    font-size: 22px;
+  }
+
+  .welcome p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .balance-pill {
+    background: #eff6ff;
+    color: var(--primary-dark);
+    border: 1px solid #bfdbfe;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .btn {
+    border: none;
+    cursor: pointer;
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: .2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-dark);
+  }
+
+  .btn-light {
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-light:hover {
+    background: #f8fafc;
+  }
+
+  /* Stats Cards */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stat h3 {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+  }
+
+  .blue { background: #eff6ff; }
+  .green { background: #ecfdf5; }
+  .orange { background: #fff7ed; }
+  .purple { background: #f5f3ff; }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 12px;
+  }
+
+  .stat-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Tool & Service Cards Grid Styles */
+  .ds { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; font-weight: 700; color: var(--ink); font-size: 16px; }
+  .ds summary em { font-style: normal; font-size: 0.8rem; background: var(--tint); color: var(--ac2); padding: 3px 12px; border-radius: 99px; }
+  
+  .ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-top: 14px; }
+  .it { display: flex; flex-direction: column; justify-content: space-between; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 14px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s, box-shadow .2s; }
+  .it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
+  
+  .sv { position: relative; aspect-ratio: 16/10; border-radius: 10px; margin-bottom: 10px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
+  .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
+  .fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
+  .sa { fill: none; stroke: var(--a); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  
+  .badge-free { background: var(--ok); color: #fff; font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 700; width: fit-content; margin-top: 8px; }
+  .badge-paid { background: #fff1cc; color: #6b4200; font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 700; border: 1px solid #f0cf7d; width: fit-content; margin-top: 8px; }
+
+  .tools-dash-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 32px; margin-bottom: 16px; }
+  .dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
+  .dash-search-bar input { height: 42px; width: 100%; padding: 8px 14px; font-size: 0.9rem; border: 1px solid var(--border); border-radius: 10px; outline: none; }
+  .dash-search-bar input:focus { border-color: var(--primary); }
+  
+  .dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .dash-cats button { border: 1px solid var(--border); background: #fff; border-radius: 99px; padding: 7px 16px; font: 600 .85rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; transition: all 0.2s; color: var(--muted); }
+  .dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* Sub Sidebar Category list */
+  .sb-category { margin-top: 14px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; }
+  .sb-group { margin-bottom: 4px; }
+  .sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-size: 0.82rem; font-weight: 700; color: #cbd5e1; cursor: pointer; border-radius: 8px; list-style: none; }
+  .sb-group summary:hover { background: rgba(255,255,255,.05); color: #fff; }
+  .sb-group summary::-webkit-details-marker { display: none; }
+  .sb-group summary em { font-style: normal; font-size: 0.7rem; color: #94a3b8; }
+  .sb-sub-list { padding-left: 6px; margin-top: 4px; display: grid; gap: 2px; }
+  .sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.78rem; font-weight: 500; color: #94a3b8; text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.2s; }
+  .sb-item:hover { color: #fff; background: rgba(37,99,235,.2); }
+  .sb-ic { display: inline-flex; align-items: center; gap: 8px; }
+  .sb-ic svg { width: 14px; height: 14px; color: #60a5fa; flex: none; }
+
+  /* Tables */
+  .tw { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; min-width: 520px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: #f8fafc; font-weight: 700; }
+  
+  .sb-status { display: inline-block; border-radius: 99px; padding: 4px 12px; font-size: 12px; font-weight: 700; text-transform: capitalize; }
+  .s-pending { background: #fff7ed; color: #ea580c; }
+  .s-processing { background: #dbe7ff; color: #1b44ad; }
+  .s-success { background: #ecfdf5; color: #16a34a; }
+  .s-failed { background: #fdecea; color: #7a1a12; }
+
+  /* Panels / Container Views */
+  .panel-view { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); max-width: 500px; }
+  .panel-view h1 { font-size: 20px; margin-bottom: 16px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; }
+  }
 </style>
 </head>
 <body>
-<div id="app">
-  <header class="ap">
-    <div class="w">
-      <a class="logo" href="dashboard.html"><span class="lt">DocSmartly</span></a>
-      <div class="tb">
-        <a class="chip" id="aB" href="#passbook">₹0.00</a>
-        <a class="btn" href="#addmoney" style="min-height:38px;padding:8px 14px;font-size:0.85rem">+ Add Balance</a>
-        <button class="btn o" id="btnLogOut" style="min-height:38px;padding:8px 14px;font-size:0.85rem">Logout</button>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard">
+      <span>D</span> DocSmartly
+    </a>
+
+    <nav class="nav">
+      <a href="#dashboard">🏠 Dashboard</a>
+      <a href="#history">🕘 Request History</a>
+      <a href="#passbook">📒 Passbook</a>
+      <a href="#addmoney">💳 Add Money</a>
+      <a href="#referral">🎁 Refer &amp; Earn</a>
+      <a href="#profile">👤 My Profile</a>
+      <a href="#contact">🎧 Contact Support</a>
+      <a href="index.html" style="color:#60a5fa; font-weight:700;">🌐 Homepage →</a>
+
+      <div class="sb-category">
+        <p style="font-size:0.7rem; font-weight:700; color:#94a3b8; text-transform:uppercase; margin:6px 8px 8px; letter-spacing:0.04em">Quick Tool Categories</p>
+        <div id="sbCategories"></div>
       </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="mi" id="loSb" style="color:#fca5a5;">🚪 Logout</button>
     </div>
-  </header>
+  </aside>
 
-  <div class="shell">
-    <aside id="sb">
-      <div class="sbs">
-        <a class="mi" href="#passbook">Passbook</a>
-        <a class="mi" href="#history">History</a>
-        <a class="mi" href="#referral">Refer &amp; Earn</a>
-        <a class="mi" href="#profile">Profile</a>
-        <a class="mi" href="#contact">Contact Support</a>
-        <a class="mi" href="index.html" style="color:var(--ac);font-weight:700">Homepage →</a>
-
-        <div class="sb-category">
-          <p style="font-size:0.75rem;font-weight:700;color:var(--mut);text-transform:uppercase;margin:6px 12px 10px;letter-spacing:0.04em">Categories &amp; Tools</p>
-          <div id="sbCategories"></div>
-        </div>
-      </div>
-      <div class="sbf"><button class="mi" id="loSb" style="color:var(--er)">Log Out</button></div>
-    </aside>
-
-    <main class="apm">
-      <section data-v="dashboard"></section>
-      <section data-v="passbook" hidden></section>
-      <section data-v="history" hidden></section>
-      <section data-v="addmoney" hidden></section>
-      <section data-v="referral" hidden></section>
-      <section data-v="profile" hidden></section>
-      <section data-v="contact" hidden></section>
-    </main>
-  </div>
+  <!-- Main Content Area -->
+  <main>
+    <section data-v="dashboard"></section>
+    <section data-v="passbook" hidden></section>
+    <section data-v="history" hidden></section>
+    <section data-v="addmoney" hidden></section>
+    <section data-v="referral" hidden></section>
+    <section data-v="profile" hidden></section>
+    <section data-v="contact" hidden></section>
+  </main>
 </div>
 
 <!-- Modal for Paid Service Confirmation -->
@@ -137,7 +363,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
     <div style="text-align:center; margin-bottom:16px;">
       <div style="font-size:2.2rem; margin-bottom:8px;">⚠️</div>
       <h2 id="rt" style="font-size:1.3rem; margin:0 0 6px; color:var(--ink);">Service request</h2>
-      <p id="rp" style="color:var(--mut); font-size:.88rem; margin:0; line-height:1.5;"></p>
+      <p id="rp" style="color:var(--muted); font-size:.88rem; margin:0; line-height:1.5;"></p>
     </div>
     <form id="fRq"></form>
   </div>
@@ -170,7 +396,8 @@ function saveUser(u) {
 }
 function updateBalance() {
   const u = user();
-  if (u) document.getElementById('aB').textContent = inr(u.bal);
+  const balancePill = document.getElementById('aB');
+  if (balancePill) balancePill.textContent = 'Wallet: ' + inr(u.bal);
 }
 
 const G=[["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
@@ -471,24 +698,24 @@ function setupSidebarCategories() {
   const mount = document.getElementById('sbCategories');
   if (!mount) return;
   mount.innerHTML = Object.entries(CATEGORIES).map(([catName, items], idx) => `
-    <details class="sb-group" ${idx < 2 ? 'open' : ''}>
+    <details class="sb-group" ${idx < 1 ? 'open' : ''}>
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
       <div class="sb-sub-list">
         ${items.map(it => {
           if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
             return `<a href="${getToolUrl(it.n)}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
-              <span style="font-size:0.72rem;color:#b45309;font-weight:700">${inr(it.amt)}</span>
+              <span style="font-size:0.7rem;color:#f59e0b;font-weight:700">${inr(it.amt)}</span>
             </a>`;
           } else if (it.isPaid) {
             return `<button type="button" class="sb-item" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
-              <span style="font-size:0.72rem;color:#b45309;font-weight:700">${inr(it.amt)}</span>
+              <span style="font-size:0.7rem;color:#f59e0b;font-weight:700">${inr(it.amt)}</span>
             </button>`;
           } else {
             return `<a href="${getToolUrl(it.n)}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
-              <span style="font-size:0.72rem;color:var(--ok);font-weight:700">Free</span>
+              <span style="font-size:0.7rem;color:#4ade80;font-weight:700">Free</span>
             </a>`;
           }
         }).join('')}
@@ -523,8 +750,8 @@ function renderDashboardSections() {
                 <a href="${getToolUrl(it.n)}" class="it">
                   ${getThumbHtml(it, globalIndex)}
                   <div style="flex:1">
-                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(it.sec)}</p>
+                    <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
+                    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">${esc(it.sec)}</p>
                   </div>
                   <div class="badge-paid">${inr(it.amt)}</div>
                 </a>`;
@@ -533,8 +760,8 @@ function renderDashboardSections() {
                 <div class="it" style="cursor:pointer" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
                   ${getThumbHtml(it, globalIndex)}
                   <div style="flex:1">
-                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(it.sec)}</p>
+                    <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
+                    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">${esc(it.sec)}</p>
                   </div>
                   <div class="badge-paid">${inr(it.amt)}</div>
                 </div>`;
@@ -543,8 +770,8 @@ function renderDashboardSections() {
                 <a href="${getToolUrl(it.n)}" class="it">
                   ${getThumbHtml(it, globalIndex)}
                   <div style="flex:1">
-                    <h3 style="font-size:0.92rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.78rem;color:var(--mut);margin-top:2px">${esc(catName.split(' ')[0])}</p>
+                    <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
+                    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">${esc(catName.split(' ')[0])}</p>
                   </div>
                   <div class="badge-free">FREE</div>
                 </a>`;
@@ -555,8 +782,9 @@ function renderDashboardSections() {
     `;
   });
 
-  mount.innerHTML = html || '<p style="color:var(--mut);font-size:0.9rem;padding:12px">No tools or services match your search.</p>';
+  mount.innerHTML = html || '<p style="color:var(--muted);font-size:0.9rem;padding:12px">No tools or services match your search.</p>';
 }
+
 function renderDashboard() {
   const u = user();
   const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
@@ -566,28 +794,66 @@ function renderDashboard() {
   if (!dashMount) return;
 
   dashMount.innerHTML = `
-    <div class="gc">
-      <div><p style="color:#a9c4ff;font-weight:700">Welcome back,</p><h1>${esc(u.name)}</h1></div>
-      <div class="gw"><div><small style="opacity:.8">Wallet Balance</small><br><b>${inr(u.bal)}</b></div><a class="btn" href="#addmoney">+ Add Money</a></div>
-    </div>
-    <div class="stt">
-      <div><b>${o.length}</b><span>Total Requests</span></div>
-      <div><b>${cnt('pending')}</b><span>Pending</span></div>
-      <div><b>${cnt('processing')}</b><span>Processing</span></div>
-      <div><b>${cnt('success')}</b><span>Success</span></div>
-      <div><b>${cnt('failed')}</b><span>Failed</span></div>
-    </div>
+    <section class="topbar">
+      <div class="welcome">
+        <h1>Welcome back 👋, ${esc(u.name)}</h1>
+        <p>Manage your documents, requests and wallet from one place.</p>
+      </div>
+
+      <div class="top-actions">
+        <a class="balance-pill" href="#passbook">Wallet: ${inr(u.bal)}</a>
+        <a class="btn btn-primary" href="#addmoney">+ Add Balance</a>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Wallet Balance</h3>
+          <div class="icon blue">💰</div>
+        </div>
+        <div class="stat-value">${inr(u.bal)}</div>
+        <div class="stat-note">Available for services</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Total Requests</h3>
+          <div class="icon purple">📄</div>
+        </div>
+        <div class="stat-value">${o.length}</div>
+        <div class="stat-note">All service requests</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Pending</h3>
+          <div class="icon orange">⏳</div>
+        </div>
+        <div class="stat-value">${cnt('pending')}</div>
+        <div class="stat-note">Awaiting action</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-head">
+          <h3>Successful</h3>
+          <div class="icon green">✅</div>
+        </div>
+        <div class="stat-value">${cnt('success')}</div>
+        <div class="stat-note">Completed requests</div>
+      </div>
+    </section>
 
     <div class="tools-dash-head">
       <div>
-        <h2 style="font-size:1.4rem;margin:0">Tools &amp; Services Portal (100+ Total)</h2>
-        <p style="color:var(--mut);font-size:0.85rem;margin-top:2px">All Free browser tools and Paid print services categorized with live preview icons</p>
+        <h2 style="font-size:1.3rem;margin:0">Tools &amp; Services Portal</h2>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:2px">All free browser tools and paid print services categorized</p>
       </div>
       <div class="dash-search-bar">
         <input id="dashToolQ" type="search" placeholder="Search by name (e.g. RC, PDF, PAN)..." aria-label="Search tools">
-        <button class="btn" type="button" id="dashSearchBtn" style="min-height:40px;padding:6px 14px;font-size:0.85rem">Search</button>
       </div>
     </div>
+    
     <div class="dash-cats" id="dashCats">
       ${cats.map(c => `<button type="button" class="${c === curFilter ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
     </div>
@@ -599,8 +865,6 @@ function renderDashboard() {
 
   const qInp = document.getElementById('dashToolQ');
   if (qInp) qInp.oninput = renderDashboardSections;
-  const sBtn = document.getElementById('dashSearchBtn');
-  if (sBtn) sBtn.onclick = renderDashboardSections;
 
   const catsEl = document.getElementById('dashCats');
   if (catsEl) {
@@ -617,15 +881,15 @@ function renderDashboard() {
 function renderHistory() {
   const u = user(), o = (u.orders || []).slice().sort((a,b) => b.t - a.t);
   document.querySelector('[data-v="history"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Request History</h1>
+    <h1 style="margin-bottom:16px; font-size:22px;">Request History</h1>
     <div class="tw"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead>
     <tbody>${o.map(x => `
       <tr>
         <td>${dt(x.t)}</td>
-        <td><b>${esc(x.n)}</b>${x.remark ? `<br><small style="color:var(--mut)">Remark: ${esc(x.remark)}</small>` : ''}</td>
+        <td><b>${esc(x.n)}</b>${x.remark ? `<br><small style="color:var(--muted)">Remark: ${esc(x.remark)}</small>` : ''}</td>
         <td><span class="sb-status s-${esc(x.s)}">${esc(x.s)}</span></td>
         <td>${inr(x.amt)}</td>
-        <td>${x.file ? `<button class="btn o" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:4px 10px;min-height:32px;font-size:.8rem">Download</button>` : '<span style="color:var(--mut)">In progress</span>'}</td>
+        <td>${x.file ? `<button class="btn btn-light" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:4px 10px;min-height:32px;font-size:.8rem">Download</button>` : '<span style="color:var(--muted)">In progress</span>'}</td>
       </tr>
     `).join('') || '<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}</tbody></table></div>
   `;
@@ -634,7 +898,7 @@ function renderHistory() {
 function renderPassbook() {
   const u = user(), tx = (u.tx || []).slice().sort((a,b) => b.t - a.t);
   document.querySelector('[data-v="passbook"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Passbook</h1>
+    <h1 style="margin-bottom:16px; font-size:22px;">Passbook Transactions</h1>
     <div class="tw"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead>
     <tbody>${tx.map(t => `
       <tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td><b>${t.type}</b></td><td><b>${t.type==='credit'?'+':'-'}${inr(t.amt)}</b></td></tr>
@@ -645,13 +909,13 @@ function renderPassbook() {
 function renderAddMoney() {
   const u = user();
   document.querySelector('[data-v="addmoney"]').innerHTML = `
-    <h1>Add Money</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px;margin-top:14px">
-      <p style="margin-bottom:10px">Current Balance: <b>${inr(u.bal)}</b></p>
+    <div class="panel-view">
+      <h1>Add Money to Wallet</h1>
+      <p style="margin-bottom:14px; color:var(--muted)">Current Balance: <b>${inr(u.bal)}</b></p>
       <form id="fAdd">
-        <label style="display:block;font-weight:700;margin-bottom:6px">Amount (Min ₹200)</label>
-        <input id="amt" type="number" min="200" value="500" required style="margin-bottom:14px">
-        <button class="btn" type="submit" style="width:100%">Pay via UPI</button>
+        <label style="display:block;font-weight:700;margin-bottom:6px;font-size:14px">Amount (Min ₹200)</label>
+        <input id="amt" type="number" min="200" value="500" required style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:16px; outline:none;">
+        <button class="btn btn-primary" type="submit" style="width:100%">Pay via UPI</button>
       </form>
     </div>
   `;
@@ -661,11 +925,11 @@ function renderReferral() {
   const u = user();
   const link = location.origin + '/register.html?ref=' + (u.code || '');
   document.querySelector('[data-v="referral"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Refer &amp; Earn</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
-      <p style="margin-bottom:10px">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
-      <input readonly value="${esc(link)}" style="margin-bottom:14px">
-      <button class="btn" onclick="navigator.clipboard.writeText('${esc(link)}');alert('Link copied!')">Copy Link</button>
+    <div class="panel-view">
+      <h1>Refer &amp; Earn</h1>
+      <p style="margin-bottom:14px; color:var(--muted)">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
+      <input readonly value="${esc(link)}" style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:14px; background:#f8fafc;" />
+      <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${esc(link)}');alert('Link copied!')" style="width:100%">Copy Link</button>
     </div>
   `;
 }
@@ -673,22 +937,24 @@ function renderReferral() {
 function renderProfile() {
   const u = user();
   document.querySelector('[data-v="profile"]').innerHTML = `
-    <h1 style="margin-bottom:14px">My Profile</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
-      <p><b>Name:</b> ${esc(u.name)}</p>
-      <p><b>Mobile:</b> ${esc(u.mob)}</p>
-      <p><b>Email:</b> ${esc(u.mail)}</p>
-      <p><b>Referral Code:</b> ${esc(u.code || '-')}</p>
+    <div class="panel-view">
+      <h1>My Profile</h1>
+      <div style="display:grid; gap:10px; font-size:15px;">
+        <p><b>Name:</b> ${esc(u.name)}</p>
+        <p><b>Mobile:</b> ${esc(u.mob)}</p>
+        <p><b>Email:</b> ${esc(u.mail)}</p>
+        <p><b>Referral Code:</b> ${esc(u.code || '-')}</p>
+      </div>
     </div>
   `;
 }
 
 function renderContact() {
   document.querySelector('[data-v="contact"]').innerHTML = `
-    <h1 style="margin-bottom:14px">Contact Support</h1>
-    <div style="background:#fff;border:1px solid var(--ln);border-radius:16px;padding:20px;max-width:440px">
-      <p style="margin-bottom:16px">Need help with an order, wallet balance, or custom requirement?</p>
-      <a class="btn" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank">Chat on WhatsApp</a>
+    <div class="panel-view">
+      <h1>Contact Support</h1>
+      <p style="margin-bottom:16px; color:var(--muted)">Need help with an order, wallet balance, or custom requirement?</p>
+      <a class="btn btn-primary" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" style="width:100%">Chat on WhatsApp</a>
     </div>
   `;
 }
@@ -701,6 +967,11 @@ function route() {
     document.querySelectorAll('[data-v]').forEach(el => el.hidden = el.dataset.v !== h);
     if (VIEWS[h]) VIEWS[h]();
     updateBalance();
+
+    // Update active sidebar nav link style
+    document.querySelectorAll('.nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + h);
+    });
   } catch (err) {
     console.error("Route execution error:", err);
   }
@@ -717,20 +988,20 @@ document.addEventListener('click', e => {
   const serviceName = curKey.split('|')[1] || curKey;
   
   document.getElementById('rt').textContent = serviceName;
-  document.getElementById('rp').innerHTML = `Is service ke liye aapke wallet balance se <b style="color:var(--ac); font-size:1.05rem;">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--mut);">Current Balance: ${inr(u.bal)}</small>`;
+  document.getElementById('rp').innerHTML = `Is service ke liye aapke wallet balance se <b style="color:var(--ac); font-size:1.05rem;">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--muted);">Current Balance: ${inr(u.bal)}</small>`;
   
   document.getElementById('fRq').innerHTML = `
     <div style="margin-bottom:12px">
       <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
-      <input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%; height:42px; padding:8px 12px; border:1.5px solid var(--ln); border-radius:8px; box-sizing:border-box;">
+      <input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; box-sizing:border-box;">
     </div>
     <div style="margin-bottom:16px">
       <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label>
-      <input id="rqRem" type="text" placeholder="Special instruction" style="width:100%; height:42px; padding:8px 12px; border:1.5px solid var(--ln); border-radius:8px; box-sizing:border-box;">
+      <input id="rqRem" type="text" placeholder="Special instruction" style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; box-sizing:border-box;">
     </div>
     <div style="display:flex; gap:10px;">
-      <button type="button" id="btnCancelModal" style="flex:1; height:42px; border:1.5px solid var(--ln); background:#fff; font-weight:700; border-radius:8px; cursor:pointer;">Cancel</button>
-      <button class="btn" type="submit" style="flex:1; height:42px;">Confirm &amp; Proceed</button>
+      <button type="button" id="btnCancelModal" style="flex:1; height:42px; border:1px solid var(--border); background:#fff; font-weight:700; border-radius:8px; cursor:pointer;">Cancel</button>
+      <button class="btn btn-primary" type="submit" style="flex:1; height:42px;">Confirm &amp; Proceed</button>
     </div>
   `;
   document.getElementById('rm').style.display = 'flex';
