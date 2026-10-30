@@ -379,6 +379,14 @@ const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month
 const tokenHdr = () => ({ 'x-user-token': localStorage.getItem('ds_token') || '' });
 const api = (m, p, b) => fetch(API + p, { method: m, headers: { 'content-type': 'application/json', ...tokenHdr() }, body: b === undefined ? undefined : JSON.stringify(b) });
 
+// Fallback helper in case tools.js doesn't define getToolUrl
+if (typeof getToolUrl === 'undefined') {
+  window.getToolUrl = function(name) {
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return 'freetools/' + slug + '.html';
+  };
+}
+
 function user() {
   try {
     const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
@@ -451,70 +459,70 @@ const TA={
   "Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8),
   "Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+X(80,84,'Age: 28 years',7),
   "Photo & Signature Resizer":()=>R(30,18,76,56,'fb',4)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+X(118,88,'35×45 mm',7),
-  "JPG / PNG to PDF":()=>R(14,26,48,40,'fb',4)+AR(68,44)+PDF(92,14,52,72),
-  "PDF Merge":()=>PDF(14,22,36,50)+PDF(30,34,36,50)+AR(74,48)+PDF(98,14,46,72),
-  "PDF Split & Page Extract":()=>PDF(14,14,46,72)+AR(66,48)+PDF(92,8,38,40)+PDF(92,54,38,40),
-  "PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+R(90,28,52,44,'fb',4)+X(116,86,'JPG',7,'fa'),
-  "PDF Rotate & Reorder":()=>PDF(30,14,46,72)+Pa('M146 58a20 20 0 1 1-6-14','sa'),
-  "PDF Compressor (KB)":()=>PDF(18,14,52,72)+R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8)+R(90,62,56,18,'fa',9)+X(118,75,'200 KB',8,'fw'),
+  "JPG / PNG to PDF":()=>R(14,26,48,40,'fb',4)+AR(68,44),
+  "PDF Merge":()=>AR(74,48),
+  "PDF Split & Page Extract":()=>AR(66,48),
+  "PDF to JPG":()=>R(90,28,52,44,'fb',4)+X(116,86,'JPG',7,'fa'),
+  "PDF Rotate & Reorder":()=>Pa('M146 58a20 20 0 1 1-6-14','sa'),
+  "PDF Compressor (KB)":()=>R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8),
   "Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5),
-  "PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.5,'1',8,'fw'),
-  "PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw')+L(52,30,56,6,8)+R(44,80,72,12,'fb',4)+X(80,89,'FOOTER',6.5,'fw'),
-  "Photo Compressor (KB)":()=>R(18,16,70,56,'fb',4)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
-  "Image Format Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'JPG',8)+AR(68,44)+R(90,26,48,40,'fb',4)+X(114,80,'PNG',8),
+  "PDF Page Number Adder":()=>C(80,80,7,'fa')+X(80,83.5,'1',8,'fw'),
+  "PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw'),
+  "Photo Compressor (KB)":()=>R(18,16,70,56,'fb',4)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7),
+  "Image Format Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'JPG',8)+AR(68,44),
   "Background Remover":()=>R(36,10,88,80,'fl',6)+H(58,22,44,66,'fa'),
-  "WebP to JPG Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'WEBP',8)+AR(68,44)+R(90,26,48,40,'fb',4)+X(114,80,'JPG',8),
-  "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+R(90,28,52,44,'fb',4),
+  "WebP to JPG Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'WEBP',8)+AR(68,44),
+  "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46),
   "ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
-  "Thumbnail Resizer":()=>R(16,14,84,66,'fb',4)+R(112,34,32,26,'fa',4)+X(128,74,'150×150',6),
-  "Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,40,100,3,'fl',1.5)+R(30,68,24,24,'fa',6)+X(120,86,'16·32',6),
+  "Thumbnail Resizer":()=>R(16,14,84,66,'fb',4)+R(112,34,32,26,'fa',4),
+  "Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,40,100,3,'fl',1.5),
   "Image Watermark Maker":()=>R(24,16,112,68,'fb',4)+X(80,56,'DOCSMARTLY',13,'fo'),
   "Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa'),
-  "Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa')+C(124,30,10,'fy')+C(100,58,10,'fr'),
-  "Photo Blur Tool":()=>R(14,22,56,48,'fb',4)+AR(74,42)+R(92,22,56,48,'fb',4)+C(118,46,20,'fo'),
-  "Image to Black & White":()=>R(14,22,56,48,'fb',4)+AR(74,42)+R(92,22,56,48,'fk',4),
-  "Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44)+H(90,14,56,72,'fk'),
+  "Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa'),
+  "Photo Blur Tool":()=>R(14,22,56,48,'fb',4)+AR(74,42),
+  "Image to Black & White":()=>R(14,22,56,48,'fb',4)+AR(74,42),
+  "Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44),
   "Photo Border Maker":()=>R(28,10,104,80,'fa',6)+R(40,22,80,56,'fb',4),
   "Color Picker from Image":()=>R(16,16,90,68,'fb',4)+Pa('M108 56l22-22 8 8-22 22z','fa'),
-  "ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw')+H(34,38,28,38),
+  "ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw'),
   "QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
   "Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
   "Student ID Card Maker":()=>IDV(52,4,56,92,'STUDENT','fb'),
   "A4 Photo Print Layout":()=>PG(36,4,88,92)+[0,1,2,3].map(r=>[0,1,2].map(c=>H(44+c*26,12+r*21,20,16)).join('')).join(''),
-  "Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7)+AR(82,46)+PDF(104,18,42,64),
-  "Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2)+L(44,60,72,4,7),
-  "Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+L(44,44,72,4,8)+R(76,76,40,12,'fa',3)+X(96,85,'₹ 4,500',6.5,'fw'),
-  "Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+L(44,44,72,4,8)+R(76,76,40,12,'fb',3)+X(96,85,'₹ 12,000',6.5,'fw'),
+  "Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7),
+  "Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2),
+  "Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+L(44,44,72,4,8),
+  "Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+L(44,44,72,4,8),
   "Hindi Typing Tool":()=>X(80,34,'अ आ इ ई',15,'fa')+R(16,44,128,44,'fw',6),
   "GST Calculator":()=>CALC('18%'),
   "GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
-  "Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+C(118,50,24,'fy')+X(118,59,'₹',24),
-  "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw')+R(48,44,80,40,'fb',4)+X(88,70,'₹100',12,'fw'),
-  "Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7)+R(44,66,72,16,'fa',4)+X(80,77,'₹ 25,000',8,'fw'),
-  "Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa')+Pa('M54 80L106 20','sa')+X(120,32,'%',22,'fa'),
-  "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw'),
+  "Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+C(118,50,24,'fy'),
+  "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw'),
+  "Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7),
+  "Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa'),
+  "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11),
   "Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8),
   "Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
   "Name, Date & Text on Photo":()=>R(20,14,120,72,'fb',4)+X(80,46,'Your Name',10,'fw'),
   "Instagram Reel Cover Maker":()=>R(48,4,64,92,'fk',6)+R(54,12,52,48,'fb',4),
-  "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
+  "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)
 };
 
 const DA={
-  "New Digital Signature (DSC)":()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa')+R(98,36,34,24,'fb',5)+X(115,52,'DSC',8,'fw'),
-  "E-procurement registration":()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa')+R(50,68,60,12,'fa',4)+X(80,77,'Register',6.5,'fw'),
-  "Tender upload (for contractor)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7),
-  "Tender upload (for department)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7),
-  "Building estimate creator":()=>R(12,12,136,76,'fb',6)+PG(100,18,40,64)+X(120,34,'₹',13,'fa'),
-  "BOQ creator":()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2),
-  "Govt civil & electric bill maker (Excel)":()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw'),
-  "Bill form":()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw'),
-  "Extra item sheet":()=>PG(28,8,92,84)+X(74,22,'EXTRA ITEMS',6.5,'fa')+C(122,76,13,'fg'),
-  "Excess item sheet":()=>PG(28,8,92,84)+X(74,22,'EXCESS ITEMS',6.5,'fa')+C(122,76,13,'fr'),
-  "QC register creator":()=>R(30,10,100,82,'fb',6)+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
+  "New Digital Signature (DSC)":()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa'),
+  "E-procurement registration":()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa'),
+  "Tender upload (for contractor)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa'),
+  "Tender upload (for department)":()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa'),
+  "Building estimate creator":()=>R(12,12,136,76,'fb',6)+PG(100,18,40,64),
+  "BOQ creator":()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa'),
+  "Govt civil & electric bill maker (Excel)":()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4),
+  "Bill form":()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4),
+  "Extra item sheet":()=>PG(28,8,92,84)+X(74,22,'EXTRA ITEMS',6.5,'fa'),
+  "Excess item sheet":()=>PG(28,8,92,84)+X(74,22,'EXCESS ITEMS',6.5,'fa'),
+  "QC register creator":()=>R(30,10,100,82,'fb',6)+C(122,80,12,'fg'),
   "Work escalation statement":()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa'),
-  "OMR Sheet Generator & Checker":()=>PG(32,6,96,88)+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
-  "Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')
+  "OMR Sheet Generator & Checker":()=>PG(32,6,96,88)+R(44,82,72,8,'fa',3),
+  "Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)
 };
 
 const ICONS_PATH={
@@ -787,95 +795,99 @@ function renderDashboardSections() {
 }
 
 function renderDashboard() {
-  const u = user();
-  const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
-  const cats = ["All", "Free Only", "Paid Only", "Vehicle", "Identity", "Tax", "Citizen", "Govt", "PDF", "Photo", "Print", "Documents", "Calculators"];
+  try {
+    const u = user();
+    const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
+    const cats = ["All", "Free Only", "Paid Only", "Vehicle", "Identity", "Tax", "Citizen", "Govt", "PDF", "Photo", "Print", "Documents", "Calculators"];
 
-  const dashMount = document.querySelector('[data-v="dashboard"]');
-  if (!dashMount) return;
+    const dashMount = document.querySelector('[data-v="dashboard"]');
+    if (!dashMount) return;
 
-  dashMount.innerHTML = `
-    <section class="topbar">
-      <div class="welcome">
-        <h1>Welcome back 👋, ${esc(u.name)}</h1>
-        <p>Manage your documents, requests and wallet from one place.</p>
-      </div>
-
-      <div class="top-actions">
-        <a class="balance-pill" href="#passbook">Wallet: ${inr(u.bal)}</a>
-        <a class="btn btn-primary" href="#addmoney">+ Add Balance</a>
-      </div>
-    </section>
-
-    <section class="stats">
-      <div class="stat">
-        <div class="stat-head">
-          <h3>Wallet Balance</h3>
-          <div class="icon blue">💰</div>
+    dashMount.innerHTML = `
+      <section class="topbar">
+        <div class="welcome">
+          <h1>Welcome back 👋, ${esc(u.name)}</h1>
+          <p>Manage your documents, requests and wallet from one place.</p>
         </div>
-        <div class="stat-value">${inr(u.bal)}</div>
-        <div class="stat-note">Available for services</div>
-      </div>
 
-      <div class="stat">
-        <div class="stat-head">
-          <h3>Total Requests</h3>
-          <div class="icon purple">📄</div>
+        <div class="top-actions">
+          <a class="balance-pill" href="#passbook">Wallet: ${inr(u.bal)}</a>
+          <a class="btn btn-primary" href="#addmoney">+ Add Balance</a>
         </div>
-        <div class="stat-value">${o.length}</div>
-        <div class="stat-note">All service requests</div>
-      </div>
+      </section>
 
-      <div class="stat">
-        <div class="stat-head">
-          <h3>Pending</h3>
-          <div class="icon orange">⏳</div>
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-head">
+            <h3>Wallet Balance</h3>
+            <div class="icon blue">💰</div>
+          </div>
+          <div class="stat-value">${inr(u.bal)}</div>
+          <div class="stat-note">Available for services</div>
         </div>
-        <div class="stat-value">${cnt('pending')}</div>
-        <div class="stat-note">Awaiting action</div>
-      </div>
 
-      <div class="stat">
-        <div class="stat-head">
-          <h3>Successful</h3>
-          <div class="icon green">✅</div>
+        <div class="stat">
+          <div class="stat-head">
+            <h3>Total Requests</h3>
+            <div class="icon purple">📄</div>
+          </div>
+          <div class="stat-value">${o.length}</div>
+          <div class="stat-note">All service requests</div>
         </div>
-        <div class="stat-value">${cnt('success')}</div>
-        <div class="stat-note">Completed requests</div>
+
+        <div class="stat">
+          <div class="stat-head">
+            <h3>Pending</h3>
+            <div class="icon orange">⏳</div>
+          </div>
+          <div class="stat-value">${cnt('pending')}</div>
+          <div class="stat-note">Awaiting action</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-head">
+            <h3>Successful</h3>
+            <div class="icon green">✅</div>
+          </div>
+          <div class="stat-value">${cnt('success')}</div>
+          <div class="stat-note">Completed requests</div>
+        </div>
+      </section>
+
+      <div class="tools-dash-head">
+        <div>
+          <h2 style="font-size:1.3rem;margin:0">Tools &amp; Services Portal</h2>
+          <p style="color:var(--muted);font-size:0.85rem;margin-top:2px">All free browser tools and paid print services categorized</p>
+        </div>
+        <div class="dash-search-bar">
+          <input id="dashToolQ" type="search" placeholder="Search by name (e.g. RC, PDF, PAN)..." aria-label="Search tools">
+        </div>
       </div>
-    </section>
-
-    <div class="tools-dash-head">
-      <div>
-        <h2 style="font-size:1.3rem;margin:0">Tools &amp; Services Portal</h2>
-        <p style="color:var(--muted);font-size:0.85rem;margin-top:2px">All free browser tools and paid print services categorized</p>
+      
+      <div class="dash-cats" id="dashCats">
+        ${cats.map(c => `<button type="button" class="${c === curFilter ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
       </div>
-      <div class="dash-search-bar">
-        <input id="dashToolQ" type="search" placeholder="Search by name (e.g. RC, PDF, PAN)..." aria-label="Search tools">
-      </div>
-    </div>
-    
-    <div class="dash-cats" id="dashCats">
-      ${cats.map(c => `<button type="button" class="${c === curFilter ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
-    </div>
 
-    <div id="bifurcatedSections"></div>
-  `;
+      <div id="bifurcatedSections"></div>
+    `;
 
-  renderDashboardSections();
+    renderDashboardSections();
 
-  const qInp = document.getElementById('dashToolQ');
-  if (qInp) qInp.oninput = renderDashboardSections;
+    const qInp = document.getElementById('dashToolQ');
+    if (qInp) qInp.oninput = renderDashboardSections;
 
-  const catsEl = document.getElementById('dashCats');
-  if (catsEl) {
-    catsEl.onclick = e => {
-      const btn = e.target.closest('[data-cat]');
-      if (!btn) return;
-      curFilter = btn.dataset.cat;
-      document.querySelectorAll('#dashCats button').forEach(b => b.classList.toggle('on', b.dataset.cat === curFilter));
-      renderDashboardSections();
-    };
+    const catsEl = document.getElementById('dashCats');
+    if (catsEl) {
+      catsEl.onclick = e => {
+        const btn = e.target.closest('[data-cat]');
+        if (!btn) return;
+        curFilter = btn.dataset.cat;
+        document.querySelectorAll('#dashCats button').forEach(b => b.classList.toggle('on', b.dataset.cat === curFilter));
+        renderDashboardSections();
+      };
+    }
+  } catch (err) {
+    console.error("renderDashboard error:", err);
   }
 }
 
