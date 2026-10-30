@@ -226,7 +226,24 @@ const CHARGE = 40;
 let currentRequestId = localStorage.getItem('ds_current_rc_req') || null;
 let pollTimer = null;
 
-function user() {
+// Fetch latest user state from server/API or local storage fallback
+async function fetchLatestUserData() {
+  try {
+    const res = await fetch(API + '/api/user/profile', {
+      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.user) {
+        saveUser(data.user);
+        return data.user;
+      }
+    }
+  } catch (e) {}
+  return userLocal();
+}
+
+function userLocal() {
   try {
     const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
     const sess = localStorage.getItem('ds_session');
@@ -243,13 +260,13 @@ function saveUser(u) {
   localStorage.setItem('ds_users', JSON.stringify(list));
 }
 
-function updateWalletUI() {
-  const u = user();
+async function updateWalletUI() {
+  const u = await fetchLatestUserData();
   document.getElementById('walletBal').textContent = '₹' + Number(u.bal || 0).toLocaleString('en-IN');
 }
 
-function renderHistoryTable() {
-  const u = user();
+async function renderHistoryTable() {
+  const u = await fetchLatestUserData();
   const rcOrders = (u.orders || []).filter(o => o.n === 'RC PDF INSTANT').sort((a,b) => b.t - a.t);
   const tbody = document.getElementById('historyTbody');
   
@@ -263,7 +280,6 @@ function renderHistoryTable() {
 
     let actionBtn = '';
     if (o.file) {
-      // Global flag check: agar localStorage me is order ki download count hai, to "Downloaded" show karo
       const isDownloaded = o.downloaded || localStorage.getItem('ds_downloaded_' + o.id) === 'true';
       if (isDownloaded) {
         actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFileWithCharge('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Downloaded</button>`;
@@ -317,7 +333,7 @@ async function checkAndRestoreStep() {
       document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
       
       const btnDl = document.getElementById('btnDownloadPdf');
-      const u = user();
+      const u = await fetchLatestUserData();
       const order = (u.orders || []).find(x => x.id === req.id);
       const isDownloaded = (order && order.downloaded) || localStorage.getItem('ds_downloaded_' + req.id) === 'true';
       
@@ -364,7 +380,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   const submitBtn = document.getElementById('btnSubStep1');
   const originalText = submitBtn.innerHTML;
 
-  const u = user();
+  // Real-time balance fetch from server before submitting
+  const u = await fetchLatestUserData();
   
   if (u.bal < CHARGE) {
     alert('Insufficient balance! Kripya pehle wallet top-up karein.');
@@ -418,7 +435,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id);
 
     if (!currentRequestId) {
-      const latestUser = user();
+      const latestUser = await fetchLatestUserData();
       const latestOrder = (latestUser.orders || []).sort((a,b) => b.t - a.t)[0];
       if (latestOrder) {
         currentRequestId = latestOrder.id;
@@ -427,8 +444,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
 
     localStorage.setItem('ds_current_rc_req', currentRequestId);
 
-    updateWalletUI();
-    renderHistoryTable();
+    await updateWalletUI();
+    await renderHistoryTable();
 
     document.getElementById('step1Form').style.display = 'none';
     document.getElementById('step2Otp').style.display = 'block';
@@ -544,7 +561,7 @@ function startStatusPolling() {
         document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
         
         const btnDl = document.getElementById('btnDownloadPdf');
-        const u = user();
+        const u = await fetchLatestUserData();
         const order = (u.orders || []).find(x => x.id === req.id);
         const isDownloaded = (order && order.downloaded) || localStorage.getItem('ds_downloaded_' + req.id) === 'true';
         
@@ -557,7 +574,7 @@ function startStatusPolling() {
         btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
         document.getElementById('downloadContainer').style.display = 'block';
         
-        renderHistoryTable();
+        await renderHistoryTable();
         return;
       }
       else if (otpStatus === 'verified' || req.s === 'success') {
@@ -591,11 +608,11 @@ function showWrongOtp() {
 }
 
 async function downloadFileWithCharge(reqId, fileName, btnElem) {
-  const u = user();
+  // Always fetch latest balance from server before re-download deduction
+  const u = await fetchLatestUserData();
   const order = (u.orders || []).find(x => x.id === reqId);
   const alreadyDownloaded = (order && order.downloaded) || localStorage.getItem('ds_downloaded_' + reqId) === 'true';
   
-  // Agar pehle download ho chuka hai, to confirmation popup dikhao aur charge deduct karo
   if (alreadyDownloaded) {
     const confirmDeduct = confirm('Aap is file ko pehle hi download kar chuke hain. Dubara download karne ke liye ₹' + CHARGE + ' aapke wallet se fir se deduct honge. Kya aap confirm karte hain?');
     if (!confirmDeduct) return;
@@ -608,7 +625,7 @@ async function downloadFileWithCharge(reqId, fileName, btnElem) {
 
     u.bal -= CHARGE;
     saveUser(u);
-    updateWalletUI();
+    await updateWalletUI();
   }
 
   if (btnElem) {
@@ -634,13 +651,13 @@ async function downloadFileWithCharge(reqId, fileName, btnElem) {
     a.download = fileName || 'RC_Document.pdf';
     a.click();
 
-    // Mark as downloaded both in order object and global localStorage flag
     if (order) {
       order.downloaded = true;
       saveUser(u);
     }
     localStorage.setItem('ds_downloaded_' + reqId, 'true');
-    renderHistoryTable();
+    await updateWalletUI();
+    await renderHistoryTable();
 
     if (btnElem) {
       btnElem.disabled = false;
@@ -655,6 +672,7 @@ async function downloadFileWithCharge(reqId, fileName, btnElem) {
   }
 }
 
+// Initial load
 updateWalletUI();
 renderHistoryTable();
 
