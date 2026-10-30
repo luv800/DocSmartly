@@ -29,7 +29,10 @@ body { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-
 .ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
 .ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
 .tb { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-.chip { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-weight: 700; color: var(--ac2); text-decoration: none; font-size: 0.9rem; }
+.chip { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-weight: 700; color: var(--ac2); text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease; }
+.chip:hover { background: #e2ebff; border-color: var(--ac); }
+.chip:active { transform: scale(0.95); }
+
 .container { max-width: 860px; margin: 30px auto; padding: 0 20px; }
 .card { background: var(--sf); border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 24px; position: relative; overflow: hidden; }
 .badge-charge { display: inline-flex; align-items: center; gap: 6px; background: #e6f4ea; color: #137333; font-weight: 700; font-size: 0.85rem; padding: 6px 14px; border-radius: 99px; border: 1px solid #ceead6; margin-bottom: 16px; }
@@ -40,8 +43,43 @@ body { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-
 .form-group input:focus, .form-group textarea:focus { border-color: var(--ac); }
 .chk-wrap { display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; color: #475569; margin: 20px 0; background: #fff8e6; padding: 12px 14px; border-radius: 10px; border: 1px solid #fef3c7; }
 .chk-wrap input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
-.btn-primary { background: var(--ac); color: #fff; border: none; font-weight: 700; font-size: 0.95rem; height: 46px; border-radius: 10px; cursor: pointer; width: 100%; transition: background .2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-.btn-primary:hover { background: var(--ac2); }
+
+/* Enhanced Button Styling with Click & Active Effects */
+.btn-primary { 
+  background: var(--ac); 
+  color: #fff; 
+  border: none; 
+  font-weight: 700; 
+  font-size: 0.95rem; 
+  height: 46px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  width: 100%; 
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+  text-decoration: none; 
+  box-shadow: 0 4px 12px rgba(36, 87, 214, 0.25);
+  user-select: none;
+}
+.btn-primary:hover { 
+  background: var(--ac2); 
+  box-shadow: 0 6px 16px rgba(22, 51, 122, 0.35);
+  transform: translateY(-1px);
+}
+.btn-primary:active { 
+  transform: scale(0.97) translateY(1px) !important; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+  filter: brightness(0.9);
+}
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
 .status-box { text-align: center; padding: 30px 10px; }
 .spinner { width: 44px; height: 44px; border: 4px solid var(--ln); border-top-color: var(--ac); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -178,7 +216,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
       </table>
     </div>
   </div>
-
+  
 </div>
 
 <script src="../../tools.js"></script>
@@ -220,16 +258,29 @@ function renderHistoryTable() {
     return;
   }
 
-  tbody.innerHTML = rcOrders.map(o => `
-    <tr style="cursor:pointer;" title="Click to resume this order" onclick="resumeOrder('${o.id}')">
-      <td>${new Date(o.t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
-      <td><b>${o.doc || o.id}</b></td>
-      <td><span class="sb-status s-${o.s}">${o.s}</span></td>
-      <td>
-        ${o.file ? `<button class="btn-primary" onclick="event.stopPropagation(); downloadFile('${o.id}', '${o.file.name}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok)">Download</button>` : `<button class="btn-primary" onclick="event.stopPropagation(); resumeOrder('${o.id}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ac)">Resume / View</button>`}
-      </td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = rcOrders.map(o => {
+    const vehicleNo = o.doc || o.vNo || (o.data && o.data['Vehicle Number']) || o.vehicleNo || o.id;
+
+    let actionBtn = '';
+    if (o.file) {
+      if (o.downloaded) {
+        actionBtn = `<span style="color: var(--ok); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">✓ Downloaded</span>`;
+      } else {
+        actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFile('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Download</button>`;
+      }
+    } else {
+      actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); resumeOrder('${o.id}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ac)">Resume / View</button>`;
+    }
+
+    return `
+      <tr style="cursor:pointer;" title="Click to view this order" onclick="resumeOrder('${o.id}')">
+        <td>${new Date(o.t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
+        <td><b>${vehicleNo}</b></td>
+        <td><span class="sb-status s-${o.s}">${o.s}</span></td>
+        <td>${actionBtn}</td>
+      </tr>
+    `;
+  }).join('');
 }
 
 async function resumeOrder(reqId) {
@@ -267,7 +318,7 @@ async function checkAndRestoreStep() {
       
       statusBox.style.display = 'none';
       const btnDl = document.getElementById('btnDownloadPdf');
-      btnDl.onclick = () => downloadFile(req.id, req.file.name);
+      btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
       document.getElementById('downloadContainer').style.display = 'block';
     }
     else if (req.s === 'success' && !req.file) {
@@ -313,6 +364,9 @@ async function checkAndRestoreStep() {
 
 document.getElementById('fRcForm').onsubmit = async function(e) {
   e.preventDefault();
+  const submitBtn = document.getElementById('btnSubStep1');
+  const originalText = submitBtn.innerHTML;
+
   const u = user();
   
   if (u.bal < CHARGE) {
@@ -320,6 +374,10 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     window.location.href = '../../dashboard.html#addmoney';
     return;
   }
+
+  // Visual feedback on click
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '⏳ Submitting...';
 
   const vNo = document.getElementById('vNo').value.trim().toUpperCase();
   const chNo = document.getElementById('chNo').value.trim().toUpperCase();
@@ -337,6 +395,7 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
       body: JSON.stringify({
         k: 'RC Services|RC PDF INSTANT',
         sec: 'RC Services',
+        doc: vNo,
         amt: CHARGE,
         data: {
           'Vehicle Number': vNo,
@@ -352,6 +411,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
     if (!res.ok) {
       const errText = await res.text();
       alert('Failed to submit request to server: ' + errText);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
       return;
     }
 
@@ -370,6 +431,8 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
 
     if (!currentRequestId) {
       alert('Error: Server did not return a valid Request ID.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
       return;
     }
 
@@ -384,11 +447,16 @@ document.getElementById('fRcForm').onsubmit = async function(e) {
   } catch (err) {
     console.error('Submit Error:', err);
     alert('Network error while submitting request.');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
   }
 };
 
 document.getElementById('fOtpForm').onsubmit = async function(e) {
   e.preventDefault();
+  const submitBtn = document.getElementById('btnOtpSubmit');
+  const originalText = submitBtn.innerHTML;
+
   const otp = document.getElementById('otpCode').value.trim();
   if (!otp) return;
 
@@ -401,6 +469,10 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
     location.reload();
     return;
   }
+
+  // Visual feedback on click
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '⏳ Verifying OTP...';
 
   try {
     const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
@@ -421,11 +493,15 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
     if (!patchRes.ok) {
       const errText = await patchRes.text();
       alert('Server Error (' + patchRes.status + '): ' + errText);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
       return;
     }
   } catch (err) {
     console.error('OTP Submit Error:', err);
     alert('Network error while submitting OTP.');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
     return;
   }
 
@@ -485,7 +561,7 @@ function startStatusPolling() {
         
         statusBox.style.display = 'none';
         const btnDl = document.getElementById('btnDownloadPdf');
-        btnDl.onclick = () => downloadFile(req.id, req.file.name);
+        btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
         document.getElementById('downloadContainer').style.display = 'block';
         
         renderHistoryTable();
@@ -514,18 +590,32 @@ function showWrongOtp(remark) {
   const errBox = document.getElementById('otpErrBox');
   errBox.style.display = 'block';
   errBox.textContent = '❌ ' + (remark || 'Admin ne OTP galat paya hai! Kripya sahi OTP dobara enter karein.');
+  
+  const submitBtn = document.getElementById('btnOtpSubmit');
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = 'Verify &amp; Submit OTP';
+
   const otpInput = document.getElementById('otpCode');
   otpInput.value = '';
   otpInput.focus();
 }
 
-async function downloadFile(reqId, fileName) {
+async function downloadFile(reqId, fileName, btnElem) {
+  if (btnElem) {
+    btnElem.disabled = true;
+    btnElem.innerText = '⏳ Downloading...';
+  }
+
   try {
     const r = await fetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
       headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
     });
     if (!r.ok) {
       alert('File download failed.');
+      if (btnElem) {
+        btnElem.disabled = false;
+        btnElem.innerText = 'Download';
+      }
       return;
     }
     const b = await r.blob();
@@ -533,8 +623,22 @@ async function downloadFile(reqId, fileName) {
     a.href = URL.createObjectURL(b);
     a.download = fileName || 'RC_Document.pdf';
     a.click();
+
+    const u = user();
+    if (u.orders) {
+      const order = u.orders.find(x => x.id === reqId);
+      if (order) {
+        order.downloaded = true;
+        saveUser(u);
+        renderHistoryTable();
+      }
+    }
   } catch (err) {
     alert('Downloading PDF...');
+    if (btnElem) {
+      btnElem.disabled = false;
+      btnElem.innerText = 'Download';
+    }
   }
 }
 
