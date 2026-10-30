@@ -1,6 +1,6 @@
 const STATUS = ['pending', 'processing', 'success', 'failed'];
 const RESET_CODE_DEFAULT = '123456';
-// Server-side price list (same keys as the site's service keys: "Service|Item")
+
 const PRICES = {
  "RC Services|RC PDF INSTANT": 40,
  "DL Services|DL PDF INSTANT": 50,
@@ -48,7 +48,7 @@ const cors = (req, env) => {
   return {
     'access-control-allow-origin': list.includes(o) ? o : (list[0] || 'null'),
     'access-control-allow-headers': 'content-type,x-user-token,x-admin-passcode,x-file-name',
-    'access-control-allow-methods': 'GET,POST,PUT,DELETE,OPTIONS',
+    'access-control-allow-methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
     'vary': 'origin',
   };
 };
@@ -108,7 +108,6 @@ export default {
     const adminOK = () => !!env.ADMIN_PASSCODE && req.headers.get('x-admin-passcode') === env.ADMIN_PASSCODE;
 
     try {
-      // ---------- customer auth ----------
       if (M === 'GET' && (m = p.match(/^\/api\/salt\/(.+)$/))) {
         const u = await findByLogin(env, decodeURIComponent(m[1]));
         return u ? reply(req, env, { salt: u.salt }) : bad(404, 'not_found');
@@ -169,7 +168,6 @@ export default {
         return reply(req, env, { ok: true });
       }
 
-      // ---------- logged-in customer ----------
       if (p === '/api/me' && M === 'GET') {
         const u = await authed();
         return u ? reply(req, env, { user: strip(u) }) : unauth();
@@ -230,6 +228,30 @@ export default {
         return reply(req, env, { user: strip(u) }, 201);
       }
 
+      if (M === 'GET' && (m = p.match(/^\/api\/requests\/([^/]+)$/))) {
+        const rid = decodeURIComponent(m[1]);
+        const u = await authed();
+        if (!u) return unauth();
+        const o = (u.orders || []).find(x => x.id === rid);
+        if (!o) return bad(404, 'not_found');
+        return reply(req, env, { request: o });
+      }
+
+      if (M === 'PATCH' && (m = p.match(/^\/api\/requests\/([^/]+)$/))) {
+        const rid = decodeURIComponent(m[1]);
+        const u = await authed();
+        if (!u) return unauth();
+        const o = (u.orders || []).find(x => x.id === rid);
+        if (!o) return bad(404, 'not_found');
+        const { s, data } = await readJson();
+        if (s && STATUS.includes(s)) o.s = s;
+        if (data && typeof data === 'object') {
+          o.data = { ...(o.data || {}), ...cleanData(data) };
+        }
+        await saveRow(env, u);
+        return reply(req, env, { ok: true, request: o });
+      }
+
       if (M === 'GET' && (m = p.match(/^\/api\/requests\/([^/]+)\/file$/))) {
         const rid = decodeURIComponent(m[1]);
         const u = await authed();
@@ -247,7 +269,6 @@ export default {
         });
       }
 
-      // ---------- admin ----------
       if (p.startsWith('/api/admin/')) {
         if (!adminOK()) return bad(401, 'unauthorized');
 
@@ -289,10 +310,14 @@ export default {
 
         if (M === 'PUT' && (m = p.match(/^\/api\/admin\/requests\/([^/]+)\/remark$/))) {
           const rid = decodeURIComponent(m[1]);
-          const { remark } = await readJson();
+          const { remark, data } = await readJson();
           const u = await owner(rid);
           if (!u) return bad(404, 'not_found');
-          u.orders.find(o => o.id === rid).remark = String(remark ?? '').trim().slice(0, 500);
+          const order = u.orders.find(o => o.id === rid);
+          if (remark !== undefined) order.remark = String(remark ?? '').trim().slice(0, 500);
+          if (data && typeof data === 'object') {
+            order.data = { ...(order.data || {}), ...cleanData(data) };
+          }
           await saveRow(env, u);
           return reply(req, env, { ok: true });
         }
