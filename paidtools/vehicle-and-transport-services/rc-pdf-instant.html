@@ -173,24 +173,24 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
       </div>
     </div>
 
-<!-- Step 3: Waiting / Confirmation Area -->
-<div id="step3Waiting" style="display: none;">
-  <div class="status-box">
-    <div class="spinner" id="waitSpinner"></div>
-    <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.25rem; color: var(--ok);">
-      ✅ OTP Verified
-    </h3>
-    <p id="waitMsg" style="color: var(--mut); font-size: 0.9rem; max-width: 500px; margin: 0 auto 20px; line-height: 1.5;">
-      Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.
-    </p>
+    <!-- Step 3: Waiting / Confirmation Area -->
+    <div id="step3Waiting" style="display: none;">
+      <div class="status-box">
+        <div class="spinner" id="waitSpinner"></div>
+        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.25rem; color: var(--ok);">✅ OTP Verified</h3>
+        <p id="waitMsg" style="color: var(--mut); font-size: 0.9rem; max-width: 500px; margin: 0 auto 20px; line-height: 1.5;">
+          Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.
+        </p>
 
-    <div id="downloadContainer" style="display: none;">
-      <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
-        📥 Download RC PDF Now
-      </button>
+        <div id="downloadContainer" style="display: none;">
+          <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
+            📥 Download RC PDF Now
+          </button>
+        </div>
+      </div>
     </div>
+
   </div>
-</div>
 
   <div class="card">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -325,11 +325,10 @@ async function checkAndRestoreStep() {
       showWrongOtp();
     }
     else if (otpStatus === 'verified' || req.s === 'success') {
-      // Jab OTP approve ho jaye, par file upload na ho
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
-      document.getElementById('waitTitle').textContent = '✅ OTP Verified';
+      document.getElementById('waitTitle').innerHTML = '✅ OTP Verified';
       document.getElementById('waitTitle').style.color = 'var(--ok)';
       document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.';
       document.getElementById('downloadContainer').style.display = 'none';
@@ -341,7 +340,7 @@ async function checkAndRestoreStep() {
       document.getElementById('waitSpinner').style.display = 'block';
       document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
       document.getElementById('waitTitle').style.color = 'var(--ac)';
-      document.getElementById('waitMsg').textContent = 'Aapka OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
       document.getElementById('downloadContainer').style.display = 'none';
       startStatusPolling();
     }
@@ -542,11 +541,10 @@ function startStatusPolling() {
         return;
       }
       else if (otpStatus === 'verified' || req.s === 'success') {
-        // Jab admin approve kar de par file abhi upload na ki ho
         document.getElementById('waitSpinner').style.display = 'block';
-        document.getElementById('waitTitle').textContent = 'OTP Confirmed';
+        document.getElementById('waitTitle').innerHTML = '✅ OTP Verified';
         document.getElementById('waitTitle').style.color = 'var(--ok)';
-        document.getElementById('waitMsg').textContent = 'otp approved wait for document generation for download';
+        document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein. File ready hote hi download option yahan dikh jayega.';
         document.getElementById('downloadContainer').style.display = 'none';
       }
     } catch (e) {
