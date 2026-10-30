@@ -16,14 +16,28 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
 .ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-block: 8px; min-height: 60px; max-width: 1400px; }
 .tb { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .92rem; font-weight: 700; color: var(--ac2); text-decoration: none; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-size: .92rem; font-weight: 700; color: var(--ac2); text-decoration: none; transition: all 0.2s ease; }
+.chip:active { transform: scale(0.95); }
+
+/* Universal Button & Card Click Effects */
+.btn, button, .it, .chip {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+.btn:active, button:active, .it:active, .chip:active {
+  transform: scale(0.96) translateY(1px) !important;
+  filter: brightness(0.92);
+}
+
 .shell { display: grid; grid-template-columns: 290px minmax(0,1fr); max-width: 1400px; margin: 0 auto; }
 .apm { padding-inline: 24px; padding-block: 28px 64px; min-width: 0; }
 #sb { position: sticky; top: 61px; height: calc(100vh - 61px); display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--ln); z-index: 6; }
 .sbs { flex: 1; overflow-y: auto; padding: 12px; }
 .sbf { padding: 12px; border-top: 1px solid var(--ln); }
-.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; text-decoration: none; }
+.mi { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 8px 12px; border: 0; background: none; border-radius: 10px; font: 600 .92rem 'Plus Jakarta Sans',system-ui,sans-serif; color: var(--ink); cursor: pointer; text-align: left; text-decoration: none; transition: all 0.2s; }
 .mi:hover { background: var(--tint); color: var(--ac); }
+.mi:active { transform: scale(0.97); }
+
 .gc { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; background: var(--ink); color: #e3ebfb; border-radius: 18px; padding: 24px; }
 .gc h1 { color: #fff; }
 .gw { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
@@ -35,7 +49,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; font-weight: 700; color: var(--ink); }
 .ds summary em { font-style: normal; font-size: 0.8rem; background: var(--tint); color: var(--ac2); padding: 2px 10px; border-radius: 99px; }
 .ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding-bottom: 14px; }
-.it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
+.it { display: flex; flex-direction: column; justify-content: space-between; background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s, box-shadow .2s; }
 .it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
 .sv { position: relative; aspect-ratio: 16/10; border-radius: 99px; margin-bottom: 8px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
 .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
@@ -48,7 +62,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
 .dash-search-bar input { height: 40px; min-height: 40px; padding: 6px 12px; font-size: 0.88rem; }
 .dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.dash-cats button { border: 1px solid var(--ln); background: #fff; border-radius: 99px; padding: 6px 14px; font: 600 .8rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; }
+.dash-cats button { border: 1px solid var(--ln); background: #fff; border-radius: 99px; padding: 6px 14px; font: 600 .8rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; transition: all 0.2s; }
 .dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 .sb-category { margin-top: 10px; border-top: 1px solid var(--ln); padding-top: 10px; }
 .sb-group { margin-bottom: 4px; }
@@ -57,7 +71,7 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 .sb-group summary::-webkit-details-marker { display: none; }
 .sb-group summary em { font-style: normal; font-size: 0.72rem; color: var(--mut); }
 .sb-sub-list { padding-left: 6px; margin-top: 4px; display: grid; gap: 2px; }
-.sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.8rem; font-weight: 500; color: var(--mut); text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; }
+.sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.8rem; font-weight: 500; color: var(--mut); text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.2s; }
 .sb-item:hover { color: var(--ac); background: var(--tint); }
 .sb-ic { display: inline-flex; align-items: center; gap: 8px; }
 .sb-ic svg { width: 15px; height: 15px; color: var(--ac); flex: none; }
@@ -116,11 +130,15 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
   </div>
 </div>
 
-<div class="modal" id="rm">
-  <div class="box">
-    <button class="x" id="rx" type="button">✕</button>
-    <h2 id="rt" style="font-size:1.3rem;margin-bottom:6px">Service request</h2>
-    <p id="rp" style="color:var(--mut);font-size:.85rem;margin-bottom:16px"></p>
+<!-- Modal for Paid Service Confirmation & Request -->
+<div class="modal" id="rm" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div class="box" style="background:#fff; width:100%; max-width:420px; border-radius:18px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,0.15); position:relative;">
+    <button class="x" id="rx" type="button" style="position:absolute; top:16px; right:16px; border:none; background:none; font-size:1.2rem; cursor:pointer;">✕</button>
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="font-size:2.2rem; margin-bottom:8px;">⚠️</div>
+      <h2 id="rt" style="font-size:1.3rem; margin:0 0 6px; color:var(--ink);">Service request</h2>
+      <p id="rp" style="color:var(--mut); font-size:.88rem; margin:0; line-height:1.5;"></p>
+    </div>
     <form id="fRq"></form>
   </div>
 </div>
@@ -128,7 +146,6 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
 <script src="tools.js"></script>
 <script>
 const API = 'https://docsmartly-api.hm2351994.workers.dev';
-// Fixed syntax error on esc function below:
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c));
 const inr = n => '₹' + Number(n || 0).toLocaleString('en-IN');
 const dt = t => t ? new Date(t).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '-';
@@ -165,15 +182,12 @@ const R=(x,y,w,h,c,r=3)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx=
 const C=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
 const X=(x,y,t,s,c='fk',a='middle')=>`<text x="${x}" y="${y}" font-size="${s}" class="${c}" text-anchor="${a}" font-weight="700">${t}</text>`;
 const Pa=(d,c)=>`<path d="${d}" class="${c}"/>`;
-const L=(x,y,w,n=3,g=6,c='fl')=>Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*.6:w,2.4,c,1.2)).join('');
 const H=(x,y,w,h,c='fb')=>R(x,y,w,h,c,3)+C(x+w/2,y+h*.38,w*.2,'fw')+Pa(`M${x+w*.15} ${y+h}q${w*.35} ${-h*.5} ${w*.7} 0z`,'fw');
 const PG=(x=52,y=8,w=56,h=84)=>R(x,y,w,h,'fw',4);
 const AR=(x,y,c='sa')=>Pa(`M${x} ${y}h16m-5-5 5 5-5 5`,c);
 const CAR=(x,y,s=1,c='fw')=>`<g transform="translate(${x} ${y}) scale(${s})">${R(0,8,44,12,c,4)}${R(8,0,28,10,c,4)}${C(11,22,4,'fk')}${C(33,22,4,'fk')}</g>`;
 const CARD=(x,y,w,h,c='fa')=>R(x,y,w,h,c,7);
-const IMG=(x,y,w,h,c='fb')=>R(x,y,w,h,c,4)+C(x+w*.74,y+h*.27,h*.1,'fy')+Pa(`M${x+3} ${y+h-1}L${x+w*.34} ${y+h*.48}L${x+w*.55} ${y+h*.74}L${x+w*.7} ${y+h*.6}L${x+w-3} ${y+h-1}z`,'fa');
-const PDF=(x,y,w,h)=>PG(x,y,w,h)+R(x+w-26,y+4,22,12,'fa',3)+X(x+w-15,y+13,'PDF',6.5,'fw')+L(x+8,y+24,w-16,3,7);
-const PHN=(x,y,w,h)=>R(x,y,w,h,'fk',6)+R(x+3,y+5,w-6,h-10,'fw',3);
+const L=(x,y,w,n=3,g=6,c='fl')=>Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*.6:w,2.4,c,1.2)).join('');
 const QR=(x,y,s=72)=>{let o=R(x,y,s,s,'fw',5);const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);return o};
 const CALC=d=>R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c==3?'fy':'fb',2)).join('')).join('');
 const BRW=(x,y,w,h)=>R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
@@ -189,21 +203,17 @@ const V={
   "Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+L(46,70,68,2,6),
   "LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
   "Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
-  "Mobile Services":()=>PHN(56,6,48,88)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb'),
+  "Mobile Services":()=>R(56,6,48,88,'fk',6)+R(59,11,42,78,'fw',3)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb'),
   "GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+L(54,30,52,2,6)+C(80,62,17,'fa')+X(80,69,'%',20,'fw'),
-  "Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.500,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
-  "Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+PHN(100,16,34,68)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
+  "Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.5,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
+  "Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+R(100,16,34,68,'fk',6)+R(103,21,28,58,'fw',3)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
   "Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')+L(38,30,48,3,7)+X(62,68,'₹500',15,'fr'),
   "DBT Seeding Status":()=>Pa('M80 14l46 22H34z','fa')+R(30,74,100,8,'fa',2)+C(130,24,13,'fg')+Pa('M123 24l5 5 9-10','sw'),
-  "TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7),
-  "New PAN Card Apply":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+H(106,38,28,36)+C(138,22,14,'fy')+Pa('M138 14v16M130 22h16','sa'),
-  "PAN Update / Correction":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+H(106,38,28,36)+C(138,22,14,'fy')+Pa('M132 28l1-6 9-9 5 5-9 9z','sa')
+  "TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7)
 };
 
 const TA={
   "Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
-  "Passport Photo Maker": () => PG(30,6,100,88) + H(60,20,40,50) + X(80,82,'PASSPORT',6.5,'fa'),
-  "PDF to Excel": () => PG(20,8,56,84) + X(48,22,'PDF',8) + AR(82,46) + R(100,18,48,64,'fg',4) + X(124,32,'XLS',7,'fw'),
   "QR Code Generator":()=>QR(44,14),
   "Stamp Designer":()=>C(80,50,38,'sa')+C(80,50,30,'sa')+X(80,48,'DOCSMARTLY',8,'fa')+X(80,60,'★ ★ ★',6,'fa'),
   "ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
@@ -212,32 +222,32 @@ const TA={
   "Visiting Card Designer":()=>R(60,46,76,46,'fw',5)+R(24,10,76,46,'fa',5)+X(36,30,'DocSmartly',8,'fw','start')+L(36,38,40,2,6,'fo'),
   "Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8),
   "Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+X(80,84,'Age: 28 years',7),
-  "Photo & Signature Resizer":()=>IMG(30,18,76,56)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+X(118,88,'35×45 mm',7),
-  "JPG / PNG to PDF":()=>IMG(14,26,48,40)+AR(68,44)+PDF(92,14,52,72),
+  "Photo & Signature Resizer":()=>R(30,18,76,56,'fb',4)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+X(118,88,'35×45 mm',7),
+  "JPG / PNG to PDF":()=>R(14,26,48,40,'fb',4)+AR(68,44)+PDF(92,14,52,72),
   "PDF Merge":()=>PDF(14,22,36,50)+PDF(30,34,36,50)+AR(74,48)+PDF(98,14,46,72),
   "PDF Split & Page Extract":()=>PDF(14,14,46,72)+AR(66,48)+PDF(92,8,38,40)+PDF(92,54,38,40),
-  "PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+IMG(90,28,52,44)+X(116,86,'JPG',7,'fa'),
+  "PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+R(90,28,52,44,'fb',4)+X(116,86,'JPG',7,'fa'),
   "PDF Rotate & Reorder":()=>PDF(30,14,46,72)+Pa('M146 58a20 20 0 1 1-6-14','sa'),
   "PDF Compressor (KB)":()=>PDF(18,14,52,72)+R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8)+R(90,62,56,18,'fa',9)+X(118,75,'200 KB',8,'fw'),
   "Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5),
-  "PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.500,'1',8,'fw'),
+  "PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.5,'1',8,'fw'),
   "PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw')+L(52,30,56,6,8)+R(44,80,72,12,'fb',4)+X(80,89,'FOOTER',6.5,'fw'),
-  "Photo Compressor (KB)":()=>IMG(18,16,70,56)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
-  "Image Format Converter":()=>IMG(14,26,48,40)+X(38,80,'JPG',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'PNG',8),
+  "Photo Compressor (KB)":()=>R(18,16,70,56,'fb',4)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
+  "Image Format Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'JPG',8)+AR(68,44)+R(90,26,48,40,'fb',4)+X(114,80,'PNG',8),
   "Background Remover":()=>R(36,10,88,80,'fl',6)+H(58,22,44,66,'fa'),
-  "WebP to JPG Converter":()=>IMG(14,26,48,40)+X(38,80,'WEBP',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'JPG',8),
-  "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+IMG(90,28,52,44),
+  "WebP to JPG Converter":()=>R(14,26,48,40,'fb',4)+X(38,80,'WEBP',8)+AR(68,44)+R(90,26,48,40,'fb',4)+X(114,80,'JPG',8),
+  "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+R(90,28,52,44,'fb',4),
   "ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
-  "Thumbnail Resizer":()=>IMG(16,14,84,66)+IMG(112,34,32,26)+X(128,74,'150×150',6),
+  "Thumbnail Resizer":()=>R(16,14,84,66,'fb',4)+R(112,34,32,26,'fa',4)+X(128,74,'150×150',6),
   "Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,40,100,3,'fl',1.5)+R(30,68,24,24,'fa',6)+X(120,86,'16·32',6),
-  "Image Watermark Maker":()=>IMG(24,16,112,68)+X(80,56,'DOCSMARTLY',13,'fo'),
+  "Image Watermark Maker":()=>R(24,16,112,68,'fb',4)+X(80,56,'DOCSMARTLY',13,'fo'),
   "Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa'),
   "Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa')+C(124,30,10,'fy')+C(100,58,10,'fr'),
-  "Photo Blur Tool":()=>IMG(14,22,56,48)+AR(74,42)+IMG(92,22,56,48)+C(118,46,20,'fo'),
-  "Image to Black & White":()=>IMG(14,22,56,48)+AR(74,42)+R(92,22,56,48,'fk',4),
+  "Photo Blur Tool":()=>R(14,22,56,48,'fb',4)+AR(74,42)+R(92,22,56,48,'fb',4)+C(118,46,20,'fo'),
+  "Image to Black & White":()=>R(14,22,56,48,'fb',4)+AR(74,42)+R(92,22,56,48,'fk',4),
   "Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44)+H(90,14,56,72,'fk'),
-  "Photo Border Maker":()=>R(28,10,104,80,'fa',6)+IMG(40,22,80,56),
-  "Color Picker from Image":()=>IMG(16,16,90,68)+Pa('M108 56l22-22 8 8-22 22z','fa'),
+  "Photo Border Maker":()=>R(28,10,104,80,'fa',6)+R(40,22,80,56,'fb',4),
+  "Color Picker from Image":()=>R(16,16,90,68,'fb',4)+Pa('M108 56l22-22 8 8-22 22z','fa'),
   "ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw')+H(34,38,28,38),
   "QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
   "Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
@@ -257,8 +267,8 @@ const TA={
   "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw'),
   "Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8),
   "Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
-  "Name, Date & Text on Photo":()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw'),
-  "Instagram Reel Cover Maker":()=>PHN(48,4,64,92)+IMG(54,12,52,48),
+  "Name, Date & Text on Photo":()=>R(20,14,120,72,'fb',4)+X(80,46,'Your Name',10,'fw'),
+  "Instagram Reel Cover Maker":()=>R(48,4,64,92,'fk',6)+R(54,12,52,48,'fb',4),
   "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
 };
 
@@ -276,14 +286,7 @@ const DA={
   "QC register creator":()=>R(30,10,100,82,'fb',6)+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
   "Work escalation statement":()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa'),
   "OMR Sheet Generator & Checker":()=>PG(32,6,96,88)+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
-  "Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw'),
-  "Online Stopwatch":()=>C(80,52,34,'fw')+C(80,52,34,'sa')+X(62,76,'00:00',9,'fa'),
-  "Name, Date & Text on Photo":()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw'),
-  "Instagram Reel Cover Maker":()=>PHN(48,4,64,92)+IMG(54,12,52,48),
-  "Calculator — Basic & Scientific":()=>CALC('√ π'),
-  "Typing Speed Test — Hindi & English":()=>TA["Hindi Typing Tool"]()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
-  "Online Exam System — Teacher & Student":()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa'),
-  "Word Counter":()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')
+  "Meta Title & Description Generator":()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')
 };
 
 const ICONS_PATH={
@@ -295,9 +298,9 @@ const ICONS_PATH={
   doc:'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6',
   store:'M4 9l1-5h14l1 5M4 9v11h16V9M9 20v-6h6v6',
   phone:'M7 3h10v18H7zM11 18h2',
-  pct:'M6 18L18 6M7 7m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M17 17m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0',
+  pct:'M6 18L18 6M7 7m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M17 17m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0',
   calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M8 15h2M12 15h2',
-  img:'M3 5h18v14H3zM9 10m-1.500 0a1.500 1.500 0 1 0 3 0a1.500 1.500 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',
+  img:'M3 5h18v14H3zM9 10m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M4 18l5-5 4 4 3-3 4 4',
   qr:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM19 14v6M14 19h2',
   text:'M5 6h14M5 10h14M5 14h10M5 18h8',
   globe:'M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
@@ -423,7 +426,6 @@ const CATEGORIES = {
   ],
   "Print & ID Cards (Free)": [
     { n: "Passport Photo Sheet", isPaid: false, ic: "img" },
-    { n: "Passport Photo Maker", isPaid: false, ic: "img" },
     { n: "ID Card Front & Back to A4", isPaid: false, ic: "id" },
     { n: "ID Card Maker", isPaid: false, ic: "id" },
     { n: "Employee ID Card Maker", isPaid: false, ic: "id" },
@@ -451,7 +453,6 @@ const CATEGORIES = {
     { n: "Percentage Calculator", isPaid: false, ic: "calc" },
     { n: "Loan / EMI Calculator", isPaid: false, ic: "calc" },
     { n: "Age Calculator", isPaid: false, ic: "calc" },
-    { n: "Calculator — Basic & Scientific", isPaid: false, ic: "calc" },
     { n: "Online Stopwatch", isPaid: false, ic: "calc" },
     { n: "Password to MD5 / SHA-256", isPaid: false, ic: "shield" },
     { n: "QR Code Generator", isPaid: false, ic: "qr" },
@@ -460,9 +461,7 @@ const CATEGORIES = {
     { n: "Word Counter", isPaid: false, ic: "text" },
     { n: "What Is My IP", isPaid: false, ic: "globe" },
     { n: "Meta Title & Description Generator", isPaid: false, ic: "globe" },
-    { n: "OMR Sheet Generator & Checker", isPaid: false, ic: "doc" },
-    { n: "Typing Speed Test — Hindi & English", isPaid: false, ic: "text" },
-    { n: "Online Exam System — Teacher & Student", isPaid: false, ic: "doc" }
+    { n: "OMR Sheet Generator & Checker", isPaid: false, ic: "doc" }
   ]
 };
 
@@ -476,7 +475,6 @@ function setupSidebarCategories() {
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
       <div class="sb-sub-list">
         ${items.map(it => {
-          // Check if paid service has a dedicated custom page
           if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
             return `<a href="${getToolUrl(it.n)}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
@@ -716,23 +714,32 @@ document.addEventListener('click', e => {
   curKey = btn.dataset.svc;
   curAmt = Number(btn.dataset.amt);
   const u = user();
-  document.getElementById('rt').textContent = curKey.split('|')[1] || curKey;
-  document.getElementById('rp').textContent = 'Charge: ' + inr(curAmt) + ' | Wallet Balance: ' + inr(u.bal);
+  const serviceName = curKey.split('|')[1] || curKey;
+  
+  document.getElementById('rt').textContent = serviceName;
+  document.getElementById('rp').innerHTML = `Is service ke liye aapke wallet balance se <b style="color:var(--ac); font-size:1.05rem;">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--mut);">Current Balance: ${inr(u.bal)}</small>`;
+  
   document.getElementById('fRq').innerHTML = `
     <div style="margin-bottom:12px">
       <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
-      <input id="rqDoc" type="text" required placeholder="Enter number">
+      <input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%; height:42px; padding:8px 12px; border:1.5px solid var(--ln); border-radius:8px; box-sizing:border-box;">
     </div>
     <div style="margin-bottom:16px">
       <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label>
-      <input id="rqRem" type="text" placeholder="Special instruction">
+      <input id="rqRem" type="text" placeholder="Special instruction" style="width:100%; height:42px; padding:8px 12px; border:1.5px solid var(--ln); border-radius:8px; box-sizing:border-box;">
     </div>
-    <button class="btn" type="submit" style="width:100%">Confirm & Deduct ${inr(curAmt)}</button>
+    <div style="display:flex; gap:10px;">
+      <button type="button" id="btnCancelModal" style="flex:1; height:42px; border:1.5px solid var(--ln); background:#fff; font-weight:700; border-radius:8px; cursor:pointer;">Cancel</button>
+      <button class="btn" type="submit" style="flex:1; height:42px;">Confirm &amp; Proceed</button>
+    </div>
   `;
-  document.getElementById('rm').classList.add('open');
+  document.getElementById('rm').style.display = 'flex';
 });
 
-document.getElementById('rx').onclick = () => document.getElementById('rm').classList.remove('open');
+document.getElementById('rx').onclick = () => document.getElementById('rm').style.display = 'none';
+document.addEventListener('click', e => {
+  if (e.target.id === 'btnCancelModal') document.getElementById('rm').style.display = 'none';
+});
 
 document.getElementById('fRq').onsubmit = async e => {
   e.preventDefault();
@@ -742,16 +749,16 @@ document.getElementById('fRq').onsubmit = async e => {
   if (u.bal < curAmt) {
     alert('Insufficient balance. Please add money first.');
     location.hash = '#addmoney';
-    document.getElementById('rm').classList.remove('open');
+    document.getElementById('rm').style.display = 'none';
     return;
   }
   const res = await api('POST', '/api/requests', {
-    k: curKey, sec: curKey.split('|')[0], data: { 'Document Number': doc, 'Remarks': rem }
+    k: curKey, sec: curKey.split('|')[0], doc: doc, amt: curAmt, data: { 'Document Number': doc, 'Remarks': rem }
   });
   if (!res.ok) { alert('Failed to submit request.'); return; }
   const j = await res.json();
   saveUser(j.user);
-  document.getElementById('rm').classList.remove('open');
+  document.getElementById('rm').style.display = 'none';
   alert('Request submitted successfully!');
   route();
 };
