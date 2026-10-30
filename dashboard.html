@@ -12,45 +12,49 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
 </script>
 <style>
   :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --bg: #f4f6fb;
-    --card: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --success: #16a34a;
-    --radius: 16px;
-    --shadow: 0 8px 24px rgba(17, 24, 39, .06);
-    --ink: #0f172a;
-    --tint: #eff6ff;
-    --ac: #2563eb;
-    --ac2: #1d4ed8;
-    --ln: #e5e7eb;
-    --sf: #ffffff;
-    --ok: #16a34a;
-    --er: #dc2626;
+    --primary: #315eea;
+    --primary-dark: #244ac4;
+    --bg: #f5f7fc;
+    --card: #fff;
+    --text: #172033;
+    --muted: #667085;
+    --border: #e7eaf1;
+    --success: #15956a;
+    --radius: 18px;
+    --shadow: 0 8px 28px rgba(22, 34, 66, .055);
+    --ink: #172033;
+    --tint: #edf3ff;
+    --ac: #315eea;
+    --ac2: #244ac4;
+    --ln: #e7eaf1;
+    --sf: #fff;
+    --ok: #15956a;
+    --er: #dc3e4b;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
+    background:
+      radial-gradient(ellipse at 85% 0%, rgba(49,94,234,.055), transparent 34rem),
+      var(--bg);
     color: var(--text);
+    -webkit-font-smoothing: antialiased;
   }
+
+  button, input { font: inherit; }
 
   .layout {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 260px minmax(0, 1fr);
     min-height: 100vh;
   }
 
-  /* Sidebar */
   .sidebar {
-    background: #0f172a;
-    color: #e2e8f0;
-    padding: 24px 16px;
+    background: #111a2e;
+    color: #e5eaf4;
+    padding: 24px 16px 18px;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -58,47 +62,45 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
     z-index: 20;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid rgba(255,255,255,.06);
   }
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 20px;
-    font-weight: 700;
+    gap: 11px;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -.04em;
     color: #fff;
-    margin-bottom: 20px;
+    margin: 0 8px 26px;
     text-decoration: none;
   }
 
   .brand span {
-    background: var(--primary);
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+    background: linear-gradient(145deg, #5480ff, #315eea);
+    width: 39px;
+    height: 39px;
+    border-radius: 13px;
     display: grid;
     place-items: center;
     font-size: 18px;
+    box-shadow: 0 7px 18px rgba(49,94,234,.32);
   }
 
-  .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-  }
+  .nav { display: flex; flex-direction: column; gap: 5px; flex: 1; }
 
   .nav a, .mi {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: #cbd5e1;
+    gap: 11px;
+    color: #aeb9cb;
     text-decoration: none;
-    padding: 11px 14px;
-    border-radius: 12px;
-    font-size: 14px;
+    padding: 11px 13px;
+    border-radius: 11px;
+    font-size: 13px;
     font-weight: 600;
-    transition: .2s;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
     background: none;
     border: none;
     cursor: pointer;
@@ -106,74 +108,58 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
     width: 100%;
   }
 
-  .nav a:hover,
-  .nav a.active, .mi:hover {
-    background: rgba(37, 99, 235, .18);
+  .nav a:hover, .nav a.active, .mi:hover {
+    background: rgba(81,126,255,.16);
     color: #fff;
   }
 
+  .nav a.active { box-shadow: inset 3px 0 #6e93ff; }
+
   .sidebar-footer {
-    margin-top: auto;
+    margin-top: 22px;
     border-top: 1px solid rgba(255,255,255,.1);
-    padding-top: 16px;
+    padding-top: 14px;
   }
 
-  /* Main Area */
-  main {
-    padding: 28px;
-    min-width: 0;
-  }
+  main { padding: 30px clamp(20px, 3vw, 42px); min-width: 0; }
 
   .topbar {
-    background: var(--card);
+    background: rgba(255,255,255,.94);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 22px;
+    border-radius: 20px;
+    padding: 22px 25px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 18px;
     box-shadow: var(--shadow);
     flex-wrap: wrap;
     margin-bottom: 24px;
   }
 
-  .welcome h1 {
-    font-size: 22px;
-  }
-
-  .welcome p {
-    color: var(--muted);
-    font-size: 14px;
-    margin-top: 4px;
-  }
-
-  .top-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
+  .welcome h1 { font-size: clamp(20px, 2vw, 25px); letter-spacing: -.045em; }
+  .welcome p { color: var(--muted); font-size: 13px; margin-top: 5px; }
+  .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
   .balance-pill {
-    background: #eff6ff;
-    color: var(--primary-dark);
-    border: 1px solid #bfdbfe;
-    padding: 10px 16px;
-    border-radius: 999px;
-    font-weight: 600;
+    background: #f0f5ff;
+    color: #244ac4;
+    border: 1px solid #dce6ff;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-weight: 700;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .btn {
     border: none;
     cursor: pointer;
-    padding: 11px 18px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 14px;
-    transition: .2s;
+    padding: 11px 17px;
+    border-radius: 11px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: .18s ease;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -181,144 +167,329 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
   }
 
   .btn-primary {
-    background: var(--primary);
+    background: linear-gradient(135deg, #416ff2, #315eea);
     color: #fff;
+    box-shadow: 0 5px 13px rgba(49,94,234,.2);
   }
 
   .btn-primary:hover {
-    background: var(--primary-dark);
+    background: linear-gradient(135deg, #315eea, #244ac4);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(49,94,234,.25);
   }
 
-  .btn-light {
-    background: #fff;
-    border: 1px solid var(--border);
-    color: var(--text);
-  }
+  .btn-light { background: #fff; border: 1px solid var(--border); color: var(--text); }
+  .btn-light:hover { background: #f7f9fc; border-color: #cfd6e3; }
 
-  .btn-light:hover {
-    background: #f8fafc;
-  }
-
-  /* Stats Cards */
   .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 18px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
   }
 
   .stat {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
+    border-radius: 17px;
+    padding: 19px;
+    box-shadow: var(--shadow);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+
+  .stat:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(22,34,66,.09); }
+  .stat-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .stat h3 { font-size: 12px; color: var(--muted); font-weight: 700; }
+  .icon { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; font-size: 16px; }
+  .blue { background: #edf3ff; }
+  .green { background: #eaf8f1; }
+  .orange { background: #fff4e8; }
+  .purple { background: #f2efff; }
+  .stat-value { font-size: 25px; font-weight: 800; letter-spacing: -.04em; margin-top: 13px; }
+  .stat-note { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  .ds {
+    background: var(--sf);
+    border: 1px solid var(--ln);
+    border-radius: 17px;
+    padding: 17px;
+    margin-bottom: 14px;
     box-shadow: var(--shadow);
   }
 
-  .stat-head {
+  .ds summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .stat h3 {
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 800;
+    color: var(--ink);
     font-size: 14px;
-    color: var(--muted);
-    font-weight: 600;
+    list-style: none;
   }
 
-  .icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+  .ds summary::-webkit-details-marker { display: none; }
+
+  .ds summary em {
+    font-style: normal;
+    font-size: 11px;
+    background: var(--tint);
+    color: var(--ac2);
+    padding: 4px 10px;
+    border-radius: 99px;
+  }
+
+  .ig {
     display: grid;
-    place-items: center;
-    font-size: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
   }
 
-  .blue { background: #eff6ff; }
-  .green { background: #ecfdf5; }
-  .orange { background: #fff7ed; }
-  .purple { background: #f5f3ff; }
-
-  .stat-value {
-    font-size: 24px;
-    font-weight: 700;
-    margin-top: 12px;
+  .it {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    min-width: 0;
   }
 
-  .stat-note {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
+  .it:hover {
+    border-color: #b6c8ff;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(36,87,214,.09);
   }
 
-  /* Tool & Service Cards Grid Styles */
-  .ds { background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); }
-  .ds summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; font-weight: 700; color: var(--ink); font-size: 16px; }
-  .ds summary em { font-style: normal; font-size: 0.8rem; background: var(--tint); color: var(--ac2); padding: 3px 12px; border-radius: 99px; }
-  
-  .ig { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-top: 14px; }
-  .it { display: flex; flex-direction: column; justify-content: space-between; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 14px; text-decoration: none; color: inherit; transition: transform .2s, border-color .2s, box-shadow .2s; }
-  .it:hover { border-color: var(--ac); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(36,87,214,.1); }
-  
-  .sv { position: relative; aspect-ratio: 16/10; border-radius: 10px; margin-bottom: 10px; overflow: hidden; background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t), #fff); }
-  .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.22)); }
-  .fa { fill: var(--a); } .fb { fill: var(--b); } .fw { fill: #fff; } .fl { fill: #dbe4f3; } .fk { fill: #13233f; } .fy { fill: #f5c451; } .fg { fill: #16a34a; } .fr { fill: #dc2626; } .fm { fill: #8a93a6; } .fo { fill: #fff; fill-opacity: .4; }
+  .it h3 { line-height: 1.4; }
+
+  .sv {
+    position: relative;
+    aspect-ratio: 16/10;
+    border-radius: 10px;
+    margin-bottom: 11px;
+    overflow: hidden;
+    background:
+      radial-gradient(rgba(19,35,63,.07) 1px, transparent 1.5px) 0 0/12px 12px,
+      linear-gradient(135deg, var(--t), #fff);
+  }
+
+  .art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(19,35,63,.2)); }
+
+  .fa { fill: var(--a); }
+  .fb { fill: var(--b); }
+  .fw { fill: #fff; }
+  .fl { fill: #dbe4f3; }
+  .fk { fill: #13233f; }
+  .fy { fill: #f5c451; }
+  .fg { fill: #16a34a; }
+  .fr { fill: #dc2626; }
+  .fm { fill: #8a93a6; }
+  .fo { fill: #fff; fill-opacity: .4; }
   .sa { fill: none; stroke: var(--a); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
   .sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-  
-  .badge-free { background: var(--ok); color: #fff; font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 700; width: fit-content; margin-top: 8px; }
-  .badge-paid { background: #fff1cc; color: #6b4200; font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 700; border: 1px solid #f0cf7d; width: fit-content; margin-top: 8px; }
 
-  .tools-dash-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 32px; margin-bottom: 16px; }
-  .dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 380px; width: 100%; }
-  .dash-search-bar input { height: 42px; width: 100%; padding: 8px 14px; font-size: 0.9rem; border: 1px solid var(--border); border-radius: 10px; outline: none; }
-  .dash-search-bar input:focus { border-color: var(--primary); }
-  
-  .dash-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
-  .dash-cats button { border: 1px solid var(--border); background: #fff; border-radius: 99px; padding: 7px 16px; font: 600 .85rem 'Plus Jakarta Sans',sans-serif; cursor: pointer; transition: all 0.2s; color: var(--muted); }
-  .dash-cats button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .badge-free, .badge-paid {
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    width: fit-content;
+    margin-top: 9px;
+  }
 
-  /* Dropdown Sidebar Category styling */
+  .badge-free { background: #e8f7ef; color: #12805b; }
+  .badge-paid { background: #fff5df; color: #805600; border: 1px solid #f2dfa9; }
+
+  .tools-dash-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 34px;
+    margin-bottom: 15px;
+  }
+
+  .tools-dash-head h2 { letter-spacing: -.035em; }
+  .dash-search-bar { display: flex; gap: 8px; align-items: center; max-width: 390px; width: 100%; }
+
+  .dash-search-bar input {
+    height: 43px;
+    width: 100%;
+    padding: 9px 14px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    outline: none;
+    background: #fff;
+    transition: border .18s, box-shadow .18s;
+  }
+
+  .dash-search-bar input:focus, input:focus {
+    border-color: #8eabff;
+    box-shadow: 0 0 0 3px rgba(49,94,234,.1);
+  }
+
+  .dash-cats { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 17px; }
+
+  .dash-cats button {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font: 700 12px 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: .18s;
+    color: #667085;
+  }
+
+  .dash-cats button:hover { border-color: #b8c8f8; color: var(--primary); }
+  .dash-cats button.on { background: #172033; color: #fff; border-color: #172033; }
+
   .sb-category { margin-top: 14px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; }
-  .sb-group { margin-bottom: 6px; background: rgba(255,255,255,.02); border-radius: 8px; overflow: hidden; }
-  .sb-group summary { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; font-size: 0.82rem; font-weight: 700; color: #cbd5e1; cursor: pointer; border-radius: 8px; list-style: none; }
+  .sb-group { margin-bottom: 5px; background: rgba(255,255,255,.025); border-radius: 9px; overflow: hidden; }
+
+  .sb-group summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #c4cede;
+    cursor: pointer;
+    list-style: none;
+  }
+
   .sb-group summary:hover { background: rgba(255,255,255,.07); color: #fff; }
   .sb-group summary::-webkit-details-marker { display: none; }
-  .sb-group summary em { font-style: normal; font-size: 0.7rem; background: rgba(37,99,235,.2); color: #60a5fa; padding: 2px 8px; border-radius: 99px; }
-  .sb-sub-list { padding: 4px 6px 8px 10px; display: grid; gap: 2px; max-height: 220px; overflow-y: auto; }
-  .sb-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 0.78rem; font-weight: 500; color: #94a3b8; text-decoration: none; border-radius: 6px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.2s; }
-  .sb-item:hover { color: #fff; background: rgba(37,99,235,.2); }
-  .sb-ic { display: inline-flex; align-items: center; gap: 8px; }
-  .sb-ic svg { width: 14px; height: 14px; color: #60a5fa; flex: none; }
 
-  /* Tables */
-  .tw { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .sb-group summary em {
+    font-style: normal;
+    font-size: 10px;
+    background: rgba(81,126,255,.19);
+    color: #91adff;
+    padding: 2px 7px;
+    border-radius: 99px;
+  }
+
+  .sb-sub-list { padding: 3px 5px 7px 8px; display: grid; gap: 2px; max-height: 220px; overflow-y: auto; }
+
+  .sb-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    padding: 7px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #9eacc1;
+    text-decoration: none;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    transition: .18s;
+  }
+
+  .sb-item:hover { color: #fff; background: rgba(81,126,255,.18); }
+  .sb-ic { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
+  .sb-ic svg { width: 14px; height: 14px; color: #83a2ff; flex: none; }
+
+  .tw {
+    overflow-x: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+
   table { width: 100%; border-collapse: collapse; min-width: 520px; }
-  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
-  th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: #f8fafc; font-weight: 700; }
-  
-  .sb-status { display: inline-block; border-radius: 99px; padding: 4px 12px; font-size: 12px; font-weight: 700; text-transform: capitalize; }
-  .s-pending { background: #fff7ed; color: #ea580c; }
-  .s-processing { background: #dbe7ff; color: #1b44ad; }
-  .s-success { background: #ecfdf5; color: #16a34a; }
-  .s-failed { background: #fdecea; color: #7a1a12; }
+  th, td { padding: 14px 17px; text-align: left; border-bottom: 1px solid var(--border); font-size: 12px; }
 
-  /* Panels / Container Views */
-  .panel-view { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); max-width: 500px; }
-  .panel-view h1 { font-size: 20px; margin-bottom: 16px; }
+  th {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    background: #f8f9fc;
+    font-weight: 800;
+  }
 
-  @media (max-width: 900px) {
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: #fafbfe; }
+
+  .sb-status {
+    display: inline-block;
+    border-radius: 99px;
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+
+  .s-pending { background: #fff4e8; color: #c45b08; }
+  .s-processing { background: #eaf0ff; color: #3157ae; }
+  .s-success { background: #eaf8f1; color: #12805b; }
+  .s-failed { background: #fdeeee; color: #b4232e; }
+
+  .panel-view {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    max-width: 520px;
+  }
+
+  .panel-view h1 { font-size: 20px; letter-spacing: -.035em; margin-bottom: 15px; }
+  :focus-visible { outline: 3px solid rgba(49,94,234,.35); outline-offset: 2px; }
+
+  @media (max-width: 1050px) {
+    .layout { grid-template-columns: 225px minmax(0, 1fr); }
+    main { padding: 22px; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 760px) {
     .layout { grid-template-columns: 1fr; }
-    .sidebar { position: relative; height: auto; }
+    .sidebar { position: relative; height: auto; max-height: none; padding: 16px; }
+    .brand { margin-bottom: 14px; }
+    .nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nav a, .mi { padding: 10px; font-size: 12px; }
+    .sb-category { display: none; }
+    .sidebar-footer { margin-top: 12px; }
+    main { padding: 18px 14px 28px; }
+    .topbar { padding: 18px; border-radius: 16px; }
+    .top-actions { width: 100%; }
+    .top-actions > * { flex: 1; }
+    .stats { gap: 10px; }
+    .stat { padding: 15px; }
+    .stat-value { font-size: 22px; }
+    .ig { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 9px; }
+  }
+
+  @media (max-width: 420px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nav { grid-template-columns: 1fr 1fr; }
+    .dash-cats { gap: 6px; }
+    .dash-cats button { padding: 7px 10px; font-size: 11px; }
+    .panel-view { padding: 19px; }
   }
 </style>
 </head>
 <body>
 
 <div class="layout">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <a class="brand" href="#dashboard">
       <span>D</span> DocSmartly
@@ -332,10 +503,10 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
       <a href="#referral">🎁 Refer &amp; Earn</a>
       <a href="#profile">👤 My Profile</a>
       <a href="#contact">🎧 Contact Support</a>
-      <a href="index.html" style="color:#60a5fa; font-weight:700;">🌐 Homepage →</a>
+      <a href="index.html" style="color:#91adff;font-weight:700;">🌐 Homepage →</a>
 
       <div class="sb-category">
-        <p style="font-size:0.7rem; font-weight:700; color:#94a3b8; text-transform:uppercase; margin:6px 8px 8px; letter-spacing:0.04em">Services &amp; Tools Menu</p>
+        <p style="font-size:0.7rem;font-weight:700;color:#9eacc1;text-transform:uppercase;margin:6px 8px 8px;letter-spacing:0.04em">Services &amp; Tools Menu</p>
         <div id="sbCategories"></div>
       </div>
     </nav>
@@ -345,7 +516,6 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
     </div>
   </aside>
 
-  <!-- Main Content Area -->
   <main>
     <section data-v="dashboard"></section>
     <section data-v="passbook" hidden></section>
@@ -357,14 +527,13 @@ if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
   </main>
 </div>
 
-<!-- Modal for Paid Service Confirmation -->
-<div class="modal" id="rm" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-  <div class="box" style="background:#fff; width:100%; max-width:420px; border-radius:18px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,0.15); position:relative;">
-    <button class="x" id="rx" type="button" style="position:absolute; top:16px; right:16px; border:none; background:none; font-size:1.2rem; cursor:pointer;">✕</button>
-    <div style="text-align:center; margin-bottom:16px;">
-      <div style="font-size:2.2rem; margin-bottom:8px;">⚠️</div>
-      <h2 id="rt" style="font-size:1.3rem; margin:0 0 6px; color:var(--ink);">Service request</h2>
-      <p id="rp" style="color:var(--muted); font-size:.88rem; margin:0; line-height:1.5;"></p>
+<div class="modal" id="rm" style="display:none;position:fixed;inset:0;background:rgba(10,18,35,.58);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(5px);padding:16px;">
+  <div class="box" style="background:#fff;width:100%;max-width:420px;border-radius:18px;padding:28px;box-shadow:0 16px 50px rgba(0,0,0,.2);position:relative;">
+    <button class="x" id="rx" type="button" style="position:absolute;top:16px;right:16px;border:none;background:none;font-size:1.2rem;cursor:pointer;">✕</button>
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="font-size:2.2rem;margin-bottom:8px;">⚠️</div>
+      <h2 id="rt" style="font-size:1.3rem;margin:0 0 6px;color:var(--ink);">Service request</h2>
+      <p id="rp" style="color:var(--muted);font-size:.88rem;margin:0;line-height:1.5;"></p>
     </div>
     <form id="fRq"></form>
   </div>
@@ -396,12 +565,15 @@ function user() {
     return { name: 'User', bal: 0, orders: [], tx: [], code: '' };
   }
 }
+
 function saveUser(u) {
   const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
   const idx = list.findIndex(x => x.id === u.id);
-  if (idx >= 0) list[idx] = u; else list.push(u);
+  if (idx >= 0) list[idx] = u;
+  else list.push(u);
   localStorage.setItem('ds_users', JSON.stringify(list));
 }
+
 function updateBalance() {
   const u = user();
   const balancePill = document.getElementById('aB');
@@ -426,7 +598,7 @@ const L=(x,y,w,n=3,g=6,c='fl')=>Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*
 const QR=(x,y,s=72)=>{let o=R(x,y,s,s,'fw',5);const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);return o};
 const CALC=d=>R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c==3?'fy':'fb',2)).join('')).join('');
 const BRW=(x,y,w,h)=>R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
-const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6,'fb');
+const IDV=(x,y,w,h,t,c)=>R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6);
 
 const V={
   "RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
@@ -545,6 +717,7 @@ const ICONS_PATH={
   shield:'M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4',
   bank:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18'
 };
+
 const getMiniSvg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS_PATH[k]||ICONS_PATH.doc}"/></svg>`;
 
 const CATEGORIES = {
@@ -681,17 +854,19 @@ const CATEGORIES = {
   ]
 };
 
+let curFilter = "All";
+
 function setupSidebarCategories() {
   const mount = document.getElementById('sbCategories');
   if (!mount) return;
+
   mount.innerHTML = Object.entries(CATEGORIES).map(([catName, items], idx) => `
     <details class="sb-group" ${idx === 0 ? 'open' : ''}>
       <summary><span>${esc(catName)}</span><em>${items.length}</em></summary>
       <div class="sb-sub-list">
         ${items.map(it => {
-          const toolUrl = (typeof getToolUrl === 'function') ? getToolUrl(it.n) : ('freetools/' + it.n.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.html');
           if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
-            return `<a href="${toolUrl}" class="sb-item">
+            return `<a href="${getToolUrl(it.n)}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
               <span style="font-size:0.7rem;color:#f59e0b;font-weight:700">${inr(it.amt)}</span>
             </a>`;
@@ -701,7 +876,7 @@ function setupSidebarCategories() {
               <span style="font-size:0.7rem;color:#f59e0b;font-weight:700">${inr(it.amt)}</span>
             </button>`;
           } else {
-            return `<a href="${toolUrl}" class="sb-item">
+            return `<a href="${getToolUrl(it.n)}" class="sb-item">
               <span class="sb-ic">${getMiniSvg(it.ic)} ${esc(it.n)}</span>
               <span style="font-size:0.7rem;color:#4ade80;font-weight:700">Free</span>
             </a>`;
@@ -717,14 +892,18 @@ function renderDashboardSections() {
   const mount = document.getElementById('bifurcatedSections');
   if (!mount) return;
 
-  let html = '', globalIndex = 0;
+  let html = '';
+  let globalIndex = 0;
 
   Object.entries(CATEGORIES).forEach(([catName, items]) => {
     if (curFilter === "Free Only" && catName.includes("(Paid)")) return;
     if (curFilter === "Paid Only" && catName.includes("(Free)")) return;
     if (curFilter !== "All" && curFilter !== "Free Only" && curFilter !== "Paid Only" && !catName.toLowerCase().includes(curFilter.toLowerCase())) return;
 
-    const filteredItems = items.filter(t => !q || t.n.toLowerCase().includes(q) || (t.sec && t.sec.toLowerCase().includes(q)));
+    const filteredItems = items.filter(t =>
+      !q || t.n.toLowerCase().includes(q) || (t.sec && t.sec.toLowerCase().includes(q))
+    );
+
     if (!filteredItems.length) return;
 
     html += `
@@ -733,10 +912,10 @@ function renderDashboardSections() {
         <div class="ig">
           ${filteredItems.map(it => {
             globalIndex++;
-            const toolUrl = (typeof getToolUrl === 'function') ? getToolUrl(it.n) : ('freetools/' + it.n.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.html');
+
             if (typeof paidToolsMap !== 'undefined' && paidToolsMap[it.n]) {
               return `
-                <a href="${toolUrl}" class="it">
+                <a href="${getToolUrl(it.n)}" class="it">
                   ${getThumbHtml(it, globalIndex)}
                   <div style="flex:1">
                     <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
@@ -744,7 +923,9 @@ function renderDashboardSections() {
                   </div>
                   <div class="badge-paid">${inr(it.amt)}</div>
                 </a>`;
-            } else if (it.isPaid) {
+            }
+
+            if (it.isPaid) {
               return `
                 <div class="it" style="cursor:pointer" data-svc="${esc(it.sec + '|' + it.n)}" data-amt="${it.amt}">
                   ${getThumbHtml(it, globalIndex)}
@@ -754,21 +935,20 @@ function renderDashboardSections() {
                   </div>
                   <div class="badge-paid">${inr(it.amt)}</div>
                 </div>`;
-            } else {
-              return `
-                <a href="${toolUrl}" class="it">
-                  ${getThumbHtml(it, globalIndex)}
-                  <div style="flex:1">
-                    <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
-                    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">${esc(catName.split(' ')[0])}</p>
-                  </div>
-                  <div class="badge-free">FREE</div>
-                </a>`;
             }
+
+            return `
+              <a href="${getToolUrl(it.n)}" class="it">
+                ${getThumbHtml(it, globalIndex)}
+                <div style="flex:1">
+                  <h3 style="font-size:0.9rem;margin:0">${esc(it.n)}</h3>
+                  <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">${esc(catName.split(' ')[0])}</p>
+                </div>
+                <div class="badge-free">FREE</div>
+              </a>`;
           }).join('')}
         </div>
-      </details>
-    `;
+      </details>`;
   });
 
   mount.innerHTML = html || '<p style="color:var(--muted);font-size:0.9rem;padding:12px">No tools or services match your search.</p>';
@@ -777,7 +957,8 @@ function renderDashboardSections() {
 function renderDashboard() {
   try {
     const u = user();
-    const o = u.orders || [], cnt = s => o.filter(x => x.s === s).length;
+    const o = u.orders || [];
+    const cnt = s => o.filter(x => x.s === s).length;
     const cats = ["All", "Free Only", "Paid Only", "Vehicle", "Identity", "Tax", "Citizen", "Govt", "PDF", "Photo", "Print", "Documents", "Calculators"];
 
     const dashMount = document.querySelector('[data-v="dashboard"]');
@@ -789,7 +970,6 @@ function renderDashboard() {
           <h1>Welcome back 👋, ${esc(u.name)}</h1>
           <p>Manage your documents, requests and wallet from one place.</p>
         </div>
-
         <div class="top-actions">
           <a class="balance-pill" href="#passbook">Wallet: ${inr(u.bal)}</a>
           <a class="btn btn-primary" href="#addmoney">+ Add Balance</a>
@@ -798,37 +978,22 @@ function renderDashboard() {
 
       <section class="stats">
         <div class="stat">
-          <div class="stat-head">
-            <h3>Wallet Balance</h3>
-            <div class="icon blue">💰</div>
-          </div>
+          <div class="stat-head"><h3>Wallet Balance</h3><div class="icon blue">💰</div></div>
           <div class="stat-value">${inr(u.bal)}</div>
           <div class="stat-note">Available for services</div>
         </div>
-
         <div class="stat">
-          <div class="stat-head">
-            <h3>Total Requests</h3>
-            <div class="icon purple">📄</div>
-          </div>
+          <div class="stat-head"><h3>Total Requests</h3><div class="icon purple">📄</div></div>
           <div class="stat-value">${o.length}</div>
           <div class="stat-note">All service requests</div>
         </div>
-
         <div class="stat">
-          <div class="stat-head">
-            <h3>Pending</h3>
-            <div class="icon orange">⏳</div>
-          </div>
+          <div class="stat-head"><h3>Pending</h3><div class="icon orange">⏳</div></div>
           <div class="stat-value">${cnt('pending')}</div>
           <div class="stat-note">Awaiting action</div>
         </div>
-
         <div class="stat">
-          <div class="stat-head">
-            <h3>Successful</h3>
-            <div class="icon green">✅</div>
-          </div>
+          <div class="stat-head"><h3>Successful</h3><div class="icon green">✅</div></div>
           <div class="stat-value">${cnt('success')}</div>
           <div class="stat-note">Completed requests</div>
         </div>
@@ -837,17 +1002,16 @@ function renderDashboard() {
       <div class="tools-dash-head">
         <div>
           <h2 style="font-size:1.3rem;margin:0">Tools &amp; Services Portal</h2>
-          <p style="color:var(--muted);font-size:0.85rem;margin-top:2px">All free browser tools and paid print services categorized</p>
+          <p style="color:var(--muted);font-size:0.85rem;margin-top:3px">Free browser tools and paid services, all in one place.</p>
         </div>
         <div class="dash-search-bar">
-          <input id="dashToolQ" type="search" placeholder="Search by name (e.g. RC, PDF, PAN)..." aria-label="Search tools">
+          <input id="dashToolQ" type="search" placeholder="Search tools and services..." aria-label="Search tools">
         </div>
       </div>
-      
+
       <div class="dash-cats" id="dashCats">
         ${cats.map(c => `<button type="button" class="${c === curFilter ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}
       </div>
-
       <div id="bifurcatedSections"></div>
     `;
 
@@ -862,7 +1026,9 @@ function renderDashboard() {
         const btn = e.target.closest('[data-cat]');
         if (!btn) return;
         curFilter = btn.dataset.cat;
-        document.querySelectorAll('#dashCats button').forEach(b => b.classList.toggle('on', b.dataset.cat === curFilter));
+        document.querySelectorAll('#dashCats button').forEach(b =>
+          b.classList.toggle('on', b.dataset.cat === curFilter)
+        );
         renderDashboardSections();
       };
     }
@@ -872,9 +1038,11 @@ function renderDashboard() {
 }
 
 function renderHistory() {
-  const u = user(), o = (u.orders || []).slice().sort((a,b) => b.t - a.t);
+  const u = user();
+  const o = (u.orders || []).slice().sort((a,b) => b.t - a.t);
+
   document.querySelector('[data-v="history"]').innerHTML = `
-    <h1 style="margin-bottom:16px; font-size:22px;">Request History</h1>
+    <h1 style="margin-bottom:16px;font-size:22px;">Request History</h1>
     <div class="tw"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead>
     <tbody>${o.map(x => `
       <tr>
@@ -882,32 +1050,35 @@ function renderHistory() {
         <td><b>${esc(x.n)}</b>${x.remark ? `<br><small style="color:var(--muted)">Remark: ${esc(x.remark)}</small>` : ''}</td>
         <td><span class="sb-status s-${esc(x.s)}">${esc(x.s)}</span></td>
         <td>${inr(x.amt)}</td>
-        <td>${x.file ? `<button class="btn btn-light" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:4px 10px;min-height:32px;font-size:.8rem">Download</button>` : '<span style="color:var(--muted)">In progress</span>'}</td>
+        <td>${x.file ? `<button class="btn btn-light" data-dl="${esc(x.id)}" data-fn="${esc(x.file.name)}" style="padding:5px 10px;font-size:.8rem">Download</button>` : '<span style="color:var(--muted)">In progress</span>'}</td>
       </tr>
     `).join('') || '<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}</tbody></table></div>
   `;
 }
 
 function renderPassbook() {
-  const u = user(), tx = (u.tx || []).slice().sort((a,b) => b.t - a.t);
+  const u = user();
+  const tx = (u.tx || []).slice().sort((a,b) => b.t - a.t);
+
   document.querySelector('[data-v="passbook"]').innerHTML = `
-    <h1 style="margin-bottom:16px; font-size:22px;">Passbook Transactions</h1>
+    <h1 style="margin-bottom:16px;font-size:22px;">Passbook Transactions</h1>
     <div class="tw"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead>
     <tbody>${tx.map(t => `
-      <tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td><b>${t.type}</b></td><td><b>${t.type==='credit'?'+':'-'}${inr(t.amt)}</b></td></tr>
+      <tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td><b>${esc(t.type)}</b></td><td><b>${t.type==='credit'?'+':'-'}${inr(t.amt)}</b></td></tr>
     `).join('') || '<tr><td colspan="4" style="text-align:center">No transactions yet.</td></tr>'}</tbody></table></div>
   `;
 }
 
 function renderAddMoney() {
   const u = user();
+
   document.querySelector('[data-v="addmoney"]').innerHTML = `
     <div class="panel-view">
       <h1>Add Money to Wallet</h1>
-      <p style="margin-bottom:14px; color:var(--muted)">Current Balance: <b>${inr(u.bal)}</b></p>
+      <p style="margin-bottom:14px;color:var(--muted)">Current Balance: <b>${inr(u.bal)}</b></p>
       <form id="fAdd">
         <label style="display:block;font-weight:700;margin-bottom:6px;font-size:14px">Amount (Min ₹200)</label>
-        <input id="amt" type="number" min="200" value="500" required style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:16px; outline:none;">
+        <input id="amt" type="number" min="200" value="500" required style="width:100%;height:43px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:16px;outline:none;">
         <button class="btn btn-primary" type="submit" style="width:100%">Pay via UPI</button>
       </form>
     </div>
@@ -917,22 +1088,33 @@ function renderAddMoney() {
 function renderReferral() {
   const u = user();
   const link = location.origin + '/register.html?ref=' + (u.code || '');
+
   document.querySelector('[data-v="referral"]').innerHTML = `
     <div class="panel-view">
       <h1>Refer &amp; Earn</h1>
-      <p style="margin-bottom:14px; color:var(--muted)">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
-      <input readonly value="${esc(link)}" style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:14px; background:#f8fafc;" />
-      <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${esc(link)}');alert('Link copied!')" style="width:100%">Copy Link</button>
+      <p style="margin-bottom:14px;color:var(--muted)">Share your referral link. Earn ₹10 wallet bonus on friend's first recharge.</p>
+      <input readonly value="${esc(link)}" style="width:100%;height:42px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:14px;background:#f8fafc;">
+      <button class="btn btn-primary" id="copyReferral" style="width:100%">Copy Link</button>
     </div>
   `;
+
+  document.getElementById('copyReferral')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(link);
+      alert('Link copied!');
+    } catch {
+      alert('Could not copy link. Please copy it manually.');
+    }
+  });
 }
 
 function renderProfile() {
   const u = user();
+
   document.querySelector('[data-v="profile"]').innerHTML = `
     <div class="panel-view">
       <h1>My Profile</h1>
-      <div style="display:grid; gap:10px; font-size:15px;">
+      <div style="display:grid;gap:10px;font-size:14px;">
         <p><b>Name:</b> ${esc(u.name)}</p>
         <p><b>Mobile:</b> ${esc(u.mob)}</p>
         <p><b>Email:</b> ${esc(u.mail)}</p>
@@ -946,13 +1128,21 @@ function renderContact() {
   document.querySelector('[data-v="contact"]').innerHTML = `
     <div class="panel-view">
       <h1>Contact Support</h1>
-      <p style="margin-bottom:16px; color:var(--muted)">Need help with an order, wallet balance, or custom requirement?</p>
-      <a class="btn btn-primary" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" style="width:100%">Chat on WhatsApp</a>
+      <p style="margin-bottom:16px;color:var(--muted)">Need help with an order, wallet balance, or custom requirement?</p>
+      <a class="btn btn-primary" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" style="width:100%">Chat on WhatsApp</a>
     </div>
   `;
 }
 
-const VIEWS = { dashboard: renderDashboard, history: renderHistory, passbook: renderPassbook, addmoney: renderAddMoney, referral: renderReferral, profile: renderProfile, contact: renderContact };
+const VIEWS = {
+  dashboard: renderDashboard,
+  history: renderHistory,
+  passbook: renderPassbook,
+  addmoney: renderAddMoney,
+  referral: renderReferral,
+  profile: renderProfile,
+  contact: renderContact
+};
 
 function route() {
   try {
@@ -968,86 +1158,150 @@ function route() {
     console.error("Route execution error:", err);
   }
 }
+
 window.addEventListener('hashchange', route);
 
-let curKey = '', curAmt = 0;
+let curKey = '';
+let curAmt = 0;
+
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-svc]');
   if (!btn) return;
+
   curKey = btn.dataset.svc;
   curAmt = Number(btn.dataset.amt);
   const u = user();
   const serviceName = curKey.split('|')[1] || curKey;
-  
+
   document.getElementById('rt').textContent = serviceName;
-  document.getElementById('rp').innerHTML = `Is service ke liye aapke wallet balance se <b style="color:var(--ac); font-size:1.05rem;">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--muted);">Current Balance: ${inr(u.bal)}</small>`;
-  
+  document.getElementById('rp').innerHTML =
+    `Is service ke liye aapke wallet balance se <b style="color:var(--ac);font-size:1.05rem;">${inr(curAmt)}</b> kate jayenge.<br><small style="color:var(--muted);">Current Balance: ${inr(u.bal)}</small>`;
+
   document.getElementById('fRq').innerHTML = `
     <div style="margin-bottom:12px">
-      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
-      <input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; box-sizing:border-box;">
+      <label for="rqDoc" style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Vehicle / Document / Application Number</label>
+      <input id="rqDoc" type="text" required placeholder="Enter number" style="width:100%;height:42px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;">
     </div>
     <div style="margin-bottom:16px">
-      <label style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label>
-      <input id="rqRem" type="text" placeholder="Special instruction" style="width:100%; height:42px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; box-sizing:border-box;">
+      <label for="rqRem" style="display:block;font-weight:700;font-size:.85rem;margin-bottom:4px">Remarks (optional)</label>
+      <input id="rqRem" type="text" placeholder="Special instruction" style="width:100%;height:42px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;">
     </div>
-    <div style="display:flex; gap:10px;">
-      <button type="button" id="btnCancelModal" style="flex:1; height:42px; border:1px solid var(--border); background:#fff; font-weight:700; border-radius:8px; cursor:pointer;">Cancel</button>
-      <button class="btn btn-primary" type="submit" style="flex:1; height:42px;">Confirm &amp; Proceed</button>
+    <div style="display:flex;gap:10px;">
+      <button type="button" id="btnCancelModal" style="flex:1;height:42px;border:1px solid var(--border);background:#fff;font-weight:700;border-radius:8px;cursor:pointer;">Cancel</button>
+      <button class="btn btn-primary" type="submit" style="flex:1;height:42px;">Confirm &amp; Proceed</button>
     </div>
   `;
+
   document.getElementById('rm').style.display = 'flex';
 });
 
-document.getElementById('rx').onclick = () => document.getElementById('rm').style.display = 'none';
+document.getElementById('rx').onclick = () => {
+  document.getElementById('rm').style.display = 'none';
+};
+
 document.addEventListener('click', e => {
-  if (e.target.id === 'btnCancelModal') document.getElementById('rm').style.display = 'none';
+  if (e.target.id === 'btnCancelModal') {
+    document.getElementById('rm').style.display = 'none';
+  }
+
+  if (e.target.id === 'rm') {
+    document.getElementById('rm').style.display = 'none';
+  }
 });
 
 document.getElementById('fRq').onsubmit = async e => {
   e.preventDefault();
+
   const doc = document.getElementById('rqDoc').value.trim();
   const rem = document.getElementById('rqRem').value.trim();
   const u = user();
+
   if (u.bal < curAmt) {
     alert('Insufficient balance. Please add money first.');
     location.hash = '#addmoney';
     document.getElementById('rm').style.display = 'none';
     return;
   }
-  const res = await api('POST', '/api/requests', {
-    k: curKey, sec: curKey.split('|')[0], doc: doc, amt: curAmt, data: { 'Document Number': doc, 'Remarks': rem }
-  });
-  if (!res.ok) { alert('Failed to submit request.'); return; }
-  const j = await res.json();
-  saveUser(j.user);
-  document.getElementById('rm').style.display = 'none';
-  alert('Request submitted successfully!');
-  route();
+
+  try {
+    const res = await api('POST', '/api/requests', {
+      k: curKey,
+      sec: curKey.split('|')[0],
+      doc,
+      amt: curAmt,
+      data: { 'Document Number': doc, 'Remarks': rem }
+    });
+
+    if (!res.ok) {
+      alert('Failed to submit request.');
+      return;
+    }
+
+    const j = await res.json();
+    saveUser(j.user);
+    document.getElementById('rm').style.display = 'none';
+    alert('Request submitted successfully!');
+    route();
+  } catch (err) {
+    console.error(err);
+    alert('Network error. Please try again.');
+  }
 };
 
 document.addEventListener('submit', async e => {
   if (e.target.id !== 'fAdd') return;
+
   e.preventDefault();
   const amt = Number(document.getElementById('amt').value);
-  const res = await api('POST', '/api/topup', { amt });
-  if (res.ok) {
-    const j = await res.json();
-    saveUser(j.user);
-    alert('Wallet recharged: ' + inr(amt));
-    location.hash = '#dashboard';
-    route();
+
+  if (amt < 200) {
+    alert('Minimum top-up amount is ₹200.');
+    return;
+  }
+
+  try {
+    const res = await api('POST', '/api/topup', { amt });
+
+    if (res.ok) {
+      const j = await res.json();
+      saveUser(j.user);
+      alert('Wallet recharged: ' + inr(amt));
+      location.hash = '#dashboard';
+      route();
+    } else {
+      alert('Unable to start wallet recharge. Please try again.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Network error. Please try again.');
   }
 });
 
 document.addEventListener('click', async e => {
   const dl = e.target.closest('[data-dl]');
   if (!dl) return;
-  const r = await fetch(API + '/api/requests/' + encodeURIComponent(dl.dataset.dl) + '/file', { headers: tokenHdr() });
-  if (!r.ok) { alert('File not available.'); return; }
-  const b = await r.blob();
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(b); a.download = dl.dataset.fn || 'result.pdf'; a.click();
+
+  try {
+    const r = await fetch(API + '/api/requests/' + encodeURIComponent(dl.dataset.dl) + '/file', {
+      headers: tokenHdr()
+    });
+
+    if (!r.ok) {
+      alert('File not available.');
+      return;
+    }
+
+    const b = await r.blob();
+    const url = URL.createObjectURL(b);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = dl.dataset.fn || 'result.pdf';
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error(err);
+    alert('Unable to download the file. Please try again.');
+  }
 });
 
 function logout() {
@@ -1055,18 +1309,16 @@ function logout() {
   localStorage.removeItem('ds_token');
   window.location.replace('index.html');
 }
-document.getElementById('btnLogOut').onclick = logout;
+
 document.getElementById('loSb').onclick = logout;
 
-// Safely initialize sidebar categories and start router
-window.addEventListener('DOMContentLoaded', () => {
-  try {
-    setupSidebarCategories();
-  } catch (e) {
-    console.error("Sidebar setup error:", e);
-  }
-  route();
-});
+try {
+  setupSidebarCategories();
+} catch (e) {
+  console.error("Sidebar setup error:", e);
+}
+
+route();
 </script>
 </body>
 </html>
