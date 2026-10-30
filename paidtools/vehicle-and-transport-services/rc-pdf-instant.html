@@ -306,42 +306,36 @@ async function checkAndRestoreStep() {
 
     const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
 
-    if (req.s === 'success') {
+    // RTO / Admin Verification & File Status Logic
+    if (req.file) {
+      // Jab Admin PDF file upload kar dega tabhi spinner hatega aur Download Button show hoga
       clearInterval(pollTimer);
       localStorage.removeItem('ds_current_rc_req');
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'none';
-      document.getElementById('waitTitle').textContent = '✅ OTP Verified & Request Approved!';
+      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
       document.getElementById('waitTitle').style.color = 'var(--ok)';
+      document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
       
-      if (req.file) {
-        document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
-        const btnDl = document.getElementById('btnDownloadPdf');
-        btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
-        document.getElementById('downloadContainer').style.display = 'block';
-      } else {
-        document.getElementById('waitMsg').textContent = 'OTP verify ho chuka hai. Admin dwara PDF document generate/upload kiya ja raha hai.';
-        document.getElementById('downloadContainer').style.display = 'none';
-      }
+      const btnDl = document.getElementById('btnDownloadPdf');
+      btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
+      document.getElementById('downloadContainer').style.display = 'block';
     }
     else if (otpStatus === 'wrong' || req.s === 'failed') {
       clearInterval(pollTimer);
       showWrongOtp();
     }
-    else if (otpStatus === 'waiting_verify' || req.s === 'processing') {
+    else {
+      // Jab tak admin file upload nahi karta (OTP approve ke baad bhi), spinner chalta rahega
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
       document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
-      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+      document.getElementById('waitTitle').style.color = 'var(--ac)';
+      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai & document generate ho raha hai. Kripya pratiksha karein.';
       document.getElementById('downloadContainer').style.display = 'none';
       startStatusPolling();
-    }
-    else {
-      document.getElementById('step3Waiting').style.display = 'none';
-      document.getElementById('step2Otp').style.display = 'block';
-      document.getElementById('otpErrMsg').style.display = 'none';
     }
   } catch (err) {
     console.error('Restore step error:', err);
@@ -489,7 +483,7 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
   document.getElementById('waitSpinner').style.display = 'block';
   document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
   document.getElementById('waitTitle').style.color = 'var(--ac)';
-  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai & document generate ho raha hai. Kripya pratiksha karein.';
   document.getElementById('downloadContainer').style.display = 'none';
 
   startStatusPolling();
@@ -520,24 +514,20 @@ function startStatusPolling() {
         return;
       }
 
-      if (req.s === 'success') {
+      // Exact requirement: Jab tak Admin File upload nahi kar deta, spinner dikhta rahega.
+      if (req.file) {
         clearInterval(pollTimer);
         localStorage.removeItem('ds_current_rc_req');
         document.getElementById('step2Otp').style.display = 'none';
         document.getElementById('step3Waiting').style.display = 'block';
         document.getElementById('waitSpinner').style.display = 'none';
-        document.getElementById('waitTitle').textContent = '✅ OTP Verified & Request Approved!';
+        document.getElementById('waitTitle').textContent = '✅ RC PDF Ready for Download!';
         document.getElementById('waitTitle').style.color = 'var(--ok)';
+        document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
         
-        if (req.file) {
-          document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
-          const btnDl = document.getElementById('btnDownloadPdf');
-          btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
-          document.getElementById('downloadContainer').style.display = 'block';
-        } else {
-          document.getElementById('waitMsg').textContent = 'OTP verify ho chuka hai. Admin dwara PDF document generate/upload kiya ja raha hai.';
-          document.getElementById('downloadContainer').style.display = 'none';
-        }
+        const btnDl = document.getElementById('btnDownloadPdf');
+        btnDl.onclick = (e) => downloadFile(req.id, req.file.name, e.target);
+        document.getElementById('downloadContainer').style.display = 'block';
         
         renderHistoryTable();
         return;
