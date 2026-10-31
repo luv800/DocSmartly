@@ -70,9 +70,8 @@ const freeToolsMap = {
 const paidToolsMap = {
   // RC Services
   "RC PDF INSTANT": "vehicle-and-transport-services/rc-pdf-instant.html",
-  "RC PDF Server 1": "vehicle-and-transport-services/rc-pdf-instant.html",
-  "RC PDF Server 2": "vehicle-and-transport-services/rc-pdf-instant.html",
-  "RC Full Details": "vehicle-and-transport-services/rc-full-details.html",
+  "Vehicle Verification & Details": "vehicle-and-transport-services/vehicle-full-details.html",
+  "Change RC Mobile Number": "vehicle-and-transport-services/change-rc-mobile-number.html",
 
   // DL & LL Services
   "DL PDF INSTANT": "vehicle-and-transport-services/dl-pdf-instant.html",
