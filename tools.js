@@ -72,6 +72,7 @@ const paidToolsMap = {
   "RC PDF INSTANT": "vehicle-and-transport-services/rc-pdf-instant.html",
   "Vehicle Verification & Details": "vehicle-and-transport-services/vehicle-full-details.html",
   "Change RC Mobile Number": "vehicle-and-transport-services/change-rc-mobile-number.html",
+  "Vehicle Aadhaar Update (Changed)": "vehicle-and-transport-services/vehicle-aadhaar-update.html",
 
   // DL & LL Services
   "DL PDF INSTANT": "vehicle-and-transport-services/dl-pdf-instant.html",
