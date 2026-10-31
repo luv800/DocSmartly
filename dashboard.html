@@ -50,7 +50,7 @@
 
     <!-- Navigation Menu -->
     <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 text-sm font-medium">
-        <a href="dashboard.html" class="flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20">
+        <a href="#dashboard" onclick="switchTab('dashboard')" class="flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20">
             <i class="fa-solid fa-house w-5 text-center"></i> Dashboard
         </a>
         <a href="#history" onclick="switchTab('history')" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
@@ -72,13 +72,12 @@
             <i class="fa-solid fa-headset w-5 text-center"></i> Contact Support
         </a>
 
-        <!-- Section Title: SERVICES WITH DROPDOWN -->
+        <!-- Section Title: SERVICES DROPDOWN -->
         <div class="pt-6 pb-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center justify-between">
             <span>Services & Tools</span>
             <i class="fa-solid fa-chevron-down text-[10px]"></i>
         </div>
         
-        <!-- SERVICES DROPDOWN CONTAINER -->
         <div class="space-y-1 pl-2">
             <div class="rounded-xl overflow-hidden">
                 <button onclick="toggleDropdown('vehicle-dropdown', 'vehicle-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
@@ -86,10 +85,10 @@
                     <i id="vehicle-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                 </button>
                 <div id="vehicle-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">RC PDF Instant</a>
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">RC Full Details</a>
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Chassis to RC</a>
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Challan Details</a>
+                    <a href="#section-vehicle" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">RC Services</a>
+                    <a href="#section-vehicle" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">RC Full Details</a>
+                    <a href="#section-vehicle" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Chassis To RC</a>
+                    <a href="#section-vehicle" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Challan Details</a>
                 </div>
             </div>
 
@@ -99,10 +98,34 @@
                     <i id="licence-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                 </button>
                 <div id="licence-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">DL Services</a>
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Voter Services</a>
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Aadhaar & Ration</a>
-                    <a href="#services" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">LL Services</a>
+                    <a href="#section-licence" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">DL Services</a>
+                    <a href="#section-licence" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Voter Services</a>
+                    <a href="#section-licence" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Aadhaar & Ration</a>
+                    <a href="#section-licence" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">LL Services</a>
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden">
+                <button onclick="toggleDropdown('tax-dropdown', 'tax-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-file-invoice-dollar w-5 text-center text-amber-400"></i> PAN, Tax & Business</span>
+                    <i id="tax-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                </button>
+                <div id="tax-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                    <a href="#section-tax" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">PAN Services</a>
+                    <a href="#section-tax" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Udyam Services</a>
+                    <a href="#section-tax" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">GST Services</a>
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden">
+                <button onclick="toggleDropdown('pdf-dropdown', 'pdf-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-file-pdf w-5 text-center text-red-400"></i> PDF & Image Tools</span>
+                    <i id="pdf-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                </button>
+                <div id="pdf-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                    <a href="#section-pdf" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">JPG / PNG to PDF</a>
+                    <a href="#section-pdf" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">PDF Merge & Split</a>
+                    <a href="#section-pdf" onclick="switchTab('dashboard')" class="block py-1.5 hover:text-white transition">Background Remover</a>
                 </div>
             </div>
         </div>
@@ -138,7 +161,7 @@
             <button onclick="openAddBalanceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md shadow-blue-600/20 flex items-center gap-2 transition">
                 <i class="fa-solid fa-plus text-xs"></i> + Add Balance
             </button>
-            <div id="userInitials" class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center border-2 border-white shadow">
+            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center border-2 border-white shadow">
                 LK
             </div>
         </div>
@@ -149,10 +172,11 @@
 
         <!-- TAB 1: DASHBOARD OVERVIEW -->
         <div id="tab-dashboard" class="space-y-6">
+            <!-- WELCOME BANNER -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
-                        Welcome back <span class="inline-block animate-bounce">👋</span>, <span id="userNameDisplay">Love Kumar Lalawat</span>
+                        Welcome back <span class="inline-block animate-bounce">👋</span>, Love Kumar Lalawat
                     </h2>
                     <p class="text-slate-500 text-sm mt-1">Manage your documents, requests and wallet from one place.</p>
                 </div>
@@ -196,7 +220,7 @@
                 </div>
             </div>
 
-            <!-- SERVICES PORTAL HEADER -->
+            <!-- TOOLS & SERVICES PORTAL HEADER -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
                 <div>
                     <h2 class="text-xl font-bold text-slate-900">Everything your print shop needs</h2>
@@ -209,10 +233,11 @@
                 </div>
             </div>
 
-            <!-- ALL SERVICES CONTAINER -->
+            <!-- ALL SERVICES SECTION -->
             <div id="services-container" class="space-y-8">
-                <!-- Vehicle & Transport Services -->
-                <div class="service-section space-y-4" data-category="paid">
+                
+                <!-- 1. VEHICLE & TRANSPORT -->
+                <div id="section-vehicle" class="service-section space-y-4">
                     <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                         <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-car text-blue-600"></i> Vehicle & Transport Services</h3>
                         <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
@@ -276,8 +301,8 @@
                     </div>
                 </div>
 
-                <!-- Licence & Identity Services -->
-                <div class="service-section space-y-4" data-category="paid">
+                <!-- 2. LICENCE & IDENTITY -->
+                <div id="section-licence" class="service-section space-y-4">
                     <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                         <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-id-card text-emerald-600"></i> Licence & Identity Services</h3>
                         <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
@@ -305,8 +330,215 @@
                                 <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
                             </div>
                         </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Aadhaar & Ration', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-fingerprint"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Aadhaar & Ration</h4>
+                                <p class="text-xs text-slate-500 mt-1">2 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('LL Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-shield"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">LL Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">2 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Mobile Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-mobile-screen"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Mobile Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- 3. PAN, TAX & BUSINESS -->
+                <div id="section-tax" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-amber-600"></i> PAN, Tax & Business Services</h3>
+                        <span class="bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full">4 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('PAN Services', 'From ₹40')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-id-card-clip"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">PAN Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹40</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Udyam Services', 'From ₹100')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-shop"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Udyam Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹100</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('GST Services', 'From ₹50')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-percent"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">GST Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">2 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹50</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('TAN Verification', 'From ₹50')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-shield"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">TAN Verification</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹50</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. PDF & IMAGE TOOLS -->
+                <div id="section-pdf" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-file-pdf text-red-600"></i> PDF & Image Tools</h3>
+                        <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('JPG / PNG To PDF', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-image"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">JPG / PNG To PDF</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('PDF Merge', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-object-ungroup"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">PDF Merge</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('PDF Split & Extract', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-scissors"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">PDF Split & Extract</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Background Remover', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Background Remover</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('ID Card Maker', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-address-card"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">ID Card Maker</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. CALCULATORS & UTILITIES -->
+                <div id="section-calc" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-calculator text-indigo-600"></i> Calculators & Utilities</h3>
+                        <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">4 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('GST Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-calculator"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">GST Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Salary Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-money-bill-wave"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Salary Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Percentage Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-percent"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Percentage Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Loan / EMI Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-landmark"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Loan / EMI Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -326,10 +558,10 @@
                                 <th class="p-3 text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="historyTableBody" class="text-sm">
+                        <tbody class="text-sm">
                             <tr class="border-b border-slate-100">
                                 <td class="p-3 text-slate-500 text-xs">28 Oct 2026</td>
-                                <td class="p-3 font-semibold text-slate-900">RC PDF Instant (RJ14AB1234)</td>
+                                <td class="p-3 font-semibold text-slate-900">RC Services (RJ14AB1234)</td>
                                 <td class="p-3"><span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-bold">Success</span></td>
                                 <td class="p-3 font-bold text-slate-900">₹40</td>
                                 <td class="p-3 text-right"><button onclick="showToast('Downloading file...')" class="text-blue-600 hover:underline font-semibold text-xs"><i class="fa-solid fa-download"></i> Download</button></td>
@@ -355,7 +587,7 @@
                                 <th class="p-3 text-right">Amount</th>
                             </tr>
                         </thead>
-                        <tbody id="passbookTableBody" class="text-sm">
+                        <tbody class="text-sm">
                             <tr class="border-b border-slate-100">
                                 <td class="p-3 text-slate-500 text-xs">28 Oct 2026</td>
                                 <td class="p-3 font-semibold text-slate-900">Wallet Recharge via UPI</td>
@@ -393,15 +625,15 @@
                 <div class="space-y-3 text-sm">
                     <div>
                         <label class="block text-xs font-bold text-slate-500 mb-1">Full Name</label>
-                        <input type="text" id="profileName" value="Love Kumar Lalawat" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
+                        <input type="text" value="Love Kumar Lalawat" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-500 mb-1">Mobile Number</label>
-                        <input type="text" id="profileMobile" value="7300277557" readonly class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
+                        <input type="text" value="7300277557" readonly class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-500 mb-1">Email Address</label>
-                        <input type="email" id="profileEmail" value="lovekumar@docsmartly.in" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
+                        <input type="email" value="lovekumar@docsmartly.in" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
                     </div>
                     <button onclick="showToast('Profile updated successfully!')" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold text-xs shadow transition">Save Changes</button>
                 </div>
