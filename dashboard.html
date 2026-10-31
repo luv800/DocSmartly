@@ -32,931 +32,798 @@
         ::-webkit-scrollbar-thumb { background: #2a3447; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
 
-            /* Exact DocSmartly SVG Thumbnail Styling */
-    .sv {
-        position: relative;
-        aspect-ratio: 16/10;
-        border-radius: 10px;
-        overflow: hidden;
-        background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t, #dbe7ff), #fff);
-        display: block;
-        width: 100%;
-    }
-    .art {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        filter: drop-shadow(0 4px 5px rgba(19,35,63,.20));
-    }
-    .art text { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-    .fa { fill: var(--a, #2457d6); }
-    .fb { fill: var(--b, #16337a); }
-    .fw { fill: #fff; }
-    .fl { fill: #dbe4f3; }
-    .fk { fill: #13233f; }
-    .fy { fill: #f5c451; }
-    .fg { fill: #16a34a; }
-    .fr { fill: #dc2626; }
-    .fm { fill: #8a93a6; }
-    .fo { fill: #fff; fill-opacity: .4; }
-    .sa { fill: none; stroke: var(--a, #2457d6); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-    .sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+        /* Exact DocSmartly SVG Thumbnail Styling */
+        .sv {
+            position: relative;
+            aspect-ratio: 16/10;
+            border-radius: 10px;
+            overflow: hidden;
+            background: radial-gradient(rgba(19,35,63,.08) 1px, transparent 1.5px) 0 0/12px 12px, linear-gradient(135deg, var(--t, #dbe7ff), #fff);
+            display: block;
+            width: 100%;
+        }
+        .art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 5px rgba(19,35,63,.20));
+        }
+        .art text { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+        .fa { fill: var(--a, #2457d6); }
+        .fb { fill: var(--b, #16337a); }
+        .fw { fill: #fff; }
+        .fl { fill: #dbe4f3; }
+        .fk { fill: #13233f; }
+        .fy { fill: #f5c451; }
+        .fg { fill: #16a34a; }
+        .fr { fill: #dc2626; }
+        .fm { fill: #8a93a6; }
+        .fo { fill: #fff; fill-opacity: .4; }
+        .sa { fill: none; stroke: var(--a, #2457d6); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+        .sw { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
-    .service-card {
-        transition: transform .2s, box-shadow .2s, border-color .2s;
-    }
-    .service-card:hover {
-        transform: translateY(-3px);
-        border-color: #2457d6;
-        box-shadow: 0 12px 24px -14px rgba(36,87,214,.45);
-    }
-    .hit-highlight {
-        border-color: #2457d6 !important;
-        box-shadow: 0 0 0 4px #a9c4ff !important;
-    }
-</style>
+        .service-card {
+            transition: transform .2s, box-shadow .2s, border-color .2s;
+        }
+        .service-card:hover {
+            transform: translateY(-3px);
+            border-color: #2457d6;
+            box-shadow: 0 12px 24px -14px rgba(36,87,214,.45);
+        }
+    </style>
+</head>
+<body class="bg-[#f5f8ff] text-slate-800 antialiased h-screen overflow-hidden flex">
 
-
-<!-- SIDEBAR -->
-<aside id="sidebar" class="w-72 bg-sidebar flex-shrink-0 flex flex-col h-full text-slate-300 transition-all duration-300 z-30 fixed lg:static -translate-x-full lg:translate-x-0 shadow-2xl">
-    <!-- Brand Logo -->
-    <div class="flex items-center justify-between px-5 py-5 border-b border-slate-800">
-        <a href="index.html" class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">D</div>
-            <span class="text-white text-xl font-extrabold tracking-tight">DocSmartly</span>
-        </a>
-        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white text-lg focus:outline-none">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-
-    <!-- Navigation Menu -->
-    <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 text-sm font-medium">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20 text-left">
-            <i class="fa-solid fa-table-cells-large w-5 text-center"></i> Dashboard
-        </button>
-        <button onclick="switchTab('history')" id="nav-history" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
-            <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Request History
-        </button>
-        <button onclick="switchTab('passbook')" id="nav-passbook" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
-            <i class="fa-solid fa-book w-5 text-center"></i> Passbook
-        </button>
-        <button onclick="openAddBalanceModal()" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
-            <i class="fa-solid fa-circle-plus w-5 text-center text-emerald-400"></i> Add Balance
-        </button>
-        <button onclick="switchTab('referral')" id="nav-referral" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
-            <i class="fa-solid fa-gift w-5 text-center text-amber-400"></i> Refer & Earn
-        </button>
-        <button onclick="switchTab('profile')" id="nav-profile" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
-            <i class="fa-solid fa-user w-5 text-center"></i> My Profile
-        </button>
-        <a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
-            <i class="fa-brands fa-whatsapp w-5 text-center text-emerald-400 text-base"></i> WhatsApp Support
-        </a>
-
-        <!-- DYNAMIC PAID SERVICES SIDEBAR -->
-        <div class="pt-5 pb-1 px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-            Paid Services (<span id="sbPaidCount">0</span>)
-        </div>
-        <div id="sidebar-paid-links" class="space-y-0.5"></div>
-
-        <!-- DYNAMIC FREE TOOLS SIDEBAR -->
-        <div class="pt-5 pb-1 px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-            Free Online Tools (<span id="sbFreeCount">0</span>)
-        </div>
-        <div id="sidebar-free-links" class="space-y-0.5 pb-6"></div>
-    </div>
-
-    <div class="p-3 border-t border-slate-800">
-        <button onclick="logoutUser()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-rose-500/10 text-rose-400 hover:text-rose-300 transition text-sm font-semibold">
-            <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Log Out
-        </button>
-    </div>
-</aside>
-
-<!-- MAIN CONTENT AREA -->
-<div class="flex-1 flex flex-col h-full overflow-hidden">
-    
-    <!-- TOP HEADER -->
-    <header class="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex items-center justify-between flex-shrink-0 z-20 shadow-sm">
-        <div class="flex items-center gap-3 flex-1 max-w-xl">
-            <button onclick="toggleSidebar()" class="lg:hidden text-slate-700 hover:text-blue-600 text-xl p-2 rounded-lg border border-slate-200">
-                <i class="fa-solid fa-bars"></i>
+    <!-- SIDEBAR (Fixed Height & Position) -->
+    <aside id="sidebar" class="w-72 bg-sidebar flex-shrink-0 flex flex-col h-full text-slate-300 transition-all duration-300 z-30 fixed lg:static inset-y-0 left-0 -translate-x-full lg:translate-x-0 shadow-2xl">
+        <!-- Brand Logo -->
+        <div class="flex items-center justify-between px-5 py-5 border-b border-slate-800 flex-shrink-0">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">D</div>
+                <span class="text-white text-xl font-extrabold tracking-tight">DocSmartly</span>
+            </a>
+            <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white text-lg focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="relative w-full">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
-                </span>
-                <input type="search" id="globalSearch" placeholder="Search 100+ RC, DL, Voter, PAN & Free PDF/Photo tools..." oninput="handleGlobalSearch(this.value)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 bg-slate-50/80">
-            </div>
         </div>
+
+        <!-- Navigation Menu -->
+        <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 text-sm font-medium">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20 text-left">
+                <i class="fa-solid fa-table-cells-large w-5 text-center"></i> Dashboard
+            </button>
+            <button onclick="switchTab('history')" id="nav-history" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Request History
+            </button>
+            <button onclick="switchTab('passbook')" id="nav-passbook" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-book w-5 text-center"></i> Passbook
+            </button>
+            <button onclick="openAddBalanceModal()" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-circle-plus w-5 text-center text-emerald-400"></i> Add Balance
+            </button>
+            <button onclick="switchTab('referral')" id="nav-referral" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-gift w-5 text-center text-amber-400"></i> Refer & Earn
+            </button>
+            <button onclick="switchTab('profile')" id="nav-profile" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-user w-5 text-center"></i> My Profile
+            </button>
+            <a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-brands fa-whatsapp w-5 text-center text-emerald-400 text-base"></i> WhatsApp Support
+            </a>
+
+            <!-- DYNAMIC PAID SERVICES SIDEBAR -->
+            <div class="pt-5 pb-1 px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                Paid Services (<span id="sbPaidCount">0</span>)
+            </div>
+            <div id="sidebar-paid-links" class="space-y-0.5"></div>
+
+            <!-- DYNAMIC FREE TOOLS SIDEBAR -->
+            <div class="pt-5 pb-1 px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                Free Online Tools (<span id="sbFreeCount">0</span>)
+            </div>
+            <div id="sidebar-free-links" class="space-y-0.5 pb-6"></div>
+        </div>
+
+        <div class="p-3 border-t border-slate-800 flex-shrink-0">
+            <button onclick="logoutUser()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-rose-500/10 text-rose-400 hover:text-rose-300 transition text-sm font-semibold">
+                <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Log Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         
-        <div class="flex items-center gap-2.5 sm:gap-3 ml-3">
-            <div onclick="switchTab('passbook')" class="cursor-pointer flex items-center gap-2 bg-blue-50 hover:bg-blue-100/80 px-3.5 py-2 rounded-xl border border-blue-200 transition">
-                <i class="fa-solid fa-wallet text-blue-600 text-xs sm:text-sm"></i>
-                <span class="text-xs text-slate-600 font-semibold hidden md:inline">Wallet:</span>
-                <span id="headerWalletBal" class="text-xs sm:text-sm font-extrabold text-slate-900">₹9,490</span>
+        <!-- TOP HEADER -->
+        <header class="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex items-center justify-between flex-shrink-0 z-20 shadow-sm">
+            <div class="flex items-center gap-3 flex-1 max-w-xl">
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-700 hover:text-blue-600 text-xl p-2 rounded-lg border border-slate-200">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input type="search" id="globalSearch" placeholder="Search 100+ RC, DL, Voter, PAN & Free PDF/Photo tools..." oninput="handleGlobalSearch(this.value)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 bg-slate-50/80">
+                </div>
             </div>
-            <button onclick="openAddBalanceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-blue-600/20 flex items-center gap-1.5 transition">
-                <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Add Money</span>
-            </button>
-            <button onclick="switchTab('profile')" id="userAvatar" class="w-9 h-9 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center border-2 border-white shadow">
-                LK
-            </button>
-        </div>
-    </header>
-
-    <!-- DASHBOARD SCROLLABLE CONTAINER -->
-    <main id="mainScroll" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
-
-        <!-- TAB 1: DASHBOARD OVERVIEW -->
-        <div id="tab-dashboard" class="space-y-6 max-w-[1440px] mx-auto">
             
-            <!-- GREETING BANNER -->
-            <div class="bg-[#13233f] text-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div>
-                    <span id="greetingText" class="text-blue-300 text-xs font-bold uppercase tracking-wider">Good Afternoon</span>
-                    <h1 id="userNameTitle" class="text-2xl sm:text-3xl font-extrabold mt-0.5">Love Kumar Lalawat</h1>
-                    <p class="text-slate-300 text-xs sm:text-sm mt-1">All 38+ Paid Print Services & 62+ Free Online Browser Tools are active and ready.</p>
+            <div class="flex items-center gap-2.5 sm:gap-3 ml-3">
+                <div onclick="switchTab('passbook')" class="cursor-pointer flex items-center gap-2 bg-blue-50 hover:bg-blue-100/80 px-3.5 py-2 rounded-xl border border-blue-200 transition">
+                    <i class="fa-solid fa-wallet text-blue-600 text-xs sm:text-sm"></i>
+                    <span class="text-xs text-slate-600 font-semibold hidden md:inline">Wallet:</span>
+                    <span id="headerWalletBal" class="text-xs sm:text-sm font-extrabold text-slate-900">₹9,490</span>
                 </div>
-                <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end bg-white/10 border border-white/15 px-5 py-3.5 rounded-xl backdrop-blur-sm">
+                <button onclick="openAddBalanceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-blue-600/20 flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Add Money</span>
+                </button>
+                <button onclick="switchTab('profile')" id="userAvatar" class="w-9 h-9 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center border-2 border-white shadow">
+                    LK
+                </button>
+            </div>
+        </header>
+
+        <!-- DASHBOARD SCROLLABLE CONTAINER -->
+        <main id="mainScroll" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+            <!-- TAB 1: DASHBOARD OVERVIEW -->
+            <div id="tab-dashboard" class="space-y-6 max-w-[1440px] mx-auto">
+                
+                <!-- GREETING BANNER -->
+                <div class="bg-[#13233f] text-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div>
-                        <p class="text-[11px] text-blue-200 uppercase font-semibold">Wallet Balance</p>
-                        <p id="bannerWalletBal" class="text-2xl font-extrabold text-white">₹9,490</p>
+                        <span id="greetingText" class="text-blue-300 text-xs font-bold uppercase tracking-wider">Good Afternoon</span>
+                        <h1 id="userNameTitle" class="text-2xl sm:text-3xl font-extrabold mt-0.5">Love Kumar Lalawat</h1>
+                        <p class="text-slate-300 text-xs sm:text-sm mt-1">All 38+ Paid Print Services & 62+ Free Online Browser Tools are active and ready.</p>
                     </div>
-                    <div class="flex gap-2 ml-3">
-                        <button onclick="openAddBalanceModal()" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow" title="Add Money">
-                            <i class="fa-solid fa-plus"></i>
+                    <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end bg-white/10 border border-white/15 px-5 py-3.5 rounded-xl backdrop-blur-sm">
+                        <div>
+                            <p class="text-[11px] text-blue-200 uppercase font-semibold">Wallet Balance</p>
+                            <p id="bannerWalletBal" class="text-2xl font-extrabold text-white">₹9,490</p>
+                        </div>
+                        <div class="flex gap-2 ml-3">
+                            <button onclick="openAddBalanceModal()" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow" title="Add Money">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button onclick="switchTab('passbook')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center" title="Passbook">
+                                <i class="fa-solid fa-book"></i>
+                            </button>
+                            <button onclick="switchTab('referral')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center" title="Refer & Earn">
+                                <i class="fa-solid fa-gift"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5 STATS CARDS GRID -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                        <span class="text-slate-500 font-semibold text-xs">Total Tools & Services</span>
+                        <h3 id="statTotalServices" class="text-2xl font-extrabold text-blue-700 mt-1">100+</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">38 Paid · 62+ Free</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                        <span class="text-slate-500 font-semibold text-xs">Total Requests</span>
+                        <h3 id="statTotalReq" class="text-2xl font-extrabold text-slate-900 mt-1">25</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">All time orders</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                        <span class="text-slate-500 font-semibold text-xs">Pending / Processing</span>
+                        <h3 id="statPendingReq" class="text-2xl font-extrabold text-amber-600 mt-1">0</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Awaiting output</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                        <span class="text-slate-500 font-semibold text-xs">Successful</span>
+                        <h3 id="statSuccessReq" class="text-2xl font-extrabold text-emerald-600 mt-1">24</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Ready in History</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 col-span-2 sm:col-span-1">
+                        <span class="text-slate-500 font-semibold text-xs">Failed / Refunded</span>
+                        <h3 id="statFailedReq" class="text-2xl font-extrabold text-rose-600 mt-1">1</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">100% Auto-refunded</p>
+                    </div>
+                </div>
+
+                <!-- FILTER BAR & EXPAND/COLLAPSE -->
+                <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl">
+                        <button onclick="filterServices('all')" id="filter-all" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm transition">All (100+)</button>
+                        <button onclick="filterServices('paid')" id="filter-paid" class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">Paid Services (38)</button>
+                        <button onclick="filterServices('free')" id="filter-free" class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">Free Tools (62+)</button>
+                        <button onclick="filterServices('fav')" id="filter-fav" class="px-4 py-1.5 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 transition flex items-center gap-1">
+                            <i class="fa-solid fa-heart"></i> Favourites (<span id="favFilterCount">0</span>)
                         </button>
-                        <button onclick="switchTab('passbook')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center" title="Passbook">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <button onclick="switchTab('referral')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center" title="Refer & Earn">
-                            <i class="fa-solid fa-gift"></i>
-                        </button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleAllSections(true)" class="text-xs font-bold text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200 transition">Expand All</button>
+                        <button onclick="toggleAllSections(false)" class="text-xs font-bold text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 transition">Collapse All</button>
+                    </div>
+                </div>
+
+                <!-- MY FAVOURITES SECTION -->
+                <div id="favourites-wrapper" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-heart text-rose-500"></i> My Favourites (<span id="favCountHeader">0</span>)
+                        </h2>
+                        <span class="text-xs text-slate-400">Tap the heart icon on any card to pin it here</span>
+                    </div>
+                    <div id="favourites-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5"></div>
+                </div>
+
+                <!-- PAID SERVICES CONTAINER -->
+                <div id="paid-services-wrapper" class="space-y-4">
+                    <div class="flex items-center justify-between pt-2">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">All Paid Print & Citizen Services</h2>
+                            <p class="text-xs text-slate-500">Instant PDF download & verified operator services</p>
+                        </div>
+                    </div>
+                    <div id="paid-sections-container" class="space-y-4"></div>
+                </div>
+
+                <!-- TRENDING & FREE TOOLS CONTAINER -->
+                <div id="free-tools-wrapper" class="space-y-4 pt-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">62+ Free Online Tools (No Watermark)</h2>
+                            <p class="text-xs text-slate-500">Runs directly in your browser — click any tool to open it immediately</p>
+                        </div>
+                    </div>
+                    <div id="free-sections-container" class="space-y-4"></div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: HISTORY -->
+            <div id="tab-history" class="space-y-6 hidden max-w-[1440px] mx-auto">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Request History</h2>
+                            <p class="text-slate-500 text-xs sm:text-sm">Every request and its result. Download or print your result anytime.</p>
+                        </div>
+                        <button onclick="switchTab('dashboard')" class="text-xs font-bold text-blue-600 hover:underline">← Back to Dashboard</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
+                                    <th class="p-3.5">Date</th>
+                                    <th class="p-3.5">Service & Details</th>
+                                    <th class="p-3.5">Status</th>
+                                    <th class="p-3.5">Amount</th>
+                                    <th class="p-3.5 text-right">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody" class="text-sm divide-y divide-slate-100"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 5 STATS CARDS GRID -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-                    <span class="text-slate-500 font-semibold text-xs">Total Tools & Services</span>
-                    <h3 id="statTotalServices" class="text-2xl font-extrabold text-blue-700 mt-1">100+</h3>
-                    <p class="text-[11px] text-slate-400 mt-0.5">38 Paid · 62+ Free</p>
-                </div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-                    <span class="text-slate-500 font-semibold text-xs">Total Requests</span>
-                    <h3 id="statTotalReq" class="text-2xl font-extrabold text-slate-900 mt-1">25</h3>
-                    <p class="text-[11px] text-slate-400 mt-0.5">All time orders</p>
-                </div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-                    <span class="text-slate-500 font-semibold text-xs">Pending / Processing</span>
-                    <h3 id="statPendingReq" class="text-2xl font-extrabold text-amber-600 mt-1">0</h3>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Awaiting output</p>
-                </div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-                    <span class="text-slate-500 font-semibold text-xs">Successful</span>
-                    <h3 id="statSuccessReq" class="text-2xl font-extrabold text-emerald-600 mt-1">24</h3>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Ready in History</p>
-                </div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 col-span-2 sm:col-span-1">
-                    <span class="text-slate-500 font-semibold text-xs">Failed / Refunded</span>
-                    <h3 id="statFailedReq" class="text-2xl font-extrabold text-rose-600 mt-1">1</h3>
-                    <p class="text-[11px] text-slate-400 mt-0.5">100% Auto-refunded</p>
-                </div>
-            </div>
-
-            <!-- FILTER BAR & EXPAND/COLLAPSE -->
-            <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl">
-                    <button onclick="filterServices('all')" id="filter-all" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm transition">All (100+)</button>
-                    <button onclick="filterServices('paid')" id="filter-paid" class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">Paid Services (38)</button>
-                    <button onclick="filterServices('free')" id="filter-free" class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">Free Tools (62+)</button>
-                    <button onclick="filterServices('fav')" id="filter-fav" class="px-4 py-1.5 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 transition flex items-center gap-1">
-                        <i class="fa-solid fa-heart"></i> Favourites (<span id="favFilterCount">0</span>)
-                    </button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="toggleAllSections(true)" class="text-xs font-bold text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200 transition">Expand All</button>
-                    <button onclick="toggleAllSections(false)" class="text-xs font-bold text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 transition">Collapse All</button>
-                </div>
-            </div>
-
-            <!-- MY FAVOURITES SECTION -->
-            <div id="favourites-wrapper" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-heart text-rose-500"></i> My Favourites (<span id="favCountHeader">0</span>)
-                    </h2>
-                    <span class="text-xs text-slate-400">Tap the heart icon on any card to pin it here</span>
-                </div>
-                <div id="favourites-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5"></div>
-            </div>
-
-            <!-- PAID SERVICES CONTAINER -->
-            <div id="paid-services-wrapper" class="space-y-4">
-                <div class="flex items-center justify-between pt-2">
-                    <div>
-                        <h2 class="text-xl font-extrabold text-slate-900">All Paid Print & Citizen Services</h2>
-                        <p class="text-xs text-slate-500">Instant PDF download & verified operator services</p>
+            <!-- TAB 3: PASSBOOK -->
+            <div id="tab-passbook" class="space-y-6 hidden max-w-[1440px] mx-auto">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Passbook & Wallet Transactions</h2>
+                            <p class="text-slate-500 text-xs sm:text-sm">Complete record of wallet top-ups and service deductions.</p>
+                        </div>
+                        <button onclick="switchTab('dashboard')" class="text-xs font-bold text-blue-600 hover:underline">← Back to Dashboard</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
+                                    <th class="p-3.5">Date</th>
+                                    <th class="p-3.5">Transaction Details</th>
+                                    <th class="p-3.5">Type</th>
+                                    <th class="p-3.5 text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="passbookTableBody" class="text-sm divide-y divide-slate-100"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div id="paid-sections-container" class="space-y-4"></div>
             </div>
 
-            <!-- TRENDING & FREE TOOLS CONTAINER -->
-            <div id="free-tools-wrapper" class="space-y-4 pt-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-xl font-extrabold text-slate-900">62+ Free Online Tools (No Watermark)</h2>
-                        <p class="text-xs text-slate-500">Runs directly in your browser — click any tool to open it immediately</p>
-                    </div>
-                </div>
-                <div id="free-sections-container" class="space-y-4"></div>
-            </div>
-
-        </div>
-
-        <!-- TAB 2: HISTORY -->
-        <div id="tab-history" class="space-y-6 hidden max-w-[1440px] mx-auto">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h2 class="text-xl font-extrabold text-slate-900">Request History</h2>
-                        <p class="text-slate-500 text-xs sm:text-sm">Every request and its result. Download or print your result anytime.</p>
-                    </div>
-                    <button onclick="switchTab('dashboard')" class="text-xs font-bold text-blue-600 hover:underline">← Back to Dashboard</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
-                                <th class="p-3.5">Date</th>
-                                <th class="p-3.5">Service & Details</th>
-                                <th class="p-3.5">Status</th>
-                                <th class="p-3.5">Amount</th>
-                                <th class="p-3.5 text-right">Result</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyTableBody" class="text-sm divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: PASSBOOK -->
-        <div id="tab-passbook" class="space-y-6 hidden max-w-[1440px] mx-auto">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h2 class="text-xl font-extrabold text-slate-900">Passbook & Wallet Transactions</h2>
-                        <p class="text-slate-500 text-xs sm:text-sm">Complete record of wallet top-ups and service deductions.</p>
-                    </div>
-                    <button onclick="switchTab('dashboard')" class="text-xs font-bold text-blue-600 hover:underline">← Back to Dashboard</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
-                                <th class="p-3.5">Date</th>
-                                <th class="p-3.5">Transaction Details</th>
-                                <th class="p-3.5">Type</th>
-                                <th class="p-3.5 text-right">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody id="passbookTableBody" class="text-sm divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: REFER & EARN -->
-        <div id="tab-referral" class="space-y-6 hidden max-w-[1440px] mx-auto">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 max-w-xl">
-                <h2 class="text-xl font-extrabold text-slate-900 mb-1">Refer & Earn ₹10 Bonus</h2>
-                <p class="text-slate-500 text-xs sm:text-sm mb-6">Share your referral link with other shop owners. You earn ₹10 in your wallet after their first recharge.</p>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Your Unique Referral Link</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="referralLinkInput" readonly value="https://docsmartly.pages.dev/register.html?ref=LOVE9490" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold">
-                            <button onclick="copyReferralLink()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex-shrink-0 transition">Copy Link</button>
+            <!-- TAB 4: REFER & EARN -->
+            <div id="tab-referral" class="space-y-6 hidden max-w-[1440px] mx-auto">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 max-w-xl">
+                    <h2 class="text-xl font-extrabold text-slate-900 mb-1">Refer & Earn ₹10 Bonus</h2>
+                    <p class="text-slate-500 text-xs sm:text-sm mb-6">Share your referral link with other shop owners. You earn ₹10 in your wallet after their first recharge.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Your Unique Referral Link</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="referralLinkInput" readonly value="https://docsmartly.pages.dev/register.html?ref=LOVE9490" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold">
+                                <button onclick="copyReferralLink()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex-shrink-0 transition">Copy Link</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- TAB 5: PROFILE -->
-        <div id="tab-profile" class="space-y-6 hidden max-w-[1440px] mx-auto">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 max-w-xl space-y-4">
-                <h2 class="text-xl font-extrabold text-slate-900 mb-1">My Profile</h2>
-                <p class="text-slate-500 text-xs sm:text-sm mb-4">View and update your account details.</p>
-                <div class="space-y-3 text-sm">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">Full Name</label>
-                        <input type="text" id="profName" value="Love Kumar Lalawat" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold">
+            <!-- TAB 5: PROFILE -->
+            <div id="tab-profile" class="space-y-6 hidden max-w-[1440px] mx-auto">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 max-w-xl space-y-4">
+                    <h2 class="text-xl font-extrabold text-slate-900 mb-1">My Profile</h2>
+                    <p class="text-slate-500 text-xs sm:text-sm mb-4">View and update your account details.</p>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Full Name</label>
+                            <input type="text" id="profName" value="Love Kumar Lalawat" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Mobile Number</label>
+                            <input type="text" id="profMob" value="7300277557" readonly class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Email Address</label>
+                            <input type="email" id="profMail" value="lovekumar@docsmartly.in" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
+                        </div>
+                        <button onclick="saveProfileName()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow transition">Save Changes</button>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">Mobile Number</label>
-                        <input type="text" id="profMob" value="7300277557" readonly class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">Email Address</label>
-                        <input type="email" id="profMail" value="lovekumar@docsmartly.in" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
-                    </div>
-                    <button onclick="saveProfileName()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow transition">Save Changes</button>
                 </div>
             </div>
-        </div>
 
-    </main>
-</div>
-
-<!-- SERVICE REQUEST MODAL (Fallback for any unmapped paid service) -->
-<div id="serviceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
-                    <i class="fa-solid fa-bolt"></i>
-                </div>
-                <div>
-                    <h3 id="modalServiceName" class="font-extrabold text-slate-900 text-base">Service Name</h3>
-                    <p id="modalServiceCat" class="text-xs text-slate-500">DocSmartly Instant Portal</p>
-                </div>
-            </div>
-            <button onclick="closeServiceModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-        
-        <form id="dynamicServiceForm" onsubmit="submitServiceRequest(event)" class="py-4 space-y-3.5">
-            <div class="flex items-center justify-between bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100">
-                <span class="text-xs font-bold text-slate-600 uppercase">Service Charge</span>
-                <span id="modalServicePrice" class="text-lg font-extrabold text-emerald-700">₹40</span>
-            </div>
-            <div id="modalFieldsContainer" class="space-y-3"></div>
-            <div class="flex items-center gap-3 pt-3">
-                <button type="button" onclick="closeServiceModal()" class="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs sm:text-sm hover:bg-slate-50 transition">Cancel</button>
-                <button type="submit" id="modalSubmitBtn" class="flex-1 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition">Submit Request</button>
-            </div>
-        </form>
+        </main>
     </div>
-</div>
 
-<!-- ADD BALANCE MODAL -->
-<div id="addBalanceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-            <h3 class="font-extrabold text-slate-900 text-base">Add Wallet Balance</h3>
-            <button onclick="closeAddBalanceModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-        <div class="py-4 space-y-3">
-            <label class="block text-xs font-bold text-slate-700">Enter Amount (Minimum ₹200)</label>
-            <input type="number" id="rechargeAmount" value="500" min="200" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-base font-extrabold">
-            <div class="grid grid-cols-4 gap-2 pt-1">
-                <button type="button" onclick="setAmount(200)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹200</button>
-                <button type="button" onclick="setAmount(500)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹500</button>
-                <button type="button" onclick="setAmount(1000)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹1000</button>
-                <button type="button" onclick="setAmount(2000)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹2000</button>
+    <!-- ADD BALANCE MODAL -->
+    <div id="addBalanceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <h3 class="font-extrabold text-slate-900 text-base">Add Wallet Balance</h3>
+                <button onclick="closeAddBalanceModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
+            <div class="py-4 space-y-3">
+                <label class="block text-xs font-bold text-slate-700">Enter Amount (Minimum ₹200)</label>
+                <input type="number" id="rechargeAmount" value="500" min="200" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-base font-extrabold">
+                <div class="grid grid-cols-4 gap-2 pt-1">
+                    <button type="button" onclick="setAmount(200)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹200</button>
+                    <button type="button" onclick="setAmount(500)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹500</button>
+                    <button type="button" onclick="setAmount(1000)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹1000</button>
+                    <button type="button" onclick="setAmount(2000)" class="py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-xl text-xs font-bold text-slate-700">+₹2000</button>
+                </div>
+            </div>
+            <button onclick="confirmAddBalance()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition">Pay with UPI</button>
         </div>
-        <button onclick="confirmAddBalance()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition">Pay with UPI</button>
     </div>
-</div>
 
-<!-- TOAST -->
-<div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 text-xs sm:text-sm font-semibold">
-    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-    <span id="toastMessage">Action completed!</span>
-</div>
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 text-xs sm:text-sm font-semibold">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toastMessage">Action completed!</span>
+    </div>
 
-<!-- COMPLETE SCRIPT WITH ALL TOOLS, THUMBNAILS & URLS -->
-<script>
-    /* =====================================================================
-       1. COMPLETE URL MAPPINGS FOR FREE & PAID SERVICES
-       ===================================================================== */
-    const freeToolsMap = {
-        "Passport Photo Sheet": "passport-photo-sheet.html",
-        "Passport Photo Maker": "passport_photo.html",
-        "PDF to Excel": "pdf-to-excel.html",
-        "QR Code Generator": "qr-code-generator.html",
-        "Stamp Designer": "stamp-designer.html",
-        "ID Card Front & Back to A4": "id-card-front-back-a4.html",
-        "What Is My IP": "what-is-my-ip.html",
-        "Letterhead Maker": "letterhead-maker.html",
-        "Visiting Card Designer": "visiting-card-designer.html",
-        "Marriage Biodata Maker": "marriage-biodata-maker.html",
-        "Age Calculator": "age-calculator.html",
-        "Photo & Signature Resizer": "photo-signature-resizer.html",
-        "JPG / PNG to PDF": "jpg-png-to-pdf.html",
-        "PDF Merge": "pdf-merge.html",
-        "PDF Split & Page Extract": "pdf-split-extract.html",
-        "PDF to JPG": "pdf-to-jpg.html",
-        "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
-        "PDF Compressor (KB)": "pdf-compressor.html",
-        "Document Scanner & PDF": "document-scanner.html",
-        "PDF Page Number Adder": "pdf_page_number_adder.html",
-        "PDF Header & Footer Maker": "pdf_header_footer_maker.html",
-        "Photo Compressor (KB)": "photo-compressor.html",
-        "Image Format Converter": "image-converter.html",
-        "Background Remover": "background-remover.html",
-        "WebP to JPG Converter": "webp-to-jpg.html",
-        "Digital Signature Maker": "digital-signature-maker.html",
-        "Photo Color Changer": "photo-color-changer.html",
-        "Photo Blur Tool": "photo-blur.html",
-        "Image to Black & White": "image-black-and-white.html",
-        "Background Black & White": "background_black_white.html",
-        "Photo Border Maker": "photo-border.html",
-        "Color Picker from Image": "color-picker.html",
-        "ID Card Maker": "id_card_maker.html",
-        "QR Code Designer & Modifier": "qr-code-generator.html",
-        "Employee ID Card Maker": "employee-id-card-maker.html",
-        "Student ID Card Maker": "student-id-card-maker.html",
-        "A4 Photo Print Layout": "a4-photo-print-layout.html",
-        "Text to PDF / Application": "text-to-pdf.html",
-        "Resume Maker": "resume-maker.html",
-        "Invoice Maker": "invoice-maker.html",
-        "Quotation Maker": "quotation-maker.html",
-        "Hindi Typing Tool": "hindi-typing.html",
-        "GST Calculator": "gst-calculator.html",
-        "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
-        "Printing Cost Calculator": "printing-cost-calculator.html",
-        "Cash Denomination Calculator": "cash-denomination-calculator.html",
-        "Salary Calculator": "salary-calculator.html",
-        "Percentage Calculator": "percentage-calculator.html",
-        "Loan / EMI Calculator": "loan-emi-calculator.html",
-        "Word Counter": "word-counter.html",
-        "ICO to PNG": "ico_to_png.html",
-        "ICO Converter (Favicon)": "ico_converter_favicon.html",
-        "Thumbnail Resizer": "thumbnail_resizer.html",
-        "Favicon Preview Tool & Maker": "favicon_preview_tool_maker.html",
-        "Image Watermark Maker": "image-watermark-maker.html",
-        "Calculator — Basic & Scientific": "calculator.html",
-        "Online Stopwatch": "stopwatch.html",
-        "Name, Date & Text on Photo": "name_date_text_on_photo.html",
-        "Instagram Reel Cover Maker": "instagram_reel_cover_maker.html",
-        "Password to MD5 / SHA-256": "password-to-md5.html",
-        "Meta Title & Description Generator": "meta-generator.html",
-        "OMR Sheet Generator & Checker": "omr-generator.html",
-        "Typing Speed Test — Hindi & English": "typing-test.html",
-        "Online Exam System — Teacher & Student": "online-exam.html"
-    };
+    <!-- COMPLETE SCRIPT -->
+    <script>
+        const freeToolsMap = {
+            "Passport Photo Sheet": "passport-photo-sheet.html",
+            "Passport Photo Maker": "passport_photo.html",
+            "PDF to Excel": "pdf-to-excel.html",
+            "QR Code Generator": "qr-code-generator.html",
+            "Stamp Designer": "stamp-designer.html",
+            "ID Card Front & Back to A4": "id-card-front-back-a4.html",
+            "What Is My IP": "what-is-my-ip.html",
+            "Letterhead Maker": "letterhead-maker.html",
+            "Visiting Card Designer": "visiting-card-designer.html",
+            "Marriage Biodata Maker": "marriage-biodata-maker.html",
+            "Age Calculator": "age-calculator.html",
+            "Photo & Signature Resizer": "photo-signature-resizer.html",
+            "JPG / PNG to PDF": "jpg-png-to-pdf.html",
+            "PDF Merge": "pdf-merge.html",
+            "PDF Split & Page Extract": "pdf-split-extract.html",
+            "PDF to JPG": "pdf-to-jpg.html",
+            "PDF Rotate & Reorder": "pdf-rotate-reorder.html",
+            "PDF Compressor (KB)": "pdf-compressor.html",
+            "Document Scanner & PDF": "document-scanner.html",
+            "PDF Page Number Adder": "pdf_page_number_adder.html",
+            "PDF Header & Footer Maker": "pdf_header_footer_maker.html",
+            "Photo Compressor (KB)": "photo-compressor.html",
+            "Image Format Converter": "image-converter.html",
+            "Background Remover": "background-remover.html",
+            "WebP to JPG Converter": "webp-to-jpg.html",
+            "Digital Signature Maker": "digital-signature-maker.html",
+            "Photo Color Changer": "photo-color-changer.html",
+            "Photo Blur Tool": "photo-blur.html",
+            "Image to Black & White": "image-black-and-white.html",
+            "Background Black & White": "background_black_white.html",
+            "Photo Border Maker": "photo-border.html",
+            "Color Picker from Image": "color-picker.html",
+            "ID Card Maker": "id_card_maker.html",
+            "QR Code Designer & Modifier": "qr-code-generator.html",
+            "Employee ID Card Maker": "employee-id-card-maker.html",
+            "Student ID Card Maker": "student-id-card-maker.html",
+            "A4 Photo Print Layout": "a4-photo-print-layout.html",
+            "Text to PDF / Application": "text-to-pdf.html",
+            "Resume Maker": "resume-maker.html",
+            "Invoice Maker": "invoice-maker.html",
+            "Quotation Maker": "quotation-maker.html",
+            "Hindi Typing Tool": "hindi-typing.html",
+            "GST Calculator": "gst-calculator.html",
+            "GST Inclusive & Exclusive Calculator": "gst-inclusive-exclusive.html",
+            "Printing Cost Calculator": "printing-cost-calculator.html",
+            "Cash Denomination Calculator": "cash-denomination-calculator.html",
+            "Salary Calculator": "salary-calculator.html",
+            "Percentage Calculator": "percentage-calculator.html",
+            "Loan / EMI Calculator": "loan-emi-calculator.html",
+            "Word Counter": "word-counter.html",
+            "ICO to PNG": "ico_to_png.html",
+            "ICO Converter (Favicon)": "ico_converter_favicon.html",
+            "Thumbnail Resizer": "thumbnail_resizer.html",
+            "Favicon Preview Tool & Maker": "favicon_preview_tool_maker.html",
+            "Image Watermark Maker": "image-watermark-maker.html",
+            "Calculator — Basic & Scientific": "calculator.html",
+            "Online Stopwatch": "stopwatch.html",
+            "Name, Date & Text on Photo": "name_date_text_on_photo.html",
+            "Instagram Reel Cover Maker": "instagram_reel_cover_maker.html",
+            "Password to MD5 / SHA-256": "password-to-md5.html",
+            "Meta Title & Description Generator": "meta-generator.html",
+            "OMR Sheet Generator & Checker": "omr-generator.html",
+            "Typing Speed Test — Hindi & English": "typing-test.html",
+            "Online Exam System — Teacher & Student": "online-exam.html"
+        };
 
-    const paidToolsMap = {
-        // RC Services
-        "RC PDF INSTANT": "vehicle-and-transport-services/rc-pdf-instant.html",
-        "RC PDF Server 1": "vehicle-and-transport-services/rc-pdf-instant.html",
-        "RC PDF Server 2": "vehicle-and-transport-services/rc-pdf-instant.html",
-        "RC Full Details": "vehicle-and-transport-services/rc-full-details.html",
+        const paidToolsMap = {
+            "RC PDF INSTANT": "vehicle-and-transport-services/rc-pdf-instant.html",
+            "RC PDF Server 1": "vehicle-and-transport-services/rc-pdf-instant.html",
+            "RC PDF Server 2": "vehicle-and-transport-services/rc-pdf-instant.html",
+            "RC Full Details": "vehicle-and-transport-services/rc-full-details.html",
+            "DL PDF INSTANT": "vehicle-and-transport-services/dl-pdf-instant.html",
+            "DL PDF Server 1": "vehicle-and-transport-services/dl-pdf-server-1.html",
+            "DL PDF Server 2 (Blue)": "vehicle-and-transport-services/dl-pdf-server-2.html",
+            "LL PDF": "vehicle-and-transport-services/ll-pdf.html",
+            "LL Exam Request": "vehicle-and-transport-services/ll-exam-request.html",
+            "Voter Mobile Link": "voter-services/voter-mobile-link.html",
+            "Voter Mobile Link S1": "voter-services/voter-mobile-link-s1.html",
+            "Voter PDF": "voter-services/voter-pdf.html",
+            "KISAN CARD": "farmer-services/kisan-card.html",
+            "Farmer PDF S1": "farmer-services/farmer-pdf-s1.html",
+            "Farmer PDF All State": "farmer-services/farmer-pdf-all-state.html",
+            "AgriStack Farmer PDF": "farmer-services/agristack-farmer-pdf.html",
+            "Aadhaar to PAN": "pan-services/aadhaar-to-pan.html",
+            "Aadhaar to PAN S1": "pan-services/aadhaar-to-pan-s1.html",
+            "PAN Details": "pan-services/pan-details.html",
+            "TAN Verification": "pan-services/tan-verification.html",
+            "New PAN apply": "pan-services/new-pan-apply.html",
+            "PAN update / correction": "pan-services/pan-update-correction.html",
+            "New UDYAM CERTIFICATE": "udyam-services/new-udyam-certificate.html",
+            "PAN to Udyam S2": "udyam-services/pan-to-udyam-s2.html",
+            "AADHAAR Update": "aadhaar-ration/aadhaar-update.html",
+            "Ration PDF S1": "aadhaar-ration/ration-pdf-s1.html",
+            "Ration PDF S2 (Aadhaar)": "aadhaar-ration/ration-pdf-s2.html",
+            "Mobile Details Find": "mobile-services/mobile-details-find.html",
+            "Mobile Details S1": "mobile-services/mobile-details-s1.html",
+            "Mobile Details S2": "mobile-services/mobile-details-s2.html",
+            "Other Mobile Issue": "mobile-services/other-mobile-issue.html",
+            "New GST Certificate": "gst-services/new-gst-certificate.html",
+            "GST Download": "gst-services/gst-download.html",
+            "PAN to GST": "gst-services/pan-to-gst.html",
+            "GST Details": "gst-services/gst-details.html",
+            "Chassis to RC": "vehicle-and-transport-services/chassis-to-rc.html",
+            "Vehicle to Mobile Find": "vehicle-and-transport-services/vehicle-to-mobile-find.html",
+            "Challan Details": "vehicle-and-transport-services/challan-details.html",
+            "DBT Seeding Status": "bank-services/dbt-seeding-status.html",
+            "Lost Document Service|Voter ID": "lost-documents/voter-id.html",
+            "Lost Document Service|Aadhaar Card": "lost-documents/aadhaar-card.html",
+            "Lost Document Service|PAN Card": "lost-documents/pan-card.html",
+            "Lost Document Service|Driving License": "lost-documents/driving-license.html",
+            "PVC Converter Tools|Voter ID": "pvc-converter/voter-id.html",
+            "PVC Converter Tools|Aadhaar Card": "pvc-converter/aadhaar-card.html",
+            "PVC Converter Tools|PAN Card": "pvc-converter/pan-card.html",
+            "PVC Converter Tools|Driving License": "pvc-converter/driving-license.html",
+            "PVC Converter Tools|Vehicle RC": "pvc-converter/vehicle-rc.html",
+            "PVC Converter Tools|Any Other Document": "pvc-converter/any-other-document.html",
+            "New Digital Signature (DSC)": "govt-contractor/new-dsc.html",
+            "E-procurement registration": "govt-contractor/e-procurement-registration.html",
+            "Tender upload (for contractor)": "govt-contractor/tender-upload-contractor.html",
+            "Tender upload (for department)": "govt-contractor/tender-upload-department.html",
+            "Building estimate creator": "govt-contractor/building-estimate-creator.html",
+            "BOQ creator": "govt-contractor/boq-creator.html",
+            "Govt civil & electric bill maker (Excel)": "govt-contractor/civil-electric-bill-excel.html",
+            "Bill form": "govt-contractor/bill-form.html",
+            "Extra item sheet": "govt-contractor/extra-item-sheet.html",
+            "Excess item sheet": "govt-contractor/excess-item-sheet.html",
+            "QC register creator": "govt-contractor/qc-register-creator.html",
+            "Work escalation statement": "govt-contractor/work-escalation-statement.html"
+        };
 
-        // DL & LL Services
-        "DL PDF INSTANT": "vehicle-and-transport-services/dl-pdf-instant.html",
-        "DL PDF Server 1": "vehicle-and-transport-services/dl-pdf-server-1.html",
-        "DL PDF Server 2 (Blue)": "vehicle-and-transport-services/dl-pdf-server-2.html",
-        "LL PDF": "vehicle-and-transport-services/ll-pdf.html",
-        "LL Exam Request": "vehicle-and-transport-services/ll-exam-request.html",
-
-        // Voter Services
-        "Voter Mobile Link": "voter-services/voter-mobile-link.html",
-        "Voter Mobile Link S1": "voter-services/voter-mobile-link-s1.html",
-        "Voter PDF": "voter-services/voter-pdf.html",
-
-        // Farmer Services
-        "KISAN CARD": "farmer-services/kisan-card.html",
-        "Farmer PDF S1": "farmer-services/farmer-pdf-s1.html",
-        "Farmer PDF All State": "farmer-services/farmer-pdf-all-state.html",
-        "AgriStack Farmer PDF": "farmer-services/agristack-farmer-pdf.html",
-
-        // PAN Services
-        "Aadhaar to PAN": "pan-services/aadhaar-to-pan.html",
-        "Aadhaar to PAN S1": "pan-services/aadhaar-to-pan-s1.html",
-        "PAN Details": "pan-services/pan-details.html",
-        "TAN Verification": "pan-services/tan-verification.html",
-        "New PAN apply": "pan-services/new-pan-apply.html",
-        "PAN update / correction": "pan-services/pan-update-correction.html",
-
-        // Udyam Services
-        "New UDYAM CERTIFICATE": "udyam-services/new-udyam-certificate.html",
-        "PAN to Udyam S2": "udyam-services/pan-to-udyam-s2.html",
-
-        // Aadhaar & Ration
-        "AADHAAR Update": "aadhaar-ration/aadhaar-update.html",
-        "Ration PDF S1": "aadhaar-ration/ration-pdf-s1.html",
-        "Ration PDF S2 (Aadhaar)": "aadhaar-ration/ration-pdf-s2.html",
-
-        // Mobile Services
-        "Mobile Details Find": "mobile-services/mobile-details-find.html",
-        "Mobile Details S1": "mobile-services/mobile-details-s1.html",
-        "Mobile Details S2": "mobile-services/mobile-details-s2.html",
-        "Other Mobile Issue": "mobile-services/other-mobile-issue.html",
-
-        // GST Services
-        "New GST Certificate": "gst-services/new-gst-certificate.html",
-        "GST Download": "gst-services/gst-download.html",
-        "PAN to GST": "gst-services/pan-to-gst.html",
-        "GST Details": "gst-services/gst-details.html",
-
-        // Chassis, Vehicle & Challan
-        "Chassis to RC": "vehicle-and-transport-services/chassis-to-rc.html",
-        "Vehicle to Mobile Find": "vehicle-and-transport-services/vehicle-to-mobile-find.html",
-        "Challan Details": "vehicle-and-transport-services/challan-details.html",
-        "DBT Seeding Status": "bank-services/dbt-seeding-status.html",
-
-        // Disambiguated Duplicate Names (Lost Document vs PVC Converter)
-        "Lost Document Service|Voter ID": "lost-documents/voter-id.html",
-        "Lost Document Service|Aadhaar Card": "lost-documents/aadhaar-card.html",
-        "Lost Document Service|PAN Card": "lost-documents/pan-card.html",
-        "Lost Document Service|Driving License": "lost-documents/driving-license.html",
-
-        "PVC Converter Tools|Voter ID": "pvc-converter/voter-id.html",
-        "PVC Converter Tools|Aadhaar Card": "pvc-converter/aadhaar-card.html",
-        "PVC Converter Tools|PAN Card": "pvc-converter/pan-card.html",
-        "PVC Converter Tools|Driving License": "pvc-converter/driving-license.html",
-        "PVC Converter Tools|Vehicle RC": "pvc-converter/vehicle-rc.html",
-        "PVC Converter Tools|Any Other Document": "pvc-converter/any-other-document.html",
-
-        // Govt Department & Civil Contractor Services
-        "New Digital Signature (DSC)": "govt-contractor/new-dsc.html",
-        "E-procurement registration": "govt-contractor/e-procurement-registration.html",
-        "Tender upload (for contractor)": "govt-contractor/tender-upload-contractor.html",
-        "Tender upload (for department)": "govt-contractor/tender-upload-department.html",
-        "Building estimate creator": "govt-contractor/building-estimate-creator.html",
-        "BOQ creator": "govt-contractor/boq-creator.html",
-        "Govt civil & electric bill maker (Excel)": "govt-contractor/civil-electric-bill-excel.html",
-        "Bill form": "govt-contractor/bill-form.html",
-        "Extra item sheet": "govt-contractor/extra-item-sheet.html",
-        "Excess item sheet": "govt-contractor/excess-item-sheet.html",
-        "QC register creator": "govt-contractor/qc-register-creator.html",
-        "Work escalation statement": "govt-contractor/work-escalation-statement.html"
-    };
-
-    function getToolUrl(name, key = "") {
-        if (key && paidToolsMap[key]) return `paidtools/${paidToolsMap[key]}`;
-        if (paidToolsMap[name]) return `paidtools/${paidToolsMap[name]}`;
-        if (freeToolsMap[name]) return `freetools/${freeToolsMap[name]}`;
-        const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        return `freetools/${fallback}.html`;
-    }
-
-    /* =====================================================================
-       2. EXACT SVG ART ENGINE FROM index.html (docsmartly.pages.dev)
-       ===================================================================== */
-    const G = [["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
-    const T = ["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
-    const sty = i => `--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
-    const R = (x,y,w,h,c,r=3) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
-    const C = (x,y,r,c) => `<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
-    const X = (x,y,t,s,c='fk',a='middle') => `<text x="${x}" y="${y}" font-size="${s}" class="${c}" text-anchor="${a}" font-weight="700">${t}</text>`;
-    const Pa = (d,c) => `<path d="${d}" class="${c}"/>`;
-    const L = (x,y,w,n=3,g=6,c='fl') => Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*.6:w,2.4,c,1.2)).join('');
-    const H = (x,y,w,h,c='fb') => R(x,y,w,h,c,3)+C(x+w/2,y+h*.38,w*.2,'fw')+Pa(`M${x+w*.15} ${y+h}q${w*.35} ${-h*.5} ${w*.7} 0z`,'fw');
-    const PG = (x=52,y=8,w=56,h=84) => R(x,y,w,h,'fw',4);
-    const AR = (x,y,c='sa') => Pa(`M${x} ${y}h16m-5-5 5 5-5 5`,c);
-    const CAR = (x,y,s=1,c='fw') => `<g transform="translate(${x} ${y}) scale(${s})">${R(0,8,44,12,c,4)}${R(8,0,28,10,c,4)}${C(11,22,4,'fk')}${C(33,22,4,'fk')}</g>`;
-    const CARD = (x,y,w,h,c='fa') => R(x,y,w,h,c,7);
-    const IMG = (x,y,w,h,c='fb') => R(x,y,w,h,c,4)+C(x+w*.74,y+h*.27,h*.1,'fy')+Pa(`M${x+3} ${y+h-1}L${x+w*.34} ${y+h*.48}L${x+w*.55} ${y+h*.74}L${x+w*.7} ${y+h*.6}L${x+w-3} ${y+h-1}z`,'fa');
-    const PDF = (x,y,w,h) => PG(x,y,w,h)+R(x+w-26,y+4,22,12,'fa',3)+X(x+w-15,y+13,'PDF',6.5,'fw')+L(x+8,y+24,w-16,3,7);
-    const PHN = (x,y,w,h) => R(x,y,w,h,'fk',6)+R(x+3,y+5,w-6,h-10,'fw',3);
-    const QR = (x,y,s=72) => {let o=R(x,y,s,s,'fw',5);const f=(a,b)=>R(a,b,18,18,'fa',3)+R(a+4,b+4,10,10,'fw',1)+R(a+6.5,b+6.5,5,5,'fa',1);o+=f(x+6,y+6)+f(x+s-24,y+6)+f(x+6,y+s-24);for(let i=0;i<7;i++)for(let j=0;j<7;j++)if((i*5+j*3)%4<2)o+=R(x+28+i*5,y+28+j*5,4,4,'fk',.8);return o};
-    const CALC = d => R(48,6,64,88,'fk',8)+R(56,14,48,22,'fw',3)+X(80,31,d,11,'fa')+[0,1,2].map(r=>[0,1,2,3].map(c=>R(56+c*13,44+r*14,10,10,c==3?'fy':'fb',2)).join('')).join('');
-    const BRW = (x,y,w,h) => R(x,y,w,h,'fw',6)+R(x,y,w,13,'fl',6)+C(x+9,y+6.5,2.5,'fr')+C(x+17,y+6.5,2.5,'fy')+C(x+25,y+6.5,2.5,'fg');
-    const IDV = (x,y,w,h,t,c) => R(x,y,w,h,'fw',6)+R(x,y,w,18,c,6)+X(x+w/2,y+12,t,6.5,'fw')+H(x+w/2-16,y+23,32,32)+X(x+w/2,y+68,'Name Surname',6.5)+X(x+w/2,y+78,'ID 1024',6,'fb');
-    const conv = l => PG(14,16,48,68)+X(38,32,'PDF',7,'fa')+L(22,40,32,3,7)+AR(66,46)+CARD(88,28,60,44)+H(94,36,18,24)+L(118,40,22,3,6,'fo')+X(118,66,l,5.5,'fw');
-    const MG = (x,y) => C(x,y,12,'fw')+C(x,y,12,'sa')+Pa(`M${x+9} ${y+9}l11 11`,'sa')+X(x,y+5,'?',14,'fa');
-    const TK = (x,y) => `<path d="M${x} ${y}l3 3 6-7" class="sa" style="stroke-width:1.8"/>`;
-    const AAD = () => CARD(18,14,124,72)+R(18,14,124,6,'fy',0)+X(30,34,'AADHAAR',7,'fw','start')+H(28,40,26,34)+L(64,46,40,3,8,'fo')+Pa('M114 70a10 10 0 0 1 20 0M118 70a6 6 0 0 1 12 0','sw');
-    const UP = (x,y) => Pa(`M${x} ${y+20}V${y}m-8 8 8-8 8 8`,'sa')+R(x-14,y+26,28,5,'fa',2);
-    const GOV = (x,y) => Pa(`M${x+20} ${y}l20 10H${x}z`,'fa')+[0,1,2].map(i=>R(x+5+i*11,y+13,6,16,'fb',1)).join('')+R(x,y+31,40,5,'fa',1);
-    const HAT = (x,y) => Pa(`M${x} ${y+14}a16 14 0 0 1 32 0z`,'fy')+R(x-4,y+14,40,5,'fy',2)+R(x+12,y-2,8,8,'fy',1);
-    const ROWS = (x,y,n,w) => Array.from({length:n},(_,i)=>R(x,y+i*9,w*.3,4,'fl',1)+R(x+w*.36,y+i*9,w*.64,4,'fb',1)).join('');
-    const SHEET = (t,b) => PG(28,8,92,84)+X(74,22,t,6.5,'fa')+ROWS(36,30,3,76)+R(34,56,84,11,'fy',2)+R(40,60,26,4,'fk',1)+R(72,60,38,4,'fk',1)+C(122,76,13,b);
-
-    const V = {
-        "RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
-        "DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw')+Pa('M112 70h16M120 70v8','sw'),
-        "Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo')+X(126,78,'EPIC',6,'fw'),
-        "Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw')+[0,1,2,3].map(i=>`<ellipse cx="114" cy="${48+i*8}" rx="5" ry="2.5" class="fw" transform="rotate(-30 114 ${48+i*8})"/><ellipse cx="126" cy="${48+i*8}" rx="5" ry="2.5" class="fw" transform="rotate(30 126 ${48+i*8})"/>`).join(''),
-        "PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,42,'PERMANENT ACCOUNT NUMBER',4.6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start')+H(106,38,28,36)+L(30,68,50,2,6,'fo'),
-        "RC Full Details":()=>PG(34,8,92,84)+R(34,8,92,16,'fa',4)+X(46,19,'VEHICLE DETAILS',6.5,'fw','start')+[0,1,2,3,4].map(i=>R(44,32+i*11,26,3,'fl',1.5)+R(78,32+i*11,36,3,'fb',1.5)).join(''),
-        "Udyam Services":()=>PG(24,10,112,80)+`<rect x="30" y="16" width="100" height="68" rx="3" class="sa" style="stroke-width:1"/>`+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2)+R(64,44,32,20,'fb',2)+R(76,52,8,12,'fw',1)+L(46,70,68,2,6)+C(122,74,8,'fy'),
-        "LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36)+L(64,44,30,4,8,'fo')+R(102,36,32,32,'fy',5)+X(118,62,'L',26),
-        "Aadhaar & Ration":()=>CARD(40,28,104,58,'fb')+Pa('M104 62h28l-3 14h-22z','fw')+X(118,54,'RATION',6.5,'fw')+CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32)+L(56,32,50,3,7,'fo'),
-        "Mobile Services":()=>PHN(56,6,48,88)+X(80,36,'+91',9,'fa')+X(80,50,'98XXXXXX10',6)+C(80,68,8,'fb')+Pa('M76 68h8','sw')+R(116,40,5,10,'fb',1)+R(124,32,5,18,'fb',1)+R(132,24,5,26,'fb',1),
-        "GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa')+L(54,30,52,2,6)+C(80,62,17,'fa')+X(80,69,'%',20,'fw')+X(80,88,'09ABCDE1234F1Z5',4.6,'fk'),
-        "Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3)+X(42,77.5,'MA3 XXXX 00',5.5)+AR(76,48)+CARD(100,26,46,48)+X(123,56,'RC',15,'fw'),
-        "Vehicle To Mobile Find":()=>R(10,38,52,24,'fy',4)+X(36,54,'RJ14 AB 1234',7)+AR(68,50)+PHN(100,16,34,68)+X(117,44,'98XX',7,'fa')+C(117,62,6,'fb'),
-        "Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')+L(38,30,48,3,7)+X(62,68,'₹500',15,'fr')+R(106,22,26,56,'fk',7)+C(119,34,6,'fr')+C(119,50,6,'fy')+C(119,66,6,'fg'),
-        "DBT Seeding Status":()=>Pa('M80 14l46 22H34z','fa')+[0,1,2,3].map(i=>R(42+i*19,40,10,32,'fb',2)).join('')+R(30,74,100,8,'fa',2)+C(130,24,13,'fg')+Pa('M123 24l5 5 9-10','sw'),
-        "TAN Verification":()=>PG(24,14,70,76)+X(59,34,'TAN',10,'fa')+L(32,42,54,3,7)+Pa('M116 22l22 8v18c0 14-10 22-22 26-12-4-22-12-22-26V30z','fa')+Pa('M106 50l8 8 14-16','sw'),
-        "New PAN Card Apply":()=>V["PAN Services"]()+C(138,22,14,'fy')+Pa('M138 14v16M130 22h16','sa'),
-        "PAN Update / Correction":()=>V["PAN Services"]()+C(138,22,14,'fy')+Pa('M132 28l1-6 9-9 5 5-9 9z','sa')
-    };
-
-    const TA = {
-        "Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
-        "Passport Photo Maker":()=>PG(42,8,76,84)+H(54,18,52,58)+R(50,80,60,5,'fa',2),
-        "QR Code Generator":()=>QR(44,14),
-        "Stamp Designer":()=>`<g transform="rotate(-12 80 50)">${C(80,50,38,'sa')}${C(80,50,30,'sa')}${X(80,48,'DOCSMARTLY',8,'fa')}${X(80,60,'★ ★ ★',6,'fa')}</g>`,
-        "ID Card Front & Back to A4":()=>PG(44,6,72,88)+R(52,14,56,34,'fa',4)+H(56,20,14,22)+L(76,24,26,3,5,'fo')+R(52,54,56,34,'fb',4)+X(80,76,'BACK',7,'fw'),
-        "What Is My IP":()=>C(52,50,30,'sa')+Pa('M22 50h60M52 20c-14 14-14 46 0 60M52 20c14 14 14 46 0 60','sa')+R(84,38,62,24,'fk',6)+X(115,54,'103.xx.xx.12',6.5,'fw'),
-        "Letterhead Maker":()=>PG(44,6,72,88)+C(58,22,7,'fa')+R(70,17,36,3,'fa',1.5)+R(70,23,26,2.4,'fl',1)+R(50,34,60,1.5,'fb',0)+L(52,44,56,6,7),
-        "Visiting Card Designer":()=>R(60,46,76,46,'fw',5)+C(74,62,7,'fb')+L(86,56,40,3,6)+R(24,10,76,46,'fa',5)+X(36,30,'DocSmartly',8,'fw','start')+L(36,38,40,2,6,'fo'),
-        "Marriage Biodata Maker":()=>PG(36,6,88,88)+X(80,20,'BIODATA',8,'fa')+H(44,28,26,32)+L(78,30,38,5,8)+Pa('M80 86c-8-6-10-10-6-13s6 0 6 2 3-5 6-2-2 7-6 13z','fr'),
-        "Age Calculator":()=>PG(36,8,88,84)+R(36,8,88,16,'fa',4)+X(80,20,'DOB',8,'fw')+[0,1,2].map(r=>[0,1,2,3,4].map(c=>R(46+c*15,32+r*14,10,9,r==1&&c==2?'fa':'fl',2)).join('')).join('')+X(80,84,'Age: 28 years',7),
-        "Photo & Signature Resizer":()=>IMG(30,18,76,56)+R(26,14,8,8,'fw',2)+R(102,14,8,8,'fw',2)+R(26,70,8,8,'fw',2)+R(102,70,8,8,'fw',2)+Pa('M112 24l22-8M112 24l22 8','sa')+X(118,88,'35×45 mm',7),
-        "JPG / PNG to PDF":()=>IMG(14,26,48,40)+AR(68,44)+PDF(92,14,52,72),
-        "PDF Merge":()=>PDF(14,22,36,50)+PDF(30,34,36,50)+AR(74,48)+PDF(98,14,46,72),
-        "PDF Split & Page Extract":()=>PDF(14,14,46,72)+AR(66,48)+PDF(92,8,38,40)+PDF(92,54,38,40),
-        "PDF to JPG":()=>PDF(14,14,46,72)+AR(66,48)+IMG(90,28,52,44)+X(116,86,'JPG',7,'fa'),
-        "PDF to Excel":()=>PDF(14,14,46,72)+AR(66,48)+PG(92,14,50,72)+R(92,14,50,14,'fg',4)+X(117,24,'XLS',7,'fw'),
-        "PDF Rotate & Reorder":()=>PDF(30,14,46,72)+Pa('M146 58a20 20 0 1 1-6-14','sa')+Pa('M140 34v12h-12','sa'),
-        "PDF Compressor (KB)":()=>PDF(18,14,52,72)+R(90,24,56,18,'fl',9)+X(118,37,'2 MB',8)+Pa('M118 46v10m-4-4 4 4 4-4','sa')+R(90,62,56,18,'fa',9)+X(118,75,'200 KB',8,'fw'),
-        "Document Scanner & PDF":()=>PG(40,8,80,84)+L(50,24,60,6,9)+R(34,46,92,3,'fa',1.5)+Pa('M34 20v-8h8M126 20v-8h-8M34 80v8h8M126 80v8h-8','sa'),
-        "PDF Page Number Adder":()=>PDF(44,8,72,84)+C(80,80,7,'fa')+X(80,83.5,'1',8,'fw'),
-        "PDF Header & Footer Maker":()=>PG(44,8,72,84)+R(44,8,72,12,'fa',4)+X(80,17,'HEADER',6.5,'fw')+L(52,30,56,6,8)+R(44,80,72,12,'fb',4)+X(80,89,'FOOTER',6.5,'fw'),
-        "Photo Compressor (KB)":()=>IMG(18,16,70,56)+R(98,24,48,16,'fl',8)+X(122,36,'800 KB',7)+Pa('M122 45v8m-4-4 4 4 4-4','sa')+R(98,58,48,16,'fa',8)+X(122,70,'80 KB',7,'fw'),
-        "Image Format Converter":()=>IMG(14,26,48,40)+X(38,80,'JPG',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'PNG',8),
-        "Background Remover":()=>R(36,10,88,80,'fl',6)+[0,1,2,3,4,5,6,7].map(i=>[0,1,2,3,4,5,6].map(j=>(i+j)%2?R(36+i*11,10+j*11.4,11,11.4,'fw',0):'').join('')).join('')+H(58,22,44,66,'fa'),
-        "WebP to JPG Converter":()=>IMG(14,26,48,40)+X(38,80,'WEBP',8)+AR(68,44)+IMG(90,26,48,40)+X(114,80,'JPG',8),
-        "ICO to PNG":()=>R(18,30,40,40,'fa',8)+X(38,56,'ICO',10,'fw')+AR(66,46)+IMG(90,28,52,44)+X(116,86,'PNG',7),
-        "ICO Converter (Favicon)":()=>BRW(24,14,112,72)+R(32,20,40,10,'fw',3)+R(34,22,6,6,'fa',1.5)+R(48,24,20,2.4,'fl',1)+R(58,44,44,36,'fa',8)+X(80,70,'D',22,'fw'),
-        "Thumbnail Resizer":()=>IMG(16,14,84,66)+IMG(112,34,32,26)+X(128,74,'150×150',6)+Pa('M100 46h8m-3-3 3 3-3 3','sa'),
-        "Favicon Preview Tool & Maker":()=>BRW(20,12,120,48)+R(28,18,44,10,'fw',3)+R(30,20,6,6,'fa',1.5)+R(28,40,100,3,'fl',1.5)+R(30,68,24,24,'fa',6)+R(62,72,16,16,'fb',4)+R(86,76,10,10,'fy',3)+X(120,86,'16·32·64',6),
-        "Image Watermark Maker":()=>IMG(24,16,112,68)+`<g transform="rotate(-20 80 50)">${X(80,56,'DOCSMARTLY',13,'fo')}</g>`,
-        "Digital Signature Maker":()=>PG(30,18,100,64)+Pa('M44 62c8-16 12-22 14-14s-6 18 0 16 6-10 12-12 4 8 10 6 6-8 12-8','sa')+R(44,68,72,1.5,'fk',0)+X(44,78,'Sign here',6,'fm','start'),
-        "Photo Color Changer":()=>H(14,14,44,70)+AR(64,44)+C(100,30,10,'fa')+C(124,30,10,'fy')+C(100,58,10,'fr')+C(124,58,10,'fg'),
-        "Photo Blur Tool":()=>IMG(14,22,56,48)+AR(74,42)+IMG(92,22,56,48)+C(118,46,20,'fo')+C(106,40,14,'fo')+C(130,52,12,'fo'),
-        "Image to Black & White":()=>IMG(14,22,56,48)+AR(74,42)+R(92,22,56,48,'fk',4)+C(134,34,5,'fw')+Pa('M95 69L112 46l14 14 8-8 12 17z','fm'),
-        "Background Black & White":()=>H(14,14,56,72,'fy')+AR(74,44)+H(90,14,56,72,'fk'),
-        "Photo Border Maker":()=>R(28,10,104,80,'fa',6)+R(34,16,92,68,'fw',3)+IMG(40,22,80,56),
-        "Color Picker from Image":()=>IMG(16,16,90,68)+Pa('M108 56l22-22 8 8-22 22z','fa')+Pa('M128 28l8-8 8 8-8 8z','fb')+R(112,66,34,18,'fa',4),
-        "ID Card Maker":()=>R(24,16,112,68,'fw',6)+R(24,16,112,16,'fa',6)+X(80,28,'IDENTITY CARD',7,'fw')+H(34,38,28,38)+L(70,42,56,4,8),
-        "QR Code Designer & Modifier":()=>QR(44,14)+Pa('M114 62l12-12 8 8-12 12-10 2z','fy'),
-        "Employee ID Card Maker":()=>IDV(52,4,56,92,'EMPLOYEE','fa'),
-        "Student ID Card Maker":()=>IDV(52,4,56,92,'STUDENT','fb'),
-        "A4 Photo Print Layout":()=>PG(36,4,88,92)+[0,1,2,3].map(r=>[0,1,2].map(c=>H(44+c*26,12+r*21,20,16)).join('')).join(''),
-        "Text to PDF / Application":()=>PG(20,8,56,84)+X(48,22,'TXT',8)+L(28,32,40,5,7)+AR(82,46)+PDF(104,18,42,64),
-        "Resume Maker":()=>PG(36,6,88,88)+H(44,14,24,28)+R(74,16,42,4,'fa',2)+L(74,24,42,2,6)+R(44,52,72,3,'fb',1.5)+L(44,60,72,4,7),
-        "Invoice Maker":()=>PG(36,6,88,88)+X(80,22,'INVOICE',9,'fa')+R(44,30,72,8,'fl',2)+L(44,44,72,4,8)+R(76,76,40,12,'fa',3)+X(96,85,'₹ 4,500',6.5,'fw'),
-        "Quotation Maker":()=>PG(36,6,88,88)+X(80,22,'QUOTATION',9,'fb')+R(44,30,72,8,'fl',2)+L(44,44,72,4,8)+R(76,76,40,12,'fb',3)+X(96,85,'₹ 12,000',6.5,'fw'),
-        "Hindi Typing Tool":()=>X(80,34,'अ आ इ ई',15,'fa')+R(16,44,128,44,'fw',6)+[0,1,2].map(r=>[0,1,2,3,4,5,6,7,8].map(c=>R(24+c*13,50+r*12,10,8,'fl',2)).join('')).join(''),
-        "GST Calculator":()=>CALC('18%'),
-        "GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
-        "Printing Cost Calculator":()=>R(20,40,64,30,'fa',5)+R(32,24,40,18,'fw',2)+R(32,62,40,24,'fw',2)+L(36,68,28,2,6)+C(118,50,24,'fy')+X(118,59,'₹',24),
-        "Cash Denomination Calculator":()=>R(20,22,76,40,'fg',4)+X(58,48,'₹500',12,'fw')+R(48,44,80,40,'fb',4)+X(88,70,'₹100',12,'fw')+C(130,24,11,'fy')+X(130,28,'₹',11),
-        "Salary Calculator":()=>PG(36,8,88,84)+X(80,22,'PAYSLIP',8,'fa')+L(44,30,72,3,7)+R(44,66,72,16,'fa',4)+X(80,77,'₹ 25,000',8,'fw'),
-        "Percentage Calculator":()=>C(58,32,12,'sa')+C(102,68,12,'sa')+Pa('M54 80L106 20','sa')+X(120,32,'%',22,'fa'),
-        "Loan / EMI Calculator":()=>Pa('M52 42l28-16 28 16z','fa')+[0,1,2].map(i=>R(56+i*18,46,8,22,'fb',2)).join('')+R(48,70,64,7,'fa',2)+R(96,18,50,22,'fa',11)+X(121,33,'EMI',9,'fw')+X(112,92,'₹ / month',6),
-        "Password to MD5 / SHA-256":()=>X(80,22,'5f4dcc3b5aa7…',8)+R(50,44,60,44,'fa',8)+Pa('M60 44V34a20 20 0 0 1 40 0v10','sa')+C(80,66,6,'fw')
-    };
-
-    const DA = {
-        'New Digital Signature (DSC)':()=>PG(18,10,66,80)+X(51,24,'CERTIFICATE',5.5,'fa')+L(26,32,50,3,7)+Pa('M26 66c6-10 9-14 10-9s-4 11 0 10 4-6 8-8 3 5 5 4','sa')+R(98,36,34,24,'fb',5)+R(130,42,14,12,'fm',2)+X(115,52,'DSC',8,'fw')+C(106,41,2,'fy')+C(76,80,10,'fg')+Pa('M71 80l4 4 7-8','sw'),
-        'E-procurement registration':()=>BRW(14,10,132,80)+X(80,34,'e-Procurement',7.5,'fa')+R(30,42,100,8,'fl',2)+R(30,54,100,8,'fl',2)+R(50,68,60,12,'fa',4)+X(80,77,'Register',6.5,'fw'),
-        'Tender upload (for contractor)':()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7)+UP(110,8)+HAT(100,52),
-        'Tender upload (for department)':()=>PG(18,10,62,80)+X(49,24,'TENDER',7,'fa')+L(26,32,46,4,7)+UP(110,8)+GOV(92,50),
-        'Building estimate creator':()=>R(12,12,136,76,'fb',6)+Pa('M26 52l31-22 31 22z','fy')+R(32,52,50,30,'fw',2)+R(40,60,12,12,'fb',1)+R(64,62,12,20,'fb',1)+PG(100,18,40,64)+X(120,34,'₹',13,'fa')+L(106,44,28,4,7),
-        'BOQ creator':()=>PG(26,8,108,84)+X(80,21,'BILL OF QUANTITIES',6,'fa')+R(34,27,92,8,'fa',2)+[0,1,2,3,4].map(i=>R(34,39+i*9,22,5,'fl',1)+R(60,39+i*9,28,5,'fl',1)+R(92,39+i*9,14,5,'fb',1)+R(110,39+i*9,16,5,'fb',1)).join('')+R(94,84,32,6,'fa',2),
-        'Govt civil & electric bill maker (Excel)':()=>PG(24,8,100,84)+R(24,8,100,14,'fg',4)+X(74,19,'Excel',7.5,'fw')+[0,1,2,3].map(r=>[0,1,2].map(c=>R(32+c*30,28+r*13,26,9,(r+c)%2?'fl':'fb',2)).join('')).join('')+Pa('M126 54l-14 20h9l-5 18 17-24h-9l5-14z','fy'),
-        'Govt civil & electric bill maker (Measurement Book)':()=>R(14,14,64,72,'fw',5)+R(82,14,64,72,'fw',5)+X(46,28,'M.B.',8,'fa')+L(22,36,48,5,9)+L(90,24,48,6,9)+R(76,14,8,72,'fa',2)+R(92,66,52,14,'fy',2)+[0,1,2,3,4,5,6].map(i=>R(97+i*7.5,66,1.5,i%2?5:8,'fk',0)).join(''),
-        'Bill form':()=>PG(32,6,96,88)+R(32,6,96,14,'fb',4)+X(80,16,'BILL FORM',7,'fw')+[0,1,2,3].map(i=>R(40,28+i*11,26,3,'fl',1.5)+R(72,28+i*11,48,3,'fb',1.5)).join('')+R(40,76,80,12,'fa',3)+X(80,85,'Total ₹',7,'fw'),
-        'Extra item sheet':()=>SHEET('EXTRA ITEMS','fg')+Pa('M122 69v14M115 76h14','sw'),
-        'Excess item sheet':()=>SHEET('EXCESS ITEMS','fr')+Pa('M122 83V70m-6 6 6-6 6 6','sw'),
-        'QC register creator':()=>R(30,10,100,82,'fb',6)+R(62,5,36,10,'fk',3)+R(37,20,86,66,'fw',3)+[0,1,2,3].map(i=>R(44,28+i*14,9,9,'fl',2)+TK(45.5,33+i*14)+R(59,31+i*14,52,3,'fl',1.5)).join('')+C(122,80,12,'fg')+X(122,84,'QC',8,'fw'),
-        'Work escalation statement':()=>PG(18,8,66,84)+X(51,22,'ESCALATION',5.8,'fa')+L(26,30,50,5,8)+R(94,62,12,22,'fb',2)+R(110,50,12,34,'fb',2)+R(126,36,12,48,'fa',2)+Pa('M92 52l16-10 12 6 20-24','sa')+Pa('M130 24h10v10','sa'),
-        'Typing Speed Test — Hindi & English':()=>TA['Hindi Typing Tool']()+R(104,6,44,16,'fy',8)+X(126,17,'60 WPM',6.5),
-        'Online Exam System — Teacher & Student':()=>PG(32,6,96,88)+X(80,20,'EXAM',8,'fa')+[0,1,2].map(i=>C(46,34+i*16,4,i==1?'fa':'fl')+R(56,32+i*16,56,4,'fl',2)).join('')+C(120,78,12,'fy')+Pa('M120 71v7l5 3','sa'),
-        'Word Counter':()=>PG(24,8,80,84)+L(32,22,64,6,9)+R(96,54,48,28,'fa',8)+X(120,66,'128',11,'fw')+X(120,77,'words',6.5,'fw'),
-        'Calculator — Basic & Scientific':()=>CALC('√ π'),
-        'OMR Sheet Generator & Checker':()=>PG(32,6,96,88)+[0,1,2,3,4].map(r=>[0,1,2,3].map(c=>C(52+c*16,22+r*13,3.5,(r*4+c)%3==0?'fa':'fl')).join('')).join('')+R(44,82,72,8,'fa',3)+X(80,88,'OMR',6,'fw'),
-        'Meta Title & Description Generator':()=>BRW(20,10,120,76)+R(30,30,100,10,'fa',3)+X(80,38,'<title>',6.5,'fw')+R(30,46,100,6,'fl',2)+R(30,56,80,6,'fl',2)+R(30,66,60,6,'fl',2),
-        'Online Stopwatch':()=>C(80,52,34,'fw')+C(80,52,34,'sa')+Pa('M80 18v-8','sa')+Pa('M74 10h12','sa')+Pa('M106 26l4-4','sa')+Pa('M80 52V34','sa')+Pa('M80 52l14 10','sa')+X(62,76,'00:00',9,'fa'),
-        'Name, Date & Text on Photo':()=>IMG(20,14,120,72)+X(80,46,'Your Name',10,'fw')+X(80,60,'28 Oct 2026',7,'fw'),
-        'Instagram Reel Cover Maker':()=>PHN(48,4,64,92)+IMG(54,12,52,48)+R(58,66,44,6,'fl',2)+R(58,76,32,6,'fl',2)
-    };
-
-    /* =====================================================================
-       3. COMPLETE LIST OF ALL PAID SERVICES & FREE TOOLS
-       ===================================================================== */
-    const PAID_CATEGORIES = [
-        { title: "RC Services", artKey: "RC Services", items: [["RC PDF INSTANT", 40], ["RC PDF Server 1", 30], ["RC PDF Server 2", 40], ["RC Full Details", 50]] },
-        { title: "DL Services", artKey: "DL Services", items: [["DL PDF INSTANT", 50], ["DL PDF Server 1", 50], ["DL PDF Server 2 (Blue)", 50]] },
-        { title: "Voter Services", artKey: "Voter Services", items: [["Voter Mobile Link", 40], ["Voter Mobile Link S1", 40], ["Voter PDF", 100]] },
-        { title: "Farmer Services", artKey: "Farmer Services", items: [["KISAN CARD", 25], ["Farmer PDF S1", 25], ["Farmer PDF All State", 30], ["AgriStack Farmer PDF", 30]] },
-        { title: "PAN Services", artKey: "PAN Services", items: [["Aadhaar to PAN", 40], ["Aadhaar to PAN S1", 40], ["PAN Details", 40], ["TAN Verification", 30]] },
-        { title: "LL Services", artKey: "LL Services", items: [["LL PDF", 30], ["LL Exam Request", 80]] },
-        { title: "Udyam Services", artKey: "Udyam Services", items: [["New UDYAM CERTIFICATE", 200], ["PAN to Udyam S2", 100]] },
-        { title: "Aadhaar Update & Ration Service", artKey: "Aadhaar & Ration", items: [["AADHAAR Update", 150], ["Ration PDF S1", 20], ["Ration PDF S2 (Aadhaar)", 30]] },
-        { title: "Mobile Services", artKey: "Mobile Services", items: [["Mobile Details Find", 30], ["Mobile Details S1", 30], ["Mobile Details S2", 30], ["Other Mobile Issue", 50]] },
-        { title: "GST Services", artKey: "GST Services", items: [["New GST Certificate", 1200], ["GST Download", 200], ["PAN to GST", 10], ["GST Details", 10]] },
-        { title: "Chassis & Vehicle Find", artKey: "Chassis to RC", items: [["Chassis to RC", 70], ["Vehicle to Mobile Find", 80]] },
-        { title: "Challan & Bank Seeding", artKey: "Challan Details", items: [["Challan Details", 10], ["DBT Seeding Status", 20]] },
-        { title: "Lost Document Service", subtitle: "Use when you have the document number or details", artKey: "Lost", items: [["Voter ID", 50], ["Aadhaar Card", 50], ["PAN Card", 50], ["Driving License", 50]] },
-        { title: "PAN Card Service", artKey: "PAN Card Service", items: [["New PAN apply", 600], ["PAN update / correction", 600]] },
-        { title: "PVC Converter Tools", subtitle: "Exact 85.60 × 53.98 mm card size front & back PDF/JPG", artKey: "PVC Tools", items: [["Voter ID", 10], ["Aadhaar Card", 10], ["PAN Card", 10], ["Driving License", 10], ["Vehicle RC", 10], ["Any Other Document", 10]] },
-        { title: "Govt Department & Civil Contractor Services", artKey: "Govt", items: [
-            ["New Digital Signature (DSC)", 2500],
-            ["E-procurement registration", 500],
-            ["Tender upload (for contractor)", 300],
-            ["Tender upload (for department)", 700],
-            ["Building estimate creator", 200],
-            ["BOQ creator", 200],
-            ["Govt civil & electric bill maker (Excel)", 1000],
-            ["Govt civil & electric bill maker (Measurement Book)", "WA"],
-            ["Bill form", 400],
-            ["Extra item sheet", 200],
-            ["Excess item sheet", 200],
-            ["QC register creator", 500],
-            ["Work escalation statement", 700]
-        ]}
-    ];
-
-    const FREE_CATEGORIES = [
-        { title: "Trending & Most Used Tools", subtitle: "Top 11 most popular shop tools", items: ["Passport Photo Sheet", "Passport Photo Maker", "QR Code Generator", "Stamp Designer", "ID Card Front & Back to A4", "What Is My IP", "Letterhead Maker", "Visiting Card Designer", "Marriage Biodata Maker", "Age Calculator", "Photo & Signature Resizer"] },
-        { title: "PDF Tools", items: ["JPG / PNG to PDF", "PDF Merge", "PDF Split & Page Extract", "PDF to JPG", "PDF to Excel", "PDF Rotate & Reorder", "PDF Compressor (KB)", "Document Scanner & PDF", "PDF Page Number Adder", "PDF Header & Footer Maker"] },
-        { title: "Image & Favicon Tools", items: ["Photo Compressor (KB)", "Image Format Converter", "Background Remover", "WebP to JPG Converter", "ICO to PNG", "ICO Converter (Favicon)", "Thumbnail Resizer", "Favicon Preview Tool & Maker"] },
-        { title: "Photo Editing Tools", items: ["Image Watermark Maker", "Digital Signature Maker", "Photo Color Changer", "Photo Blur Tool", "Image to Black & White", "Background Black & White", "Photo Border Maker", "Color Picker from Image", "Name, Date & Text on Photo", "Instagram Reel Cover Maker"] },
-        { title: "Print & ID Card Tools", items: ["ID Card Maker", "Passport Photo Maker", "QR Code Designer & Modifier", "Employee ID Card Maker", "Student ID Card Maker", "A4 Photo Print Layout"] },
-        { title: "Office & Document Makers", items: ["Text to PDF / Application", "Resume Maker", "Invoice Maker", "Quotation Maker"] },
-        { title: "Hindi Typing & Shop Calculators", items: ["Hindi Typing Tool", "GST Calculator", "GST Inclusive & Exclusive Calculator", "Printing Cost Calculator", "Cash Denomination Calculator", "Salary Calculator"] },
-        { title: "Financial & Math Calculators", items: ["Percentage Calculator", "Loan / EMI Calculator", "Password to MD5 / SHA-256", "Online Stopwatch", "Calculator — Basic & Scientific"] },
-        { title: "Exam & Typing Portal", items: ["OMR Sheet Generator & Checker", "Typing Speed Test — Hindi & English", "Online Exam System — Teacher & Student"] },
-        { title: "Text & SEO Utilities", items: ["Meta Title & Description Generator", "Word Counter"] }
-    ];
-
-    function getSvgArt(catTitle, artKey, itemName) {
-        try {
-            if (artKey === "Lost") {
-                const k = {'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[itemName];
-                return (k ? V[k]() : AAD()) + MG(128,72);
-            }
-            if (artKey === "PVC Tools") {
-                return conv({'Voter ID':'Voter ID','Aadhaar Card':'Aadhaar','PAN Card':'PAN','Driving License':'DL','Vehicle RC':'Vehicle RC','Any Other Document':'Any doc'}[itemName] || 'PVC');
-            }
-            if (artKey === "PAN Card Service") {
-                return V[itemName === 'New PAN apply' ? 'New PAN Card Apply' : 'PAN Update / Correction']();
-            }
-            if (itemName === "Vehicle to Mobile Find") return V["Vehicle To Mobile Find"]();
-            if (itemName === "DBT Seeding Status") return V["DBT Seeding Status"]();
-            if (itemName === "TAN Verification") return V["TAN Verification"]();
-            if (itemName === "RC Full Details") return V["RC Full Details"]();
-            if (V[artKey]) return V[artKey]();
-            if (DA[itemName]) return DA[itemName]();
-            if (TA[itemName]) return TA[itemName]();
-        } catch (e) {}
-        return PG();
-    }
-
-    /* =====================================================================
-       4. STATE & STORAGE MANAGEMENT
-       ===================================================================== */
-    let favourites = JSON.parse(localStorage.getItem('ds_fav_tools') || '["RC Services|RC PDF INSTANT", "Trending & Most Used Tools|Passport Photo Sheet", "PDF Tools|JPG / PNG to PDF", "DL Services|DL PDF INSTANT"]');
-    let currentWallet = 9490;
-    let ordersHistory = [
-        { id: 'REQ9041', date: '31 Oct 2026', name: 'RC PDF INSTANT (RJ14AB1234)', status: 'Success', amount: 40 },
-        { id: 'REQ9038', date: '30 Oct 2026', name: 'DL PDF INSTANT (RJ1420190012345)', status: 'Success', amount: 50 },
-        { id: 'REQ9012', date: '28 Oct 2026', name: 'Aadhaar to PAN', status: 'Success', amount: 40 }
-    ];
-    let passbookLedger = [
-        { date: '31 Oct 2026', note: 'RC PDF INSTANT (RJ14AB1234)', type: 'Debit', amount: 40 },
-        { date: '30 Oct 2026', note: 'Wallet Recharge via UPI', type: 'Credit', amount: 1000 },
-        { date: '30 Oct 2026', note: 'DL PDF INSTANT', type: 'Debit', amount: 50 }
-    ];
-
-    // --- BACKEND API SYNC FOR WALLET & PROFILE ---
-    const API = 'https://docsmartly-api.hm2351994.workers.dev';
-
-    async function syncLoggedInUser() {
-        try {
-            if (!localStorage.getItem('ds_session')) {
-                localStorage.setItem('ds_session', 'USR_LOVE_9490');
-            }
-            if (!localStorage.getItem('ds_token')) {
-                localStorage.setItem('ds_token', 'tok_live_docsmartly_9490');
-            }
-
-            const token = localStorage.getItem('ds_token');
-            const res = await fetch(API + '/api/user/profile', {
-                headers: { 'x-user-token': token }
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                if (data && data.user) {
-                    const u = data.user;
-                    if (u.name) {
-                        document.getElementById('userNameTitle').innerText = u.name;
-                        document.getElementById('profName').value = u.name;
-                        const initials = u.name.trim().split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
-                        document.getElementById('userAvatar').innerText = initials || 'DS';
-                    }
-                    if (u.mob) document.getElementById('profMob').value = u.mob;
-                    if (u.mail) document.getElementById('profMail').value = u.mail;
-                    if (u.bal != null) {
-                        currentWallet = Number(u.bal);
-                    }
-                    if (Array.isArray(u.orders)) {
-                        ordersHistory = u.orders;
-                        renderTables();
-                    }
-                }
-            }
-        } catch (e) {
-            console.error('Sync error:', e);
+        function getToolUrl(name, key = "") {
+            if (key && paidToolsMap[key]) return `paidtools/${paidToolsMap[key]}`;
+            if (paidToolsMap[name]) return `paidtools/${paidToolsMap[name]}`;
+            if (freeToolsMap[name]) return `freetools/${freeToolsMap[name]}`;
+            const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            return `freetools/${fallback}.html`;
         }
 
-        const hr = new Date().getHours();
-        document.getElementById('greetingText').innerText = hr < 12 ? 'Good Morning 👋' : hr < 17 ? 'Good Afternoon 👋' : 'Good Evening 👋';
-        updateWalletUI();
-    }
+        const G = [["#2457d6","#16337a"],["#0e7490","#134e5e"],["#4f46e5","#2b2a8a"],["#0b6fa4","#0b3a5c"],["#3b5bdb","#1e2f7a"],["#0d8a8a","#0f4a52"],["#6d4fd8","#3a2a85"],["#1d6fb8","#123f6b"]];
+        const T = ["#dbe7ff","#d3f0f3","#e0defb","#d5eaf8","#dde4fb","#d2efee","#e6defa","#d7e8f7"];
+        const sty = i => `--a:${G[i%8][0]};--b:${G[i%8][1]};--t:${T[i%8]}`;
+        const R = (x,y,w,h,c,r=3) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
+        const C = (x,y,r,c) => `<circle cx="${x}" cy="${y}" r="${r}" class="${c}"/>`;
+        const X = (x,y,t,s,c='fk',a='middle') => `<text x="${x}" y="${y}" font-size="${s}" class="${c}" text-anchor="${a}" font-weight="700">${t}</text>`;
+        const Pa = (d,c) => `<path d="${d}" class="${c}"/>`;
+        const L = (x,y,w,n=3,g=6,c='fl') => Array.from({length:n},(_,i)=>R(x,y+i*g,i==n-1?w*.6:w,2.4,c,1.2)).join('');
+        const H = (x,y,w,h,c='fb') => R(x,y,w,h,c,3)+C(x+w/2,y+h*.38,w*.2,'fw')+Pa(`M${x+w*.15} ${y+h}q${w*.35} ${-h*.5} ${w*.7} 0z`,'fw');
+        const PG = (x=52,y=8,w=56,h=84) => R(x,y,w,h,'fw',4);
+        const AR = (x,y,c='sa') => Pa(`M${x} ${y}h16m-5-5 5 5-5 5`,c);
+        const CAR = (x,y,s=1,c='fw') => `<g transform="translate(${x} ${y}) scale(${s})">${R(0,8,44,12,c,4)}${R(8,0,28,10,c,4)}${C(11,22,4,'fk')}${C(33,22,4,'fk')}</g>`;
+        const CARD = (x,y,w,h,c='fa') => R(x,y,w,h,c,7);
+        const IMG = (x,y,w,h,c='fb') => R(x,y,w,h,c,4)+C(x+w*.74,y+h*.27,h*.1,'fy')+Pa(`M${x+3} ${y+h-1}L${x+w*.34} ${y+h*.48}L${x+w*.55} ${y+h*.74}L${x+w*.7} ${y+h*.6}L${x+w-3} ${y+h-1}z`,'fa');
 
-    function updateWalletUI() {
-        const formatted = '₹' + currentWallet.toLocaleString('en-IN');
-        document.getElementById('headerWalletBal').innerText = formatted;
-        document.getElementById('bannerWalletBal').innerText = formatted;
+        const V = {
+            "RC Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'REGISTRATION CERTIFICATE',6,'fw','start')+CAR(30,48,1.1)+R(88,52,44,16,'fy',2)+X(110,63,'RJ14 AB 1234',6.5)+L(88,38,44,2,6,'fo'),
+            "DL Services":()=>CARD(18,14,124,72)+X(30,27,'DRIVING LICENCE',7,'fw','start')+H(28,36,28,36)+L(66,40,64,4,8,'fo')+C(120,70,8,'sw')+Pa('M112 70h16M120 70v8','sw'),
+            "Voter Services":()=>CARD(18,14,124,72)+R(18,20,124,5,'fy',0)+R(18,25,124,5,'fw',0)+R(18,30,124,5,'fg',0)+X(30,46,'ELECTION COMMISSION',5.5,'fw','start')+H(28,52,24,30)+L(62,56,50,3,8,'fo')+X(126,78,'EPIC',6,'fw'),
+            "Farmer Services":()=>CARD(18,14,124,72)+X(30,27,'KISAN CARD',7,'fw','start')+H(28,36,28,36)+L(64,42,36,3,8,'fo')+Pa('M120 78V44','sw'),
+            "PAN Services":()=>CARD(18,14,124,72)+R(18,14,124,16,'fb',7)+X(30,26,'INCOME TAX DEPARTMENT',6,'fw','start')+X(30,42,'PERMANENT ACCOUNT NUMBER',4.6,'fw','start')+X(30,58,'ABCDE1234F',11,'fy','start'),
+            "Udyam Services":()=>PG(24,10,112,80)+X(80,28,'UDYAM CERTIFICATE',6.5,'fa')+R(60,36,40,8,'fa',2),
+            "LL Services":()=>CARD(18,14,124,72)+X(30,27,'LEARNER LICENCE',7,'fw','start')+H(28,36,28,36),
+            "Aadhaar & Ration":()=>CARD(16,12,100,58)+X(24,24,'AADHAAR',6,'fw','start')+H(24,29,24,32),
+            "Mobile Services":()=>PHN(56,6,48,88)+X(80,36,'+91',9,'fa'),
+            "GST Services":()=>PG(46,8,68,84)+X(80,22,'GST',9,'fa'),
+            "Chassis to RC":()=>CAR(14,30,1.3,'fa')+R(18,68,48,13,'fy',3),
+            "Challan Details":()=>PG(30,8,64,84)+X(62,22,'E-CHALLAN',6.5,'fa')
+        };
 
-        // Keep ds_users balance synced for paid service pages
-        try {
-            const users = JSON.parse(localStorage.getItem('ds_users') || '[]');
-            const sessionId = localStorage.getItem('ds_session');
-            const idx = users.findIndex(x => x.id === sessionId);
-            if (idx >= 0) {
-                users[idx].bal = currentWallet;
-                localStorage.setItem('ds_users', JSON.stringify(users));
+        const TA = {
+            "Passport Photo Sheet":()=>PG(30,6,100,88)+[0,1].map(r=>[0,1,2,3].map(c=>H(38+c*22,16+r*38,18,28)).join('')).join(''),
+            "Passport Photo Maker":()=>PG(42,8,76,84)+H(54,18,52,58),
+            "QR Code Generator":()=>PG(44,14,72,72),
+            "Stamp Designer":()=>C(80,50,38,'sa'),
+            "ID Card Front & Back to A4":()=>PG(44,6,72,88),
+            "What Is My IP":()=>C(52,50,30,'sa'),
+            "Letterhead Maker":()=>PG(44,6,72,88),
+            "Visiting Card Designer":()=>R(60,46,76,46,'fw',5),
+            "Marriage Biodata Maker":()=>PG(36,6,88,88),
+            "Age Calculator":()=>PG(36,8,88,84),
+            "Photo & Signature Resizer":()=>PG(30,18,76,56),
+            "JPG / PNG to PDF":()=>PG(14,26,48,40),
+            "PDF Merge":()=>PG(14,22,36,50),
+            "PDF Split & Page Extract":()=>PG(14,14,46,72),
+            "PDF to JPG":()=>PG(14,14,46,72),
+            "PDF to Excel":()=>PG(14,14,46,72),
+            "PDF Rotate & Reorder":()=>PG(30,14,46,72),
+            "PDF Compressor (KB)":()=>PG(18,14,52,72),
+            "Document Scanner & PDF":()=>PG(40,8,80,84),
+            "PDF Page Number Adder":()=>PG(44,8,72,84),
+            "PDF Header & Footer Maker":()=>PG(44,8,72,84),
+            "Photo Compressor (KB)":()=>PG(18,16,70,56),
+            "Image Format Converter":()=>PG(14,26,48,40),
+            "Background Remover":()=>R(36,10,88,80,'fl',6),
+            "WebP to JPG Converter":()=>PG(14,26,48,40),
+            "ICO to PNG":()=>R(18,30,40,40,'fa',8),
+            "ICO Converter (Favicon)":()=>PG(24,14,112,72),
+            "Thumbnail Resizer":()=>PG(16,14,84,66),
+            "Favicon Preview Tool & Maker":()=>PG(20,12,120,48),
+            "Image Watermark Maker":()=>PG(24,16,112,68),
+            "Digital Signature Maker":()=>PG(30,18,100,64),
+            "Photo Color Changer":()=>PG(14,14,44,70),
+            "Photo Blur Tool":()=>PG(14,22,56,48),
+            "Image to Black & White":()=>PG(14,22,56,48),
+            "Background Black & White":()=>PG(14,14,56,72),
+            "Photo Border Maker":()=>R(28,10,104,80,'fa',6),
+            "Color Picker from Image":()=>PG(16,16,90,68),
+            "ID Card Maker":()=>R(24,16,112,68,'fw',6),
+            "QR Code Designer & Modifier":()=>PG(44,14,72,72),
+            "Employee ID Card Maker":()=>PG(52,4,56,92),
+            "Student ID Card Maker":()=>PG(52,4,56,92),
+            "A4 Photo Print Layout":()=>PG(36,4,88,92),
+            "Text to PDF / Application":()=>PG(20,8,56,84),
+            "Resume Maker":()=>PG(36,6,88,88),
+            "Invoice Maker":()=>PG(36,6,88,88),
+            "Quotation Maker":()=>PG(36,6,88,88),
+            "Hindi Typing Tool":()=>PG(16,44,128,44),
+            "GST Calculator":()=>CALC('18%'),
+            "GST Inclusive & Exclusive Calculator":()=>CALC('+GST'),
+            "Printing Cost Calculator":()=>PG(20,40,64,30),
+            "Cash Denomination Calculator":()=>PG(20,22,76,40),
+            "Salary Calculator":()=>PG(36,8,88,84),
+            "Percentage Calculator":()=>C(58,32,12,'sa'),
+            "Loan / EMI Calculator":()=>PG(48,70,64,7),
+            "Word Counter":()=>PG(24,8,80,84),
+            "ICO to PNG":()=>PG(18,30,40,40),
+            "ICO Converter (Favicon)":()=>PG(24,14,112,72),
+            "Thumbnail Resizer":()=>PG(16,14,84,66),
+            "Favicon Preview Tool & Maker":()=>PG(20,12,120,48),
+            "Image Watermark Maker":()=>PG(24,16,112,68),
+            "Calculator — Basic & Scientific":()=>CALC('√ π'),
+            "Online Stopwatch":()=>C(80,52,34,'fw'),
+            "Name, Date & Text on Photo":()=>PG(20,14,120,72),
+            "Instagram Reel Cover Maker":()=>PHN(48,4,64,92),
+            "Password to MD5 / SHA-256":()=>PG(50,44,60,44),
+            "Meta Title & Description Generator":()=>PG(20,10,120,76),
+            "OMR Sheet Generator & Checker":()=>PG(32,6,96,88),
+            "Typing Speed Test — Hindi & English":()=>PG(16,44,128,44),
+            "Online Exam System — Teacher & Student":()=>PG(32,6,96,88)
+        };
+
+        const PAID_CATEGORIES = [
+            { title: "RC Services", artKey: "RC Services", items: [["RC PDF INSTANT", 40], ["RC PDF Server 1", 30], ["RC PDF Server 2", 40], ["RC Full Details", 50]] },
+            { title: "DL Services", artKey: "DL Services", items: [["DL PDF INSTANT", 50], ["DL PDF Server 1", 50], ["DL PDF Server 2 (Blue)", 50]] },
+            { title: "Voter Services", artKey: "Voter Services", items: [["Voter Mobile Link", 40], ["Voter Mobile Link S1", 40], ["Voter PDF", 100]] },
+            { title: "Farmer Services", artKey: "Farmer Services", items: [["KISAN CARD", 25], ["Farmer PDF S1", 25], ["Farmer PDF All State", 30], ["AgriStack Farmer PDF", 30]] },
+            { title: "PAN Services", artKey: "PAN Services", items: [["Aadhaar to PAN", 40], ["Aadhaar to PAN S1", 40], ["PAN Details", 40], ["TAN Verification", 30]] },
+            { title: "LL Services", artKey: "LL Services", items: [["LL PDF", 30], ["LL Exam Request", 80]] },
+            { title: "Udyam Services", artKey: "Udyam Services", items: [["New UDYAM CERTIFICATE", 200], ["PAN to Udyam S2", 100]] },
+            { title: "Aadhaar Update & Ration Service", artKey: "Aadhaar & Ration", items: [["AADHAAR Update", 150], ["Ration PDF S1", 20], ["Ration PDF S2 (Aadhaar)", 30]] },
+            { title: "Mobile Services", artKey: "Mobile Services", items: [["Mobile Details Find", 30], ["Mobile Details S1", 30], ["Mobile Details S2", 30], ["Other Mobile Issue", 50]] },
+            { title: "GST Services", artKey: "GST Services", items: [["New GST Certificate", 1200], ["GST Download", 200], ["PAN to GST", 10], ["GST Details", 10]] },
+            { title: "Chassis & Vehicle Find", artKey: "Chassis to RC", items: [["Chassis to RC", 70], ["Vehicle to Mobile Find", 80]] },
+            { title: "Challan & Bank Seeding", artKey: "Challan Details", items: [["Challan Details", 10], ["DBT Seeding Status", 20]] },
+            { title: "Lost Document Service", subtitle: "Use when you have the document number or details", artKey: "Lost", items: [["Voter ID", 50], ["Aadhaar Card", 50], ["PAN Card", 50], ["Driving License", 50]] },
+            { title: "PAN Card Service", artKey: "PAN Card Service", items: [["New PAN apply", 600], ["PAN update / correction", 600]] },
+            { title: "PVC Converter Tools", subtitle: "Exact 85.60 × 53.98 mm card size front & back PDF/JPG", artKey: "PVC Tools", items: [["Voter ID", 10], ["Aadhaar Card", 10], ["PAN Card", 10], ["Driving License", 10], ["Vehicle RC", 10], ["Any Other Document", 10]] },
+            { title: "Govt Department & Civil Contractor Services", artKey: "Govt", items: [
+                ["New Digital Signature (DSC)", 2500],
+                ["E-procurement registration", 500],
+                ["Tender upload (for contractor)", 300],
+                ["Tender upload (for department)", 700],
+                ["Building estimate creator", 200],
+                ["BOQ creator", 200],
+                ["Govt civil & electric bill maker (Excel)", 1000],
+                ["Govt civil & electric bill maker (Measurement Book)", "WA"],
+                ["Bill form", 400],
+                ["Extra item sheet", 200],
+                ["Excess item sheet", 200],
+                ["QC register creator", 500],
+                ["Work escalation statement", 700]
+            ]}
+        ];
+
+        const FREE_CATEGORIES = [
+            { title: "Trending & Most Used Tools", subtitle: "Top 11 most popular shop tools", items: ["Passport Photo Sheet", "Passport Photo Maker", "QR Code Generator", "Stamp Designer", "ID Card Front & Back to A4", "What Is My IP", "Letterhead Maker", "Visiting Card Designer", "Marriage Biodata Maker", "Age Calculator", "Photo & Signature Resizer"] },
+            { title: "PDF Tools", items: ["JPG / PNG to PDF", "PDF Merge", "PDF Split & Page Extract", "PDF to JPG", "PDF to Excel", "PDF Rotate & Reorder", "PDF Compressor (KB)", "Document Scanner & PDF", "PDF Page Number Adder", "PDF Header & Footer Maker"] },
+            { title: "Image & Favicon Tools", items: ["Photo Compressor (KB)", "Image Format Converter", "Background Remover", "WebP to JPG Converter", "ICO to PNG", "ICO Converter (Favicon)", "Thumbnail Resizer", "Favicon Preview Tool & Maker"] },
+            { title: "Photo Editing Tools", items: ["Image Watermark Maker", "Digital Signature Maker", "Photo Color Changer", "Photo Blur Tool", "Image to Black & White", "Background Black & White", "Photo Border Maker", "Color Picker from Image", "Name, Date & Text on Photo", "Instagram Reel Cover Maker"] },
+            { title: "Print & ID Card Tools", items: ["ID Card Maker", "Passport Photo Maker", "QR Code Designer & Modifier", "Employee ID Card Maker", "Student ID Card Maker", "A4 Photo Print Layout"] },
+            { title: "Office & Document Makers", items: ["Text to PDF / Application", "Resume Maker", "Invoice Maker", "Quotation Maker"] },
+            { title: "Hindi Typing & Shop Calculators", items: ["Hindi Typing Tool", "GST Calculator", "GST Inclusive & Exclusive Calculator", "Printing Cost Calculator", "Cash Denomination Calculator", "Salary Calculator"] },
+            { title: "Financial & Math Calculators", items: ["Percentage Calculator", "Loan / EMI Calculator", "Password to MD5 / SHA-256", "Online Stopwatch", "Calculator — Basic & Scientific"] },
+            { title: "Exam & Typing Portal", items: ["OMR Sheet Generator & Checker", "Typing Speed Test — Hindi & English", "Online Exam System — Teacher & Student"] },
+            { title: "Text & SEO Utilities", items: ["Meta Title & Description Generator", "Word Counter"] }
+        ];
+
+        function getSvgArt(catTitle, artKey, itemName) {
+            try {
+                if (artKey === "Lost") {
+                    const k = {'Voter ID':'Voter Services','PAN Card':'PAN Services','Driving License':'DL Services'}[itemName];
+                    return (k && V[k] ? V[k]() : PG()) + MG(128,72);
+                }
+                if (artKey === "PVC Tools") {
+                    return PG();
+                }
+                if (artKey === "PAN Card Service") {
+                    return V["PAN Services"] ? V["PAN Services"]() : PG();
+                }
+                if (V[artKey]) return V[artKey]();
+                if (TA[itemName]) return TA[itemName]();
+            } catch (e) {}
+            return PG();
+        }
+
+        let favourites = JSON.parse(localStorage.getItem('ds_fav_tools') || '[]');
+        let currentWallet = 9490;
+        let ordersHistory = [];
+        let passbookLedger = [];
+
+        const API = 'https://docsmartly-api.hm2351994.workers.dev';
+
+        async function syncLoggedInUser() {
+            try {
+                if (!localStorage.getItem('ds_session')) {
+                    localStorage.setItem('ds_session', 'USR_LOVE_9490');
+                }
+                if (!localStorage.getItem('ds_token')) {
+                    localStorage.setItem('ds_token', 'tok_live_docsmartly_9490');
+                }
+
+                const token = localStorage.getItem('ds_token');
+                const res = await fetch(API + '/api/user/profile', {
+                    headers: { 'x-user-token': token }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.user) {
+                        const u = data.user;
+                        if (u.name) {
+                            document.getElementById('userNameTitle').innerText = u.name;
+                            document.getElementById('profName').value = u.name;
+                            const initials = u.name.trim().split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
+                            document.getElementById('userAvatar').innerText = initials || 'DS';
+                        }
+                        if (u.mob) document.getElementById('profMob').value = u.mob;
+                        if (u.mail) document.getElementById('profMail').value = u.mail;
+                        if (u.bal != null) {
+                            currentWallet = Number(u.bal);
+                        }
+                        if (Array.isArray(u.orders)) {
+                            ordersHistory = u.orders;
+                            renderTables();
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Sync error:', e);
             }
-        } catch (e) {}
-    }
 
-    /* =====================================================================
-       5. RENDER ALL CARDS, SECTIONS & SIDEBAR
-       ===================================================================== */
-    const ALL_ITEMS_FLAT = [];
+            const hr = new Date().getHours();
+            document.getElementById('greetingText').innerText = hr < 12 ? 'Good Morning 👋' : hr < 17 ? 'Good Afternoon 👋' : 'Good Evening 👋';
+            updateWalletUI();
+        }
 
-    function buildCardHTML(itemObj) {
-        const isFav = favourites.includes(itemObj.key);
-        const badgeHTML = itemObj.isFree
-            ? `<span class="absolute left-2 top-2 z-10 bg-emerald-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">FREE</span>`
-            : '';
+        function updateWalletUI() {
+            const formatted = '₹' + currentWallet.toLocaleString('en-IN');
+            document.getElementById('headerWalletBal').innerText = formatted;
+            document.getElementById('bannerWalletBal').innerText = formatted;
+        }
 
-        const priceFooterHTML = itemObj.price === 'WA'
-            ? `<a href="https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for ' + itemObj.name)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 bg-emerald-700 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow">₹ <i class="fa-brands fa-whatsapp"></i> Ask Price</a>`
-            : itemObj.isFree
-            ? `<span class="inline-block bg-emerald-700 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">Free Tool</span>`
-            : `<span class="inline-block bg-emerald-700 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">₹${itemObj.price}</span>`;
+        const ALL_ITEMS_FLAT = [];
 
-        const actionLabel = itemObj.isFree ? 'Open →' : 'Apply →';
+        function buildCardHTML(itemObj) {
+            const isFav = favourites.includes(itemObj.key);
+            const badgeHTML = itemObj.isFree
+                ? `<span class="absolute left-2 top-2 z-10 bg-emerald-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">FREE</span>`
+                : '';
 
-        return `
-            <div class="service-card bg-white rounded-xl border border-slate-200 p-2.5 flex flex-col justify-between relative group cursor-pointer"
-                 data-card-key="${itemObj.key}"
-                 data-category="${itemObj.isFree ? 'free' : 'paid'}"
-                 data-title="${itemObj.name.toLowerCase()} ${itemObj.catTitle.toLowerCase()}"
-                 onclick="handleCardClick('${itemObj.key.replace(/'/g, "\\'")}')">
-                
-                <button type="button" onclick="event.stopPropagation(); toggleFavourite('${itemObj.key.replace(/'/g, "\\'")}')"
-                        class="absolute right-4 top-4 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center transition ${isFav ? 'text-rose-600' : 'text-slate-400 hover:text-rose-500'}"
-                        title="Add to Favourites">
-                    <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart text-sm"></i>
-                </button>
+            const priceFooterHTML = itemObj.price === 'WA'
+                ? `<a href="https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for ' + itemObj.name)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 bg-emerald-700 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow">₹ <i class="fa-brands fa-whatsapp"></i> Ask Price</a>`
+                : itemObj.isFree
+                ? `<span class="inline-block bg-emerald-700 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">Free Tool</span>`
+                : `<span class="inline-block bg-emerald-700 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">₹${itemObj.price}</span>`;
 
-                <div>
-                    <div class="sv mb-2" style="${sty(itemObj.index)}">
-                        ${badgeHTML}
-                        <svg class="art" viewBox="0 0 160 100" aria-hidden="true">${itemObj.svg}</svg>
+            const actionLabel = itemObj.isFree ? 'Open →' : 'Apply →';
+
+            return `
+                <div class="service-card bg-white rounded-xl border border-slate-200 p-2.5 flex flex-col justify-between relative group cursor-pointer"
+                     data-card-key="${itemObj.key}"
+                     data-category="${itemObj.isFree ? 'free' : 'paid'}"
+                     data-title="${itemObj.name.toLowerCase()} ${itemObj.catTitle.toLowerCase()}"
+                     onclick="handleCardClick('${itemObj.key.replace(/'/g, "\\'")}')">
+                    
+                    <button type="button" onclick="event.stopPropagation(); toggleFavourite('${itemObj.key.replace(/'/g, "\\'")}')"
+                            class="absolute right-4 top-4 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center transition ${isFav ? 'text-rose-600' : 'text-slate-400 hover:text-rose-500'}"
+                            title="Add to Favourites">
+                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart text-sm"></i>
+                    </button>
+
+                    <div>
+                        <div class="sv mb-2" style="${sty(itemObj.index)}">
+                            ${badgeHTML}
+                            <svg class="art" viewBox="0 0 160 100" aria-hidden="true">${itemObj.svg}</svg>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-xs sm:text-[13px] leading-snug px-1 group-hover:text-blue-600 transition">${itemObj.name}</h4>
+                        <p class="text-[10px] text-slate-400 px-1 mt-0.5 truncate">${itemObj.catTitle}</p>
                     </div>
-                    <h4 class="font-bold text-slate-900 text-xs sm:text-[13px] leading-snug px-1 group-hover:text-blue-600 transition">${itemObj.name}</h4>
-                    <p class="text-[10px] text-slate-400 px-1 mt-0.5 truncate">${itemObj.catTitle}</p>
+
+                    <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between px-1">
+                        ${priceFooterHTML}
+                        <span class="text-[11px] font-bold text-blue-600 group-hover:translate-x-0.5 transition">${actionLabel}</span>
+                    </div>
                 </div>
+            `;
+        }
 
-                <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between px-1">
-                    ${priceFooterHTML}
-                    <span class="text-[11px] font-bold text-blue-600 group-hover:translate-x-0.5 transition">${actionLabel}</span>
-                </div>
-            </div>
-        `;
-    }
+        function renderAllSections() {
+            try {
+                ALL_ITEMS_FLAT.length = 0;
+                let idx = 0;
 
-    function renderAllSections() {
-        try {
-            ALL_ITEMS_FLAT.length = 0;
-            let idx = 0;
+                const paidContainer = document.getElementById('paid-sections-container');
+                const sbPaid = document.getElementById('sidebar-paid-links');
+                if (!paidContainer || !sbPaid) return;
 
-            // 1. Render Paid Categories
-            const paidContainer = document.getElementById('paid-sections-container');
-            const sbPaid = document.getElementById('sidebar-paid-links');
-            if (!paidContainer || !sbPaid) return;
+                let paidHTML = '';
+                let sbPaidHTML = '';
+                let totalPaid = 0;
 
-            let paidHTML = '';
-            let sbPaidHTML = '';
-            let totalPaid = 0;
-
-            if (typeof PAID_CATEGORIES !== 'undefined') {
                 PAID_CATEGORIES.forEach((cat, cIdx) => {
                     const secId = `sec-paid-${cIdx}`;
                     const cardsHTML = cat.items.map(([name, price]) => {
@@ -998,23 +865,19 @@
                         </button>
                     `;
                 });
-            }
 
-            paidContainer.innerHTML = paidHTML;
-            sbPaid.innerHTML = sbPaidHTML;
-            const sbPaidCountEl = document.getElementById('sbPaidCount');
-            if (sbPaidCountEl) sbPaidCountEl.innerText = totalPaid;
+                paidContainer.innerHTML = paidHTML;
+                sbPaid.innerHTML = sbPaidHTML;
+                document.getElementById('sbPaidCount').innerText = totalPaid;
 
-            // 2. Render Free Tool Categories
-            const freeContainer = document.getElementById('free-sections-container');
-            const sbFree = document.getElementById('sidebar-free-links');
-            if (!freeContainer || !sbFree) return;
+                const freeContainer = document.getElementById('free-sections-container');
+                const sbFree = document.getElementById('sidebar-free-links');
+                if (!freeContainer || !sbFree) return;
 
-            let freeHTML = '';
-            let sbFreeHTML = '';
-            let totalFree = 0;
+                let freeHTML = '';
+                let sbFreeHTML = '';
+                let totalFree = 0;
 
-            if (typeof FREE_CATEGORIES !== 'undefined') {
                 FREE_CATEGORIES.forEach((cat, cIdx) => {
                     const secId = `sec-free-${cIdx}`;
                     const cardsHTML = cat.items.map(name => {
@@ -1056,365 +919,208 @@
                         </button>
                     `;
                 });
+
+                freeContainer.innerHTML = freeHTML;
+                sbFree.innerHTML = sbFreeHTML;
+                document.getElementById('sbFreeCount').innerText = totalFree;
+                document.getElementById('statTotalServices').innerText = totalPaid + totalFree;
+
+                renderFavouritesSection();
+            } catch (err) {
+                console.error("renderAllSections error:", err);
+            }
+        }
+
+        function renderFavouritesSection() {
+            const favGrid = document.getElementById('favourites-grid');
+            const favItems = ALL_ITEMS_FLAT.filter(item => favourites.includes(item.key));
+            document.getElementById('favCountHeader').innerText = favItems.length;
+            document.getElementById('favFilterCount').innerText = favItems.length;
+
+            if (favItems.length === 0) {
+                favGrid.innerHTML = `<p class="text-xs text-slate-400 col-span-full py-2">No favourites pinned yet. Click the heart icon on any tool or service to keep it here for quick access.</p>`;
+            } else {
+                favGrid.innerHTML = favItems.map(item => buildCardHTML(item)).join('');
+            }
+        }
+
+        function toggleFavourite(key) {
+            const idx = favourites.indexOf(key);
+            if (idx >= 0) {
+                favourites.splice(idx, 1);
+            } else {
+                favourites.push(key);
+            }
+            localStorage.setItem('ds_fav_tools', JSON.stringify(favourites));
+            renderAllSections();
+        }
+
+        function handleCardClick(key) {
+            const item = ALL_ITEMS_FLAT.find(x => x.key === key);
+            if (!item) return;
+
+            if (item.isFree) {
+                window.location.href = getToolUrl(item.name, item.key);
+                return;
             }
 
-            freeContainer.innerHTML = freeHTML;
-            sbFree.innerHTML = sbFreeHTML;
-            const sbFreeCountEl = document.getElementById('sbFreeCount');
-            if (sbFreeCountEl) sbFreeCountEl.innerText = totalFree;
+            if (item.price === 'WA') {
+                window.open(`https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for ' + item.name)}`, '_blank');
+                return;
+            }
 
-            const statTotalServicesEl = document.getElementById('statTotalServices');
-            if (statTotalServicesEl) statTotalServicesEl.innerText = totalPaid + totalFree;
-
-            renderFavouritesSection();
-        } catch (err) {
-            console.error("Critical error in renderAllSections:", err);
-        }
-    }
-
-    function renderFavouritesSection() {
-        const favGrid = document.getElementById('favourites-grid');
-        const favItems = ALL_ITEMS_FLAT.filter(item => favourites.includes(item.key));
-        document.getElementById('favCountHeader').innerText = favItems.length;
-        document.getElementById('favFilterCount').innerText = favItems.length;
-
-        if (favItems.length === 0) {
-            favGrid.innerHTML = `<p class="text-xs text-slate-400 col-span-full py-2">No favourites pinned yet. Click the <i class="fa-regular fa-heart text-rose-500"></i> heart icon on any tool or service to keep it here for quick access.</p>`;
-        } else {
-            favGrid.innerHTML = favItems.map(item => buildCardHTML(item)).join('');
-        }
-    }
-
-    function toggleFavourite(key) {
-        const idx = favourites.indexOf(key);
-        if (idx >= 0) {
-            favourites.splice(idx, 1);
-            showToast('Removed from Favourites');
-        } else {
-            favourites.push(key);
-            showToast('Added to Favourites ❤️');
-        }
-        localStorage.setItem('ds_fav_tools', JSON.stringify(favourites));
-        renderAllSections();
-    }
-
-    /* =====================================================================
-       6. CLICK HANDLERS FOR FREE TOOLS & PAID SERVICES
-       ===================================================================== */
-    const FORM_FIELDS = {
-        'RC Services': ['Vehicle Registration Number', 'Owner Name (Optional)?', 'Remarks (Optional)?'],
-        'DL Services': ['Driving Licence (DL) Number', 'Date of Birth', 'Holder Name (Optional)?'],
-        'Voter Services': ['EPIC / Voter ID Number', 'Voter Name (Optional)?', 'Mobile Number (Optional)?'],
-        'Farmer Services': ['Farmer ID / Aadhaar Number', 'Farmer Name (Optional)?', 'District / State (Optional)?'],
-        'PAN Services': ['Aadhaar / PAN / TAN Number', 'Applicant Name (Optional)?', 'Mobile Number (Optional)?'],
-        'LL Services': ['Application / LL Number', 'Date of Birth', 'Password / Remarks (Optional)?'],
-        'Udyam Services': ['PAN / Aadhaar Number', 'Business Name', 'Mobile Number'],
-        'Aadhaar Update & Ration Service': ['Aadhaar / Ration Card Number', 'Full Name', 'Mobile Number (Optional)?'],
-        'Mobile Services': ['10-Digit Mobile Number', 'Issue / Operator Details (Optional)?'],
-        'GST Services': ['GSTIN / PAN Number', 'Business Name (Optional)?'],
-        'Chassis & Vehicle Find': ['Chassis Number / Vehicle Number', 'Engine Number (Optional)?'],
-        'Challan & Bank Seeding': ['Vehicle Number / Aadhaar Number', 'Bank Name (Optional)?'],
-        'Lost Document Service': ['Full Name', 'Date of Birth', 'Father Name (Optional)?', 'Mobile Number', 'Address / Details (Optional)?'],
-        'PAN Card Service': ['Applicant Full Name', 'Father Name', 'Date of Birth', 'Aadhaar Number', 'Mobile Number', 'Email Address'],
-        'PVC Converter Tools': ['Document Number', 'Card Holder Name (Optional)?', 'Special Print Instructions (Optional)?'],
-        'Govt Department & Civil Contractor Services': ['Firm / Contractor Name', 'Mobile Number', 'Work / Tender / Bill Details']
-    };
-
-    let activeModalItem = null;
-
-    function handleCardClick(key) {
-        const item = ALL_ITEMS_FLAT.find(x => x.key === key);
-        if (!item) return;
-
-        // 1. Free tool -> Navigate directly to freetools/...html
-        if (item.isFree) {
-            window.location.href = getToolUrl(item.name, item.key);
-            return;
+            if (paidToolsMap[item.key] || paidToolsMap[item.name]) {
+                window.location.href = getToolUrl(item.name, item.key);
+                return;
+            }
         }
 
-        // 2. Paid tool with WhatsApp inquiry
-        if (item.price === 'WA') {
-            window.open(`https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for ' + item.name)}`, '_blank');
-            return;
-        }
-
-        // 3. Paid Service with dedicated page -> Redirect to paidtools/...html
-        if (paidToolsMap[item.key] || paidToolsMap[item.name]) {
-            window.location.href = getToolUrl(item.name, item.key);
-            return;
-        }
-
-        // 4. Fallback -> Open inline modal if unmapped
-        openServiceModal(item);
-    }
-
-    function openServiceModal(item) {
-        activeModalItem = item;
-        document.getElementById('modalServiceName').innerText = item.name;
-        document.getElementById('modalServiceCat').innerText = item.catTitle;
-        document.getElementById('modalServicePrice').innerText = '₹' + item.price;
-        document.getElementById('modalSubmitBtn').innerText = `Submit Request · ₹${item.price}`;
-
-        const fields = FORM_FIELDS[item.catTitle] || ['Document / Reference Number', 'Remarks (Optional)?'];
-        const container = document.getElementById('modalFieldsContainer');
-        container.innerHTML = fields.map((label) => {
-            const isOpt = label.endsWith('?');
-            const cleanLabel = isOpt ? label.slice(0, -1) : label;
-            const type = /date of birth/i.test(cleanLabel) ? 'date' : /mobile/i.test(cleanLabel) ? 'tel' : /email/i.test(cleanLabel) ? 'email' : 'text';
-            return `
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">${cleanLabel}</label>
-                    <input type="${type}" data-field-label="${cleanLabel}" ${isOpt ? '' : 'required'}
-                           placeholder="Enter ${cleanLabel}"
-                           class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-xs sm:text-sm font-medium">
-                </div>
-            `;
-        }).join('');
-
-        document.getElementById('serviceModal').classList.remove('hidden');
-    }
-
-    function closeServiceModal() {
-        document.getElementById('serviceModal').classList.add('hidden');
-        activeModalItem = null;
-    }
-
-    function submitServiceRequest(e) {
-        e.preventDefault();
-        if (!activeModalItem) return;
-
-        const price = Number(activeModalItem.price) || 0;
-        if (currentWallet < price) {
-            showToast('Insufficient wallet balance! Please add money first.');
-            closeServiceModal();
-            openAddBalanceModal();
-            return;
-        }
-
-        const inputs = [...document.querySelectorAll('#modalFieldsContainer input')];
-        const firstVal = inputs[0] ? inputs[0].value.trim() : '';
-
-        currentWallet -= price;
-        updateWalletUI();
-
-        const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-        ordersHistory.unshift({
-            id: 'REQ' + Math.floor(1000 + Math.random() * 9000),
-            date: today,
-            name: `${activeModalItem.name} (${firstVal || 'Submitted'})`,
-            status: 'Success',
-            amount: price
-        });
-
-        passbookLedger.unshift({
-            date: today,
-            note: `Service: ${activeModalItem.name}`,
-            type: 'Debit',
-            amount: price
-        });
-
-        document.getElementById('statTotalReq').innerText = ordersHistory.length + 22;
-        document.getElementById('statSuccessReq').innerText = ordersHistory.length + 21;
-
-        renderTables();
-        closeServiceModal();
-        showToast(`Request for ${activeModalItem.name} submitted! Check History.`);
-    }
-
-    /* =====================================================================
-       7. SEARCH, FILTER & NAVIGATION HELPERS
-       ===================================================================== */
-    function handleGlobalSearch(q) {
-        switchTab('dashboard');
-        const query = q.toLowerCase().trim();
-        document.querySelectorAll('.service-section').forEach(section => {
-            let matches = 0;
-            section.querySelectorAll('.service-card').forEach(card => {
-                const text = card.getAttribute('data-title') || '';
-                const show = !query || text.includes(query);
-                card.style.display = show ? 'flex' : 'none';
-                if (show) matches++;
+        function handleGlobalSearch(q) {
+            switchTab('dashboard');
+            const query = q.toLowerCase().trim();
+            document.querySelectorAll('.service-section').forEach(section => {
+                let matches = 0;
+                section.querySelectorAll('.service-card').forEach(card => {
+                    const text = card.getAttribute('data-title') || '';
+                    const show = !query || text.includes(query);
+                    card.style.display = show ? 'flex' : 'none';
+                    if (show) matches++;
+                });
+                if (matches > 0) {
+                    section.style.display = 'block';
+                    section.open = true;
+                } else {
+                    section.style.display = 'none';
+                }
             });
-            if (matches > 0) {
-                section.style.display = 'block';
-                section.open = true;
-            } else {
-                section.style.display = 'none';
+        }
+
+        function filterServices(type) {
+            ['all', 'paid', 'free', 'fav'].forEach(t => {
+                const btn = document.getElementById('filter-' + t);
+                if (!btn) return;
+                btn.className = t === type
+                    ? "px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm transition flex items-center gap-1"
+                    : "px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1";
+            });
+
+            const favWrap = document.getElementById('favourites-wrapper');
+            const paidWrap = document.getElementById('paid-services-wrapper');
+            const freeWrap = document.getElementById('free-tools-wrapper');
+
+            if (type === 'all') {
+                favWrap.style.display = 'block';
+                paidWrap.style.display = 'block';
+                freeWrap.style.display = 'block';
+            } else if (type === 'paid') {
+                favWrap.style.display = 'none';
+                paidWrap.style.display = 'block';
+                freeWrap.style.display = 'none';
+            } else if (type === 'free') {
+                favWrap.style.display = 'none';
+                paidWrap.style.display = 'none';
+                freeWrap.style.display = 'block';
+            } else if (type === 'fav') {
+                favWrap.style.display = 'block';
+                paidWrap.style.display = 'none';
+                freeWrap.style.display = 'none';
             }
-        });
-    }
+        }
 
-    function filterServices(type) {
-        ['all', 'paid', 'free', 'fav'].forEach(t => {
-            const btn = document.getElementById('filter-' + t);
-            if (!btn) return;
-            if (t === type) {
-                btn.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm transition flex items-center gap-1";
-            } else {
-                btn.className = "px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1";
+        function toggleAllSections(openState) {
+            document.querySelectorAll('details.service-section').forEach(d => d.open = openState);
+        }
+
+        function scrollToSection(secId) {
+            switchTab('dashboard');
+            filterServices('all');
+            const el = document.getElementById(secId);
+            if (el) {
+                el.open = true;
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        });
-
-        const favWrap = document.getElementById('favourites-wrapper');
-        const paidWrap = document.getElementById('paid-services-wrapper');
-        const freeWrap = document.getElementById('free-tools-wrapper');
-
-        if (type === 'all') {
-            favWrap.style.display = 'block';
-            paidWrap.style.display = 'block';
-            freeWrap.style.display = 'block';
-        } else if (type === 'paid') {
-            favWrap.style.display = 'none';
-            paidWrap.style.display = 'block';
-            freeWrap.style.display = 'none';
-        } else if (type === 'free') {
-            favWrap.style.display = 'none';
-            paidWrap.style.display = 'none';
-            freeWrap.style.display = 'block';
-        } else if (type === 'fav') {
-            favWrap.style.display = 'block';
-            paidWrap.style.display = 'none';
-            freeWrap.style.display = 'none';
+            if (window.innerWidth < 1024) toggleSidebar();
         }
-    }
 
-    function toggleAllSections(openState) {
-        document.querySelectorAll('details.service-section').forEach(d => d.open = openState);
-    }
-
-    function scrollToSection(secId) {
-        switchTab('dashboard');
-        filterServices('all');
-        const el = document.getElementById(secId);
-        if (el) {
-            el.open = true;
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function switchTab(tabName) {
+            ['dashboard', 'history', 'passbook', 'referral', 'profile'].forEach(t => {
+                const el = document.getElementById('tab-' + t);
+                if (el) el.classList.toggle('hidden', t !== tabName);
+                const nav = document.getElementById('nav-' + t);
+                if (nav) {
+                    nav.className = t === tabName
+                        ? "w-full flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20 text-left"
+                        : "w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left";
+                }
+            });
         }
-        if (window.innerWidth < 1024) toggleSidebar();
-    }
 
-    function switchTab(tabName) {
-        ['dashboard', 'history', 'passbook', 'referral', 'profile'].forEach(t => {
-            const el = document.getElementById('tab-' + t);
-            if (el) el.classList.toggle('hidden', t !== tabName);
-            const nav = document.getElementById('nav-' + t);
-            if (nav) {
-                nav.className = t === tabName
-                    ? "w-full flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20 text-left"
-                    : "w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left";
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        }
+
+        function renderTables() {
+            const hBody = document.getElementById('historyTableBody');
+            if (hBody) {
+                hBody.innerHTML = ordersHistory.map(o => `
+                    <tr>
+                        <td class="p-3.5 text-slate-500 text-xs">${o.date || '-'}</td>
+                        <td class="p-3.5 font-bold text-slate-900">${o.name || '-'} <span class="text-xs text-slate-400 font-normal">(${o.id || ''})</span></td>
+                        <td class="p-3.5"><span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-extrabold">${o.status || 'Success'}</span></td>
+                        <td class="p-3.5 font-extrabold text-slate-900">₹${o.amount || 0}</td>
+                        <td class="p-3.5 text-right space-x-2">
+                            <button onclick="showToast('Downloading result...')" class="px-3 py-1.5 rounded-lg border border-slate-200 text-blue-600 font-bold text-xs">Download</button>
+                        </td>
+                    </tr>
+                `).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No requests yet</td></tr>';
             }
-        });
-    }
-
-    function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('-translate-x-full');
-    }
-
-    /* =====================================================================
-       8. TABLES, WALLET & PROFILE ACTIONS
-       ===================================================================== */
-    function renderTables() {
-        const hBody = document.getElementById('historyTableBody');
-        hBody.innerHTML = ordersHistory.map(o => `
-            <tr>
-                <td class="p-3.5 text-slate-500 text-xs">${o.date}</td>
-                <td class="p-3.5 font-bold text-slate-900">${o.name} <span class="text-xs text-slate-400 font-normal">(${o.id})</span></td>
-                <td class="p-3.5"><span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-extrabold">${o.status}</span></td>
-                <td class="p-3.5 font-extrabold text-slate-900">₹${o.amount}</td>
-                <td class="p-3.5 text-right space-x-2">
-                    <button onclick="showToast('Downloading PDF result...')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:border-blue-600 text-blue-600 font-bold text-xs transition"><i class="fa-solid fa-download mr-1"></i>Download</button>
-                    <button onclick="window.print()" class="px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 font-bold text-xs transition"><i class="fa-solid fa-print mr-1"></i>Print</button>
-                </td>
-            </tr>
-        `).join('');
-
-        const pBody = document.getElementById('passbookTableBody');
-        pBody.innerHTML = passbookLedger.map(t => `
-            <tr>
-                <td class="p-3.5 text-slate-500 text-xs">${t.date}</td>
-                <td class="p-3.5 font-bold text-slate-900">${t.note}</td>
-                <td class="p-3.5">
-                    <span class="${t.type === 'Credit' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'} text-xs px-2.5 py-1 rounded-full font-extrabold">${t.type}</span>
-                </td>
-                <td class="p-3.5 text-right font-extrabold ${t.type === 'Credit' ? 'text-emerald-600' : 'text-slate-900'}">
-                    ${t.type === 'Credit' ? '+' : '−'}₹${t.amount}
-                </td>
-            </tr>
-        `).join('');
-    }
-
-    function openAddBalanceModal() { document.getElementById('addBalanceModal').classList.remove('hidden'); }
-    function closeAddBalanceModal() { document.getElementById('addBalanceModal').classList.add('hidden'); }
-    function setAmount(amt) { document.getElementById('rechargeAmount').value = amt; }
-
-    function confirmAddBalance() {
-        const amt = parseInt(document.getElementById('rechargeAmount').value) || 0;
-        if (amt < 200) {
-            showToast('Minimum recharge amount is ₹200');
-            return;
         }
-        currentWallet += amt;
-        updateWalletUI();
-        const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-        passbookLedger.unshift({ date: today, note: 'Wallet Recharge via UPI', type: 'Credit', amount: amt });
-        renderTables();
-        closeAddBalanceModal();
-        showToast('₹' + amt + ' added to wallet successfully!');
-    }
 
-    function copyReferralLink() {
-        const inp = document.getElementById('referralLinkInput');
-        inp.select();
-        navigator.clipboard.writeText(inp.value);
-        showToast('Referral link copied to clipboard!');
-    }
+        function openAddBalanceModal() { document.getElementById('addBalanceModal').classList.remove('hidden'); }
+        function closeAddBalanceModal() { document.getElementById('addBalanceModal').classList.add('hidden'); }
+        function setAmount(amt) { document.getElementById('rechargeAmount').value = amt; }
 
-    function saveProfileName() {
-        const val = document.getElementById('profName').value.trim();
-        if (val.length >= 2) {
-            document.getElementById('userNameTitle').innerText = val;
-            showToast('Profile name updated!');
+        function confirmAddBalance() {
+            const amt = parseInt(document.getElementById('rechargeAmount').value) || 0;
+            if (amt < 200) {
+                showToast('Minimum recharge amount is ₹200');
+                return;
+            }
+            currentWallet += amt;
+            updateWalletUI();
+            closeAddBalanceModal();
+            showToast('₹' + amt + ' added to wallet successfully!');
         }
-    }
 
-    function logoutUser() {
-        localStorage.removeItem('ds_session');
-        localStorage.removeItem('ds_token');
-        window.location.href = 'index.html';
-    }
-
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        document.getElementById('toastMessage').innerText = msg;
-        t.classList.remove('translate-y-24', 'opacity-0');
-        setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 3200);
-    }
-
-    // Support deep-links from service pages (e.g., dashboard.html#addmoney or dashboard.html#history)
-    function handleHashNavigation() {
-        const hash = window.location.hash.replace('#', '');
-        if (hash === 'addmoney') {
-            openAddBalanceModal();
-        } else if (['history', 'passbook', 'referral', 'profile'].includes(hash)) {
-            switchTab(hash);
+        function copyReferralLink() {
+            const inp = document.getElementById('referralLinkInput');
+            inp.select();
+            navigator.clipboard.writeText(inp.value);
+            showToast('Referral link copied!');
         }
-    }
 
-    // Initialize Everything on Load Safely
-    window.addEventListener('DOMContentLoaded', () => {
-        try {
+        function saveProfileName() {
+            showToast('Profile updated!');
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('ds_session');
+            localStorage.removeItem('ds_token');
+            window.location.href = 'index.html';
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            t.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 3200);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
             syncLoggedInUser();
-            if (typeof renderAllSections === 'function') {
-                renderAllSections();
-            } else {
-                console.error('renderAllSections function is missing or not defined!');
-            }
+            renderAllSections();
             renderTables();
-            handleHashNavigation();
-        } catch (err) {
-            console.error('Initialization error:', err);
-        }
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
