@@ -37,10 +37,15 @@
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="w-64 bg-sidebar flex-shrink-0 flex flex-col h-full text-slate-300 transition-all duration-300 z-30 fixed lg:static -translate-x-full lg:translate-x-0 shadow-xl">
-        <!-- Brand Logo -->
-        <div class="flex items-center gap-3 px-6 py-6 border-b border-slate-800">
-            <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">D</div>
-            <span class="text-white text-xl font-bold tracking-wide">DocSmartly</span>
+        <!-- Brand Logo & Close Button for Mobile -->
+        <div class="flex items-center justify-between px-6 py-6 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">D</div>
+                <span class="text-white text-xl font-bold tracking-wide">DocSmartly</span>
+            </div>
+            <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white text-lg focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <!-- Navigation Menu -->
@@ -86,6 +91,7 @@
                         <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">RC PDF Server 1 & 2</a>
                         <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">RC Full Details</a>
                         <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">Chassis to RC</a>
+                        <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">Challan Details</a>
                     </div>
                 </div>
 
@@ -96,10 +102,11 @@
                         <i id="licence-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                     </button>
                     <div id="licence-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Aadhaar Print & Find</a>
-                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">PAN Card Services</a>
-                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Voter ID Card Maker</a>
-                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Driving Licence PDF</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">DL Services</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Voter Services</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Aadhaar & Ration</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">LL Services</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Mobile Services</a>
                     </div>
                 </div>
 
@@ -110,9 +117,10 @@
                         <i id="tax-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                     </button>
                     <div id="tax-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">GST Calculator (Free)</a>
-                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">Income Tax Returns</a>
-                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">MSME / Udyam Registration</a>
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">PAN Services</a>
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">Udyam Services</a>
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">GST Services</a>
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">TAN Verification</a>
                     </div>
                 </div>
 
@@ -123,9 +131,8 @@
                         <i id="citizen-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                     </button>
                     <div id="citizen-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Ration Card Services</a>
-                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Kisan Samman Nidhi Status (Free)</a>
-                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Land Records / Khasra</a>
+                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Farmer Services</a>
+                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">DBT Seeding Status</a>
                     </div>
                 </div>
 
@@ -136,22 +143,39 @@
                         <i id="govt-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                     </button>
                     <div id="govt-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">Labour Card Registration</a>
-                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">Trade License Application</a>
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">New Digital Signature (DSC)</a>
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">E-Procurement Registration</a>
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">Building Estimate Creator</a>
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">BOQ Creator</a>
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">Govt Civil & Electric Bill Maker</a>
                     </div>
                 </div>
 
-                <!-- PDF Tools Dropdown Item -->
+                <!-- PDF & Image Tools Dropdown Item -->
                 <div class="rounded-xl overflow-hidden">
                     <button onclick="toggleDropdown('pdf-dropdown', 'pdf-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
                         <span class="flex items-center gap-3"><i class="fa-solid fa-file-pdf w-5 text-center text-red-400"></i> PDF & Image Tools</span>
                         <i id="pdf-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
                     </button>
                     <div id="pdf-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
-                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">PDF Merge & Split (Free)</a>
-                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Background Remover (Free)</a>
-                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Passport Photo Sheet (Free)</a>
-                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Watermark Maker (Free)</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">JPG / PNG to PDF</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">PDF Merge & Split</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Background Remover</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Photo Compressor (KB)</a>
+                    </div>
+                </div>
+
+                <!-- Calculators & Utilities Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('calc-dropdown', 'calc-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-calculator w-5 text-center text-indigo-400"></i> Calculators & Utilities</span>
+                        <i id="calc-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="calc-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-calc" class="block py-1.5 hover:text-white transition">GST Calculator</a>
+                        <a href="#section-calc" class="block py-1.5 hover:text-white transition">Salary Calculator</a>
+                        <a href="#section-calc" class="block py-1.5 hover:text-white transition">Percentage Calculator</a>
+                        <a href="#section-calc" class="block py-1.5 hover:text-white transition">Loan / EMI Calculator</a>
                     </div>
                 </div>
             </div>
@@ -164,7 +188,7 @@
         <!-- TOP HEADER -->
         <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-shrink-0">
             <div class="flex items-center gap-4">
-                <button id="menuBtn" class="lg:hidden text-slate-600 hover:text-slate-900 text-xl focus:outline-none">
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-600 hover:text-slate-900 text-xl focus:outline-none">
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <h1 class="text-xl font-bold text-slate-800 hidden sm:block">Dashboard Overview</h1>
@@ -262,9 +286,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('RC Services', 'From ₹30')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-car-side"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-car-side"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">RC Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">3 services</p>
                             </div>
@@ -275,9 +297,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('RC Full Details', 'From ₹50')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-file-lines"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-lines"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">RC Full Details</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -288,9 +308,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Chassis To RC', 'From ₹70')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-barcode"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-barcode"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Chassis To RC</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -301,9 +319,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Vehicle To Mobile Find', 'From ₹40')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-mobile-screen-button"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-mobile-screen-button"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Vehicle To Mobile Find</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -314,9 +330,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Challan Details', 'From ₹10')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-receipt"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-receipt"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Challan Details</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -337,9 +351,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('DL Services', 'From ₹30')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-id-badge"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-id-badge"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">DL Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">3 services</p>
                             </div>
@@ -350,9 +362,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Voter Services', 'From ₹40')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-address-card"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-address-card"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Voter Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">3 services</p>
                             </div>
@@ -363,9 +373,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Aadhaar & Ration', 'From ₹30')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-fingerprint"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-fingerprint"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Aadhaar & Ration</h4>
                                 <p class="text-xs text-slate-500 mt-1">2 services</p>
                             </div>
@@ -376,9 +384,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('LL Services', 'From ₹30')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-file-shield"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-shield"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">LL Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">2 services</p>
                             </div>
@@ -389,9 +395,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Mobile Services', 'From ₹30')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-mobile-screen"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-mobile-screen"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Mobile Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">3 services</p>
                             </div>
@@ -412,9 +416,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('PAN Services', 'From ₹40')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-id-card-clip"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-id-card-clip"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">PAN Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">3 services</p>
                             </div>
@@ -425,9 +427,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Udyam Services', 'From ₹100')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-shop"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-shop"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Udyam Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -438,9 +438,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('GST Services', 'From ₹50')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-percent"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-percent"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">GST Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">2 services</p>
                             </div>
@@ -451,9 +449,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('TAN Verification', 'From ₹50')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-file-shield"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-shield"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">TAN Verification</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -469,14 +465,12 @@
                 <div id="section-citizen" class="service-section space-y-4">
                     <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                         <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-users text-purple-600"></i> Citizen & Farmer Services</h3>
-                        <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full">3 services</span>
+                        <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full">2 services</span>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Farmer Services', 'From ₹30')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center text-purple-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-seedling"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center text-purple-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-seedling"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Farmer Services</h4>
                                 <p class="text-xs text-slate-500 mt-1">3 services</p>
                             </div>
@@ -487,9 +481,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('DBT Seeding Status', 'From ₹20')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center text-purple-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-building-columns"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center text-purple-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-building-columns"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">DBT Seeding Status</h4>
                                 <p class="text-xs text-slate-500 mt-1">1 service</p>
                             </div>
@@ -510,9 +502,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('New Digital Signature (DSC)', 'From ₹2,800')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-signature"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-signature"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">New Digital Signature (DSC)</h4>
                                 <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
                             </div>
@@ -523,9 +513,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('E-Procurement Registration', 'From ₹500')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-globe"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-globe"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">E-Procurement Registration</h4>
                                 <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
                             </div>
@@ -536,9 +524,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Building Estimate Creator', 'From ₹300')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-calculator"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-calculator"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Building Estimate Creator</h4>
                                 <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
                             </div>
@@ -549,9 +535,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('BOQ Creator', 'From ₹200')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-table-list"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-table-list"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">BOQ Creator</h4>
                                 <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
                             </div>
@@ -562,9 +546,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Govt Civil & Electric Bill Maker', 'From ₹1,000')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-invoice-dollar"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Govt Civil & Electric Bill</h4>
                                 <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
                             </div>
@@ -585,9 +567,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('JPG / PNG To PDF', 'FREE')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-file-image"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-file-image"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">JPG / PNG To PDF</h4>
                                 <p class="text-xs text-slate-500 mt-1">Free Utility</p>
                             </div>
@@ -598,9 +578,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('PDF Merge', 'FREE')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-object-ungroup"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-object-ungroup"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">PDF Merge</h4>
                                 <p class="text-xs text-slate-500 mt-1">Free Utility</p>
                             </div>
@@ -611,9 +589,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('PDF Split & Extract', 'FREE')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-scissors"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-scissors"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">PDF Split & Extract</h4>
                                 <p class="text-xs text-slate-500 mt-1">Free Utility</p>
                             </div>
@@ -624,9 +600,7 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Background Remover', 'FREE')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">Background Remover</h4>
                                 <p class="text-xs text-slate-500 mt-1">Free Utility</p>
                             </div>
@@ -637,15 +611,67 @@
                         </div>
                         <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('ID Card Maker', 'FREE')">
                             <div>
-                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-address-card"></i>
-                                </div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-address-card"></i></div>
                                 <h4 class="font-bold text-slate-900 text-sm">ID Card Maker</h4>
                                 <p class="text-xs text-slate-500 mt-1">Free Utility</p>
                             </div>
                             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                                 <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
                                 <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. CALCULATORS & UTILITIES -->
+                <div id="section-calc" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-calculator text-indigo-600"></i> Calculators & Utilities</h3>
+                        <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">4 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('GST Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-calculator"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">GST Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Salary Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-money-bill-wave"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Salary Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Percentage Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-percent"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Percentage Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Loan / EMI Calculator', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-105 transition"><i class="fa-solid fa-landmark"></i></div>
+                                <h4 class="font-bold text-slate-900 text-sm">Loan / EMI Calculator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-indigo-600 group-hover:underline">Use</span>
                             </div>
                         </div>
                     </div>
@@ -722,13 +748,12 @@
 
     <!-- JAVASCRIPT FOR INTERACTIVITY -->
     <script>
-        // Sidebar toggle for mobile
+        // Sidebar toggle for mobile open/close
         const sidebar = document.getElementById('sidebar');
-        const menuBtn = document.getElementById('menuBtn');
 
-        menuBtn.addEventListener('click', () => {
+        function toggleSidebar() {
             sidebar.classList.toggle('-translate-x-full');
-        });
+        }
 
         // Dropdown toggle function for sidebar
         function toggleDropdown(dropdownId, chevronId) {
