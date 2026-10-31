@@ -1,692 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>RC PDF Instant – DocSmartly</title>
-<link rel="stylesheet" href="../../css/styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
-  window.location.replace('../../login.html');
-}
-</script>
-<style>
-:root {
-  --bg: #f4f7fe;
-  --sf: #ffffff;
-  --ink: #13233f;
-  --mut: #64748b;
-  --ln: #e2e8f0;
-  --ac: #2457d6;
-  --ac2: #16337a;
-  --tint: #eff4ff;
-  --ok: #16a34a;
-  --er: #dc2626;
-  --warn: #d97706;
-}
-body { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background-color: var(--bg); color: var(--ink); }
-.ap { position: sticky; top: 0; z-index: 20; background: rgba(245,248,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
-.ap > .w { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
-.tb { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-.chip { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 99px; background: var(--tint); border: 1.5px solid var(--ln); font-weight: 700; color: var(--ac2); text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease; }
-.chip:hover { background: #e2ebff; border-color: var(--ac); }
-.chip:active { transform: scale(0.95); }
-
-.container { max-width: 860px; margin: 30px auto; padding: 0 20px; }
-.card { background: var(--sf); border: 1px solid var(--ln); border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 24px; position: relative; overflow: hidden; }
-.badge-charge { display: inline-flex; align-items: center; gap: 6px; background: #e6f4ea; color: #137333; font-weight: 700; font-size: 0.85rem; padding: 6px 14px; border-radius: 99px; border: 1px solid #ceead6; margin-bottom: 16px; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--ink); }
-.form-group input, .form-group textarea { width: 100%; height: 44px; padding: 10px 14px; border: 1.5px solid var(--ln); border-radius: 10px; font-family: inherit; font-size: 0.92rem; box-sizing: border-box; outline: none; transition: border-color .2s; }
-.form-group textarea { height: 80px; resize: vertical; }
-.form-group input:focus, .form-group textarea:focus { border-color: var(--ac); }
-.chk-wrap { display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; color: #475569; margin: 20px 0; background: #fff8e6; padding: 12px 14px; border-radius: 10px; border: 1px solid #fef3c7; }
-.chk-wrap input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
-
-.btn-primary { 
-  background: var(--ac); 
-  color: #fff; 
-  border: none; 
-  font-weight: 700; 
-  font-size: 0.95rem; 
-  height: 46px; 
-  border-radius: 10px; 
-  cursor: pointer; 
-  width: 100%; 
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-  display: inline-flex; 
-  align-items: center; 
-  justify-content: center; 
-  gap: 8px; 
-  text-decoration: none; 
-  box-shadow: 0 4px 12px rgba(36, 87, 214, 0.25);
-  user-select: none;
-}
-.btn-primary:hover { 
-  background: var(--ac2); 
-  box-shadow: 0 6px 16px rgba(22, 51, 122, 0.35);
-  transform: translateY(-1px);
-}
-.btn-primary:active { 
-  transform: scale(0.97) translateY(1px) !important; 
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
-  filter: brightness(0.9);
-}
-.btn-primary:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-.status-box { text-align: center; padding: 30px 10px; }
-.spinner { width: 44px; height: 44px; border: 4px solid var(--ln); border-top-color: var(--ac); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.tw { overflow-x: auto; background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
-table { width: 100%; border-collapse: collapse; min-width: 500px; }
-th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--ln); font-size: .88rem; }
-th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); background: var(--tint); }
-.sb-status { display: inline-block; border-radius: 99px; padding: 3px 10px; font-size: .75rem; font-weight: 800; text-transform: capitalize; }
-.s-pending { background: #fff1cc; color: #6b4200; }
-.s-processing { background: #dbe7ff; color: #1b44ad; }
-.s-success { background: #e0f5ea; color: #0f6b45; }
-.s-failed { background: #fdecea; color: #7a1a12; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>RC PDF Instant – DocSmartly</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
+            window.location.replace('../../login.html');
+        }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: { sidebar: '#0d1322', brandBlue: '#2457d6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f8ff; color: #13233f; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0d1322; }
+        ::-webkit-scrollbar-thumb { background: #2a3447; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { animation: spin 1s linear infinite; }
+    </style>
 </head>
-<body>
+<body class="bg-[#f5f8ff] text-slate-800 antialiased h-screen overflow-hidden flex">
 
-<header class="ap">
-  <div class="w">
-    <a href="../../dashboard.html" style="text-decoration:none;font-weight:800;font-size:1.2rem;color:var(--ac)">← DocSmartly Portal</a>
-    <div class="tb">
-      <span class="chip" id="walletBal">₹0.00</span>
-      <a class="btn-primary" href="../../dashboard.html#addmoney" style="height:36px;padding:0 14px;font-size:0.82rem;width:auto">+ Add Balance</a>
-    </div>
-  </div>
-</header>
-
-<div class="container">
-  
-  <div class="card" id="mainServiceCard">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <h1 style="font-size: 1.6rem; margin: 0 0 6px;">RC PDF Instant (RTO Verification)</h1>
-      <p style="color: var(--mut); margin: 0 0 12px; font-size: 0.9rem;">Instant RTO verification &amp; non-chip / chip RC PDF document generation.</p>
-      <div class="badge-charge">🏷️ Charge: ₹40.00 / Request</div>
-    </div>
-
-    <div id="step1Form">
-      <form id="fRcForm">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
-          <div class="form-group">
-            <label for="vNo">Vehicle Number *</label>
-            <input type="text" id="vNo" placeholder="EX: RJ14AB1234" required style="text-transform:uppercase;">
-          </div>
-          <div class="form-group">
-            <label for="chNo">Chassis Number *</label>
-            <input type="text" id="chNo" placeholder="Enter last 5 or full Chassis No." required style="text-transform:uppercase;">
-          </div>
-          <div class="form-group">
-            <label for="engNo">Engine Number *</label>
-            <input type="text" id="engNo" placeholder="Enter last 5 or full Engine No." required style="text-transform:uppercase;">
-          </div>
-          <div class="form-group">
-            <label for="mobNo">Registered Mobile Number *</label>
-            <input type="tel" id="mobNo" placeholder="10 Digit Registered Mobile No." pattern="[0-9]{10}" maxlength="10" required>
-          </div>
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="w-72 bg-sidebar flex-shrink-0 flex flex-col h-full text-slate-300 transition-all duration-300 z-30 fixed lg:static inset-y-0 left-0 -translate-x-full lg:translate-x-0 shadow-2xl">
+        <div class="flex items-center justify-between px-5 py-5 border-b border-slate-800 flex-shrink-0">
+            <a href="../../dashboard.html" class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">D</div>
+                <span class="text-white text-xl font-extrabold tracking-tight">DocSmartly</span>
+            </a>
+            <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white text-lg focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
-        <div class="form-group">
-          <label for="regAddr">Registered Owner Address *</label>
-          <textarea id="regAddr" placeholder="Enter full registered address as per RTO records" required></textarea>
+        <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 text-sm font-medium">
+            <a href="../../dashboard.html" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-table-cells-large w-5 text-center"></i> Dashboard
+            </a>
+            <a href="../../dashboard.html#history" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Request History
+            </a>
+            <a href="../../dashboard.html#passbook" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-book w-5 text-center"></i> Passbook
+            </a>
+            <a href="../../dashboard.html#addmoney" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-left">
+                <i class="fa-solid fa-circle-plus w-5 text-center text-emerald-400"></i> Add Balance
+            </a>
+            <a href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-brands fa-whatsapp w-5 text-center text-emerald-400 text-base"></i> WhatsApp Support
+            </a>
         </div>
 
-        <div class="chk-wrap">
-          <input type="checkbox" id="chkConfirm" required>
-          <label for="chkConfirm" style="cursor:pointer;">
-            Main ye poori tarah se confirm karta hu ki di gayi sabhi jankari (Vehicle, Chassis, Engine No. aur Address) bilkul sahi hain. Galat jankari paye jane par hone wale kisi bhi nuksan ki zimmedari meri khud ki hogi.
-          </label>
+        <div class="p-3 border-t border-slate-800 flex-shrink-0">
+            <button onclick="logoutUser()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-rose-500/10 text-rose-400 hover:text-rose-300 transition text-sm font-semibold">
+                <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Log Out
+            </button>
         </div>
+    </aside>
 
-        <button type="submit" class="btn-primary" id="btnSubStep1">Submit &amp; Proceed to OTP</button>
-      </form>
-    </div>
-
-    <!-- Step 2: OTP Input Form -->
-    <div id="step2Otp" style="display: none;">
-      <div class="status-box">
-        <h3 id="otpTitle" style="margin: 0 0 8px; font-size: 1.2rem; color: var(--warn);">Enter OTP sent to Registered Mobile</h3>
-        <p id="otpMsg" style="color: var(--mut); font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px;">
-          Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
-        </p>
-
-        <!-- Red Inline Error Message -->
-        <div id="otpErrMsg" style="display: none; color: var(--er); font-weight: 700; font-size: 0.95rem; margin-bottom: 14px;">
-          Incorrect OTP
-        </div>
-
-        <form id="fOtpForm" style="max-width: 340px; margin: 0 auto;">
-          <div class="form-group">
-            <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;" maxlength="6">
-          </div>
-          <button type="submit" class="btn-primary" id="btnOtpSubmit">Verify &amp; Submit OTP</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Step 3: Waiting / Confirmation Area -->
-    <div id="step3Waiting" style="display: none;">
-      <div class="status-box">
-        <div class="spinner" id="waitSpinner"></div>
-        <h3 id="waitTitle" style="margin: 0 0 8px; font-size: 1.25rem; color: var(--ok);">✅ RC PDF Ready For Download!</h3>
-        <p id="waitMsg" style="color: var(--mut); font-size: 0.9rem; max-width: 500px; margin: 0 auto 20px; line-height: 1.5;">
-          Official RC PDF upload kar diya gaya hai.
-        </p>
-
-        <div id="downloadContainer" style="display: none;">
-          <button type="button" class="btn-primary" id="btnDownloadPdf" style="background: var(--ok); font-size: 1.05rem;">
-            📥 Download RC PDF Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-      <div>
-        <h3 style="margin: 0; font-size: 1.1rem;">History</h3>
-        <p style="margin: 2px 0 0; font-size: 0.82rem; color: var(--mut);">Is service ki aapki recent requests</p>
-      </div>
-      <a href="../../dashboard.html#history" class="chip" style="height:32px;padding:0 12px;font-size:0.78rem">View All</a>
-    </div>
-
-    <div class="tw">
-      <table>
-        <thead>
-          <tr>
-            <th>Vehicle No</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="historyTbody">
-          <tr><td colspan="3" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-</div>
-
-<script src="../../tools.js"></script>
-<script>
-const API = 'https://docsmartly-api.hm2351994.workers.dev';
-const CHARGE = 40;
-let currentRequestId = localStorage.getItem('ds_current_rc_req') || null;
-let pollTimer = null;
-
-// Helper to handle API response and session errors
-async function handleApiResponse(res) {
-  const text = await res.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch (e) {
-    throw new Error(text || 'Server error');
-  }
-  if (!res.ok || (data && data.error === 'session')) {
-    alert('Session expired or invalid. Kripya dobara login karein.');
-    localStorage.removeItem('ds_token');
-    localStorage.removeItem('ds_session');
-    window.location.replace('../../login.html');
-    throw new Error('Session expired');
-  }
-  return data;
-}
-
-async function fetchLatestUserData() {
-  try {
-    const res = await fetch(API + '/api/user/profile', {
-      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-    });
-    if (res.ok) {
-      const data = await handleApiResponse(res);
-      if (data.user) {
-        saveUser(data.user);
-        return data.user;
-      }
-    }
-  } catch (e) {}
-  return userLocal();
-}
-
-function userLocal() {
-  try {
-    const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-    const sess = localStorage.getItem('ds_session');
-    return list.find(x => x.id === sess) || { name: 'User', bal: 0, orders: [], tx: [] };
-  } catch (e) {
-    return { name: 'User', bal: 0, orders: [], tx: [] };
-  }
-}
-
-function saveUser(u) {
-  const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
-  const idx = list.findIndex(x => x.id === u.id);
-  if (idx >= 0) list[idx] = u; else list.push(u);
-  localStorage.setItem('ds_users', JSON.stringify(list));
-}
-
-async function updateWalletUI() {
-  const u = await fetchLatestUserData();
-  document.getElementById('walletBal').textContent = '₹' + Number(u.bal || 0).toLocaleString('en-IN');
-}
-
-async function renderHistoryTable() {
-  const u = await fetchLatestUserData();
-  const rcOrders = (u.orders || []).filter(o => o.n === 'RC PDF INSTANT').sort((a,b) => b.t - a.t);
-  const tbody = document.getElementById('historyTbody');
-  
-  if (!rcOrders.length) {
-    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--mut); padding: 24px;">No requests yet</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = rcOrders.map(o => {
-    const vehicleNo = o.doc || o.vNo || (o.data && o.data['Vehicle Number']) || o.vehicleNo || o.id;
-
-    let actionBtn = '';
-    if (o.file) {
-      const isDownloaded = o.downloaded || localStorage.getItem('ds_downloaded_' + o.id) === 'true';
-      if (isDownloaded) {
-        actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFileWithCharge('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Downloaded</button>`;
-      } else {
-        actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); downloadFileWithCharge('${o.id}', '${o.file.name}', this)" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ok);box-shadow:0 2px 8px rgba(22,163,74,0.25)">Download</button>`;
-      }
-    } else {
-      actionBtn = `<button class="btn-primary" onclick="event.stopPropagation(); resumeOrder('${o.id}')" style="height:32px;padding:0 12px;font-size:0.8rem;background:var(--ac)">Resume / View</button>`;
-    }
-
-    return `
-      <tr style="cursor:pointer;" title="Click to view this order" onclick="resumeOrder('${o.id}')">
-        <td><b>${vehicleNo}</b></td>
-        <td><span class="sb-status s-${o.s}">${o.s}</span></td>
-        <td>${actionBtn}</td>
-      </tr>
-    `;
-  }).join('');
-}
-
-async function resumeOrder(reqId) {
-  currentRequestId = reqId;
-  localStorage.setItem('ds_current_rc_req', reqId);
-  await checkAndRestoreStep();
-}
-
-async function checkAndRestoreStep() {
-  if (!currentRequestId) return;
-
-  try {
-    const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-    });
-    if (!r.ok) return;
-    const data = await handleApiResponse(r);
-    const req = data.request;
-    if (!req) return;
-
-    document.getElementById('step1Form').style.display = 'none';
-
-    const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
-
-    if (req.file) {
-      clearInterval(pollTimer);
-      localStorage.removeItem('ds_current_rc_req');
-      document.getElementById('step2Otp').style.display = 'none';
-      document.getElementById('step3Waiting').style.display = 'block';
-      document.getElementById('waitSpinner').style.display = 'none';
-      document.getElementById('waitTitle').textContent = '✅ RC PDF Ready For Download!';
-      document.getElementById('waitTitle').style.color = 'var(--ok)';
-      document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
-      
-      const btnDl = document.getElementById('btnDownloadPdf');
-      const u = await fetchLatestUserData();
-      const order = (u.orders || []).find(x => x.id === req.id);
-      const isDownloaded = (order && order.downloaded) || localStorage.getItem('ds_downloaded_' + req.id) === 'true';
-      
-      if (isDownloaded) {
-        btnDl.innerText = 'Downloaded';
-      } else {
-        btnDl.innerText = '📥 Download RC PDF Now';
-      }
-
-      btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
-      document.getElementById('downloadContainer').style.display = 'block';
-    }
-    else if (otpStatus === 'wrong' || req.s === 'failed') {
-      clearInterval(pollTimer);
-      showWrongOtp();
-    }
-    else if (otpStatus === 'verified' || req.s === 'success') {
-      document.getElementById('step2Otp').style.display = 'none';
-      document.getElementById('step3Waiting').style.display = 'block';
-      document.getElementById('waitSpinner').style.display = 'block';
-      document.getElementById('waitTitle').innerHTML = '✅ OTP Verified';
-      document.getElementById('waitTitle').style.color = 'var(--ok)';
-      document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein.';
-      document.getElementById('downloadContainer').style.display = 'none';
-      startStatusPolling();
-    }
-    else {
-      document.getElementById('step2Otp').style.display = 'none';
-      document.getElementById('step3Waiting').style.display = 'block';
-      document.getElementById('waitSpinner').style.display = 'block';
-      document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
-      document.getElementById('waitTitle').style.color = 'var(--ac)';
-      document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
-      document.getElementById('downloadContainer').style.display = 'none';
-      startStatusPolling();
-    }
-  } catch (err) {
-    console.error('Restore step error:', err);
-  }
-}
-
-document.getElementById('fRcForm').onsubmit = async function(e) {
-  e.preventDefault();
-  const submitBtn = document.getElementById('btnSubStep1');
-  const originalText = submitBtn.innerHTML;
-
-  const u = await fetchLatestUserData();
-  
-  if (u.bal < CHARGE) {
-    alert('Insufficient balance! Kripya pehle wallet top-up karein.');
-    window.location.href = '../../dashboard.html#addmoney';
-    return;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '⏳ Submitting...';
-
-  const vNo = document.getElementById('vNo').value.trim().toUpperCase();
-  const chNo = document.getElementById('chNo').value.trim().toUpperCase();
-  const engNo = document.getElementById('engNo').value.trim().toUpperCase();
-  const mobNo = document.getElementById('mobNo').value.trim();
-  const regAddr = document.getElementById('regAddr').value.trim();
-
-  try {
-    const res = await fetch(API + '/api/requests', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-user-token': localStorage.getItem('ds_token') || ''
-      },
-      body: JSON.stringify({
-        k: 'RC Services|RC PDF INSTANT',
-        sec: 'RC Services',
-        doc: vNo,
-        amt: CHARGE,
-        data: {
-          'Vehicle Number': vNo,
-          'Chassis Number': chNo,
-          'Engine Number': engNo,
-          'Mobile Number': mobNo,
-          'Registered Address': regAddr,
-          'otp_status': 'pending'
-        }
-      })
-    });
-
-    const j = await handleApiResponse(res);
-    if (j.user) saveUser(j.user);
-    
-    currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || j.requestId || j.orderId || (u.orders && u.orders[0] && u.orders[0].id);
-
-    if (!currentRequestId) {
-      const latestUser = await fetchLatestUserData();
-      const latestOrder = (latestUser.orders || []).sort((a,b) => b.t - a.t)[0];
-      if (latestOrder) {
-        currentRequestId = latestOrder.id;
-      }
-    }
-
-    localStorage.setItem('ds_current_rc_req', currentRequestId);
-
-    await updateWalletUI();
-    await renderHistoryTable();
-
-    document.getElementById('step1Form').style.display = 'none';
-    document.getElementById('step2Otp').style.display = 'block';
-    document.getElementById('otpErrMsg').style.display = 'none';
-
-  } catch (err) {
-    console.error('Submit Error:', err);
-    if (err.message !== 'Session expired') {
-      alert('Network error or session invalid while submitting request.');
-    }
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalText;
-  }
-};
-
-document.getElementById('fOtpForm').onsubmit = async function(e) {
-  e.preventDefault();
-  const submitBtn = document.getElementById('btnOtpSubmit');
-  const originalText = submitBtn.innerHTML;
-
-  const otp = document.getElementById('otpCode').value.trim();
-  if (!otp) return;
-
-  if (!currentRequestId) {
-    currentRequestId = localStorage.getItem('ds_current_rc_req');
-  }
-
-  if (!currentRequestId) {
-    alert('Session expired or Request ID missing. Kripya form dobara bharein.');
-    location.reload();
-    return;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '⏳ Verifying OTP...';
-
-  try {
-    const patchRes = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-      method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        'x-user-token': localStorage.getItem('ds_token') || ''
-      },
-      body: JSON.stringify({
-        s: 'processing',
-        data: {
-          entered_otp: otp,
-          otp: otp,
-          'Entered OTP': otp,
-          otp_status: 'waiting_verify'
-        }
-      })
-    });
-
-    await handleApiResponse(patchRes);
-  } catch (err) {
-    console.error('OTP Submit Error:', err);
-    if (err.message !== 'Session expired') {
-      alert('Network error while submitting OTP.');
-    }
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalText;
-    return;
-  }
-
-  document.getElementById('otpErrMsg').style.display = 'none';
-  document.getElementById('step2Otp').style.display = 'none';
-  document.getElementById('step3Waiting').style.display = 'block';
-  document.getElementById('waitSpinner').style.display = 'block';
-  document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
-  document.getElementById('waitTitle').style.color = 'var(--ac)';
-  document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
-  document.getElementById('downloadContainer').style.display = 'none';
-
-  startStatusPolling();
-};
-
-function startStatusPolling() {
-  if (pollTimer) clearInterval(pollTimer);
-  
-  pollTimer = setInterval(async () => {
-    if (!currentRequestId) currentRequestId = localStorage.getItem('ds_current_rc_req');
-    if (!currentRequestId) return;
-
-    try {
-      const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
-        headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-      });
-      if (!r.ok) return;
-      const data = await handleApiResponse(r);
-      const req = data.request;
-
-      if (!req) return;
-
-      const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
-
-      if (otpStatus === 'wrong' || req.s === 'failed') {
-        clearInterval(pollTimer);
-        showWrongOtp();
-        return;
-      }
-
-      if (req.file) {
-        clearInterval(pollTimer);
-        localStorage.removeItem('ds_current_rc_req');
-        document.getElementById('step2Otp').style.display = 'none';
-        document.getElementById('step3Waiting').style.display = 'block';
-        document.getElementById('waitSpinner').style.display = 'none';
-        document.getElementById('waitTitle').textContent = '✅ RC PDF Ready For Download!';
-        document.getElementById('waitTitle').style.color = 'var(--ok)';
-        document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         
-        const btnDl = document.getElementById('btnDownloadPdf');
-        const u = await fetchLatestUserData();
-        const order = (u.orders || []).find(x => x.id === req.id);
-        const isDownloaded = (order && order.downloaded) || localStorage.getItem('ds_downloaded_' + req.id) === 'true';
-        
-        if (isDownloaded) {
-          btnDl.innerText = 'Downloaded';
-        } else {
-          btnDl.innerText = '📥 Download RC PDF Now';
+        <!-- TOP HEADER -->
+        <header class="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex items-center justify-between flex-shrink-0 z-20 shadow-sm">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-700 hover:text-blue-600 text-xl p-2 rounded-lg border border-slate-200">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="../../dashboard.html" class="text-xs sm:text-sm font-extrabold text-blue-600 hover:underline flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+            
+            <div class="flex items-center gap-2.5 sm:gap-3">
+                <div onclick="location.href='../../dashboard.html#passbook'" class="cursor-pointer flex items-center gap-2 bg-blue-50 hover:bg-blue-100/80 px-3.5 py-2 rounded-xl border border-blue-200 transition">
+                    <i class="fa-solid fa-wallet text-blue-600 text-xs sm:text-sm"></i>
+                    <span class="text-xs text-slate-600 font-semibold hidden md:inline">Wallet:</span>
+                    <span id="walletBal" class="text-xs sm:text-sm font-extrabold text-slate-900">₹0.00</span>
+                </div>
+                <a href="../../dashboard.html#addmoney" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-blue-600/20 flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Add Money</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CONTAINER -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 max-w-4xl mx-auto w-full">
+            
+            <!-- SERVICE CARD -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 relative">
+                <div class="text-center mb-6">
+                    <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">RC PDF Instant (RTO Verification)</h1>
+                    <p class="text-slate-500 text-xs sm:text-sm mb-3">Instant RTO verification &amp; non-chip / chip RC PDF document generation.</p>
+                    <div class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 font-extrabold text-xs px-3.5 py-1.5 rounded-full border border-emerald-200">
+                        🏷️ Charge: ₹40.00 / Request
+                    </div>
+                </div>
+
+                <!-- Step 1: Form -->
+                <div id="step1Form">
+                    <form id="fRcForm" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" for="vNo">Vehicle Number *</label>
+                                <input type="text" id="vNo" placeholder="EX: RJ14AB1234" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-blue-600 uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" for="chNo">Chassis Number *</label>
+                                <input type="text" id="chNo" placeholder="Enter last 5 or full Chassis No." required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-blue-600 uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" for="engNo">Engine Number *</label>
+                                <input type="text" id="engNo" placeholder="Enter last 5 or full Engine No." required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-blue-600 uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" for="mobNo">Registered Mobile Number *</label>
+                                <input type="tel" id="mobNo" placeholder="10 Digit Registered Mobile No." pattern="[0-9]{10}" maxlength="10" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-blue-600">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1" for="regAddr">Registered Owner Address *</label>
+                            <textarea id="regAddr" placeholder="Enter full registered address as per RTO records" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-blue-600 h-20 resize-none"></textarea>
+                        </div>
+
+                        <div class="flex items-start gap-3 bg-amber-50/70 p-3.5 rounded-xl border border-amber-200 text-xs text-amber-900">
+                            <input type="checkbox" id="chkConfirm" required class="mt-0.5 w-4 h-4 rounded text-blue-600 cursor-pointer flex-shrink-0">
+                            <label for="chkConfirm" class="cursor-pointer font-medium">
+                                Main ye poori tarah se confirm karta hu ki di gayi sabhi jankari (Vehicle, Chassis, Engine No. aur Address) bilkul sahi hain. Galat jankari paye jane par hone wale kisi bhi nuksan ki zimmedari meri khud ki hogi.
+                            </label>
+                        </div>
+
+                        <button type="submit" id="btnSubStep1" class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition">Submit &amp; Proceed to OTP</button>
+                    </form>
+                </div>
+
+                <!-- Step 2: OTP Input Form -->
+                <div id="step2Otp" class="hidden text-center py-6 space-y-4">
+                    <h3 id="otpTitle" class="text-lg font-extrabold text-amber-600">Enter OTP sent to Registered Mobile</h3>
+                    <p id="otpMsg" class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+                        Aapke registered mobile number par RTO authority dwara OTP bheja gaya hai. Kripya niche OTP enter karke submit karein.
+                    </p>
+
+                    <div id="otpErrMsg" class="hidden text-rose-600 font-bold text-xs">Incorrect OTP</div>
+
+                    <form id="fOtpForm" class="max-w-xs mx-auto space-y-3">
+                        <input type="text" id="otpCode" placeholder="Enter 4 or 6 Digit OTP" required inputmode="numeric" autocomplete="one-time-code" maxlength="6" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-center text-lg font-extrabold tracking-widest focus:outline-none focus:border-blue-600">
+                        <button type="submit" id="btnOtpSubmit" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow transition">Verify &amp; Submit OTP</button>
+                    </form>
+                </div>
+
+                <!-- Step 3: Waiting / Confirmation Area -->
+                <div id="step3Waiting" class="hidden text-center py-8 space-y-4">
+                    <div class="w-12 h-12 border-4 border-slate-200 border-t-blue-600 rounded-full spinner mx-auto" id="waitSpinner"></div>
+                    <h3 id="waitTitle" class="text-lg font-extrabold text-emerald-600">✅ RC PDF Ready For Download!</h3>
+                    <p id="waitMsg" class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">Official RC PDF upload kar diya gaya hai.</p>
+
+                    <div id="downloadContainer" class="hidden pt-2">
+                        <button type="button" id="btnDownloadPdf" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition">
+                            📥 Download RC PDF Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HISTORY CARD -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-extrabold text-slate-900 text-base">History</h3>
+                        <p class="text-xs text-slate-500">Is service ki aapki recent requests</p>
+                    </div>
+                    <a href="../../dashboard.html#history" class="text-xs font-bold text-blue-600 hover:underline">View All →</a>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-[11px] font-bold">
+                                <th class="p-3">Vehicle No</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTbody" class="divide-y divide-slate-100">
+                            <tr><td colspan="3" class="text-center text-slate-400 p-6">No requests yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../../tools.js"></script>
+    <script>
+        const API = 'https://docsmartly-api.hm2351994.workers.dev';
+        const CHARGE = 40;
+        let currentRequestId = localStorage.getItem('ds_current_rc_req') || null;
+        let pollTimer = null;
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
         }
 
-        btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
-        document.getElementById('downloadContainer').style.display = 'block';
-        
-        await renderHistoryTable();
-        return;
-      }
-      else if (otpStatus === 'verified' || req.s === 'success') {
-        document.getElementById('waitSpinner').style.display = 'block';
-        document.getElementById('waitTitle').innerHTML = '✅ OTP Verified';
-        document.getElementById('waitTitle').style.color = 'var(--ok)';
-        document.getElementById('waitMsg').textContent = 'Aapka OTP successfully approve ho gaya hai. Document generation processing me hai, kripya thodi der pratiksha karein.';
-        document.getElementById('downloadContainer').style.display = 'none';
-      }
-    } catch (e) {
-      console.error('Polling error:', e);
-    }
-  }, 3000);
-}
+        function logoutUser() {
+            localStorage.removeItem('ds_session');
+            localStorage.removeItem('ds_token');
+            window.location.href = '../../index.html';
+        }
 
-function showWrongOtp() {
-  document.getElementById('step3Waiting').style.display = 'none';
-  document.getElementById('step2Otp').style.display = 'block';
-  
-  const errMsg = document.getElementById('otpErrMsg');
-  errMsg.style.display = 'block';
-  errMsg.textContent = 'Incorrect OTP';
+        async function handleApiResponse(res) {
+            const text = await res.text();
+            let data;
+            try { data = JSON.parse(text); } catch (e) { throw new Error(text || 'Server error'); }
+            if (!res.ok || (data && data.error === 'session')) {
+                alert('Session expired or invalid. Kripya dobara login karein.');
+                localStorage.removeItem('ds_token');
+                localStorage.removeItem('ds_session');
+                window.location.replace('../../login.html');
+                throw new Error('Session expired');
+            }
+            return data;
+        }
 
-  const submitBtn = document.getElementById('btnOtpSubmit');
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = 'Verify &amp; Submit OTP';
+        async function fetchLatestUserData() {
+            try {
+                const res = await fetch(API + '/api/user/profile', {
+                    headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+                });
+                if (res.ok) {
+                    const data = await handleApiResponse(res);
+                    if (data.user) {
+                        saveUser(data.user);
+                        return data.user;
+                    }
+                }
+            } catch (e) {}
+            return userLocal();
+        }
 
-  const otpInput = document.getElementById('otpCode');
-  otpInput.value = '';
-  otpInput.focus();
-}
+        function userLocal() {
+            try {
+                const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+                const sess = localStorage.getItem('ds_session');
+                return list.find(x => x.id === sess) || { name: 'User', bal: 0, orders: [], tx: [] };
+            } catch (e) { return { name: 'User', bal: 0, orders: [], tx: [] }; }
+        }
 
-async function downloadFileWithCharge(reqId, fileName, btnElem) {
-  const u = await fetchLatestUserData();
-  const order = (u.orders || []).find(x => x.id === reqId);
-  const alreadyDownloaded = (order && order.downloaded) || localStorage.getItem('ds_downloaded_' + reqId) === 'true';
-  
-  if (alreadyDownloaded) {
-    const confirmDeduct = confirm('Aap is file ko pehle hi download kar chuke hain. Dubara download karne ke liye ₹' + CHARGE + ' aapke wallet se fir se deduct honge. Kya aap confirm karte hain?');
-    if (!confirmDeduct) return;
+        function saveUser(u) {
+            const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+            const idx = list.findIndex(x => x.id === u.id);
+            if (idx >= 0) list[idx] = u; else list.push(u);
+            localStorage.setItem('ds_users', JSON.stringify(list));
+        }
 
-    if (u.bal < CHARGE) {
-      alert('Insufficient balance! Kripya pehle wallet top-up karein.');
-      window.location.href = '../../dashboard.html#addmoney';
-      return;
-    }
+        async function updateWalletUI() {
+            const u = await fetchLatestUserData();
+            document.getElementById('walletBal').textContent = '₹' + Number(u.bal || 0).toLocaleString('en-IN');
+        }
 
-    u.bal -= CHARGE;
-    saveUser(u);
-    await updateWalletUI();
-  }
+        async function renderHistoryTable() {
+            const u = await fetchLatestUserData();
+            const rcOrders = (u.orders || []).filter(o => o.n === 'RC PDF INSTANT' || (o.k && o.k.includes('RC Services'))).sort((a,b) => b.t - a.t);
+            const tbody = document.getElementById('historyTbody');
+            
+            if (!rcOrders.length) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-slate-400 p-6">No requests yet</td></tr>';
+                return;
+            }
 
-  if (btnElem) {
-    btnElem.disabled = true;
-    btnElem.innerText = '⏳ Downloading...';
-  }
+            tbody.innerHTML = rcOrders.map(o => {
+                const vehicleNo = o.doc || o.vNo || (o.data && o.data['Vehicle Number']) || o.vehicleNo || o.id;
+                let actionBtn = '';
+                if (o.file) {
+                    const isDownloaded = o.downloaded || localStorage.getItem('ds_downloaded_' + o.id) === 'true';
+                    actionBtn = `<button class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow transition" onclick="event.stopPropagation(); downloadFileWithCharge('${o.id}', '${o.file.name}', this)">${isDownloaded ? 'Downloaded' : 'Download'}</button>`;
+                } else {
+                    actionBtn = `<button class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow transition" onclick="event.stopPropagation(); resumeOrder('${o.id}')">Resume / View</button>`;
+                }
 
-  try {
-    const r = await fetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
-      headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
-    });
-    if (!r.ok) {
-      await handleApiResponse(r);
-      alert('File download failed.');
-      if (btnElem) {
-        btnElem.disabled = false;
-        btnElem.innerText = 'Downloaded';
-      }
-      return;
-    }
-    const b = await r.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(b);
-    a.download = fileName || 'RC_Document.pdf';
-    a.click();
+                return `
+                    <tr class="cursor-pointer hover:bg-slate-50 transition" onclick="resumeOrder('${o.id}')">
+                        <td class="p-3 font-bold text-slate-900">${vehicleNo}</td>
+                        <td class="p-3"><span class="px-2.5 py-1 rounded-full text-xs font-extrabold uppercase bg-blue-50 text-blue-700">${o.s || 'pending'}</span></td>
+                        <td class="p-3 text-right">${actionBtn}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
 
-    if (order) {
-      order.downloaded = true;
-      saveUser(u);
-    }
-    localStorage.setItem('ds_downloaded_' + reqId, 'true');
-    await updateWalletUI();
-    await renderHistoryTable();
+        async function resumeOrder(reqId) {
+            currentRequestId = reqId;
+            localStorage.setItem('ds_current_rc_req', reqId);
+            await checkAndRestoreStep();
+        }
 
-    if (btnElem) {
-      btnElem.disabled = false;
-      btnElem.innerText = 'Downloaded';
-    }
-  } catch (err) {
-    if (err.message !== 'Session expired') {
-      alert('Error downloading file.');
-    }
-    if (btnElem) {
-      btnElem.disabled = false;
-      btnElem.innerText = 'Downloaded';
-    }
-  }
-}
+        async function checkAndRestoreStep() {
+            if (!currentRequestId) return;
+            try {
+                const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+                    headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+                });
+                if (!r.ok) return;
+                const data = await handleApiResponse(r);
+                const req = data.request;
+                if (!req) return;
 
-updateWalletUI();
-renderHistoryTable();
+                document.getElementById('step1Form').classList.add('hidden');
+                const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
 
-if (currentRequestId) {
-  checkAndRestoreStep();
-}
-</script>
+                if (req.file) {
+                    clearInterval(pollTimer);
+                    localStorage.removeItem('ds_current_rc_req');
+                    document.getElementById('step2Otp').classList.add('hidden');
+                    document.getElementById('step3Waiting').classList.remove('hidden');
+                    document.getElementById('waitSpinner').classList.add('hidden');
+                    document.getElementById('waitTitle').textContent = '✅ RC PDF Ready For Download!';
+                    document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
+                    
+                    const btnDl = document.getElementById('btnDownloadPdf');
+                    btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
+                    document.getElementById('downloadContainer').classList.remove('hidden');
+                } else if (otpStatus === 'wrong' || req.s === 'failed') {
+                    clearInterval(pollTimer);
+                    showWrongOtp();
+                } else {
+                    document.getElementById('step2Otp').classList.add('hidden');
+                    document.getElementById('step3Waiting').classList.remove('hidden');
+                    document.getElementById('waitSpinner').classList.remove('hidden');
+                    document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+                    document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+                    document.getElementById('downloadContainer').classList.add('hidden');
+                    startStatusPolling();
+                }
+            } catch (err) {}
+        }
+
+        document.getElementById('fRcForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('btnSubStep1');
+            const u = await fetchLatestUserData();
+            
+            if (u.bal < CHARGE) {
+                alert('Insufficient balance! Kripya pehle wallet top-up karein.');
+                window.location.href = '../../dashboard.html#addmoney';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Submitting...';
+
+            const vNo = document.getElementById('vNo').value.trim().toUpperCase();
+            const chNo = document.getElementById('chNo').value.trim().toUpperCase();
+            const engNo = document.getElementById('engNo').value.trim().toUpperCase();
+            const mobNo = document.getElementById('mobNo').value.trim();
+            const regAddr = document.getElementById('regAddr').value.trim();
+
+            try {
+                const res = await fetch(API + '/api/requests', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json', 'x-user-token': localStorage.getItem('ds_token') || '' },
+                    body: JSON.stringify({
+                        k: 'RC Services|RC PDF INSTANT',
+                        sec: 'RC Services',
+                        doc: vNo,
+                        amt: CHARGE,
+                        data: { 'Vehicle Number': vNo, 'Chassis Number': chNo, 'Engine Number': engNo, 'Mobile Number': mobNo, 'Registered Address': regAddr, 'otp_status': 'pending' }
+                    })
+                });
+
+                const j = await handleApiResponse(res);
+                if (j.user) saveUser(j.user);
+                
+                currentRequestId = (j.request && (j.request.id || j.request._id || j.request.uuid)) || j.id || (u.orders && u.orders[0] && u.orders[0].id);
+                localStorage.setItem('ds_current_rc_req', currentRequestId);
+
+                await updateWalletUI();
+                await renderHistoryTable();
+
+                document.getElementById('step1Form').classList.add('hidden');
+                document.getElementById('step2Otp').classList.remove('hidden');
+                document.getElementById('otpErrMsg').classList.add('hidden');
+            } catch (err) {
+                alert('Network error or session invalid.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit &amp; Proceed to OTP';
+            }
+        };
+
+        document.getElementById('fOtpForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const otp = document.getElementById('otpCode').value.trim();
+            if (!otp) return;
+            if (!currentRequestId) currentRequestId = localStorage.getItem('ds_current_rc_req');
+
+            try {
+                await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+                    method: 'PATCH',
+                    headers: { 'content-type': 'application/json', 'x-user-token': localStorage.getItem('ds_token') || '' },
+                    body: JSON.stringify({ s: 'processing', data: { entered_otp: otp, otp: otp, 'Entered OTP': otp, otp_status: 'waiting_verify' } })
+                });
+            } catch (err) {}
+
+            document.getElementById('step2Otp').classList.add('hidden');
+            document.getElementById('step3Waiting').classList.remove('hidden');
+            document.getElementById('waitSpinner').classList.remove('hidden');
+            document.getElementById('waitTitle').textContent = 'Checking OTP confirmation...';
+            document.getElementById('waitMsg').textContent = 'Admin dwara OTP verify kiya ja raha hai. Kripya pratiksha karein.';
+            document.getElementById('downloadContainer').classList.add('hidden');
+            startStatusPolling();
+        };
+
+        function startStatusPolling() {
+            if (pollTimer) clearInterval(pollTimer);
+            pollTimer = setInterval(async () => {
+                if (!currentRequestId) currentRequestId = localStorage.getItem('ds_current_rc_req');
+                if (!currentRequestId) return;
+                try {
+                    const r = await fetch(API + '/api/requests/' + encodeURIComponent(currentRequestId), {
+                        headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+                    });
+                    if (!r.ok) return;
+                    const data = await handleApiResponse(r);
+                    const req = data.request;
+                    if (!req) return;
+
+                    const otpStatus = req.data && req.data.otp_status ? req.data.otp_status : 'pending';
+                    if (otpStatus === 'wrong' || req.s === 'failed') {
+                        clearInterval(pollTimer);
+                        showWrongOtp();
+                        return;
+                    }
+                    if (req.file) {
+                        clearInterval(pollTimer);
+                        localStorage.removeItem('ds_current_rc_req');
+                        document.getElementById('step2Otp').classList.add('hidden');
+                        document.getElementById('step3Waiting').classList.remove('hidden');
+                        document.getElementById('waitSpinner').classList.add('hidden');
+                        document.getElementById('waitTitle').textContent = '✅ RC PDF Ready For Download!';
+                        document.getElementById('waitMsg').textContent = 'Official RC PDF upload kar diya gaya hai.';
+                        
+                        const btnDl = document.getElementById('btnDownloadPdf');
+                        btnDl.onclick = (e) => downloadFileWithCharge(req.id, req.file.name, e.target);
+                        document.getElementById('downloadContainer').classList.remove('hidden');
+                        await renderHistoryTable();
+                    }
+                } catch (e) {}
+            }, 3000);
+        }
+
+        function showWrongOtp() {
+            document.getElementById('step3Waiting').classList.add('hidden');
+            document.getElementById('step2Otp').classList.remove('hidden');
+            document.getElementById('otpErrMsg').classList.remove('hidden');
+            document.getElementById('btnOtpSubmit').disabled = false;
+            document.getElementById('otpCode').value = '';
+            document.getElementById('otpCode').focus();
+        }
+
+        async function downloadFileWithCharge(reqId, fileName, btnElem) {
+            const u = await fetchLatestUserData();
+            try {
+                const r = await fetch(API + '/api/requests/' + encodeURIComponent(reqId) + '/file', {
+                    headers: { 'x-user-token': localStorage.getItem('ds_token') || '' }
+                });
+                if (!r.ok) { alert('File download failed.'); return; }
+                const b = await r.blob();
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(b);
+                a.download = fileName || 'RC_Document.pdf';
+                a.click();
+                localStorage.setItem('ds_downloaded_' + reqId, 'true');
+                await renderHistoryTable();
+            } catch (err) { alert('Error downloading file.'); }
+        }
+
+        updateWalletUI();
+        renderHistoryTable();
+        if (currentRequestId) checkAndRestoreStep();
+    </script>
 </body>
 </html>
