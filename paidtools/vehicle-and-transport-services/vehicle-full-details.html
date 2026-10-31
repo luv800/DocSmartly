@@ -304,71 +304,87 @@
             document.getElementById('step2Otp').classList.remove('hidden');
         }
 
-        document.getElementById('fVehicleForm').onsubmit = async function(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('btnSubStep1');
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '⏳ Submitting...';
+       document.getElementById('fVehicleForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const submitBtn = document.getElementById('btnSubStep1');
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ Submitting...';
 
-            const vNo = document.getElementById('vNo').value.trim().toUpperCase();
-            const chNo = document.getElementById('chNo').value.trim().toUpperCase();
-            const engNo = document.getElementById('engNo').value.trim().toUpperCase();
-            const mobNo = document.getElementById('mobNo').value.trim();
+    const vNo = document.getElementById('vNo').value.trim().toUpperCase();
+    const chNo = document.getElementById('chNo').value.trim().toUpperCase();
+    const engNo = document.getElementById('engNo').value.trim().toUpperCase();
+    const mobNo = document.getElementById('mobNo').value.trim();
 
-            let reqId = 'REQ_' + Date.now();
+    let reqId = 'REQ_' + Date.now();
 
-            try {
-                const res = await fetch(API + '/api/requests', {
-                    method: 'POST',
-                    headers: { 'content-type': 'application/json', 'x-user-token': localStorage.getItem('ds_token') || 'tok_live_docsmartly_9490' },
-                    body: JSON.stringify({
-                        k: `Vehicle Services|${SERVICE_KEY}`,
-                        sec: 'Vehicle Services',
-                        doc: vNo,
-                        amt: CHARGE,
-                        data: { 'Vehicle Registration No.': vNo, 'Chassis No (Full)': chNo, 'Engine Number (Full)': engNo, 'Registered Mobile Number': mobNo, 'otp_status': 'pending' }
-                    })
-                });
-
-                if (res.ok) {
-                    const j = await res.json().catch(() => ({}));
-                    if (j.request && (j.request.id || j.request._id)) {
-                        reqId = j.request.id || j.request._id;
-                    } else if (j.id) {
-                        reqId = j.id;
-                    }
+    try {
+        const res = await fetch(API + '/api/requests', {
+            method: 'POST',
+            headers: { 
+                'content-type': 'application/json', 
+                'x-user-token': localStorage.getItem('ds_token') || 'tok_live_docsmartly_9490' 
+            },
+            body: JSON.stringify({
+                k: `Vehicle Services|${SERVICE_KEY}`,
+                sec: 'Vehicle Services',
+                doc: vNo,
+                amt: CHARGE,
+                data: { 
+                    'Vehicle Registration No.': vNo, 
+                    'Chassis No (Full)': chNo, 
+                    'Engine Number (Full)': engNo, 
+                    'Registered Mobile Number': mobNo, 
+                    'otp_status': 'pending' 
                 }
-            } catch (err) {}
+            })
+        });
 
-            currentRequestId = reqId;
-            localStorage.setItem('ds_current_veh_req', currentRequestId);
+        const j = await res.json().catch(() => ({}));
+        if (res.ok) {
+            if (j.request && (j.request.id || j.request._id)) {
+                reqId = j.request.id || j.request._id;
+            } else if (j.id) {
+                reqId = j.id;
+            }
+            if (j.user) saveUser(j.user);
+        } else {
+            console.warn("Server warning on order create:", j);
+        }
+    } catch (err) {
+        console.error("Network or API error:", err);
+    }
 
-            try {
-                const u = await fetchLatestUserData();
-                u.bal = Math.max(0, (u.bal || 9490) - CHARGE);
-                if (!u.orders) u.orders = [];
-                u.orders.unshift({
-                    id: currentRequestId,
-                    n: SERVICE_KEY,
-                    s: 'pending',
-                    doc: vNo,
-                    amount: CHARGE,
-                    date: new Date().toLocaleDateString(),
-                    t: Date.now(),
-                    data: { 'Vehicle Registration No.': vNo, 'Chassis No (Full)': chNo, 'Engine Number (Full)': engNo, 'Registered Mobile Number': mobNo, 'otp_status': 'pending' }
-                });
-                saveUser(u);
-            } catch (e) {}
+    currentRequestId = reqId;
+    localStorage.setItem('ds_current_veh_req', currentRequestId);
 
-            await updateWalletUI();
-            await renderHistoryTable();
+    // Local state sync taaki history aur passbook turant update ho jaye
+    try {
+        const u = await fetchLatestUserData();
+        if (!u.orders) u.orders = [];
+        // Check if order already exists to avoid duplication
+        if (!u.orders.some(o => o.id === currentRequestId)) {
+            u.orders.unshift({
+                id: currentRequestId,
+                n: SERVICE_KEY,
+                s: 'pending',
+                doc: vNo,
+                amount: CHARGE,
+                date: new Date().toLocaleDateString(),
+                t: Date.now(),
+                data: { 'Vehicle Registration No.': vNo, 'Chassis No (Full)': chNo, 'Engine Number (Full)': engNo, 'Registered Mobile Number': mobNo, 'otp_status': 'pending' }
+            });
+            saveUser(u);
+        }
+    } catch (e) {}
 
-            // Seamless transition to Step 2 (OTP) without reload
-            document.getElementById('step1Form').classList.add('hidden');
-            document.getElementById('step2Otp').classList.remove('hidden');
-        };
+    await updateWalletUI();
+    await renderHistoryTable();
 
+    // Move to Step 2 (OTP) smoothly
+    document.getElementById('step1Form').classList.add('hidden');
+    document.getElementById('step2Otp').classList.remove('hidden');
+};
         document.getElementById('fOtpForm').onsubmit = async function(e) {
             e.preventDefault();
             const otp = document.getElementById('otpCode').value.trim();
