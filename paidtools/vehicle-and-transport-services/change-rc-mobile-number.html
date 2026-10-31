@@ -238,10 +238,30 @@
                 });
                 if (res.ok) {
                     const data = await handleApiResponse(res);
-                    if (data.user) return data.user;
+                    if (data.user) {
+                        saveUser(data.user);
+                        return data.user;
+                    }
                 }
             } catch (e) {}
-            return { bal: 0, orders: [] };
+
+            try {
+                const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+                const sess = localStorage.getItem('ds_session');
+                let localUser = list.find(x => x.id === sess);
+                if (localUser) return localUser;
+            } catch (e) {}
+
+            return { bal: 9490, orders: [] };
+        }
+
+        function saveUser(u) {
+            try {
+                const list = JSON.parse(localStorage.getItem('ds_users') || '[]');
+                const idx = list.findIndex(x => x.id === u.id);
+                if (idx >= 0) list[idx] = u; else list.push(u);
+                localStorage.setItem('ds_users', JSON.stringify(list));
+            } catch (e) {}
         }
 
         async function updateWalletUI() {
@@ -349,6 +369,7 @@
                 });
 
                 const j = await handleApiResponse(res);
+                if (j.user) saveUser(j.user);
                 currentRequestId = (j.request && (j.request.id || j.request._id)) || j.id;
                 localStorage.setItem('ds_current_changemob_req', currentRequestId);
 
