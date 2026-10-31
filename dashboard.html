@@ -828,35 +828,27 @@
             { date: '30 Oct 2026', note: 'DL PDF INSTANT', type: 'Debit', amount: 50 }
         ];
 
-        // Ensure session & token exist so paid service pages (like rc-pdf-instant.html) don't bounce to login.html
-        function syncLoggedInUser() {
-            try {
-                if (!localStorage.getItem('ds_session')) {
-                    localStorage.setItem('ds_session', 'USR_LOVE_9490');
-                }
-                if (!localStorage.getItem('ds_token')) {
-                    localStorage.setItem('ds_token', 'tok_live_docsmartly_9490');
-                }
+       // --- BACKEND API SYNC FOR WALLET & PROFILE ---
+const API = 'https://docsmartly-api.hm2351994.workers.dev';
 
-                let users = JSON.parse(localStorage.getItem('ds_users') || '[]');
-                const sessionId = localStorage.getItem('ds_session');
-                let u = users.find(x => x.id === sessionId) || users[0];
+async function syncLoggedInUser() {
+    try {
+        if (!localStorage.getItem('ds_session')) {
+            localStorage.setItem('ds_session', 'USR_LOVE_9490');
+        }
+        if (!localStorage.getItem('ds_token')) {
+            localStorage.setItem('ds_token', 'tok_live_docsmartly_9490');
+        }
 
-                if (!u) {
-                    u = {
-                        id: sessionId,
-                        name: 'Love Kumar Lalawat',
-                        mob: '7300277557',
-                        mail: 'lovekumar@docsmartly.in',
-                        bal: currentWallet,
-                        fav: favourites,
-                        orders: [],
-                        tx: []
-                    };
-                    users.push(u);
-                    localStorage.setItem('ds_users', JSON.stringify(users));
-                }
+        const token = localStorage.getItem('ds_token');
+        const res = await fetch(API + '/api/user/profile', {
+            headers: { 'x-user-token': token }
+        });
 
+        if (res.ok) {
+            const data = await res.json();
+            if (data && data.user) {
+                const u = data.user;
                 if (u.name) {
                     document.getElementById('userNameTitle').innerText = u.name;
                     document.getElementById('profName').value = u.name;
@@ -865,20 +857,29 @@
                 }
                 if (u.mob) document.getElementById('profMob').value = u.mob;
                 if (u.mail) document.getElementById('profMail').value = u.mail;
-                if (u.bal != null) currentWallet = Number(u.bal);
-                if (Array.isArray(u.fav) && u.fav.length) favourites = u.fav;
-            } catch (e) {}
-
-            const hr = new Date().getHours();
-            document.getElementById('greetingText').innerText = hr < 12 ? 'Good Morning 👋' : hr < 17 ? 'Good Afternoon 👋' : 'Good Evening 👋';
-            updateWalletUI();
+                if (u.bal != null) {
+                    currentWallet = Number(u.bal);
+                }
+                if (Array.isArray(u.orders)) {
+                    ordersHistory = u.orders;
+                    renderTables();
+                }
+            }
         }
+    } catch (e) {
+        console.error('Sync error:', e);
+    }
 
-        function updateWalletUI() {
-            const formatted = '₹' + currentWallet.toLocaleString('en-IN');
-            document.getElementById('headerWalletBal').innerText = formatted;
-            document.getElementById('bannerWalletBal').innerText = formatted;
+    const hr = new Date().getHours();
+    document.getElementById('greetingText').innerText = hr < 12 ? 'Good Morning 👋' : hr < 17 ? 'Good Afternoon 👋' : 'Good Evening 👋';
+    updateWalletUI();
+}
 
+function updateWalletUI() {
+    const formatted = '₹' + currentWallet.toLocaleString('en-IN');
+    document.getElementById('headerWalletBal').innerText = formatted;
+    document.getElementById('bannerWalletBal').innerText = formatted;
+}
             // Keep ds_users balance synced for paid service pages
             try {
                 const users = JSON.parse(localStorage.getItem('ds_users') || '[]');
@@ -1104,31 +1105,31 @@
 
         let activeModalItem = null;
 
-        function handleCardClick(key) {
-            const item = ALL_ITEMS_FLAT.find(x => x.key === key);
-            if (!item) return;
+function handleCardClick(key) {
+    const item = ALL_ITEMS_FLAT.find(x => x.key === key);
+    if (!item) return;
 
-            // 1. Free tool -> Navigate directly to freetools/...html
-            if (item.isFree) {
-                window.location.href = getToolUrl(item.name, item.key);
-                return;
-            }
+    // 1. Free tool -> Navigate directly to freetools/...html
+    if (item.isFree) {
+        window.location.href = getToolUrl(item.name, item.key);
+        return;
+    }
 
-            // 2. Paid tool with WhatsApp inquiry
-            if (item.price === 'WA') {
-                window.open(`https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for ' + item.name)}`, '_blank');
-                return;
-            }
+    // 2. Paid tool with WhatsApp inquiry
+    if (item.price === 'WA') {
+        window.open(`https://wa.me/917300277557?text=${encodeURIComponent('Hello DocSmartly, I want the price for ' + item.name)}`, '_blank');
+        return;
+    }
 
-            // 3. Paid Service with dedicated page -> Redirect to paidtools/...html
-            if (paidToolsMap[item.key] || paidToolsMap[item.name]) {
-                window.location.href = getToolUrl(item.name, item.key);
-                return;
-            }
+    // 3. Paid Service with dedicated page -> Redirect to paidtools/...html
+    if (paidToolsMap[item.key] || paidToolsMap[item.name]) {
+        window.location.href = getToolUrl(item.name, item.key);
+        return;
+    }
 
-            // 4. Fallback -> Open inline modal if unmapped
-            openServiceModal(item);
-        }
+    // 4. Fallback -> Open inline modal if unmapped
+    openServiceModal(item);
+}
 
         function openServiceModal(item) {
             activeModalItem = item;
