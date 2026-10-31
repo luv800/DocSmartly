@@ -1,693 +1,828 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dashboard – DocSmartly</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-if (!localStorage.getItem('ds_session') || !localStorage.getItem('ds_token')) {
-  window.location.replace('login.html');
-}
-</script>
-<style>
-:root {
-  --primary:#315eea;
-  --primary-dark:#244ac4;
-  --bg:#f5f7fc;
-  --card:#fff;
-  --text:#172033;
-  --muted:#667085;
-  --border:#e7eaf1;
-  --radius:18px;
-  --shadow:0 8px 28px rgba(22,34,66,.055);
-}
-* {box-sizing:border-box;margin:0;padding:0}
-body {
-  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
-  background:radial-gradient(ellipse at 85% 0%,rgba(49,94,234,.055),transparent 34rem),var(--bg);
-  color:var(--text);
-  -webkit-font-smoothing:antialiased;
-}
-button,input {font:inherit}
-.layout {display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh}
-.sidebar {
-  background:#111a2e;
-  color:#e5eaf4;
-  padding:22px 14px 16px;
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow-y:auto;
-  align-self:start;
-  z-index:50;
-  display:flex;
-  flex-direction:column;
-  border-right:1px solid rgba(255,255,255,.06);
-}
-.brand {
-  display:flex;align-items:center;gap:11px;
-  font-size:19px;font-weight:800;letter-spacing:-.04em;
-  color:#fff;margin:0 8px 20px;text-decoration:none;
-}
-.brand span {
-  background:linear-gradient(145deg,#5480ff,#315eea);
-  width:39px;height:39px;border-radius:13px;
-  display:grid;place-items:center;font-size:18px;
-  box-shadow:0 7px 18px rgba(49,94,234,.32);
-}
-.nav {display:flex;flex-direction:column;gap:4px;flex:1}
-.nav a,.mi {
-  display:flex;align-items:center;gap:10px;
-  color:#aeb9cb;text-decoration:none;
-  padding:10px 12px;border-radius:10px;
-  font-size:12px;font-weight:600;
-  transition:background .18s,color .18s;
-  background:none;border:none;cursor:pointer;
-  text-align:left;width:100%;
-}
-.nav a:hover,.nav a.active,.mi:hover {background:rgba(81,126,255,.16);color:#fff}
-.nav a.active {box-shadow:inset 3px 0 #6e93ff}
-.nav-label {
-  color:#8393ad;font-size:10px;font-weight:800;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:17px 12px 5px;
-}
-.sidebar-footer {margin-top:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
-main {padding:28px clamp(18px,3vw,40px);min-width:0}
-.topbar {
-  background:rgba(255,255,255,.94);
-  border:1px solid var(--border);border-radius:20px;
-  padding:21px 24px;display:flex;align-items:center;
-  justify-content:space-between;gap:16px;flex-wrap:wrap;
-  box-shadow:var(--shadow);margin-bottom:22px;
-}
-.welcome h1 {font-size:clamp(20px,2vw,25px);letter-spacing:-.045em}
-.welcome p {color:var(--muted);font-size:13px;margin-top:5px}
-.top-actions {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.balance-pill {
-  background:#f0f5ff;color:#244ac4;border:1px solid #dce6ff;
-  padding:10px 14px;border-radius:12px;font-weight:700;
-  text-decoration:none;font-size:13px;
-}
-.btn {
-  border:none;cursor:pointer;padding:11px 16px;border-radius:11px;
-  font-weight:700;font-size:13px;transition:.18s ease;
-  text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
-}
-.btn-primary {background:linear-gradient(135deg,#416ff2,#315eea);color:#fff;box-shadow:0 5px 13px rgba(49,94,234,.2)}
-.btn-primary:hover {background:linear-gradient(135deg,#315eea,#244ac4);transform:translateY(-1px)}
-.btn-light {background:#fff;border:1px solid var(--border);color:var(--text)}
-.stats {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:26px}
-.stat {background:var(--card);border:1px solid var(--border);border-radius:17px;padding:18px;box-shadow:var(--shadow)}
-.stat-head {display:flex;justify-content:space-between;align-items:center;gap:10px}
-.stat h3 {font-size:12px;color:var(--muted);font-weight:700}
-.stat-icon {width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:17px}
-.blue {background:#edf3ff}.green {background:#eaf8f1}.orange {background:#fff4e8}.purple {background:#f2efff}
-.stat-value {font-size:24px;font-weight:800;letter-spacing:-.04em;margin-top:12px}
-.stat-note {font-size:12px;color:var(--muted);margin-top:3px}
-.tools-heading {
-  display:flex;justify-content:space-between;align-items:end;
-  gap:14px;flex-wrap:wrap;margin:25px 0 14px;
-}
-.tools-heading h2 {font-size:21px;letter-spacing:-.035em}
-.tools-heading p {color:var(--muted);font-size:12px;margin-top:4px}
-.filters {display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
-.filters button {
-  border:1px solid var(--border);background:#fff;border-radius:999px;
-  padding:8px 13px;font:700 12px 'Plus Jakarta Sans',sans-serif;
-  cursor:pointer;color:var(--muted);
-}
-.filters button.on {background:#172033;color:#fff;border-color:#172033}
-.ds {background:var(--card);border:1px solid var(--border);border-radius:16px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow);scroll-margin-top:18px}
-.ds summary {
-  display:flex;justify-content:space-between;align-items:center;
-  gap:12px;cursor:pointer;font-weight:800;color:var(--text);
-  font-size:13px;list-style:none;
-}
-.ds summary::-webkit-details-marker {display:none}
-.ds summary em {font-style:normal;font-size:10px;background:#edf3ff;color:var(--primary-dark);padding:4px 9px;border-radius:99px}
-.tool-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:11px;margin-top:14px}
-.tool-card {
-  display:flex;flex-direction:column;justify-content:space-between;
-  background:#fff;border:1px solid var(--border);border-radius:14px;
-  padding:11px;text-decoration:none;color:inherit;min-width:0;
-  transition:transform .18s,border-color .18s,box-shadow .18s;
-}
-.tool-card:hover {border-color:#b6c8ff;transform:translateY(-3px);box-shadow:0 9px 22px rgba(36,87,214,.09)}
-.tool-icon {
-  height:82px;border-radius:11px;margin-bottom:10px;
-  display:grid;place-items:center;overflow:hidden;
-  background:linear-gradient(135deg,#eaf0ff,#f7f9ff);
-}
-.tool-icon svg {width:67px;height:59px;filter:drop-shadow(0 4px 4px rgba(19,35,63,.12))}
-.tool-name {font-size:12px;font-weight:800;line-height:1.45}
-.tool-category {font-size:10px;color:var(--muted);margin-top:3px}
-.badge-free,.badge-paid {font-size:10px;padding:5px 9px;border-radius:999px;font-weight:800;width:fit-content;margin-top:8px}
-.badge-free {background:#e8f7ef;color:#12805b}
-.badge-paid {background:#fff5df;color:#805600;border:1px solid #f2dfa9}
-.tblue {fill:#315eea}.tdark {fill:#173573}.tlight {fill:#eff4ff}.twhite {fill:#fff}
-.tgreen {fill:#20a779}.torange {fill:#f4b544}.tgray {fill:#dbe3f0}
-.tline {fill:none;stroke:#315eea;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.tstroke {fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.table-wrap {overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:15px;box-shadow:var(--shadow)}
-table {width:100%;border-collapse:collapse;min-width:500px}
-th,td {padding:13px 15px;text-align:left;border-bottom:1px solid var(--border);font-size:12px}
-th {font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:#f8f9fc;font-weight:800}
-tbody tr:last-child td {border-bottom:0}
-.status {display:inline-block;border-radius:99px;padding:5px 9px;font-size:10px;font-weight:800;text-transform:capitalize}
-.s-pending {background:#fff4e8;color:#c45b08}.s-processing {background:#eaf0ff;color:#3157ae}.s-success {background:#eaf8f1;color:#12805b}.s-failed {background:#fdeeee;color:#b4232e}
-.panel {background:#fff;border:1px solid var(--border);border-radius:17px;padding:23px;box-shadow:var(--shadow);max-width:520px}
-.panel h1 {font-size:20px;letter-spacing:-.035em;margin-bottom:14px}
-.field {width:100%;height:43px;padding:8px 12px;border:1px solid var(--border);border-radius:9px;margin:6px 0 15px}
-[data-v][hidden] {display:none!important}
-:focus-visible {outline:3px solid rgba(49,94,234,.35);outline-offset:2px}
-
-@media(max-width:1050px) {
-  .layout {grid-template-columns:225px minmax(0,1fr)}
-  main {padding:20px}
-  .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:760px) {
-  .layout {grid-template-columns:1fr}
-  .sidebar {
-    position:sticky;top:0;height:auto;max-height:52vh;
-    overflow-y:auto;padding:12px 12px 10px;z-index:100;
-    box-shadow:0 8px 20px rgba(10,18,35,.18);
-  }
-  .brand {margin:0 6px 10px}
-  .nav {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
-  .nav-label {grid-column:1/-1;padding-top:12px}
-  .nav a,.mi {padding:9px 8px;font-size:11px}
-  .sidebar-footer {margin-top:8px}
-  main {padding:16px 12px 26px}
-  .topbar {padding:17px;border-radius:16px}
-  .top-actions {width:100%}
-  .top-actions>* {flex:1}
-  .tool-grid {grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocSmartly - Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        sidebar: '#0d1322',
+                        brandBlue: '#2563eb',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0d1322; }
+        ::-webkit-scrollbar-thumb { background: #2a3447; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+    </style>
 </head>
-<body>
+<body class="bg-[#f3f4f6] text-slate-800 antialiased flex h-screen overflow-hidden">
 
-<div class="layout">
-  <aside class="sidebar">
-    <a class="brand" href="#dashboard"><span>D</span> DocSmartly</a>
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="w-64 bg-sidebar flex-shrink-0 flex flex-col h-full text-slate-300 transition-all duration-300 z-30 fixed lg:static -translate-x-full lg:translate-x-0 shadow-xl">
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3 px-6 py-6 border-b border-slate-800">
+            <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">D</div>
+            <span class="text-white text-xl font-bold tracking-wide">DocSmartly</span>
+        </div>
 
-    <nav class="nav">
-      <a href="#dashboard">🏠 Dashboard</a>
-      <a href="#history">🕘 Request History</a>
-      <a href="#passbook">📒 Passbook</a>
-      <a href="#addmoney">💳 Add Money</a>
-      <a href="#referral">🎁 Refer &amp; Earn</a>
-      <a href="#profile">👤 My Profile</a>
-      <a href="#contact">🎧 Contact Support</a>
+        <!-- Navigation Menu -->
+        <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 text-sm font-medium">
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/20">
+                <i class="fa-solid fa-house w-5 text-center"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Request History
+            </a>
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-solid fa-wallet w-5 text-center"></i> Passbook
+            </a>
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-solid fa-circle-plus w-5 text-center"></i> Add Money
+            </a>
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-solid fa-gift w-5 text-center"></i> Refer & Earn
+            </a>
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-solid fa-user w-5 text-center"></i> My Profile
+            </a>
+            <a href="#" class="flex items-center gap-3.5 px-4 py-3 rounded-xl hover:bg-slate-800/60 hover:text-white transition">
+                <i class="fa-solid fa-headset w-5 text-center"></i> Contact Support
+            </a>
 
-      <div class="nav-label">🚀 Services</div>
-      <a href="#services-vehicle">🚗 Vehicle &amp; Transport</a>
-      <a href="#services-licence">🪪 Licence &amp; Identity</a>
-      <a href="#services-tax">📑 PAN, Tax &amp; Business</a>
-      <a href="#services-citizen">🌾 Citizen &amp; Farmer</a>
-      <a href="#services-govt">🏗️ Govt &amp; Contractor</a>
-      <a href="#services-pdf">📄 PDF Tools</a>
-      <a href="#services-image">🖼️ Image &amp; Photo Tools</a>
-      <a href="#services-print">🪪 Print &amp; ID Cards</a>
-      <a href="#services-documents">📝 Documents &amp; Letters</a>
-      <a href="#services-utilities">🧮 Calculators &amp; Utilities</a>
+            <!-- Section Title: SERVICES WITH DROPDOWN -->
+            <div class="pt-6 pb-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+                <span>Services</span>
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+            </div>
+            
+            <!-- SERVICES DROPDOWN CONTAINER -->
+            <div class="space-y-1 pl-2">
+                <!-- Vehicle & Transport Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('vehicle-dropdown', 'vehicle-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-car w-5 text-center text-blue-400"></i> Vehicle & Transport</span>
+                        <i id="vehicle-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="vehicle-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">RC PDF Instant</a>
+                        <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">RC PDF Server 1 & 2</a>
+                        <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">RC Full Details</a>
+                        <a href="#section-vehicle" class="block py-1.5 hover:text-white transition">Chassis to RC</a>
+                    </div>
+                </div>
 
-      <a href="index.html">🌐 Homepage →</a>
-    </nav>
+                <!-- Licence & Identity Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('licence-dropdown', 'licence-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-id-card w-5 text-center text-emerald-400"></i> Licence & Identity</span>
+                        <i id="licence-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="licence-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Aadhaar Print & Find</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">PAN Card Services</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Voter ID Card Maker</a>
+                        <a href="#section-licence" class="block py-1.5 hover:text-white transition">Driving Licence PDF</a>
+                    </div>
+                </div>
 
-    <div class="sidebar-footer">
-      <button class="mi" id="loSb" style="color:#fca5a5">🚪 Logout</button>
+                <!-- PAN, Tax & Business Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('tax-dropdown', 'tax-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-file-invoice-dollar w-5 text-center text-amber-400"></i> PAN, Tax & Business</span>
+                        <i id="tax-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="tax-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">GST Calculator (Free)</a>
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">Income Tax Returns</a>
+                        <a href="#section-tax" class="block py-1.5 hover:text-white transition">MSME / Udyam Registration</a>
+                    </div>
+                </div>
+
+                <!-- Citizen & Farmer Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('citizen-dropdown', 'citizen-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-users w-5 text-center text-purple-400"></i> Citizen & Farmer</span>
+                        <i id="citizen-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="citizen-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Ration Card Services</a>
+                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Kisan Samman Nidhi Status (Free)</a>
+                        <a href="#section-citizen" class="block py-1.5 hover:text-white transition">Land Records / Khasra</a>
+                    </div>
+                </div>
+
+                <!-- Govt & Contractor Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('govt-dropdown', 'govt-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-building-shield w-5 text-center text-rose-400"></i> Govt & Contractor</span>
+                        <i id="govt-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="govt-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">Labour Card Registration</a>
+                        <a href="#section-govt" class="block py-1.5 hover:text-white transition">Trade License Application</a>
+                    </div>
+                </div>
+
+                <!-- PDF Tools Dropdown Item -->
+                <div class="rounded-xl overflow-hidden">
+                    <button onclick="toggleDropdown('pdf-dropdown', 'pdf-chevron')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-800/60 hover:text-white transition text-xs font-medium">
+                        <span class="flex items-center gap-3"><i class="fa-solid fa-file-pdf w-5 text-center text-red-400"></i> PDF & Image Tools</span>
+                        <i id="pdf-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                    </button>
+                    <div id="pdf-dropdown" class="hidden pl-8 py-1 space-y-1 text-xs text-slate-400 border-l border-slate-800 ml-5 my-1">
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">PDF Merge & Split (Free)</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Background Remover (Free)</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Passport Photo Sheet (Free)</a>
+                        <a href="#section-pdf" class="block py-1.5 hover:text-white transition">Watermark Maker (Free)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <!-- TOP HEADER -->
+        <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <button id="menuBtn" class="lg:hidden text-slate-600 hover:text-slate-900 text-xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1 class="text-xl font-bold text-slate-800 hidden sm:block">Dashboard Overview</h1>
+            </div>
+            
+            <!-- Top Right Wallet & Profile Widget -->
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 font-medium">Wallet:</span>
+                    <span class="text-sm font-bold text-slate-900">₹9,490</span>
+                </div>
+                <button onclick="openAddBalanceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md shadow-blue-600/20 flex items-center gap-2 transition">
+                    <i class="fa-solid fa-plus text-xs"></i> + Add Balance
+                </button>
+                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center border-2 border-white shadow">
+                    LK
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD SCROLLABLE CONTAINER -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+            <!-- WELCOME BANNER -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
+                        Welcome back <span class="inline-block animate-bounce">👋</span>, Love Kumar Lalawat
+                    </h2>
+                    <p class="text-slate-500 text-sm mt-1">Manage your documents, requests and wallet from one place.</p>
+                </div>
+                <div class="flex items-center gap-3 bg-blue-50 border border-blue-100 px-5 py-3 rounded-xl">
+                    <div class="text-right">
+                        <p class="text-xs text-slate-500">Available Wallet</p>
+                        <p class="text-xl font-bold text-blue-600">₹9,490</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 STATS CARDS GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 font-medium text-sm">Wallet Balance</span>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+                    <div class="mt-4"><h3 class="text-3xl font-extrabold text-slate-900">₹9,490</h3><p class="text-xs text-slate-400 mt-1">Available for services</p></div>
+                </div>
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 font-medium text-sm">Total Requests</span>
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-file-lines"></i></div>
+                    </div>
+                    <div class="mt-4"><h3 class="text-3xl font-extrabold text-slate-900">25</h3><p class="text-xs text-slate-400 mt-1">All service requests</p></div>
+                </div>
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 font-medium text-sm">Pending</span>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-lg"><i class="fa-solid fa-hourglass-half"></i></div>
+                    </div>
+                    <div class="mt-4"><h3 class="text-3xl font-extrabold text-slate-900">0</h3><p class="text-xs text-slate-400 mt-1">Awaiting action</p></div>
+                </div>
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 font-medium text-sm">Successful</span>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+                    <div class="mt-4"><h3 class="text-3xl font-extrabold text-slate-900">24</h3><p class="text-xs text-slate-400 mt-1">Completed requests</p></div>
+                </div>
+            </div>
+
+            <!-- TOOLS & SERVICES PORTAL HEADER -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Everything your print shop needs</h2>
+                    <p class="text-slate-500 text-xs sm:text-sm">One login, one wallet. RC, DL, Voter, Ration, Farmer and more services for PVC card printing.</p>
+                </div>
+                <!-- Filter Pills -->
+                <div class="flex items-center gap-2 bg-slate-200/60 p-1.5 rounded-xl flex-shrink-0">
+                    <button onclick="filterServices('all')" id="filter-all" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm transition">All</button>
+                    <button onclick="filterServices('paid')" id="filter-paid" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">Paid Only</button>
+                    <button onclick="filterServices('free')" id="filter-free" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">Free Only</button>
+                </div>
+            </div>
+
+            <!-- ALL SERVICES SECTION -->
+            <div id="services-container" class="space-y-8">
+                
+                <!-- 1. VEHICLE & TRANSPORT SERVICES -->
+                <div id="section-vehicle" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-car text-blue-600"></i> Vehicle & Transport Services</h3>
+                        <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('RC Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-car-side"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">RC Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-blue-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('RC Full Details', 'From ₹50')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">RC Full Details</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹50</span>
+                                <span class="text-xs font-semibold text-blue-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Chassis To RC', 'From ₹70')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-barcode"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Chassis To RC</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹70</span>
+                                <span class="text-xs font-semibold text-blue-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Vehicle To Mobile Find', 'From ₹40')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-mobile-screen-button"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Vehicle To Mobile Find</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹40</span>
+                                <span class="text-xs font-semibold text-blue-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Challan Details', 'From ₹10')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-receipt"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Challan Details</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹10</span>
+                                <span class="text-xs font-semibold text-blue-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. LICENCE & IDENTITY SERVICES -->
+                <div id="section-licence" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-id-card text-emerald-600"></i> Licence & Identity Services</h3>
+                        <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('DL Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-id-badge"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">DL Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Voter Services', 'From ₹40')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-address-card"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Voter Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹40</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Aadhaar & Ration', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-fingerprint"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Aadhaar & Ration</h4>
+                                <p class="text-xs text-slate-500 mt-1">2 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('LL Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-file-shield"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">LL Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">2 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Mobile Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Mobile Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-emerald-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. PAN, TAX & BUSINESS SERVICES -->
+                <div id="section-tax" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-amber-600"></i> PAN, Tax & Business Services</h3>
+                        <span class="bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full">4 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('PAN Services', 'From ₹40')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-id-card-clip"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">PAN Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹40</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Udyam Services', 'From ₹100')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-shop"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Udyam Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹100</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('GST Services', 'From ₹50')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-percent"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">GST Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">2 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹50</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('TAN Verification', 'From ₹50')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-file-shield"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">TAN Verification</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹50</span>
+                                <span class="text-xs font-semibold text-amber-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CITIZEN & FARMER SERVICES -->
+                <div id="section-citizen" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-users text-purple-600"></i> Citizen & Farmer Services</h3>
+                        <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full">3 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Farmer Services', 'From ₹30')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center text-purple-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-seedling"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Farmer Services</h4>
+                                <p class="text-xs text-slate-500 mt-1">3 services</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹30</span>
+                                <span class="text-xs font-semibold text-purple-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('DBT Seeding Status', 'From ₹20')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center text-purple-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">DBT Seeding Status</h4>
+                                <p class="text-xs text-slate-500 mt-1">1 service</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">From ₹20</span>
+                                <span class="text-xs font-semibold text-purple-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. GOVT & CONTRACTOR SERVICES -->
+                <div id="section-govt" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-building-shield text-rose-600"></i> Govt & Contractor Services</h3>
+                        <span class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('New Digital Signature (DSC)', 'From ₹2,800')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-signature"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">New Digital Signature (DSC)</h4>
+                                <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">₹2,800</span>
+                                <span class="text-xs font-semibold text-rose-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('E-Procurement Registration', 'From ₹500')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-globe"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">E-Procurement Registration</h4>
+                                <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">₹500</span>
+                                <span class="text-xs font-semibold text-rose-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Building Estimate Creator', 'From ₹300')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-calculator"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Building Estimate Creator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">₹300</span>
+                                <span class="text-xs font-semibold text-rose-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('BOQ Creator', 'From ₹200')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-table-list"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">BOQ Creator</h4>
+                                <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">₹200</span>
+                                <span class="text-xs font-semibold text-rose-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="paid" onclick="openServiceModal('Govt Civil & Electric Bill Maker', 'From ₹1,000')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Govt Civil & Electric Bill</h4>
+                                <p class="text-xs text-slate-500 mt-1">Govt & Contractor</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">₹1,000</span>
+                                <span class="text-xs font-semibold text-rose-600 group-hover:underline">Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. PDF & IMAGE TOOLS -->
+                <div id="section-pdf" class="service-section space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-file-pdf text-red-600"></i> PDF & Image Tools</h3>
+                        <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full">5 services</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('JPG / PNG To PDF', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-file-image"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">JPG / PNG To PDF</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('PDF Merge', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-object-ungroup"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">PDF Merge</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('PDF Split & Extract', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-scissors"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">PDF Split & Extract</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('Background Remover', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">Background Remover</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                        <div class="service-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group cursor-pointer" data-category="free" onclick="openServiceModal('ID Card Maker', 'FREE')">
+                            <div>
+                                <div class="w-full h-24 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-address-card"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">ID Card Maker</h4>
+                                <p class="text-xs text-slate-500 mt-1">Free Utility</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-md">FREE</span>
+                                <span class="text-xs font-semibold text-red-600 group-hover:underline">Use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
     </div>
-  </aside>
 
-  <main>
-    <section data-v="dashboard"></section>
-    <section data-v="history" hidden></section>
-    <section data-v="passbook" hidden></section>
-    <section data-v="addmoney" hidden></section>
-    <section data-v="referral" hidden></section>
-    <section data-v="profile" hidden></section>
-    <section data-v="contact" hidden></section>
-  </main>
-</div>
+    <!-- MODAL POPUP FOR SERVICE APPLICATION -->
+    <div id="serviceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 transform transition-all">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-file-shield"></i>
+                    </div>
+                    <div>
+                        <h3 id="modalServiceName" class="font-bold text-slate-900 text-base">Service Name</h3>
+                        <p class="text-xs text-slate-500">DocSmartly Secure Portal</p>
+                    </div>
+                </div>
+                <button onclick="closeServiceModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="py-5 space-y-4">
+                <div class="flex items-center justify-between bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Service Fee</span>
+                    <span id="modalServicePrice" class="text-lg font-extrabold text-blue-600">₹40</span>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Enter Document Number / Details</label>
+                    <input type="text" placeholder="e.g. RJ14AB1234 or ID Number" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-sm">
+                </div>
+            </div>
 
-<div id="rm" style="display:none;position:fixed;inset:0;background:rgba(10,18,35,.58);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(5px);padding:16px">
-  <div style="background:#fff;width:100%;max-width:420px;border-radius:18px;padding:25px;box-shadow:0 16px 50px rgba(0,0,0,.2);position:relative">
-    <button id="rx" type="button" style="position:absolute;top:14px;right:15px;border:none;background:none;font-size:1.2rem;cursor:pointer">✕</button>
-    <div style="text-align:center;margin-bottom:15px">
-      <div style="font-size:2rem;margin-bottom:7px">⚠️</div>
-      <h2 id="rt" style="font-size:1.2rem;margin-bottom:6px">Service request</h2>
-      <p id="rp" style="color:#667085;font-size:.85rem;line-height:1.5"></p>
+            <div class="flex items-center gap-3 pt-2">
+                <button onclick="closeServiceModal()" class="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition">Cancel</button>
+                <button onclick="submitServiceRequest()" class="flex-1 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition">Proceed Now</button>
+            </div>
+        </div>
     </div>
-    <form id="fRq"></form>
-  </div>
-</div>
 
-<script src="tools.js"></script>
-<script>
-const API='https://docsmartly-api.hm2351994.workers.dev';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
-const dt=t=>t?new Date(t).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'-';
-const tokenHdr=()=>({'x-user-token':localStorage.getItem('ds_token')||''});
-const api=(m,p,b)=>fetch(API+p,{method:m,headers:{'content-type':'application/json',...tokenHdr()},body:b===undefined?undefined:JSON.stringify(b)});
-
-if(typeof getToolUrl==='undefined'){
-  window.getToolUrl=function(name){
-    const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-    return 'freetools/'+slug+'.html';
-  };
-}
-
-function user(){
-  try {
-    const list=JSON.parse(localStorage.getItem('ds_users')||'[]');
-    const sess=localStorage.getItem('ds_session');
-    return list.find(x=>x.id===sess)||{name:'User',bal:0,orders:[],tx:[],code:''};
-  } catch(e) {
-    return {name:'User',bal:0,orders:[],tx:[],code:''};
-  }
-}
-function saveUser(u){
-  const list=JSON.parse(localStorage.getItem('ds_users')||'[]');
-  const idx=list.findIndex(x=>x.id===u.id);
-  if(idx>=0)list[idx]=u;else list.push(u);
-  localStorage.setItem('ds_users',JSON.stringify(list));
-}
-
-const categoryIds={
-  "Vehicle & Transport Services (Paid)":"services-vehicle",
-  "Licence & Identity Services (Paid)":"services-licence",
-  "PAN, Tax & Business Services (Paid)":"services-tax",
-  "Citizen, Banking & Farmer Services (Paid)":"services-citizen",
-  "Govt & Contractor Work (Paid)":"services-govt",
-  "PDF Tools (Free)":"services-pdf",
-  "Image & Photo Tools (Free)":"services-image",
-  "Print & ID Cards (Free)":"services-print",
-  "Documents & Letters (Free)":"services-documents",
-  "Calculators & Utilities (Free)":"services-utilities"
-};
-
-const CATEGORIES={
-"Vehicle & Transport Services (Paid)":[
-{n:"RC PDF INSTANT",sec:"RC Services",amt:40,isPaid:true},
-{n:"RC PDF Server 1",sec:"RC Services",amt:30,isPaid:true},
-{n:"RC PDF Server 2",sec:"RC Services",amt:40,isPaid:true},
-{n:"RC Full Details",sec:"RC Full Details",amt:50,isPaid:true},
-{n:"Chassis to RC",sec:"Chassis to RC",amt:70,isPaid:true},
-{n:"Vehicle to Mobile Find",sec:"Vehicle To Mobile Find",amt:80,isPaid:true},
-{n:"Challan Details",sec:"Challan Details",amt:10,isPaid:true}
-],
-"Licence & Identity Services (Paid)":[
-{n:"DL PDF INSTANT",sec:"DL Services",amt:50,isPaid:true},
-{n:"DL PDF Server 1",sec:"DL Services",amt:50,isPaid:true},
-{n:"DL PDF Server 2 (Blue)",sec:"DL Services",amt:50,isPaid:true},
-{n:"LL PDF",sec:"LL Services",amt:30,isPaid:true},
-{n:"LL Exam Request",sec:"LL Services",amt:80,isPaid:true},
-{n:"Voter Mobile Link",sec:"Voter Services",amt:40,isPaid:true},
-{n:"Voter Mobile Link S1",sec:"Voter Services",amt:40,isPaid:true},
-{n:"Voter PDF",sec:"Voter Services",amt:100,isPaid:true}
-],
-"PAN, Tax & Business Services (Paid)":[
-{n:"Aadhaar to PAN",sec:"PAN Services",amt:250,isPaid:true},
-{n:"Aadhaar to PAN S1",sec:"PAN Services",amt:40,isPaid:true},
-{n:"PAN Details",sec:"PAN Services",amt:40,isPaid:true},
-{n:"New PAN apply",sec:"PAN Card Service",amt:600,isPaid:true},
-{n:"PAN update / correction",sec:"PAN Card Service",amt:600,isPaid:true},
-{n:"PAN to Udyam S2",sec:"Udyam Services",amt:100,isPaid:true},
-{n:"New UDYAM CERTIFICATE",sec:"Udyam Services",amt:200,isPaid:true},
-{n:"New GST Certificate",sec:"GST Services",amt:1200,isPaid:true},
-{n:"GST Download",sec:"GST Services",amt:200,isPaid:true},
-{n:"PAN to GST",sec:"GST Services",amt:10,isPaid:true},
-{n:"GST Details",sec:"GST Services",amt:10,isPaid:true},
-{n:"TAN Verification",sec:"TAN Verification",amt:30,isPaid:true}
-],
-"Citizen, Banking & Farmer Services (Paid)":[
-{n:"KISAN CARD",sec:"Farmer Services",amt:25,isPaid:true},
-{n:"Farmer PDF S1",sec:"Farmer Services",amt:25,isPaid:true},
-{n:"Farmer PDF All State",sec:"Farmer Services",amt:30,isPaid:true},
-{n:"AgriStack Farmer PDF",sec:"Farmer Services",amt:30,isPaid:true},
-{n:"AADHAAR Update",sec:"Aadhaar & Ration",amt:150,isPaid:true},
-{n:"Ration PDF S1",sec:"Aadhaar & Ration",amt:20,isPaid:true},
-{n:"Ration PDF S2 (Aadhaar)",sec:"Aadhaar & Ration",amt:30,isPaid:true},
-{n:"DBT Seeding Status",sec:"DBT Seeding Status",amt:20,isPaid:true},
-{n:"Mobile Details Find",sec:"Mobile Services",amt:30,isPaid:true},
-{n:"Mobile Details S1",sec:"Mobile Services",amt:30,isPaid:true},
-{n:"Mobile Details S2",sec:"Mobile Services",amt:30,isPaid:true},
-{n:"Other Mobile Issue",sec:"Mobile Services",amt:50,isPaid:true}
-],
-"Govt & Contractor Work (Paid)":[
-{n:"New Digital Signature (DSC)",sec:"Govt Contractor",amt:2500,isPaid:true},
-{n:"E-procurement registration",sec:"Govt Contractor",amt:500,isPaid:true},
-{n:"Tender upload (for contractor)",sec:"Govt Contractor",amt:300,isPaid:true},
-{n:"Tender upload (for department)",sec:"Govt Contractor",amt:700,isPaid:true},
-{n:"Building estimate creator",sec:"Govt Contractor",amt:200,isPaid:true},
-{n:"BOQ creator",sec:"Govt Contractor",amt:200,isPaid:true},
-{n:"Govt civil & electric bill maker (Excel)",sec:"Govt Contractor",amt:1000,isPaid:true},
-{n:"Bill form",sec:"Govt Contractor",amt:400,isPaid:true},
-{n:"Extra item sheet",sec:"Govt Contractor",amt:200,isPaid:true},
-{n:"Excess item sheet",sec:"Govt Contractor",amt:200,isPaid:true},
-{n:"QC register creator",sec:"Govt Contractor",amt:500,isPaid:true},
-{n:"Work escalation statement",sec:"Govt Contractor",amt:700,isPaid:true}
-],
-"PDF Tools (Free)":[
-{n:"JPG / PNG to PDF"},{n:"PDF Merge"},{n:"PDF Split & Page Extract"},
-{n:"PDF to JPG"},{n:"PDF to Excel"},{n:"PDF Rotate & Reorder"},
-{n:"PDF Compressor (KB)"},{n:"Document Scanner & PDF"},
-{n:"PDF Page Number Adder"},{n:"PDF Header & Footer Maker"}
-],
-"Image & Photo Tools (Free)":[
-{n:"Photo Compressor (KB)"},{n:"Image Format Converter"},{n:"Background Remover"},
-{n:"WebP to JPG Converter"},{n:"ICO to PNG"},{n:"ICO Converter (Favicon)"},
-{n:"Thumbnail Resizer"},{n:"Favicon Preview Tool & Maker"},{n:"Image Watermark Maker"},
-{n:"Photo Color Changer"},{n:"Photo Blur Tool"},{n:"Image to Black & White"},
-{n:"Background Black & White"},{n:"Photo Border Maker"},{n:"Color Picker from Image"},
-{n:"Name, Date & Text on Photo"},{n:"Instagram Reel Cover Maker"}
-],
-"Print & ID Cards (Free)":[
-{n:"Passport Photo Sheet"},{n:"ID Card Front & Back to A4"},{n:"ID Card Maker"},
-{n:"Employee ID Card Maker"},{n:"Student ID Card Maker"},{n:"A4 Photo Print Layout"},
-{n:"Photo & Signature Resizer"},{n:"Digital Signature Maker"},{n:"Stamp Designer"}
-],
-"Documents & Letters (Free)":[
-{n:"Text to PDF / Application"},{n:"Letterhead Maker"},{n:"Visiting Card Designer"},
-{n:"Marriage Biodata Maker"},{n:"Resume Maker"},{n:"Invoice Maker"},{n:"Quotation Maker"}
-],
-"Calculators & Utilities (Free)":[
-{n:"GST Calculator"},{n:"GST Inclusive & Exclusive Calculator"},
-{n:"Printing Cost Calculator"},{n:"Cash Denomination Calculator"},
-{n:"Salary Calculator"},{n:"Percentage Calculator"},{n:"Loan / EMI Calculator"},
-{n:"Age Calculator"},{n:"Online Stopwatch"},{n:"Password to MD5 / SHA-256"},
-{n:"QR Code Generator"},{n:"QR Code Designer & Modifier"},{n:"Hindi Typing Tool"},
-{n:"Word Counter"},{n:"What Is My IP"},{n:"Meta Title & Description Generator"},
-{n:"OMR Sheet Generator & Checker"}
-]
-};
-
-function iconSvg(index,name){
-  const icons=[
-    `<rect x="18" y="27" width="64" height="38" rx="6" class="tblue"/><path d="M26 46h24M26 54h16" class="tstroke"/><circle cx="67" cy="46" r="9" class="torange"/>`,
-    `<rect x="31" y="15" width="38" height="68" rx="7" class="tdark"/><rect x="36" y="22" width="28" height="48" rx="3" class="twhite"/><circle cx="50" cy="76" r="3" class="tlight"/>`,
-    `<path d="M25 23h50v58H25z" class="twhite"/><path d="M36 36h28M36 46h28M36 56h20" class="tline"/><circle cx="67" cy="68" r="9" class="tgreen"/>`,
-    `<rect x="17" y="30" width="66" height="42" rx="7" class="tblue"/><circle cx="38" cy="48" r="9" class="twhite"/><path d="M30 65q8-16 16 0M54 44h20M54 53h17M54 62h12" class="tstroke"/>`,
-    `<path d="M27 20h46v62H27z" class="twhite"/><path d="M39 38h22M39 48h22M39 58h14" class="tline"/><path d="M34 68h32" class="tstroke"/>`,
-    `<circle cx="49" cy="49" r="27" class="tlight"/><path d="M49 29v22l14 9" class="tline"/><path d="M70 31h12v12" class="tgreen"/>`,
-    `<rect x="18" y="20" width="64" height="58" rx="7" class="tlight"/><path d="M29 34h42M29 45h42M29 56h28" class="tline"/><circle cx="68" cy="67" r="8" class="tgreen"/>`,
-    `<path d="M50 15l31 18v36L50 86 19 69V33z" class="tblue"/><path d="M50 15v35m31-17L50 50 19 33m31 17v36" class="tstroke"/>`,
-    `<rect x="16" y="23" width="68" height="48" rx="5" class="twhite"/><path d="M16 36h68" class="tline"/><circle cx="29" cy="30" r="2" class="torange"/><circle cx="36" cy="30" r="2" class="tgreen"/>`,
-    `<circle cx="50" cy="50" r="28" class="tblue"/><path d="M50 33v34M33 50h34" class="tstroke"/>`,
-    `<rect x="22" y="17" width="56" height="66" rx="5" class="twhite"/><path d="M33 32h34M33 42h34M33 52h26M33 62h30" class="tline"/>`,
-    `<path d="M50 17l32 17v32L50 83 18 66V34z" class="tblue"/><path d="M50 17v34m32-17L50 51 18 34m32 17v32" class="tstroke"/>`,
-    `<rect x="18" y="27" width="65" height="46" rx="6" class="twhite"/><path d="M30 39h40M30 49h32M30 59h23" class="tline"/><circle cx="70" cy="65" r="7" class="tgreen"/>`,
-    `<circle cx="50" cy="49" r="29" class="tlight"/><path d="M50 29v21l14 9" class="tline"/><path d="M68 26l12 1-1 12" class="torange"/>`,
-    `<rect x="18" y="22" width="64" height="54" rx="5" class="twhite"/><path d="M29 34h40M29 44h40M29 54h27" class="tline"/><path d="M62 64l7 7 14-17" class="tgreen"/>`,
-    `<circle cx="50" cy="49" r="28" class="tblue"/><path d="M50 33v17l13 10" class="tstroke"/><circle cx="50" cy="49" r="35" class="tline"/>`
-  ];
-  const idx=(index+name.length)%icons.length;
-  return `<svg viewBox="0 0 100 100" role="img" aria-label="${esc(name)} icon">${icons[idx]}</svg>`;
-}
-
-let curFilter='All';
-function renderDashboard(){
-  const u=user(),orders=u.orders||[];
-  const count=status=>orders.filter(x=>x.s===status).length;
-  const mount=document.querySelector('[data-v="dashboard"]');
-
-  mount.innerHTML=`
-  <section class="topbar">
-    <div class="welcome">
-      <h1>Welcome back 👋, ${esc(u.name)}</h1>
-      <p>Manage your documents, requests and wallet from one place.</p>
+    <!-- ADD BALANCE MODAL -->
+    <div id="addBalanceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <h3 class="font-bold text-slate-900 text-base">Add Wallet Balance</h3>
+                <button onclick="closeAddBalanceModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="py-4 space-y-3">
+                <label class="block text-xs font-bold text-slate-700">Enter Amount (₹)</label>
+                <input type="number" id="rechargeAmount" value="500" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-sm font-bold">
+                <div class="grid grid-cols-3 gap-2 pt-1">
+                    <button onclick="setAmount(100)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700">₹100</button>
+                    <button onclick="setAmount(500)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700">₹500</button>
+                    <button onclick="setAmount(1000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700">₹1000</button>
+                </div>
+            </div>
+            <button onclick="confirmAddBalance()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition">Add to Wallet</button>
+        </div>
     </div>
-    <div class="top-actions">
-      <a class="balance-pill" href="#passbook">Wallet: ${inr(u.bal)}</a>
-      <a class="btn btn-primary" href="#addmoney">+ Add Balance</a>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 text-sm font-medium">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMessage">Success action completed</span>
     </div>
-  </section>
 
-  <section class="stats">
-    <div class="stat"><div class="stat-head"><h3>Wallet Balance</h3><div class="stat-icon blue">💰</div></div><div class="stat-value">${inr(u.bal)}</div><div class="stat-note">Available for services</div></div>
-    <div class="stat"><div class="stat-head"><h3>Total Requests</h3><div class="stat-icon purple">📄</div></div><div class="stat-value">${orders.length}</div><div class="stat-note">All service requests</div></div>
-    <div class="stat"><div class="stat-head"><h3>Pending</h3><div class="stat-icon orange">⏳</div></div><div class="stat-value">${count('pending')}</div><div class="stat-note">Awaiting action</div></div>
-    <div class="stat"><div class="stat-head"><h3>Successful</h3><div class="stat-icon green">✅</div></div><div class="stat-value">${count('success')}</div><div class="stat-note">Completed requests</div></div>
-  </section>
+    <!-- JAVASCRIPT FOR INTERACTIVITY -->
+    <script>
+        // Sidebar toggle for mobile
+        const sidebar = document.getElementById('sidebar');
+        const menuBtn = document.getElementById('menuBtn');
 
-  <div class="tools-heading">
-    <div><h2>Tools &amp; Services Portal</h2><p>Browse services by category. Every service has its own icon.</p></div>
-  </div>
-  <div class="filters" id="filters">
-    ${['All','Free Only','Paid Only'].map(x=>`<button type="button" data-filter="${x}" class="${x===curFilter?'on':''}">${x}</button>`).join('')}
-  </div>
-  <div id="serviceSections"></div>`;
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
 
-  renderSections();
+        // Dropdown toggle function for sidebar
+        function toggleDropdown(dropdownId, chevronId) {
+            const dropdown = document.getElementById(dropdownId);
+            const chevron = document.getElementById(chevronId);
+            dropdown.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
 
-  document.getElementById('filters').addEventListener('click',e=>{
-    const b=e.target.closest('[data-filter]');
-    if(!b)return;
-    curFilter=b.dataset.filter;
-    document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x.dataset.filter===curFilter));
-    renderSections();
-  });
-}
+        // Filter Services function (All, Paid Only, Free Only)
+        function filterServices(type) {
+            const allBtn = document.getElementById('filter-all');
+            const paidBtn = document.getElementById('filter-paid');
+            const freeBtn = document.getElementById('filter-free');
 
-function renderSections(){
-  const root=document.getElementById('serviceSections');
-  if(!root)return;
-  let index=0,html='';
+            // Reset button states
+            allBtn.className = "px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+            paidBtn.className = "px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+            freeBtn.className = "px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
 
-  Object.entries(CATEGORIES).forEach(([category,items])=>{
-    if(curFilter==='Free Only'&&category.includes('(Paid)'))return;
-    if(curFilter==='Paid Only'&&category.includes('(Free)'))return;
+            if(type === 'all') {
+                allBtn.className = "px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm transition";
+            } else if(type === 'paid') {
+                paidBtn.className = "px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm transition";
+            } else if(type === 'free') {
+                freeBtn.className = "px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm transition";
+            }
 
-    const sectionId=categoryIds[category]||'';
-    html+=`<details class="ds" id="${sectionId}" open>
-      <summary><span>${esc(category)}</span><em>${items.length} services</em></summary>
-      <div class="tool-grid">`;
+            // Filter service cards and sections
+            const sections = document.querySelectorAll('.service-section');
+            sections.forEach(section => {
+                const cards = section.querySelectorAll('.service-card');
+                let visibleCardsCount = 0;
 
-    items.forEach(item=>{
-      index++;
-      const paid=!!item.isPaid;
-      const icon=`<div class="tool-icon">${iconSvg(index,item.n)}</div>`;
-      const label=paid
-        ?`<div class="badge-paid">${inr(item.amt)}</div>`
-        :`<div class="badge-free">FREE</div>`;
+                cards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (type === 'all' || category === type) {
+                        card.style.display = 'flex';
+                        visibleCardsCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
 
-      if(paid){
-        html+=`<div class="tool-card" role="button" tabindex="0" data-service="${esc(item.sec+'|'+item.n)}" data-amount="${item.amt}">
-          ${icon}<div><div class="tool-name">${esc(item.n)}</div><div class="tool-category">${esc(category)}</div></div>${label}
-        </div>`;
-      } else {
-        const url=typeof getToolUrl==='function'?getToolUrl(item.n):'#';
-        html+=`<a class="tool-card" href="${esc(url)}">
-          ${icon}<div><div class="tool-name">${esc(item.n)}</div><div class="tool-category">${esc(category)}</div></div>${label}
-        </a>`;
-      }
-    });
+                // If no cards match in this section, hide the entire category section
+                if (visibleCardsCount === 0) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+        }
 
-    html+='</div></details>';
-  });
+        // Modal Functions
+        function openServiceModal(name, price) {
+            document.getElementById('modalServiceName').innerText = name;
+            document.getElementById('modalServicePrice').innerText = price;
+            document.getElementById('serviceModal').classList.remove('hidden');
+        }
 
-  root.innerHTML=html;
-}
+        function closeServiceModal() {
+            document.getElementById('serviceModal').classList.add('hidden');
+        }
 
-function renderHistory(){
-  const orders=(user().orders||[]).slice().sort((a,b)=>b.t-a);
-  document.querySelector('[data-v="history"]').innerHTML=`
-    <h1 style="font-size:22px;margin-bottom:15px">Request History</h1>
-    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Service</th><th>Status</th><th>Amount</th><th>File</th></tr></thead><tbody>
-    ${orders.map(x=>`<tr><td>${dt(x.t)}</td><td><b>${esc(x.n)}</b></td><td><span class="status s-${esc(x.s)}">${esc(x.s)}</span></td><td>${inr(x.amt)}</td><td>${x.file?`<button class="btn btn-light" data-download="${esc(x.id)}" data-filename="${esc(x.file.name)}">Download</button>`:'In progress'}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center">No requests yet.</td></tr>'}
-    </tbody></table></div>`;
-}
-function renderPassbook(){
-  const tx=(user().tx||[]).slice().sort((a,b)=>b.t-a);
-  document.querySelector('[data-v="passbook"]').innerHTML=`
-    <h1 style="font-size:22px;margin-bottom:15px">Passbook Transactions</h1>
-    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Note</th><th>Type</th><th>Amount</th></tr></thead><tbody>
-    ${tx.map(t=>`<tr><td>${dt(t.t)}</td><td>${esc(t.note)}</td><td>${esc(t.type)}</td><td>${t.type==='credit'?'+':'-'}${inr(t.amt)}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center">No transactions yet.</td></tr>'}
-    </tbody></table></div>`;
-}
-function renderAddMoney(){
-  document.querySelector('[data-v="addmoney"]').innerHTML=`
-    <div class="panel"><h1>Add Money to Wallet</h1>
-    <p style="color:var(--muted);margin-bottom:12px">Current Balance: <b>${inr(user().bal)}</b></p>
-    <form id="fAdd"><label for="amt" style="font-weight:700;font-size:13px">Amount (minimum ₹200)</label>
-    <input class="field" id="amt" type="number" min="200" value="500" required>
-    <button class="btn btn-primary" type="submit" style="width:100%">Pay via UPI</button></form></div>`;
-}
-function renderReferral(){
-  const u=user(),link=location.origin+'/register.html?ref='+(u.code||'');
-  document.querySelector('[data-v="referral"]').innerHTML=`
-    <div class="panel"><h1>Refer &amp; Earn</h1>
-    <p style="color:var(--muted);margin-bottom:12px">Share your referral link and invite friends.</p>
-    <input class="field" id="refLink" readonly value="${esc(link)}">
-    <button class="btn btn-primary" id="copyReferral" style="width:100%">Copy Link</button></div>`;
-  document.getElementById('copyReferral').onclick=async()=>{
-    try {await navigator.clipboard.writeText(link);alert('Link copied!')}
-    catch {document.getElementById('refLink').select();alert('Please copy the selected link.')}
-  };
-}
-function renderProfile(){
-  const u=user();
-  document.querySelector('[data-v="profile"]').innerHTML=`
-    <div class="panel"><h1>My Profile</h1>
-    <p><b>Name:</b> ${esc(u.name)}</p><p style="margin-top:8px"><b>Mobile:</b> ${esc(u.mob)}</p>
-    <p style="margin-top:8px"><b>Email:</b> ${esc(u.mail)}</p>
-    <p style="margin-top:8px"><b>Referral Code:</b> ${esc(u.code||'-')}</p></div>`;
-}
-function renderContact(){
-  document.querySelector('[data-v="contact"]').innerHTML=`
-    <div class="panel"><h1>Contact Support</h1>
-    <p style="color:var(--muted);margin-bottom:14px">Need help with an order or wallet?</p>
-    <a class="btn btn-primary" href="https://wa.me/917300277557?text=Hello%20DocSmartly%20Support" target="_blank" rel="noopener" style="width:100%">Chat on WhatsApp</a></div>`;
-}
+        function submitServiceRequest() {
+            closeServiceModal();
+            showToast('Service request submitted successfully!');
+        }
 
-const views={
-  dashboard:renderDashboard,
-  history:renderHistory,
-  passbook:renderPassbook,
-  addmoney:renderAddMoney,
-  referral:renderReferral,
-  profile:renderProfile,
-  contact:renderContact
-};
+        function openAddBalanceModal() {
+            document.getElementById('addBalanceModal').classList.remove('hidden');
+        }
 
-function route(){
-  const hash=location.hash.slice(1)||'dashboard';
-  const isCategory=hash.startsWith('services-');
-  document.querySelectorAll('[data-v]').forEach(el=>{
-    el.hidden=el.dataset.v!==(isCategory?'dashboard':hash);
-  });
-  if(isCategory){
-    renderDashboard();
-    requestAnimationFrame(()=>{
-      const section=document.getElementById(hash);
-      if(section){
-        section.open=true;
-        section.scrollIntoView({behavior:'smooth',block:'start'});
-      }
-    });
-  } else if(views[hash]){
-    views[hash]();
-  } else {
-    renderDashboard();
-  }
-  document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+hash));
-}
-window.addEventListener('hashchange',route);
+        function closeAddBalanceModal() {
+            document.getElementById('addBalanceModal').classList.add('hidden');
+        }
 
-let currentKey='',currentAmount=0;
-document.addEventListener('click',e=>{
-  const card=e.target.closest('[data-service]');
-  if(!card)return;
-  openRequest(card);
-});
-document.addEventListener('keydown',e=>{
-  if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-service]')){
-    e.preventDefault();
-    openRequest(e.target);
-  }
-});
+        function setAmount(amount) {
+            document.getElementById('rechargeAmount').value = amount;
+        }
 
-function openRequest(card){
-  currentKey=card.dataset.service;
-  currentAmount=Number(card.dataset.amount);
-  const u=user(),serviceName=currentKey.split('|')[1]||currentKey;
-  document.getElementById('rt').textContent=serviceName;
-  document.getElementById('rp').innerHTML=`Is service ke liye <b>${inr(currentAmount)}</b> wallet se charge honge.<br>Current Balance: ${inr(u.bal)}`;
-  document.getElementById('fRq').innerHTML=`
-    <label style="display:block;font-weight:700;font-size:13px" for="rqDoc">Vehicle / Document / Application Number</label>
-    <input class="field" id="rqDoc" required placeholder="Enter number">
-    <label style="display:block;font-weight:700;font-size:13px" for="rqRem">Remarks (optional)</label>
-    <input class="field" id="rqRem" placeholder="Special instruction">
-    <div style="display:flex;gap:9px">
-      <button type="button" id="btnCancelModal" class="btn btn-light" style="flex:1">Cancel</button>
-      <button class="btn btn-primary" type="submit" style="flex:1">Confirm &amp; Proceed</button>
-    </div>`;
-  document.getElementById('rm').style.display='flex';
-}
+        function confirmAddBalance() {
+            closeAddBalanceModal();
+            showToast('Wallet balance updated successfully!');
+        }
 
-document.getElementById('rx').onclick=()=>document.getElementById('rm').style.display='none';
-document.addEventListener('click',e=>{
-  if(e.target.id==='btnCancelModal'||e.target.id==='rm')document.getElementById('rm').style.display='none';
-});
-
-document.getElementById('fRq').onsubmit=async e=>{
-  e.preventDefault();
-  const doc=document.getElementById('rqDoc').value.trim();
-  const rem=document.getElementById('rqRem').value.trim();
-  const u=user();
-
-  if(u.bal<currentAmount){
-    alert('Insufficient wallet balance. Please add money first.');
-    document.getElementById('rm').style.display='none';
-    location.hash='#addmoney';
-    return;
-  }
-  try {
-    const res=await api('POST','/api/requests',{
-      k:currentKey,
-      sec:currentKey.split('|')[0],
-      doc,
-      amt:currentAmount,
-      data:{'Document Number':doc,'Remarks':rem}
-    });
-    if(!res.ok){alert('Failed to submit request.');return}
-    const data=await res.json();
-    saveUser(data.user);
-    document.getElementById('rm').style.display='none';
-    alert('Request submitted successfully!');
-    location.hash='#history';
-  } catch(err) {
-    console.error(err);
-    alert('Network error. Please try again.');
-  }
-};
-
-document.addEventListener('submit',async e=>{
-  if(e.target.id!=='fAdd')return;
-  e.preventDefault();
-  const amt=Number(document.getElementById('amt').value);
-  if(amt<200){alert('Minimum top-up amount is ₹200.');return}
-  try {
-    const res=await api('POST','/api/topup',{amt});
-    if(!res.ok){alert('Unable to start wallet recharge.');return}
-    const data=await res.json();
-    if(data.user)saveUser(data.user);
-    alert('Wallet recharge request submitted.');
-    route();
-  } catch(err) {
-    console.error(err);
-    alert('Network error. Please try again.');
-  }
-});
-
-document.addEventListener('click',async e=>{
-  const btn=e.target.closest('[data-download]');
-  if(!btn)return;
-  try {
-    const res=await fetch(API+'/api/requests/'+encodeURIComponent(btn.dataset.download)+'/file',{headers:tokenHdr()});
-    if(!res.ok){alert('File not available.');return}
-    const blob=await res.blob(),url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;a.download=btn.dataset.filename||'result.pdf';a.click();
-    URL.revokeObjectURL(url);
-  } catch(err) {
-    console.error(err);
-    alert('Unable to download file.');
-  }
-});
-
-document.getElementById('loSb').onclick=()=>{
-  localStorage.removeItem('ds_session');
-  localStorage.removeItem('ds_token');
-  window.location.replace('index.html');
-};
-
-route();
-</script>
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
