@@ -156,20 +156,15 @@ const paidToolsMap = {
 
 // MAIN GET URL FUNCTION
 function getToolUrl(name, key = "") {
-  // 1. Check if it's a Paid Service by composite key ("Category|Name") or Name
   if (key && paidToolsMap[key]) {
     return `paidtools/${paidToolsMap[key]}`;
   }
   if (paidToolsMap[name]) {
     return `paidtools/${paidToolsMap[name]}`;
   }
-
-  // 2. Check if it's a Free Tool
   if (freeToolsMap[name]) {
     return `freetools/${freeToolsMap[name]}`;
   }
-
-  // 3. Fallback for unmapped free tools
   const fallback = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return `freetools/${fallback}.html`;
 }
