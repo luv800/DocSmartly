@@ -1382,14 +1382,20 @@ function handleCardClick(key) {
                 switchTab(hash);
             }
         }
-
-        // Initialize Everything on Load
-        window.addEventListener('DOMContentLoaded', () => {
-            syncLoggedInUser();
+// Initialize Everything on Load Safely
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        syncLoggedInUser();
+        if (typeof renderAllSections === 'function') {
             renderAllSections();
-            renderTables();
-            handleHashNavigation();
-        });
+        } else {
+            console.error('renderAllSections function is missing or not defined!');
+        }
+        renderTables();
+    } catch (err) {
+        console.error('Initialization error:', err);
+    }
+});
     </script>
 </body>
 </html>
